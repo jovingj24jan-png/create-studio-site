@@ -393,7 +393,18 @@ body.menu .menu a.mi{opacity:1;transform:none}
   .fcase-r{border-left:0;padding-left:0}}
 
 /* ═══════════════════════════════════════════════════ services ══════════ */
-.svc{padding-top:clamp(56px,6vw,96px)}
+#studio{padding-bottom:0}
+.svc-stack{position:relative}
+.svc{position:sticky;top:0;min-height:100svh;display:flex;flex-direction:column;
+  justify-content:center;background:var(--paper);border-top:1px solid var(--line);
+  padding:calc(var(--nav-h) + clamp(28px,4vw,64px)) 0 clamp(40px,5vw,80px);
+  margin-bottom:60vh}
+.svc:last-child{margin-bottom:40vh}
+#hww{position:relative;z-index:2}
+@media(max-width:809px){.svc,.svc:last-child{position:static;min-height:0;display:block;
+  padding:clamp(56px,6vw,96px) 0 0;border-top:0;margin-bottom:0}}
+@media(prefers-reduced-motion:reduce){.svc,.svc:last-child{position:static;min-height:0;
+  display:block;padding:clamp(56px,6vw,96px) 0 0;margin-bottom:0}}
 .svc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
 .svc-idx{color:var(--rule);font-weight:400}
 .svc-rule{position:relative;margin-top:8px}
@@ -626,8 +637,8 @@ input::placeholder{color:var(--rule)}
   <div class="shell">
     <h2 class="t-sectionword rv">services</h2>
     <p class="t-lead mt3 deep rv" style="max-width:36ch">What we do best, and what your next project needs most.</p>
-    <div id="services"></div>
   </div>
+  <div id="services" class="svc-stack"></div>
 </section>
 
 <!-- ═══════════════════════════════════════════════ PROCESS ══════════════ -->
@@ -1048,7 +1059,7 @@ function marks(){return clients.map(function(c){
 
 /* ───────────────────────────────────────────────────── services ─────── */
 document.getElementById("services").innerHTML=services.map(function(s){
- return '<article class="svc"><div class="svc-head"><span class="t-mono-sm deep">'+esc(s.k)+'</span>'+
+ return '<article class="svc"><div class="shell"><div class="svc-head"><span class="t-mono-sm deep">'+esc(s.k)+'</span>'+
  '<span style="flex:1"></span>'+
  '<span class="t-h5 num svc-idx">/'+s.no+'</span></div>'+
  '<div class="svc-rule"><span class="base"></span><span class="tick"></span></div>'+
@@ -1059,7 +1070,7 @@ document.getElementById("services").innerHTML=services.map(function(s){
    '<ul style="grid-column:8/13">'+s.p.map(function(p){
      return '<li class="flex g2" style="padding:12px 0;align-items:flex-start"><svg class="plus" width="11" height="11" viewBox="0 0 11 11"><path d="M5.5 0V11M0 5.5H11" stroke="currentColor" stroke-width="1.2"/></svg><span class="t-body">'+esc(p)+'</span></li>'
    }).join("")+'<li class="ticks mt3"></li></ul>'+
- '</div></article>';
+ '</div></div></article>';
 }).join("");
 
 /* ───────────────────────────────────────────────────── process ──────── */
