@@ -1,0 +1,33 @@
+# build / deps
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# local QA output
+cmp
+cmp2
+qa-shots
+qa-report.txt
+ref-*.json
+
+# saved copy of the third-party reference site (not redistributed)
+Create® — Design Studio.html
+Create® — Design Studio_files/
+
+# reference screenshots used only for measurement (not part of the site)
+check.jpg
+car.jpg
+blackwell.jpg
+strategy.jpg
+design.jpg
+ai.jpg
+seo.jpg
+flower.jpg
+behind.jpg
+grow.jpg
+studies.jpg
+success.jpg
+94932952-*.png
+*abstract*.jpg

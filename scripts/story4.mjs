@@ -1,0 +1,20 @@
+import puppeteer from "puppeteer-core";
+import { pathToFileURL } from "node:url";
+import { resolve } from "node:path";
+import { mkdirSync } from "node:fs";
+mkdirSync("cmp",{recursive:true});
+const b=await puppeteer.launch({executablePath:"C:/Program Files/Google/Chrome/Application/chrome.exe",headless:"new",args:["--no-sandbox","--hide-scrollbars","--allow-file-access-from-files"]});
+const p=await b.newPage();
+await p.setViewport({width:1440,height:900});
+await p.goto(pathToFileURL(resolve("index.html")).href,{waitUntil:"load"});
+await new Promise(r=>setTimeout(r,700));
+const g=await p.evaluate(()=>{const s=document.getElementById("story-section");return{t:s.offsetTop,h:s.offsetHeight,vh:innerHeight}});
+await p.evaluate(y=>window.scrollTo(0,y), g.t+(g.h-g.vh)*0.97);
+await new Promise(r=>setTimeout(r,1200));
+const fit=await p.evaluate(()=>{
+  const t=document.querySelector(".story-text").getBoundingClientRect();
+  return {textH:Math.round(t.height), vh:innerHeight, fits:t.height<innerHeight-40};
+});
+console.log("all four lines block:", JSON.stringify(fit));
+await p.screenshot({path:"cmp/story4.png"});
+await b.close();

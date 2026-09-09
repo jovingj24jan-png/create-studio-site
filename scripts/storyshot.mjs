@@ -1,0 +1,13 @@
+import puppeteer from "puppeteer-core";
+import { pathToFileURL } from "node:url";
+import { resolve } from "node:path";
+const b=await puppeteer.launch({executablePath:"C:/Program Files/Google/Chrome/Application/chrome.exe",headless:"new",args:["--no-sandbox","--hide-scrollbars","--allow-file-access-from-files"]});
+const p=await b.newPage();
+await p.setViewport({width:1440,height:900});
+await p.goto(pathToFileURL(resolve("index.html")).href,{waitUntil:"load"});
+await new Promise(r=>setTimeout(r,700));
+const g=await p.evaluate(()=>{const s=document.getElementById("story-section");return{t:s.offsetTop,h:s.offsetHeight,vh:innerHeight}});
+await p.evaluate(y=>window.scrollTo(0,y), g.t+(g.h-g.vh)*0.62);
+await new Promise(r=>setTimeout(r,900));
+await p.screenshot({path:"cmp/story.png"});
+await b.close();console.log("shot ok");
