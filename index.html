@@ -395,16 +395,16 @@ body.menu .menu a.mi{opacity:1;transform:none}
 /* ═══════════════════════════════════════════════════ services ══════════ */
 #studio{padding-bottom:0}
 .svc-stack{position:relative}
-.svc{position:sticky;top:0;min-height:100svh;display:flex;flex-direction:column;
-  justify-content:center;background:var(--paper);border-top:1px solid var(--line);
-  padding:calc(var(--nav-h) + clamp(28px,4vw,64px)) 0 clamp(40px,5vw,80px);
-  margin-bottom:60vh}
-.svc:last-child{margin-bottom:40vh}
+.svc{position:sticky;top:20px;padding:clamp(44px,5vw,72px) 0 clamp(48px,5.6vw,80px);
+  background:rgba(242,242,242,.66);
+  -webkit-backdrop-filter:blur(15px) saturate(1.06);backdrop-filter:blur(15px) saturate(1.06)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .svc{background:var(--paper)}}
 #hww{position:relative;z-index:2}
-@media(max-width:809px){.svc,.svc:last-child{position:static;min-height:0;display:block;
-  padding:clamp(56px,6vw,96px) 0 0;border-top:0;margin-bottom:0}}
-@media(prefers-reduced-motion:reduce){.svc,.svc:last-child{position:static;min-height:0;
-  display:block;padding:clamp(56px,6vw,96px) 0 0;margin-bottom:0}}
+@media(max-width:809px){.svc{position:static;padding:clamp(56px,6vw,96px) 0 0;
+  background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media(prefers-reduced-motion:reduce){.svc{position:static;padding:clamp(56px,6vw,96px) 0 0;
+  background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
 .svc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
 .svc-idx{color:var(--rule);font-weight:400}
 .svc-rule{position:relative;margin-top:8px}
