@@ -121,7 +121,9 @@ ul{list-style:none}
 .case-hero-veil{position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(5,6,9,.55),rgba(5,6,9,.18) 38%,rgba(5,6,9,.72))}
 .case-hero-in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
-  justify-content:space-between;padding:calc(var(--nav-h) + 6vh) 0 7vh;color:#fff}
+  justify-content:space-between;color:#fff;
+  /* vertical only: .shell on the same element supplies the horizontal gutter */
+  padding-top:calc(var(--nav-h) + 6vh);padding-bottom:7vh}
 .case-hero-top{display:flex;align-items:center;gap:16px}
 .case-hero-word{font-weight:700;font-size:calc(var(--rfs)*1.55);letter-spacing:-.045em;
   line-height:1;color:#fff}
@@ -203,7 +205,8 @@ ul{list-style:none}
 .case-next-veil{position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(5,6,9,.42),rgba(5,6,9,.28) 45%,rgba(5,6,9,.6))}
 .case-next-in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;
-  justify-content:space-between;padding:clamp(40px,6vh,80px) 0}
+  justify-content:space-between;
+  padding-top:clamp(40px,6vh,80px);padding-bottom:clamp(40px,6vh,80px)}
 .case-next-mid{text-align:center;margin-top:auto;margin-bottom:auto}
 .case-next-arrow{display:inline-flex;align-items:center;justify-content:center;
   width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;

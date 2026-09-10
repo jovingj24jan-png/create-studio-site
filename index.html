@@ -176,6 +176,36 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .imgbox.in img{transform:none}
 
+/* ═══════════════════════════ partnership / pricing card row ════════════ */
+.pcards{background:#fafafa}
+.pcard-row{display:grid;grid-template-columns:1.15fr 1fr 1.2fr;gap:20px}
+.pcard{display:flex;flex-direction:column;padding:28px;border-radius:12px;
+  background:#fff;border:1px solid var(--line)}
+.pcard-b,.pcard-c{background:#f2f2f2;border-color:transparent}
+.pcard-h{display:flex;align-items:center;gap:12px;color:#606163;
+  font-size:calc(var(--rfs)*2.1);font-weight:500;letter-spacing:-.04em}
+.pcard-h svg{width:26px;height:26px;flex:none;color:var(--rule)}
+.pcard-p{margin-top:14px;max-width:34ch;color:var(--deep);
+  font-size:calc(var(--rfs)*1.25);line-height:1.45}
+.pcard-img{margin-top:22px;border-radius:10px;aspect-ratio:512/384}
+.pcard-lab{color:var(--deep);font-size:calc(var(--rfs)*1.15)}
+.pcard-t{margin-top:10px;max-width:13ch;color:#26282b;
+  font-size:calc(var(--rfs)*2.6);font-weight:500;letter-spacing:-.05em;line-height:1.12}
+.pcard-list{margin-top:auto;padding-top:36px;display:grid;gap:16px}
+.pcard-list li{display:flex;align-items:center;gap:12px;color:var(--deep);
+  font-size:calc(var(--rfs)*1.25)}
+.pcard-list svg{width:20px;height:20px;flex:none;color:var(--rule)}
+.pcard-panel{margin-top:auto;padding:22px;border-radius:12px;background:#fafafa}
+.pcard-date{margin-top:8px;font-size:calc(var(--rfs)*1.9);font-weight:500;letter-spacing:-.04em}
+.pcard-cta{display:inline-flex;align-items:center;gap:16px;margin-top:22px;
+  font-size:calc(var(--rfs)*1.3)}
+/* reference measures no hover state on these cards: no transform, no colour
+   change on card, image or CTA. Entrance reveal is the site-wide .rv only. */
+.pcard-arrow{display:flex;align-items:center;justify-content:center;flex:none;
+  width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff}
+@media(max-width:1023px){.pcard-row{grid-template-columns:1fr 1fr}.pcard-c{grid-column:1/-1}}
+@media(max-width:809px){.pcard-row{grid-template-columns:1fr}.pcard-c{grid-column:auto}}
+
 /* ═══════════════════ section header: rail + ruled marker (page 17) ══════ */
 .sechead{background:#fafafa;padding:clamp(48px,6vw,104px) 0 clamp(40px,5vw,88px)}
 .sechead-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0 32px;align-items:start}
@@ -446,8 +476,10 @@ body.menu .menu a.mi{opacity:1;transform:none}
 #studio{padding-bottom:0}
 .svc-stack{position:relative}
 .svc{position:sticky;top:20px;padding:clamp(44px,5vw,72px) 0 clamp(48px,5.6vw,80px);
-  background:rgba(242,242,242,.66);
-  -webkit-backdrop-filter:blur(15px) saturate(1.06);backdrop-filter:blur(15px) saturate(1.06)}
+  /* measured on the reference: blur(5px), no saturation, and a lighter tint so
+     the outgoing panel stays legible through the incoming one */
+  background:rgba(244,244,244,.55);
+  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .svc{background:var(--paper)}}
 #hww{position:relative;z-index:2}
@@ -458,7 +490,9 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .svc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
 .svc-idx{color:var(--rule);font-weight:400}
 .svc-rule{position:relative;margin-top:8px}
-.svc-rule .base{height:1px;background:var(--line)}
+/* span is inline: without display:block it collapses to 0x0 and the rule
+   never paints. Colour matches the reference rule (#d5d7de). */
+.svc-rule .base{display:block;height:1px;background:var(--rule)}
 .svc-rule .tick{position:absolute;left:0;top:0;height:2px;width:0;background:var(--accent);transition:width 1.2s var(--ease)}
 .svc.in .svc-rule .tick{width:26px}
 .svc-round,.svc-round img{border-radius:10px}
@@ -816,23 +850,34 @@ input::placeholder{color:var(--rule)}
 </section>
 
 <!-- ═══════════════════════════════════════════════ PARTNERSHIP ══════════ -->
-<section class="section" aria-label="Long-term partnership">
+<section class="section pcards" aria-label="Long-term partnership">
   <div class="shell">
-    <div class="grid" style="row-gap:40px">
-      <div style="grid-column:1/7">
-        <span class="t-mono-sm muted">● Built for the long run</span>
-        <h2 class="t-h2 mt3" style="max-width:11ch">Still here after launch day</h2>
-        <ul class="mt5" id="pillars"></ul>
-      </div>
-      <div style="grid-column:8/13">
-        <div class="rv" style="background:var(--mist);padding:36px">
-          <p class="t-mono-sm muted">Next availability</p>
-          <p class="t-h3 mt1">from 14 September</p>
-          <p class="t-body mt3 deep" style="max-width:30ch">A quick intro call, no strings attached. Tell us what you are working on and we will tell you honestly whether we are the right fit.</p>
-          <div class="imgbox mt5" style="aspect-ratio:16/10"><img src="public/img/studio-c.svg" alt=""></div>
-          <a href="#contact" class="btn btn-dark btn-lg mt3" style="width:100%">Book now <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+    <div class="pcard-row">
+
+      <article class="pcard rv">
+        <p class="pcard-h"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12.4l2.6 2.6L16 9.6" stroke="#fafafa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Simple Pricing</p>
+        <p class="pcard-p">Plans that scale with the project and leave room to keep making things.</p>
+        <div class="pcard-img imgbox"><img src="wave.avif" alt="" decoding="async"></div>
+        <p class="pcard-p">Pick a plan that grows with you and keeps creative costs predictable.</p>
+        <a href="#pricing" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Explore plans</span></a>
+      </article>
+
+      <article class="pcard pcard-b rv">
+        <p class="pcard-lab">Built for the long run</p>
+        <h2 class="pcard-t">Still here after launch day</h2>
+        <ul class="pcard-list" id="pillars"></ul>
+      </article>
+
+      <article class="pcard pcard-c rv">
+        <p class="pcard-lab">A quick intro call, no strings attached.</p>
+        <h2 class="pcard-t">Let&#39;s chat or just say hello.</h2>
+        <div class="pcard-panel">
+          <p class="pcard-lab">Next availability</p>
+          <p class="pcard-date">from 14 September 2025</p>
+          <a href="#contact" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Book now</span></a>
         </div>
-      </div>
+      </article>
+
     </div>
   </div>
 </section>
@@ -953,7 +998,7 @@ input::placeholder{color:var(--rule)}
           <li><a href="#contact" class="ulink">DISCLAIMER</a></li><li><a href="#contact" class="ulink">404</a></li>
         </ul>
         <div class="flex wrap center g3 mt5"><p class="t-body deep">Follow us on socials</p>
-        <div class="flex wrap g3 t-mono accent"><a href="#" class="ulink">X</a><a href="#" class="ulink">Li</a><a href="#" class="ulink">IG</a><a href="#" class="ulink">FB</a><a href="#" class="ulink">WA</a></div></div>
+        <div class="flex wrap g3 t-mono accent"><a href="https://x.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="X">X</a><a href="https://linkedin.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">Li</a><a href="https://instagram.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a><a href="https://facebook.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a><a href="https://whatsapp.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a></div></div>
       </div>
     </div>
   </div>
@@ -1025,9 +1070,9 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 
 /* ───────────────────────────────────────────────────── data ─────────── */
 var projects=[
- {slug:"solvanne",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
+ {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
  {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",noSub:true,ticks:true,year:"2025",stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
- {slug:"verge",client:"vantar",logo:["Lindholm"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
+ {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Lindholm"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
 var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
@@ -1182,17 +1227,8 @@ document.getElementById("plans").innerHTML=plans.map(function(p,i){
 }).join("");
 
 /* ───────────────────────────────────────────────────── pillars ──────── */
-document.getElementById("pillars").innerHTML=pillars.map(function(p,i){
- return '<li class="rv rule-t" style="padding:24px 0"><div class="flex g3" style="align-items:baseline">'+
- '<span class="t-mono-sm accent num" style="flex:none">/0'+(i+1)+'</span><div><h3 class="t-h4">'+esc(p[0])+'</h3>'+
- '<p class="t-small mt1 deep" style="max-width:42ch">'+esc(p[1])+'</p></div></div></li>';
-}).join("")+'<li class="rule-t"></li>';
-
-/* ───────────────────────────────────────────────────── team ─────────── */
-document.getElementById("team").innerHTML=team.map(function(m){
- return '<article class="member rv"><div class="ph imgbox"><img src="public/img/person-'+m[0]+'.svg" alt="'+esc(m[1])+', '+esc(m[2])+'">'+
- '<div class="kpi"><p class="t-mono-sm accent">//KPI</p><p class="t-h4 num mt1">'+m[3]+'</p><p class="t-small mt1" style="color:rgba(255,255,255,.65)">'+esc(m[4])+'</p></div></div>'+
- '<div class="rule-t mt2 flex between g2" style="padding-top:12px;align-items:flex-start"><div><h3 class="t-h4">'+esc(m[1])+'</h3><p class="t-mono-sm muted mt1">'+esc(m[2])+'</p></div></div></article>';
+document.getElementById("pillars").innerHTML=pillars.map(function(x){
+ return '<li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12.4l2.6 2.6L16 9.6" stroke="#fafafa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+esc(x[0])+'</li>';
 }).join("");
 
 /* ───────────────────────────────────────────────────── faq ──────────── */
