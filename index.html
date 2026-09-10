@@ -1324,6 +1324,13 @@ document.querySelectorAll(".rv,.mask,.imgbox,.svc,.wcard,.panel").forEach(functi
 document.querySelectorAll("section .mask").forEach(function(el,i){
  el.querySelector("span").style.transitionDelay=((i%4)*110)+"ms";
 });
+/* the global index wraps every 4th mask, which left the benefit cards'
+   three lines out of order; restagger each card from its own first line */
+document.querySelectorAll(".bcard").forEach(function(card){
+ card.querySelectorAll(".mask").forEach(function(el,i){
+  el.querySelector("span").style.transitionDelay=(i*110)+"ms";
+ });
+});
 
 /* counters */
 var cio=new IntersectionObserver(function(es){
