@@ -963,27 +963,6 @@ input::placeholder{color:var(--rule)}
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ TESTIMONIALS ═════════ -->
-<section class="section" aria-label="Testimonials">
-  <div class="shell">
-    <div class="grid rule-b" style="padding-bottom:40px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted">● What our clients say</span><h2 class="t-h2 mt3" style="max-width:14ch">Long partnerships, work that holds</h2></div>
-      <p class="t-lead deep" style="grid-column:9/13;align-self:end">From kickoff to launch, brands trust us to stay close, adapt fast and deliver without drama.</p>
-    </div>
-    <div class="grid mt5" style="row-gap:24px">
-      <p class="t-mono-sm muted" style="grid-column:1/3">Spotlight</p>
-      <figure style="grid-column:3/13">
-        <blockquote class="t-h3" style="max-width:30ch">“They did not just meet the brief, they lifted it. Clear updates, fast turns, and an end result that carried our brand further than we had planned for.”</blockquote>
-        <figcaption class="rule-t mt5 flex wrap between center g2" style="padding-top:16px"><div><p class="t-h4">Iris Kalloway</p><p class="t-mono-sm muted mt1">Marketing Lead · Sundermark</p></div><p class="t-mono-sm muted">September 2025</p></figcaption>
-      </figure>
-    </div>
-  </div>
-  <div class="mt6" style="display:grid;gap:20px">
-    <div class="mq" style="--dur:52s"><div class="mq-track" id="tm1"></div><div class="mq-track" id="tm1b" aria-hidden="true"></div></div>
-    <div class="mq" data-dir="right" style="--dur:62s"><div class="mq-track" id="tm2"></div><div class="mq-track" id="tm2b" aria-hidden="true"></div></div>
-  </div>
-</section>
-
 <!-- ═══════════════════════════════════════════════ WHISPERS ═════════════ -->
 <section id="whispers" class="section" aria-label="Whispers">
   <div class="shell">
@@ -1140,15 +1119,6 @@ var faqs=[
  ["What happens after launch?","We can stay on for fixes, updates and ongoing support, or hand over cleanly with documentation."],
  ["Can we start small and scale later?","Yes. Plenty of clients begin with a brand refresh and expand into campaigns, strategy and ongoing support as they grow."]
 ];
-var quotes=[
- ["Kickoff to launch moved quickly and never felt chaotic. Issues were solved before they became problems, and the ship date held.","Theo Brandt","Head of Product","Plinth"],
- ["We did not get a website, we got a framework we can keep growing into. Every decision came with a reason behind it.","Ada Vasquez","Brand Manager","Vantar"],
- ["They do not deliver and disappear. The team stayed close, fixed details on the fly and made launch week uneventful.","Rowan Petit","Creative Lead","Weldon"],
- ["The whole thing felt effortless. They understood the vision early and kept us aligned through clear milestones.","Nils Aaberg","Creative Director","Harrowgate"],
- ["Every meeting was useful, every deadline held, and the result described our brand better than we could.","Delia Sorensen","Head of Design","Solvanne"],
- ["They took a messy brief and turned it into something we are proud to show. Fast, sharp, no overthinking.","Owen Marsh","Founder","Kestrel"],
- ["A rare balance of speed and detail. Complex flows came back simple and the product is both usable and on-brand.","Saskia Vance","UX Lead","Ostara"]
-];
 var posts=[
  [1,"Jul 30, 2025","Rethinking Product Design with Intelligence","Lucas Marino","Technical Director"],
  [2,"Jul 25, 2025","Digital Identities Across Cultures","Owen Marsh","Marketing Lead"],
@@ -1264,16 +1234,6 @@ document.getElementById("faqs").innerHTML=faqs.map(function(f,i){
  '<span class="plan-ico" style="margin-top:8px"></span></button></h3>'+
  '<div class="acc"><div><p class="t-body deep" style="max-width:58ch;padding:0 0 28px 56px">'+esc(f[1])+'</p></div></div></li>';
 }).join("")+'<li class="rule-t"></li>';
-
-/* ───────────────────────────────────────────────── testimonials ─────── */
-function cards(list){return list.map(function(q){
- return '<figure style="flex:none;width:420px;margin:0 10px;padding:28px;background:var(--mist);display:flex;flex-direction:column;justify-content:space-between">'+
- '<blockquote class="t-body">“'+esc(q[0])+'”</blockquote>'+
- '<figcaption class="rule-t mt4 flex between end g2" style="padding-top:16px"><div><p class="t-small" style="font-weight:500">'+esc(q[1])+'</p><p class="t-mono-sm muted mt1">'+esc(q[2])+'</p></div><p class="t-mono-sm accent">'+esc(q[3])+'</p></figcaption></figure>';
-}).join("")}
-var half=Math.ceil(quotes.length/2);
-document.getElementById("tm1").innerHTML=document.getElementById("tm1b").innerHTML=cards(quotes.slice(0,half));
-document.getElementById("tm2").innerHTML=document.getElementById("tm2b").innerHTML=cards(quotes.slice(half));
 
 /* ───────────────────────────────────────────────────── whispers ────── */
 function wcard(p,lg){
