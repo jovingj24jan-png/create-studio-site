@@ -176,6 +176,38 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .imgbox.in img{transform:none}
 
+/* ═══════════════════ section header: rail + ruled marker (page 17) ══════ */
+.sechead{background:#fafafa;padding:clamp(48px,6vw,104px) 0 clamp(40px,5vw,88px)}
+.sechead-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0 32px;align-items:start}
+.sechead-rail{grid-column:1/3}
+.sechead-rail .hair{display:block;width:68px;height:1px;background:var(--rule);
+  margin-bottom:clamp(44px,6.4vw,82px)}
+.sechead-tag{display:block;color:#6b6c6e;white-space:nowrap}
+.sechead-hatch{display:block;height:22px;margin-top:10px;
+  background-image:repeating-linear-gradient(45deg,var(--rule) 0 1.5px,transparent 1.5px 6px)}
+.sechead-main{grid-column:4/13}
+.sechead-rule{position:relative;height:1px;background:var(--rule);
+  margin-bottom:clamp(38px,5.6vw,80px)}
+.sechead-rule::before{content:"";position:absolute;left:0;top:-1px;width:26px;height:3px;
+  background:var(--accent)}
+.sechead-h{max-width:15ch}
+/* t-h2 sits at line-height 1, so the clip box needs descender room; the
+   negative margin keeps the extra padding out of the layout height */
+.sechead-h .mask{padding-bottom:.16em;margin-bottom:-.16em}
+.sechead-lead{display:flex;gap:16px;color:var(--muted);max-width:52ch;
+  margin-top:clamp(22px,3vw,42px)}
+.sechead-lead::before{content:"";flex:none;width:46px;height:1px;background:var(--muted);
+  margin-top:.72em}
+.sechead-ticks{height:16px;margin-top:clamp(44px,6.4vw,92px);
+  background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 11px)}
+@media(max-width:809px){
+  .sechead-grid{grid-template-columns:1fr;gap:0}
+  .sechead-rail,.sechead-main{grid-column:1/-1}
+  .sechead-rail .hair{margin-bottom:14px}
+  .sechead-main{margin-top:26px}
+  .sechead-lead{max-width:none}
+}
+
 /* ═══════════════════════════════════════════════════ marquee ═══════════ */
 .mq{display:flex;width:100%;overflow:hidden;user-select:none}
 .mq-track{display:flex;flex:none;align-items:center;animation:mq var(--dur,34s) linear infinite;will-change:transform}
@@ -266,7 +298,6 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .panel a{position:relative;display:block;height:100%;overflow:hidden;background:var(--ink)}
 .panel img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.6s var(--ease)}
 .panel.in img.bg{transform:none}
-.panel a:hover img.bg{transform:scale(1.05)}
 .panel .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.30),rgba(5,6,9,.10) 32%,rgba(5,6,9,.14) 62%,rgba(5,6,9,.36))}
 .panel .body{position:relative;display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:14.3vh 7.5% 11.2vh;color:#fff}
 .panel .mark{height:32px;width:auto;filter:brightness(0) invert(1)}
@@ -282,6 +313,17 @@ body.menu .menu a.mi{opacity:1;transform:none}
 @media(max-width:809px){.panel .stack{display:none}}
 .panel .cta{opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
 .panel a:hover .cta{opacity:1;transform:none}
+/* cursor-following label over a project panel, as the reference does it. Only
+   mounted for fine pointers; touch keeps the .cta button as the affordance. */
+.vc-cursor{position:fixed;left:0;top:0;z-index:80;pointer-events:none;
+  display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;
+  background:var(--accent);color:#fff;white-space:nowrap;
+  font-family:"Fragment Mono",ui-monospace,monospace;font-size:calc(var(--mono)*.8);
+  letter-spacing:-.04em;line-height:1;text-transform:uppercase;
+  opacity:0;transform:translate3d(-50%,-50%,0) scale(.72);
+  transition:opacity .32s var(--ease),transform .32s var(--ease)}
+.vc-cursor.on{opacity:1;transform:translate3d(-50%,-50%,0) scale(1)}
+.vc-cursor svg{width:14px;height:14px;display:block}
 
 /* ═══════════════════════════════════════════════════ dark bands ════════ */
 .dark{background:var(--ink);color:#fff}
@@ -710,12 +752,21 @@ input::placeholder{color:var(--rule)}
 </section>
 
 <!-- ═══════════════════════════════════════════════ WHY / STATS ══════════ -->
-<section class="section" aria-label="Why choose us">
+<section class="section sechead" aria-label="Why choose us">
   <div class="shell">
-    <div class="grid rule-b" style="padding-bottom:40px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted">● Why choose us</span><h2 class="t-h2 mt3" style="max-width:13ch">Built to keep projects moving</h2></div>
-      <p class="t-lead deep" style="grid-column:9/13;align-self:end"><span class="accent">——&nbsp;</span>A clear process, short review cycles and a clean launch. Fewer steps means fewer places for a project to stall.</p>
+    <div class="sechead-grid">
+      <div class="sechead-rail">
+        <span class="hair"></span>
+        <span class="sechead-tag t-mono-sm">Why choose us</span>
+        <span class="sechead-hatch" aria-hidden="true"></span>
+      </div>
+      <div class="sechead-main">
+        <div class="sechead-rule" aria-hidden="true"></div>
+        <h2 class="sechead-h t-h2"><span class="mask"><span>Built to keep projects moving</span></span></h2>
+        <p class="sechead-lead t-lead rv">A clear process, short review cycles and a clean launch. Fewer steps means fewer places for a project to stall.</p>
+      </div>
     </div>
+    <div class="sechead-ticks" aria-hidden="true"></div>
     <div class="grid mt5" style="row-gap:40px">
       <div style="grid-column:1/6">
         <span class="mask"><span class="t-h2" style="color:var(--ink)">we listen.</span></span>
@@ -975,7 +1026,7 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 /* ───────────────────────────────────────────────────── data ─────────── */
 var projects=[
  {slug:"solvanne",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
- {slug:"harrowgate",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",noSub:true,ticks:true,year:"2025",stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
+ {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",noSub:true,ticks:true,year:"2025",stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
  {slug:"verge",client:"vantar",logo:["Lindholm"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
@@ -1044,7 +1095,8 @@ h1.innerHTML=words.map(function(w,i){
 
 /* ───────────────────────────────────────────── project panels ───────── */
 document.getElementById("panels").innerHTML=projects.map(function(p,i){
- return '<article class="panel" style="z-index:'+(i+1)+'"><a href="#work" aria-label="'+esc(p.title)+'">'+
+ return '<article class="panel" style="z-index:'+(i+1)+'"><a href="'+(p.case||"#work")+'"'+
+ (p.case?' data-case':'')+' aria-label="'+esc(p.title)+(p.case?" — view case study":"")+'">'+
  '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'" alt="">'+
  '<span class="veil"></span>'+
  '<div class="body shell">'+
@@ -1056,7 +1108,7 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
      (p.ticks?'<span class="p3-ticks" aria-hidden></span>':'')+'</div>'+
    '<div class="p3-mid" style="text-align:center"><span class="mask"><span class="t-project">'+esc(p.title)+'</span></span>'+
    (p.noSub?'':'<p class="t-mono mt2" style="color:rgba(255,255,255,.9)">'+esc(p.sub)+'</p>')+
-   '<span class="btn btn-light btn-sm cta mt3">View case '+A+'</span></div>'+
+   (p.case?'<span class="btn btn-light btn-sm cta mt3">View case '+A+'</span>':'')+'</div>'+
    '<div class="flex between end g3">'+
      '<ul class="stack t-mono-sm">'+p.stack.map(function(s){return "<li>"+esc(s)+"</li>"}).join("")+'</ul>'+
      '<p class="t-mono-sm" style="color:rgba(255,255,255,.85);flex:none">YR/ <span class="num">'+p.year+'</span></p>'+
@@ -1291,6 +1343,30 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
   });
  },{threshold:.6});
  els.forEach(function(el){io.observe(el)});
+})();
+
+/* project panels: cursor-following "view case study" label (reference behaviour —
+   the panel art itself does not move on hover, the label tracks the pointer). */
+(function(){
+ var panels=document.querySelectorAll(".panel a[data-case]");
+ if(!panels.length)return;
+ var fine=window.matchMedia("(hover:hover) and (pointer:fine)");
+ var reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
+ if(!fine.matches||reduce.matches)return;
+ var el=document.createElement("div");
+ el.className="vc-cursor";
+ el.setAttribute("aria-hidden","true");
+ el.innerHTML='<svg viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg><span>View case study</span>';
+ document.body.appendChild(el);
+ var x=0,y=0,frame=0;
+ function draw(){frame=0;el.style.translate=x+"px "+y+"px"}
+ function move(e){x=e.clientX;y=e.clientY;if(!frame)frame=requestAnimationFrame(draw)}
+ panels.forEach(function(a){
+  a.addEventListener("pointerenter",function(e){x=e.clientX;y=e.clientY;draw();el.classList.add("on")});
+  a.addEventListener("pointermove",move);
+  a.addEventListener("pointerleave",function(){el.classList.remove("on")});
+ });
+ window.addEventListener("blur",function(){el.classList.remove("on")});
 })();
 
 /* header hide on scroll-down */
