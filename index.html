@@ -148,6 +148,9 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .word{display:inline-block;overflow:hidden;vertical-align:top}
 .word>span{display:inline-block;transform:translateY(110%);transition:transform 1.05s var(--ease)}
 .word.in>span{transform:none}
+.wm-mask{display:block;overflow:hidden}
+.wm-mask>span{display:block;transform:translateY(104%);transition:transform 1.15s var(--ease)}
+.stage.in .wm-mask>span{transform:none}
 .stage{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 .stage.in{opacity:1;transform:none}
 .hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
@@ -156,7 +159,6 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
 .reel{position:relative;display:block;width:100%;aspect-ratio:1.70588;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#1b2129,#05070a)}
 .reel img,.reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(1);transition:filter .6s var(--ease)}
-.reel img{animation:reel-drift 26s var(--ease) infinite alternate}
 .reel:hover img,.reel:hover video{filter:brightness(1.08)}
 .reel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.06),rgba(5,6,9,.34))}
 .reel-cta{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;height:44px;color:#fff;white-space:nowrap}
@@ -166,13 +168,12 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .reel-cta-label{font-size:16px;font-weight:400;letter-spacing:-.05em;line-height:1.4}
 .reel-note{display:flex;align-items:flex-start;gap:6px;padding:8px;color:#fff}
 .reel-note svg{flex:none;width:14px;height:14px;margin-top:3px;color:var(--accent)}
-@keyframes reel-drift{from{transform:scale(1)}to{transform:scale(1.07)}}
 
 /* ═══════════════════════════════════════════════ reveal utilities ══════ */
 .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .rv.in{opacity:1;transform:none}
 .imgbox{position:relative;overflow:hidden}
-.imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 1.5s var(--ease)}
+.imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .imgbox.in img{transform:none}
 
 /* ═══════════════════════════════════════════════════ marquee ═══════════ */
@@ -258,13 +259,12 @@ body.menu .menu a.mi{opacity:1;transform:none}
   .story-water{transform:none!important}
   .story-water img{animation:none}
   .story-drip{display:none}
-  .reel img{animation:none}
 }
 
 /* ═══════════════════════════════════════════════ project panels ════════ */
 .panel{position:sticky;top:0;height:100svh;width:100%}
 .panel a{position:relative;display:block;height:100%;overflow:hidden;background:var(--ink)}
-.panel img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 1.6s var(--ease)}
+.panel img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.6s var(--ease)}
 .panel.in img.bg{transform:none}
 .panel a:hover img.bg{transform:scale(1.05)}
 .panel .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.30),rgba(5,6,9,.10) 32%,rgba(5,6,9,.14) 62%,rgba(5,6,9,.36))}
@@ -446,7 +446,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
 /* ═══════════════════════════════════════════════ whisper cards ═════════ */
 .wcard{position:relative;display:block;width:100%;border-radius:16px;overflow:hidden;background:var(--ink);aspect-ratio:4/3}
 .wcard.lg{aspect-ratio:16/9}
-.wcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 1.5s var(--ease)}
+.wcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .wcard.in img{transform:none}
 .wcard:hover img{transform:scale(1.05)}
 .wcard .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.7),rgba(5,6,9,.1) 55%,rgba(5,6,9,.5))}
@@ -477,7 +477,7 @@ input::placeholder{color:var(--rule)}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .rv,.stage{opacity:1;transform:none}
-  .mask>span,.word>span{transform:none}
+  .mask>span,.word>span,.wm-mask>span{transform:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
 }
 </style>
@@ -539,7 +539,7 @@ input::placeholder{color:var(--rule)}
       <div class="grid" style="align-items:center;row-gap:16px">
         <div class="r1"><div class="rail t-mono-sm stage" data-d="860">// 00.02°</div></div>
         <div class="hero-mark stage" data-d="940">
-          <p class="t-wordmark"><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></p>
+          <p class="t-wordmark wm-mask"><span><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></span></p>
         </div>
       </div>
     </div>
@@ -575,7 +575,8 @@ input::placeholder{color:var(--rule)}
         <div class="hero-card stage" data-d="1280">
           <div class="reel-head t-mono-sm"><span>Showreel</span><span class="hair"></span><span>\\2026</span></div>
           <a class="reel" id="reel" href="#work" aria-label="Watch showreel 2025">
-            <img src="public/img/showreel.svg" alt="" decoding="async">
+            <video src="public/video/showreel.mp4" poster="public/img/showreel.svg"
+                   muted loop autoplay playsinline preload="auto" aria-hidden="true"></video>
             <span class="reel-cta">
               <span class="reel-cta-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></span>
               <span class="reel-cta-label">Showreel 2025</span>
@@ -965,8 +966,8 @@ input::placeholder{color:var(--rule)}
    client logo x10              public/img/client-<name>.svg      h 40px, auto
    footer chip                  public/img/footer-chip.svg        80 x 40 pill
 
-   Optional video: drop public/video/showreel.mp4 and add the attribute
-   data-reel to <body>; the showreel card then swaps to a muted looping video.
+   showreel video               public/video/showreel.mp4         400 x 226, H.264
+   The card plays it muted on loop, with the svg above as the poster frame.
    ───────────────────────────────────────────────────────────────────────── */
 var A='<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg>';
 var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")};
@@ -1191,15 +1192,18 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 
-/* hero mount stagger */
-window.addEventListener("load",function(){
- document.querySelectorAll(".stage").forEach(function(el){
-  setTimeout(function(){el.classList.add("in")},+el.dataset.d||0);
- });
- document.querySelectorAll("#heroH1 .word").forEach(function(el){
-  setTimeout(function(){el.classList.add("in")},+el.dataset.d||0);
- });
-});
+/* hero mount stagger. Driven off DOM-ready rather than window.load: the hero
+   backdrop is a large jpg and gating the entrance on it left the fold blank. */
+(function(){
+ function play(){
+  document.querySelectorAll(".stage,#heroH1 .word").forEach(function(el){
+   setTimeout(function(){el.classList.add("in")},+el.dataset.d||0);
+  });
+ }
+ function arm(){requestAnimationFrame(function(){requestAnimationFrame(play)})}
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
+ else arm();
+})();
 
 /* scroll reveals */
 var io=new IntersectionObserver(function(es){
@@ -1340,20 +1344,16 @@ document.getElementById("nl").addEventListener("submit",function(e){
  this.reset();
 });
 
-/* showreel: if a video is dropped in at public/video/showreel.mp4, use it.
-   Opt-in via <body data-reel> so no request is made (and no console noise)
-   when the file is absent. */
+/* showreel: hold on the poster frame when the viewer asks for reduced motion */
 (function(){
- if(!document.body.hasAttribute("data-reel"))return;
- var reel=document.getElementById("reel");
- var v=document.createElement("video");
- v.src="public/video/showreel.mp4";v.muted=true;v.loop=true;v.autoplay=true;
- v.playsInline=true;v.setAttribute("playsinline","");v.preload="metadata";
- v.addEventListener("loadeddata",function(){
-  var img=reel.querySelector("img"); if(img)img.remove();
-  v.play().catch(function(){});
- });
- reel.insertBefore(v,reel.firstChild);
+ var v=document.querySelector(".reel video"); if(!v)return;
+ var mq=window.matchMedia("(prefers-reduced-motion: reduce)");
+ function apply(){
+  if(mq.matches){v.removeAttribute("autoplay");v.pause();v.currentTime=0;}
+  else v.play().catch(function(){});
+ }
+ apply();
+ if(mq.addEventListener)mq.addEventListener("change",apply);else if(mq.addListener)mq.addListener(apply);
 })();
 })();
 </script>
