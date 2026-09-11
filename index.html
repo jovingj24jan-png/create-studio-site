@@ -443,7 +443,17 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .p3-ticks{flex:0 1 36%;height:14px;background-image:repeating-linear-gradient(to right,rgba(255,255,255,.75) 0 1px,transparent 1px 11px)}
 .p3-mid{pointer-events:none;margin-top:-7vh}
 .p3-mid .cta{pointer-events:auto}
-@media(max-width:809px){.panel .stack{display:none}}
+/* Work-panel type, matched to the reference's project cards: the title is
+   a flat 4rem (2.5rem on phones), the sub 1.13rem and the stack and year
+   1rem, all Fragment Mono except the title. Scoped to .panel so the shared
+   .t-project / .t-mono classes keep their own sizes elsewhere. */
+.panel .t-project{font-size:64px}
+.panel .p3-mid .t-mono{font-size:1.13rem;line-height:1.3}
+.panel .body .t-mono-sm{font-size:1rem;letter-spacing:-.05em}
+@media(max-width:809px){
+  .panel .stack{display:none}
+  .panel .t-project{font-size:40px}
+}
 .panel .cta{opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
 .panel a:hover .cta{opacity:1;transform:none}
 /* cursor-following label over a project panel, as the reference does it. Only
