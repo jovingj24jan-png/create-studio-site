@@ -431,6 +431,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .panel img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.6s var(--ease)}
 .panel.in img.bg{transform:none}
 .panel .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.30),rgba(5,6,9,.10) 32%,rgba(5,6,9,.14) 62%,rgba(5,6,9,.36))}
+.panel.bright .veil{background:linear-gradient(180deg,rgba(5,6,9,.42),rgba(5,6,9,.34) 32%,rgba(5,6,9,.38) 62%,rgba(5,6,9,.48))}
 .panel .body{position:relative;display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:14.3vh 7.5% 11.2vh;color:#fff}
 .panel .mark{height:32px;width:auto;filter:brightness(0) invert(1)}
 .panel .stack li{color:rgba(255,255,255,.8)}
@@ -1148,8 +1149,8 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 /* ───────────────────────────────────────────────────── data ─────────── */
 var projects=[
  {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
- {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",noSub:true,ticks:true,year:"2025",stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
- {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Lindholm"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
+ {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",noSub:true,ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
+ {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Lindholm"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
 var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
@@ -1208,9 +1209,10 @@ h1.innerHTML=words.map(function(w,i){
 
 /* ───────────────────────────────────────────── project panels ───────── */
 document.getElementById("panels").innerHTML=projects.map(function(p,i){
- return '<article class="panel" style="z-index:'+(i+1)+'"><a href="'+(p.case||"#work")+'"'+
+ return '<article class="panel'+(p.bright?" bright":"")+'" style="z-index:'+(i+1)+'"><a href="'+(p.case||"#work")+'"'+
  (p.case?' data-case':'')+' aria-label="'+esc(p.title)+(p.case?" — view case study":"")+'">'+
- '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'" alt="">'+
+ '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'"'+
+   (p.pos?' style="object-position:'+p.pos+'"':'')+' alt="">'+
  '<span class="veil"></span>'+
  '<div class="body shell">'+
    '<div class="flex between center g3">'+(p.logo
