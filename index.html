@@ -19,6 +19,21 @@
   --muted:#797d82; --deep:#5c6063; --accent:#ff6041;
   --gutter:40px; --nav-h:60px;
   --ease:cubic-bezier(.22,1,.36,1);
+  /* Entrance motion read off the reference build. The tween easings are its
+     cubic-beziers verbatim; the --s-* curves are its springs sampled at the
+     same 10ms resolution its runtime uses, so a spring is reproducible in
+     plain CSS. --s-head is the overdamped heading spring (k100 c27 m0.3),
+     the rest are its duration/bounce springs. */
+  --e-slide:cubic-bezier(.55,.58,.34,1.04);
+  --e-pop:cubic-bezier(0,1.2,.56,1);
+  --e-tag:cubic-bezier(.68,0,.16,.97);
+  --e-img:cubic-bezier(.68,0,.2,.89);
+  --e-logo:cubic-bezier(.29,.84,.56,1);
+  --s-head:linear(0,0.0127,0.0398,0.072,0.1056,0.139,0.1716,0.2031,0.2335,0.2628,0.291,0.3181,0.3441,0.3692,0.3933,0.4165,0.4388,0.4603,0.4809,0.5007,0.5198,0.5382,0.5558,0.5728,0.5892,0.6049,0.62,0.6345,0.6485,0.6619,0.6748,0.6873,0.6992,0.7107,0.7218,0.7324,0.7426,0.7525,0.7619,0.771,0.7798,0.7882,0.7963,0.8041,0.8116,0.8188,0.8257,0.8324,0.8388,0.845,0.8509,0.8566,0.8621,0.8673,0.8724,0.8773,0.882,0.8865,0.8908,0.895,0.899,0.9029,0.9066,0.9102,0.9136,0.9169,0.9201,0.9231,0.9261,0.9289,0.9316,0.9342,0.9367,0.9392,0.9415,0.9437,0.9459,0.9479,0.9499,0.9518,0.9537,0.9555,0.9572,0.9588,0.9604,0.9619,0.9633,0.9647,0.9661,0.9674,0.9686,0.9698,0.971,0.9721,0.9732,0.9742,0.9752,0.9761,0.977,0.9779,0.9788,0.9796,0.9804,0.9811,0.9818,0.9825,0.9832,0.9838,0.9845,0.985,0.9856,0.9862,0.9867,0.9872,0.9877,0.9882,0.9886,0.9891,0.9895,0.9899,0.9903,0.9906,0.991,0.9913,0.9917,0.992,0.9923,0.9926,0.9929,0.9931,0.9934,0.9937,0.9939,0.9941,0.9944,0.9946,0.9948,0.995,0.9952,1);
+  --s-1:linear(0,0.0039,0.015,0.0321,0.0543,0.0808,0.1108,0.1435,0.1784,0.2148,0.2524,0.2906,0.3291,0.3675,0.4056,0.4431,0.4798,0.5156,0.5502,0.5836,0.6156,0.6463,0.6755,0.7033,0.7296,0.7544,0.7778,0.7997,0.8201,0.8392,0.8569,0.8734,0.8886,0.9025,0.9154,0.9271,0.9378,0.9476,0.9564,0.9644,0.9716,0.978,0.9837,0.9888,0.9932,0.9971,1.0006,1.0035,1.006,1.0081,1.0099,1.0114,1.0126,1.0135,1.0142,1.0147,1.015,1.0151,1.0152,1.0151,1.0149,1.0146,1.0142,1.0138,1.0133,1.0128,1.0123,1.0117,1.0111,1.0105,1.01,1.0094,1.0088,1.0082,1.0077,1.0072,1.0066,1.0061,1.0057,1.0052,1.0048,1.0043,1.004,1.0036,1.0032,1.0029,1.0026,1.0023,1.0021,1.0018,1.0016,1.0014,1.0012,1.001,1.0009,1.0007,1.0006,1.0005,1.0004,1);
+  --s-06:linear(0,0.0107,0.0395,0.0818,0.1338,0.1924,0.255,0.3193,0.3837,0.4469,0.5078,0.5656,0.6199,0.6702,0.7164,0.7585,0.7964,0.8303,0.8604,0.8868,0.9099,0.9298,0.9468,0.9613,0.9734,0.9834,0.9916,0.9982,1.0035,1.0075,1.0105,1.0126,1.014,1.0148,1.0151,1.0151,1.0147,1.0142,1.0134,1.0126,1.0116,1.0107,1.0097,1.0087,1.0078,1.0069,1.006,1.0053,1.0045,1.0039,1.0033,1.0027,1.0023,1.0018,1.0015,1.0012,1.0009,1.0007,1.0005,1);
+  --s-04:linear(0,0.0235,0.083,0.1647,0.2582,0.3557,0.4517,0.5423,0.6252,0.6991,0.7636,0.8186,0.8647,0.9025,0.933,0.9571,0.9756,0.9895,0.9996,1.0065,1.0111,1.0137,1.0149,1.0151,1.0146,1.0136,1.0123,1.0108,1.0093,1.0079,1.0066,1.0053,1.0043,1.0033,1.0025,1.0019,1.0013,1.0009,1.0006,1);
+  --s-02:linear(0,0.086,0.2539,0.428,0.5786,0.698,0.7879,0.8534,0.8998,0.9323,0.9546,0.9697,0.98,0.9868,0.9913,0.9943,0.9963,0.9976,0.9985,1);
 }
 @media(max-width:1439px){:root{--rfs:14px;--gutter:32px}}
 @media(max-width:1199px){:root{--rfs:12px;--mono:14px;--gutter:28px;--nav-h:56px}}
@@ -127,8 +142,8 @@ body.menu .menu a.mi{opacity:1;transform:none}
 /* ═══════════════════════════════════════════════════ hero ══════════════ */
 .hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;background:var(--ink);color:#fff}
 .hero-bg{position:absolute;inset:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;animation:heroIn 2.4s var(--ease) both}
-@keyframes heroIn{from{transform:scale(1.12);opacity:.4}to{transform:scale(1);opacity:1}}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;animation:heroIn 1s var(--e-img) both}
+@keyframes heroIn{from{opacity:.001;transform:translateY(40px) scale(1.3)}to{opacity:1;transform:none}}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
 .hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(28px,5vh,70px));padding-bottom:clamp(28px,5vh,64px)}
 .rail{display:flex;align-items:center;gap:12px;white-space:nowrap;color:rgba(255,255,255,.65)}
@@ -142,17 +157,45 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .r1{grid-column:1/2}
 @media(max-width:1023px){.hero-h1{grid-column:3/10;padding-left:0}.hero-stat{grid-column:10/13}.hero-mark,.hero-info{grid-column:3/13;padding-left:0}.hero-card{grid-column:8/13}.r1{grid-column:1/3}}
 @media(max-width:809px){.hero-h1,.hero-stat,.hero-mark,.hero-info,.hero-card,.r1{grid-column:1/13;text-align:left;margin-left:0;max-width:none;padding-left:0}.hero-stat{margin-top:8px}}
+/* The reference reveals a short text row by wiping it in from the left
+   behind a mask: x -100 to 0 over 1s, opacity untouched. It is the single
+   most-used motion on the page, so it stays the plain .mask. */
 .mask{display:block;overflow:hidden}
-.mask>span{display:block;transform:translateY(110%);transition:transform 1.05s var(--ease)}
+.mask>span{display:block;transform:translateX(-100px);transition:transform 1s var(--e-slide)}
 .mask.in>span{transform:none}
-.word{display:inline-block;overflow:hidden;vertical-align:top}
-.word>span{display:inline-block;transform:translateY(110%);transition:transform 1.05s var(--ease)}
-.word.in>span{transform:none}
-.wm-mask{display:block;overflow:hidden}
-.wm-mask>span{display:block;transform:translateY(104%);transition:transform 1.15s var(--ease)}
-.stage.in .wm-mask>span{transform:none}
-.stage{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.stage.in{opacity:1;transform:none}
+.mask-far>span{transform:translateX(-160px)}      /* statement lines travel further */
+
+/* Hero headline words arrive as a blur-and-fade, not a mask. */
+.word{display:inline-block;vertical-align:top}
+.word>span{display:inline-block;opacity:.001;filter:blur(10px);
+  transition:opacity .4s var(--s-04),filter .4s var(--s-04)}
+.word.in>span{opacity:1;filter:blur(0)}
+
+/* Hero load timeline. Every row slides horizontally at t=0 — the left
+   marker from x -30, the row content from x 85 — then the pieces inside
+   land on their own delays (see data-d in the markup). */
+.hx-mark{transform:translateX(-30px);transition:transform 1s var(--e-slide)}
+.hx-row{transform:translateX(85px);transition:transform 1s var(--e-slide)}
+.hx-mark.in,.hx-row.in{transform:none}
+.hx-pop{opacity:.001;transition:opacity .6s var(--e-pop)}
+.hx-fade{opacity:.001;transition:opacity .4s var(--s-04)}
+.hx-fade6{opacity:.001;transition:opacity .6s var(--s-06)}
+.hx-pop.in,.hx-fade.in,.hx-fade6.in{opacity:1}
+.hx-lift{opacity:.001;transform:translateY(80px);
+  transition:opacity 2s var(--e-pop),transform 2s var(--e-pop)}
+.hx-lift.in{opacity:1;transform:none}
+/* the hero logo strip stays half-lit, so it fades to its own 0.5 */
+.hero-logos.hx-lift{opacity:.001}
+.hero-logos.hx-lift.in{opacity:.5}
+.hx-time{transform:translateY(40px);transition:transform 1s var(--e-pop)}
+.hx-time.in{transform:none}
+.hdr-logo{opacity:.001;transform:translateY(-48px);
+  transition:opacity 1s var(--e-logo),transform 1s var(--e-logo)}
+.hdr-logo.in{opacity:1;transform:none}
+/* button labels wipe up out of their own mask */
+.lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
+.lmask>span{display:block;transform:translateY(70px);transition:transform 1s var(--e-pop)}
+.lmask.in>span{transform:none}
 .hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
 .hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
@@ -170,8 +213,27 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .reel-note svg{flex:none;width:14px;height:14px;margin-top:3px;color:var(--accent)}
 
 /* ═══════════════════════════════════════════════ reveal utilities ══════ */
-.rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+/* Cards and blocks: y 40 to 0 on the 1s spring, 0.2s after they come in. */
+.rv{opacity:.001;transform:translateY(40px);
+  transition:opacity 1s var(--s-1) .2s,transform 1s var(--s-1) .2s}
 .rv.in{opacity:1;transform:none}
+/* Section header cascade: the eyebrow pops down from 1.14, then the heading
+   and its lead rise 140px on the overdamped spring at +0.3s and +0.5s. */
+.rv-tag{display:inline-block;opacity:.001;transform:scale(1.14);
+  transition:opacity .5s var(--e-tag),transform .5s var(--e-tag)}
+.rv-h{opacity:.001;transform:translateY(140px);
+  transition:opacity 1.4s var(--s-head) .3s,transform 1.4s var(--s-head) .3s}
+.rv-lead{opacity:.001;transform:translateY(140px);
+  transition:opacity 1.4s var(--s-head) .5s,transform 1.4s var(--s-head) .5s}
+.rv-tag.in,.rv-h.in,.rv-lead.in{opacity:1;transform:none}
+.sechead-tag.rv-tag,.hww-kick.rv-tag{display:inline-block}
+/* each heading word also lifts 20px out of the rising block */
+.rv-h .w{display:inline-block;opacity:.001;transform:translateY(20px);
+  transition:opacity .4s var(--s-04),transform .4s var(--s-04)}
+.rv-h.in .w{opacity:1;transform:none}
+/* counters hold until the block has settled */
+.rv-num{opacity:.001;transition:opacity .6s var(--e-pop) .8s}
+.rv-num.in{opacity:1}
 .imgbox{position:relative;overflow:hidden}
 .imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .imgbox.in img{transform:none}
@@ -292,8 +354,8 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
   font-size:clamp(3rem,8vw,9rem);line-height:.9;letter-spacing:-.06em;font-weight:500;color:var(--ink);
-  opacity:0;transform:translate3d(0,80px,0);filter:blur(8px);
-  will-change:transform,opacity,filter}
+  opacity:.001;transition:opacity .4s var(--s-04);will-change:opacity}
+.story-line.in{opacity:1}
 .story-line+.story-line{margin-top:.06em}
 .story-line strong{color:var(--accent);font-weight:inherit}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
@@ -303,14 +365,14 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .story-water-a{opacity:.55;animation:storyWaterA 24s ease-in-out infinite alternate}
 .story-water-b{opacity:.3;animation:storyWaterB 31s ease-in-out infinite alternate}
 @keyframes storyWaterA{
-  0%{transform:scale(1.06) translate3d(0,0,0)}
-  50%{transform:scale(1.12) translate3d(-2.2%,-3.4%,0)}
-  100%{transform:scale(1.08) translate3d(1.8%,-6%,0)}
+  0%{transform:scale(1.16) translate3d(0,0,0)}
+  50%{transform:scale(1.22) translate3d(-2.2%,-3.4%,0)}
+  100%{transform:scale(1.18) translate3d(1.8%,-6%,0)}
 }
 @keyframes storyWaterB{
-  0%{transform:scaleX(-1) scale(1.14) translate3d(0,0,0)}
-  50%{transform:scaleX(-1) scale(1.07) translate3d(2.6%,-1.8%,0)}
-  100%{transform:scaleX(-1) scale(1.16) translate3d(-2%,-3.2%,0)}
+  0%{transform:scaleX(-1) scale(1.24) translate3d(0,0,0)}
+  50%{transform:scaleX(-1) scale(1.17) translate3d(2.6%,-1.8%,0)}
+  100%{transform:scaleX(-1) scale(1.26) translate3d(-2%,-3.2%,0)}
 }
 /* droplets that actually run down the surface */
 .story-drip{position:absolute;top:0;opacity:0;animation-fill-mode:backwards;display:block;border-radius:52% 48% 44% 56%/62% 60% 40% 38%;
@@ -592,8 +654,11 @@ input::placeholder{color:var(--rule)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
-  .rv,.stage{opacity:1;transform:none}
-  .mask>span,.word>span,.wm-mask>span{transform:none}
+  .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
+  .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
+  .hero-logos.hx-lift{opacity:.5}
+  .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
+  .word>span{filter:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
 }
 </style>
@@ -603,14 +668,14 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ HEADER ═══════════════ -->
 <header class="hdr" id="hdr">
   <div class="shell hdr-in">
-    <a href="#top" class="logo" aria-label="Create — home">create<sup>®</sup></a>
+    <a href="#top" class="logo hdr-logo" data-d="500" aria-label="Create — home">create<sup>®</sup></a>
     <nav class="nav t-mono" aria-label="Primary">
       <a href="#work"><span class="roll"><span>WORK</span><span aria-hidden="true">WORK</span></span><sup class="badge num">5</sup></a>
       <a href="#studio"><span class="roll"><span>STUDIO</span><span aria-hidden="true">STUDIO</span></span></a>
       <a href="#whispers"><span class="roll"><span>WHISPERS</span><span aria-hidden="true">WHISPERS</span></span><sup class="badge num">7</sup></a>
     </nav>
     <div class="hdr-right">
-      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i></button>
+      <button class="burger hx-fade6" data-d="1200" id="burger" aria-label="Open menu" aria-expanded="false"><i></i></button>
     </div>
   </div>
 </header>
@@ -638,12 +703,12 @@ input::placeholder{color:var(--rule)}
     <!-- 00.01 -->
     <div class="shell">
       <div class="grid" style="align-items:start;row-gap:24px">
-        <div class="r1"><div class="rail t-mono-sm stage" data-d="200">// 00.01°</div></div>
-        <h1 class="hero-h1 t-h4" style="max-width:17ch" id="heroH1"></h1>
-        <div class="hero-stat stage" data-d="780">
-          <p class="t-h4 num accent" style="font-weight:700"><span class="count" data-to="120" data-suffix="+">0+</span></p>
-          <p class="t-mono-sm mt1" style="color:rgba(255,255,255,.8);max-width:24ch;margin-left:auto">Working quietly with brands in eleven countries</p>
-          <div class="mq mq-logos hero-logos mt2" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
+        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
+        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:17ch" id="heroH1"></h1>
+        <div class="hero-stat hx-row" data-d="0">
+          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+">0+</span></p>
+          <p class="t-mono-sm mt1 hx-fade" data-d="700" style="color:rgba(255,255,255,.8);max-width:24ch;margin-left:auto">Working quietly with brands in eleven countries</p>
+          <div class="mq mq-logos hero-logos mt2 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
         </div>
       </div>
     </div>
@@ -651,9 +716,9 @@ input::placeholder{color:var(--rule)}
     <!-- 00.02 -->
     <div class="shell" style="margin:32px 0">
       <div class="grid" style="align-items:center;row-gap:16px">
-        <div class="r1"><div class="rail t-mono-sm stage" data-d="860">// 00.02°</div></div>
-        <div class="hero-mark stage" data-d="940">
-          <p class="t-wordmark wm-mask"><span><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></span></p>
+        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.02°</div></div>
+        <div class="hero-mark hx-row" data-d="0">
+          <p class="t-wordmark"><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></p>
         </div>
       </div>
     </div>
@@ -661,11 +726,11 @@ input::placeholder{color:var(--rule)}
     <!-- 00.03 -->
     <div class="shell">
       <div class="grid" style="align-items:end;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm stage" data-d="1020">// 00.03°</div></div>
+        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.03°</div></div>
 
-        <div class="hero-info">
-          <div class="stage" data-d="1080"><p class="t-mono" style="max-width:34ch">A design studio working with founders and established teams. We make the things people remember using.</p></div>
-          <div class="stage mt3" data-d="1140">
+        <div class="hero-info hx-row" data-d="0">
+          <div><p class="t-mono" style="max-width:34ch">A design studio working with founders and established teams. We make the things people remember using.</p></div>
+          <div class="hx-time mt3" data-d="600">
             <span class="hair" style="width:32px;background:rgba(255,255,255,.4);margin-bottom:12px;display:block"></span>
             <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
             <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">UTC−8 Los Angeles</p>
@@ -677,16 +742,16 @@ input::placeholder{color:var(--rule)}
     <!-- 00.04 + showreel -->
     <div class="shell mt4">
       <div class="grid" style="align-items:end;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm stage" data-d="1180">// 00.04°</div></div>
+        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.04°</div></div>
 
-        <div class="hero-info">
-          <div class="stage flex wrap g1" data-d="1200" style="gap:12px">
-            <a href="#work" class="btn btn-accent">See work <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-            <a href="#site-foot" class="btn btn-light">Let's chat <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <div class="hero-info hx-row" data-d="0">
+          <div class="flex wrap g1" style="gap:12px">
+            <a href="#work" class="btn btn-accent"><span class="lmask" data-d="1000"><span>See work</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+            <a href="#site-foot" class="btn btn-light"><span class="lmask" data-d="1200"><span>Let's chat</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
           </div>
         </div>
 
-        <div class="hero-card stage" data-d="1280">
+        <div class="hero-card hx-row" data-d="0">
           <div class="reel-head t-mono-sm"><span>Showreel</span><span class="hair"></span><span>\\2026</span></div>
           <a class="reel" id="reel" href="#work" aria-label="Watch showreel 2025">
             <video src="public/video/showreel.mp4" poster="public/img/showreel.svg"
@@ -743,10 +808,10 @@ input::placeholder{color:var(--rule)}
   <div class="shell">
     <div class="grid" style="row-gap:32px">
       <div style="grid-column:1/8">
-        <span class="t-mono-sm" style="color:rgba(255,255,255,.65)">● <span class="scramble" data-text="Performance">Performance</span></span>
-        <h2 class="t-h2 mt3" style="max-width:12ch">Numbers we are happy to show</h2>
+        <span class="t-mono-sm rv-tag" style="color:rgba(255,255,255,.65)">● <span class="scramble" data-text="Performance">Performance</span></span>
+        <h2 class="t-h2 mt3 rv-h" style="max-width:12ch">Numbers we are happy to show</h2>
       </div>
-      <p class="t-lead" style="grid-column:9/13;align-self:end;color:rgba(255,255,255,.6)"><span class="accent">——&nbsp;</span>From first launches to long collaborations, we are trusted to deliver on time and at the quality agreed.</p>
+      <p class="t-lead rv-lead" style="grid-column:9/13;align-self:end;color:rgba(255,255,255,.6)"><span class="accent">——&nbsp;</span>From first launches to long collaborations, we are trusted to deliver on time and at the quality agreed.</p>
     </div>
     <div class="perf-rule mt5" aria-hidden></div>
     <dl class="mt6" id="perf" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px"></dl>
@@ -755,7 +820,7 @@ input::placeholder{color:var(--rule)}
 
 <!-- ═══════════════════════════════════════════════ CLIENTS ══════════════ -->
 <section class="section" aria-label="Clients">
-  <div class="shell"><h2 class="t-h2 rv" style="text-align:center;max-width:18ch;margin:0 auto">Names that shaped the work you just scrolled</h2></div>
+  <div class="shell"><h2 class="t-h2 rv-h" style="text-align:center;max-width:18ch;margin:0 auto">Names that shaped the work you just scrolled</h2></div>
   <div class="mt6">
     <div class="rule-t rule-b" style="padding:24px 0"><div class="mq mq-logos" style="--dur:38s"><div class="mq-track" id="cl1"></div><div class="mq-track" id="cl1b" aria-hidden="true"></div></div></div>
     <div class="rule-b" style="padding:24px 0"><div class="mq mq-logos" data-dir="right" style="--dur:48s"><div class="mq-track" id="cl2"></div><div class="mq-track" id="cl2b" aria-hidden="true"></div></div></div>
@@ -765,8 +830,8 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ SERVICES ═════════════ -->
 <section id="studio" class="section" aria-label="Services">
   <div class="shell">
-    <h2 class="t-sectionword rv">services</h2>
-    <p class="t-lead mt3 deep rv" style="max-width:36ch">What we do best, and what your next project needs most.</p>
+    <h2 class="t-sectionword rv-h">services</h2>
+    <p class="t-lead mt3 rv-lead deep" style="max-width:36ch">What we do best, and what your next project needs most.</p>
   </div>
   <div id="services" class="svc-stack"></div>
 </section>
@@ -777,13 +842,13 @@ input::placeholder{color:var(--rule)}
     <div class="grid hww-head" style="row-gap:40px">
       <div class="hww-rail">
         <span class="hww-cap"></span>
-        <span class="t-mono hww-kick">How we work</span>
+        <span class="t-mono hww-kick rv-tag">How we work</span>
         <span class="hww-hatch"></span>
       </div>
       <div class="hww-main">
         <div class="hww-top"><span class="hww-line"></span><span class="hww-mark">create<sup>&#174;</sup></span></div>
-        <h2 class="hww-title">The process behind our success</h2>
-        <p class="hww-sub"><span class="lead"></span>We work with clarity, precision. Every step designed to move your project forward with confidence.</p>
+        <h2 class="hww-title rv-h">The process behind our success</h2>
+        <p class="hww-sub rv-lead"><span class="lead"></span>We work with clarity, precision. Every step designed to move your project forward with confidence.</p>
         <span class="hww-ticks"></span>
       </div>
     </div>
@@ -810,8 +875,8 @@ input::placeholder{color:var(--rule)}
     </a>
     <p class="fcase-p">Step inside one of our featured projects. From first brief to launch, follow the process that shows what makes Create&#174; different.</p>
     <div class="fcase-r">
-      <h2 class="fcase-h">Our process in motion</h2>
-      <p class="fcase-s">Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
+      <h2 class="fcase-h rv-h">Our process in motion</h2>
+      <p class="fcase-s rv-lead">Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
       <a href="#work" class="grow-cta fcase-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg></span>Explore Case Studies</a>
     </div>
   </div>
@@ -823,13 +888,13 @@ input::placeholder{color:var(--rule)}
     <div class="sechead-grid">
       <div class="sechead-rail">
         <span class="hair"></span>
-        <span class="sechead-tag t-mono-sm">Why choose us</span>
+        <span class="sechead-tag t-mono-sm rv-tag">Why choose us</span>
         <span class="sechead-hatch" aria-hidden="true"></span>
       </div>
       <div class="sechead-main">
         <div class="sechead-rule" aria-hidden="true"></div>
-        <h2 class="sechead-h t-h2"><span class="mask"><span>Designed to Make Your Life Easier</span></span></h2>
-        <p class="sechead-lead t-lead rv">A clear process, short review cycles and a clean launch. Fewer steps means fewer places for a project to stall.</p>
+        <h2 class="sechead-h t-h2 rv-h">Designed to Make Your Life Easier</h2>
+        <p class="sechead-lead t-lead rv-lead">A clear process, short review cycles and a clean launch. Fewer steps means fewer places for a project to stall.</p>
       </div>
     </div>
     <div class="sechead-ticks" aria-hidden="true"></div>
@@ -876,8 +941,8 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ CUSTOM WORK ══════════ -->
 <section class="rule-t rule-b" style="padding:96px 0" aria-label="Statement">
   <div class="shell" style="max-width:calc(2000px)">
-    <span class="mask"><span class="t-service">No templates,</span></span>
-    <span class="mask"><span class="t-service">no leftovers.</span></span>
+    <span class="mask mask-far"><span class="t-service">No templates,</span></span>
+    <span class="mask mask-far"><span class="t-service">no leftovers.</span></span>
     <span class="mask"><span class="t-service muted">Built for you</span></span>
     <span class="mask"><span class="t-service accent">from the first sketch.</span></span>
   </div>
@@ -887,12 +952,12 @@ input::placeholder{color:var(--rule)}
 <section class="section" id="pricing" aria-label="Pricing">
   <div class="shell">
     <div class="grid" style="padding-bottom:48px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted">● Pricing</span><h2 class="t-h2 mt3" style="max-width:16ch">Three ways to start working together</h2></div>
-      <p class="t-body deep" style="grid-column:9/13;align-self:end">Each plan sets out scope, features and cost up front, so you can decide with the whole picture in view.</p>
+      <div style="grid-column:1/8"><span class="t-mono-sm muted rv-tag">● Pricing</span><h2 class="t-h2 mt3 rv-h" style="max-width:16ch">Three ways to start working together</h2></div>
+      <p class="t-body rv-lead deep" style="grid-column:9/13;align-self:end">Each plan sets out scope, features and cost up front, so you can decide with the whole picture in view.</p>
     </div>
     <div id="plans"></div>
     <div class="grid mt6 center" style="row-gap:32px">
-      <h3 class="t-h2" style="grid-column:1/5">Ask our expert</h3>
+      <h3 class="t-h2 rv-h" style="grid-column:1/5">Ask our expert</h3>
       <p class="t-body deep" style="grid-column:5/8;max-width:32ch">Schedule a quick call and we will walk you through the plans.</p>
       <div style="grid-column:9/13;border-left:1px solid var(--line);padding-left:24px">
         <div class="flex center g2"><img src="maggie.avif" alt="" width="56" height="56" decoding="async" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:50% 28%;flex:none"><div><p class="t-body" style="font-weight:500">Nora Pemberton</p><p class="t-small muted">Project Operations Manager</p></div></div>
@@ -939,8 +1004,8 @@ input::placeholder{color:var(--rule)}
 <section class="section" aria-label="Team">
   <div class="shell">
     <div class="grid rule-b" style="padding-bottom:40px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted">● The team</span><h2 class="t-h2 mt3" style="max-width:13ch">Light in the room, serious on the work</h2></div>
-      <p class="t-lead deep" style="grid-column:9/13;align-self:end"><span class="accent">——&nbsp;</span>Sharp strategy and bold ideas without the boardroom stiffness. Professional where it counts, human where it matters.</p>
+      <div style="grid-column:1/8"><span class="t-mono-sm muted rv-tag">● The team</span><h2 class="t-h2 mt3 rv-h" style="max-width:13ch">Light in the room, serious on the work</h2></div>
+      <p class="t-lead rv-lead deep" style="grid-column:9/13;align-self:end"><span class="accent">——&nbsp;</span>Sharp strategy and bold ideas without the boardroom stiffness. Professional where it counts, human where it matters.</p>
     </div>
     <div class="mt5" id="team" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:40px 20px"></div>
   </div>
@@ -950,8 +1015,8 @@ input::placeholder{color:var(--rule)}
 <section class="section" aria-label="FAQ">
   <div class="shell">
     <div class="grid rule-b" style="padding-bottom:40px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted">● FAQ</span><h2 class="t-h2 mt3" style="max-width:12ch">Questions worth answering early</h2></div>
-      <p class="t-lead deep" style="grid-column:9/13;align-self:end"><span class="accent">——&nbsp;</span>The questions we get asked most often about working together, answered in one place.</p>
+      <div style="grid-column:1/8"><span class="t-mono-sm muted rv-tag">● FAQ</span><h2 class="t-h2 mt3 rv-h" style="max-width:12ch">Questions worth answering early</h2></div>
+      <p class="t-lead rv-lead deep" style="grid-column:9/13;align-self:end"><span class="accent">——&nbsp;</span>The questions we get asked most often about working together, answered in one place.</p>
     </div>
     <div class="grid mt5" style="row-gap:40px">
       <ul style="grid-column:1/9" id="faqs"></ul>
@@ -971,8 +1036,8 @@ input::placeholder{color:var(--rule)}
 <section id="whispers" class="section" aria-label="Whispers">
   <div class="shell">
     <div class="grid" style="padding-bottom:48px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted">● Whispers</span><h2 class="t-h2 mt3" style="max-width:15ch">Half-formed thoughts, written down</h2></div>
-      <p class="t-body deep" style="grid-column:9/13;align-self:end">Launches, design explorations and team experiments — where ideas take shape before they become projects.</p>
+      <div style="grid-column:1/8"><span class="t-mono-sm muted rv-tag">● Whispers</span><h2 class="t-h2 mt3 rv-h" style="max-width:15ch">Half-formed thoughts, written down</h2></div>
+      <p class="t-body rv-lead deep" style="grid-column:9/13;align-self:end">Launches, design explorations and team experiments — where ideas take shape before they become projects.</p>
     </div>
     <div id="whisperLead"></div>
     <div class="mt3" id="whisperGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px"></div>
@@ -1136,7 +1201,7 @@ var h1=document.getElementById("heroH1");
 var words="Brands and products built to carry weight.".split(" ");
 h1.innerHTML=words.map(function(w,i){
   var t=i===words.length-1?esc(w.replace(/\.$/,""))+'<span class="accent">.</span>':esc(w);
-  return '<span class="word" data-d="'+(320+i*70)+'"><span>'+t+'&nbsp;</span></span>';
+  return '<span class="word" data-d="'+(200+i*40)+'"><span>'+t+'&nbsp;</span></span>';
 }).join("");
 
 /* ───────────────────────────────────────────── project panels ───────── */
@@ -1164,7 +1229,7 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
 
 /* ───────────────────────────────────────────────── performance ──────── */
 document.getElementById("perf").innerHTML=perf.map(function(s){
- return '<div class="rv">'+
+ return '<div class="rv-num">'+
  '<dd class="num accent" style="font-size:min(calc(var(--rfs)*6),12vw);font-weight:500;letter-spacing:-.06em;line-height:.9"><span class="count" data-to="'+s[1]+'" data-suffix="'+s[2]+'">0</span></dd>'+
  '<dt class="t-mono-sm mt3" style="color:rgba(255,255,255,.82)">'+esc(s[3])+'</dt>'+
  '<div class="perf-meta mt2"><span class="perf-bar"></span><span class="perf-line"></span>'+
@@ -1269,7 +1334,7 @@ tick();setInterval(tick,1000);
    backdrop is a large jpg and gating the entrance on it left the fold blank. */
 (function(){
  function play(){
-  document.querySelectorAll(".stage,#heroH1 .word").forEach(function(el){
+  document.querySelectorAll(".hdr [data-d],.hero [data-d]").forEach(function(el){
    setTimeout(function(){el.classList.add("in")},+el.dataset.d||0);
   });
  }
@@ -1282,17 +1347,35 @@ tick();setInterval(tick,1000);
 var io=new IntersectionObserver(function(es){
  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
 },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
-document.querySelectorAll(".rv,.mask,.imgbox,.svc,.wcard,.panel").forEach(function(el){io.observe(el)});
+document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc,.wcard,.panel")
+ .forEach(function(el){io.observe(el)});
 
-/* staggered mask lines within a block */
-document.querySelectorAll("section .mask").forEach(function(el,i){
- el.querySelector("span").style.transitionDelay=((i%4)*110)+"ms";
-});
-/* the global index wraps every 4th mask, which left the benefit cards'
-   three lines out of order; restagger each card from its own first line */
+/* the benefit cards read as one thought, so their lines keep a stagger */
 document.querySelectorAll(".bcard").forEach(function(card){
  card.querySelectorAll(".mask").forEach(function(el,i){
   el.querySelector("span").style.transitionDelay=(i*110)+"ms";
+ });
+});
+
+/* Section headings lift their words out of the block that is already
+   rising: same 20px, 40ms apart, on top of the heading's own 0.3s delay. */
+document.querySelectorAll(".rv-h").forEach(function(head){
+ var walker=document.createTreeWalker(head,NodeFilter.SHOW_TEXT),nodes=[],node,i=0;
+ while((node=walker.nextNode()))nodes.push(node);
+ nodes.forEach(function(text){
+  if(!text.nodeValue.trim())return;
+  var frag=document.createDocumentFragment();
+  text.nodeValue.split(/(\s+)/).forEach(function(part){
+   if(!part)return;
+   if(!part.trim()){frag.appendChild(document.createTextNode(part));return}
+   var w=document.createElement("span");
+   w.className="w";
+   w.textContent=part;
+   w.style.transitionDelay=(300+i*40)+"ms";
+   i++;
+   frag.appendChild(w);
+  });
+  text.parentNode.replaceChild(frag,text);
  });
 });
 
@@ -1319,7 +1402,7 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
  if(!storySection||!storyLines.length)return;
  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
  if(reduce){
-  storyLines.forEach(function(l){l.style.opacity=1;l.style.transform="none";l.style.filter="none"});
+  storyLines.forEach(function(l){l.classList.add("in")});
   return;
  }
  var storyWater=storySection.querySelector(".story-water");
@@ -1331,14 +1414,7 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
   // water drifts upward as the section is scrolled through, clamped to +-70px
   if(storyWater)storyWater.style.transform="translate3d(0,"+((0.5-progress)*300).toFixed(2)+"px,0)";
   for(var i=0;i<storyLines.length;i++){
-   var start=i*0.20, end=start+0.28;
-   var lp=(progress-start)/(end-start);
-   lp=Math.min(Math.max(lp,0),1);
-   var eased=lp*lp*(3-2*lp);
-   var el=storyLines[i];
-   el.style.opacity=eased;
-   el.style.transform="translate3d(0,"+(80-eased*80).toFixed(2)+"px,0)";
-   el.style.filter="blur("+(8-eased*8).toFixed(2)+"px)";
+   storyLines[i].classList.toggle("in",progress>=i*0.20);
   }
  }
  function onScroll(){
