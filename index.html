@@ -357,7 +357,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
   opacity:.001;transition:opacity .4s var(--s-04);will-change:opacity}
 .story-line.in{opacity:1}
 .story-line+.story-line{margin-top:.06em}
-.story-line strong{color:var(--accent);font-weight:inherit}
+.story-line-accent{color:var(--accent)}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
    is what reads as movement, since a single texture sliding looks static */
@@ -792,10 +792,10 @@ input::placeholder{color:var(--rule)}
       <span class="story-bubble story-bubble-6"></span>
     </div>
     <div class="story-text">
-      <div class="story-line"><span>we</span> <strong>listen</strong></div>
-      <div class="story-line"><span>we</span> <strong>imagine</strong></div>
-      <div class="story-line"><span>we</span> <strong>create</strong></div>
-      <div class="story-line"><span>beautiful</span> <strong>things</strong></div>
+      <div class="story-line">we listen</div>
+      <div class="story-line">we imagine</div>
+      <div class="story-line story-line-accent">we create</div>
+      <div class="story-line">beautiful things</div>
     </div>
   </div>
 </section>
