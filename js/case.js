@@ -46,6 +46,18 @@ var cio = new IntersectionObserver(function(entries){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){ cio.observe(el) });
 
+/* ── clear header over a white hero ──────────────────────────────────── */
+var whiteHero = document.querySelector(".br-hero");
+if(whiteHero){
+  var clearHdr = function(){
+    document.body.classList.toggle("hdr-clear",
+      window.scrollY < whiteHero.offsetHeight - 80);
+  };
+  clearHdr();
+  window.addEventListener("scroll", clearHdr, {passive:true});
+  window.addEventListener("resize", clearHdr);
+}
+
 /* ── header retract ──────────────────────────────────────────────────── */
 var hdr = document.getElementById("hdr"), last = window.scrollY;
 window.addEventListener("scroll", function(){

@@ -185,6 +185,13 @@ ul{list-style:none}
   font-size:11px;letter-spacing:.01em;line-height:1.2;text-transform:uppercase;
   color:rgba(255,255,255,.86)}
 
+/* Page 1 here is white, so the header sits transparent over it and takes
+   its solid background back once the hero has scrolled away - otherwise it
+   would stay clear over the dark sections further down the same document. */
+.br-page .hdr{transition:transform .5s var(--ease),
+  background-color .45s var(--ease),color .45s var(--ease)}
+.br-page.hdr-clear .hdr{background:transparent;color:var(--ink)}
+
 /* Tablet: the two columns still hold, the badge shrinks with them. */
 @media(max-width:1199px){
   .br-badge{width:auto;min-width:0;padding:8px 12px 8px 8px;border-radius:10px}
