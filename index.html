@@ -361,7 +361,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
    is what reads as movement, since a single texture sliding looks static */
-.story-water img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;mix-blend-mode:multiply;transform-origin:50% 50%;will-change:transform}
+.story-water img,.story-water video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;mix-blend-mode:multiply;transform-origin:50% 50%;will-change:transform}
 .story-water-a{opacity:.55;animation:storyWaterA 24s ease-in-out infinite alternate}
 .story-water-b{opacity:.3;animation:storyWaterB 31s ease-in-out infinite alternate}
 @keyframes storyWaterA{
@@ -421,7 +421,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
   .story-sticky{position:static;height:auto;min-height:100vh;padding:12vh 0}
   .story-line{opacity:1!important;transform:none!important;filter:none!important}
   .story-water{transform:none!important}
-  .story-water img{animation:none}
+  .story-water img,.story-water video{animation:none}
   .story-drip{display:none}
 }
 
@@ -772,8 +772,10 @@ input::placeholder{color:var(--rule)}
 <section class="story-section" id="story-section" aria-label="Studio statement">
   <div class="story-sticky">
     <div class="story-water" aria-hidden="true">
-      <img class="story-water-a" src="water.jpg" alt="" decoding="async">
-      <img class="story-water-b" src="water.jpg" alt="" decoding="async">
+      <video class="story-water-a" src="public/video/story.mp4" poster="water.jpg"
+             muted loop autoplay playsinline preload="auto"></video>
+      <video class="story-water-b" src="public/video/story.mp4" poster="water.jpg"
+             muted loop autoplay playsinline preload="auto"></video>
       <span class="story-drip story-drip-1"></span>
       <span class="story-drip story-drip-2"></span>
       <span class="story-drip story-drip-3"></span>
@@ -1424,6 +1426,31 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
  window.addEventListener("scroll",onScroll,{passive:true});
  window.addEventListener("resize",onScroll);
  updateStoryScroll();
+})();
+
+/* page 2 footage: decode only while the section is on screen */
+(function(){
+ var clips=document.querySelectorAll(".story-water video");
+ if(!clips.length)return;
+ var section=document.getElementById("story-section");
+ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  clips.forEach(function(v){v.autoplay=false;v.removeAttribute("autoplay");v.pause()});
+  return;
+ }
+ /* the back layer is the same clip mirrored, so hold it half a loop behind:
+    in sync the two copies read as one symmetrical frame, not as depth */
+ var back=clips[1];
+ if(back)back.addEventListener("loadedmetadata",function(){
+  if(back.duration)back.currentTime=back.duration/2;
+ },{once:true});
+ new IntersectionObserver(function(es){
+  es.forEach(function(e){
+   clips.forEach(function(v){
+    if(e.isIntersecting){var t=v.play();if(t&&t.catch)t.catch(function(){})}
+    else v.pause();
+   });
+  });
+ },{rootMargin:"10% 0px"}).observe(section);
 })();
 
 /* mono labels scramble into place when scrolled to */
