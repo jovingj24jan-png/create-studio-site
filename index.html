@@ -360,30 +360,24 @@ html.js-motion .lmask>span{transform:translateY(70px)}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
 /* ═══════════════════════ story section (page 2) — isolated namespace ═══ */
-/* Page 2 is the second view of the hero scroll scene: it slides up over the
-   held hero while its statement rises and scales into place, then the stage
-   pins for a screen so the statement can be read. */
-.story-section{position:relative;width:100%;height:200vh;background:#f7f7f5}
+/* 640vh of scroll track with a 100vh sticky stage; the pinned 540vh gives each
+   phrase a short hold in the centre plus about a screen of scroll to move on. */
+.story-section{position:relative;width:100%;height:640vh;background:#f7f7f5}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.story-sticky{perspective:1400px}
+.story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
+.story-line{
+  font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.04em;font-weight:700;color:var(--ink)}
+/* Scroll sequence: every phrase shares one grid cell at the centre of the
+   stage. Phrases wait below the stage, rise to the centre, then keep rising
+   out through the top of the page, where the stage clips them. Armed only
+   when motion is allowed; otherwise the phrases stack as they always have. */
+html.js-motion .story-text{display:grid}
+html.js-motion .story-line{grid-area:1/1;display:flex;align-items:center;justify-content:center;margin-top:0}
+html.js-motion .story-line:not(:first-child){transform:translate3d(0,calc(54vh + 50%),0)}
+.story-line+.story-line{margin-top:.06em}
+.story-line-accent{color:var(--accent)}
+/* page 2 slides up over the held hero, so it sits above it */
 html.js-motion .story-section{z-index:1}
-.story-scene{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;padding:7vw;transform-style:preserve-3d}
-html.js-motion .story-scene{opacity:.001;scale:.82}
-.story-number{position:absolute;top:7vh;left:4vw;font-size:12px;letter-spacing:.08em;color:var(--ink)}
-.story-title{display:flex;flex-direction:column;margin:0;font-size:clamp(45px,7.5vw,125px);line-height:.9;letter-spacing:-.055em;font-weight:500;color:var(--ink);transform:translateZ(100px)}
-.story-title span:nth-child(2){transform:translateX(5vw)}
-.story-title span:nth-child(3){transform:translateX(10vw)}
-@media(max-width:768px){
-  .story-sticky{perspective:900px}
-  .story-scene{padding:24px}
-  /* On a narrow stage the depth boost (translateZ on a 900px perspective, 1.125x)
-     would enlarge the lines after layout and push them off the screen, so it is
-     folded into the type size instead and the indents become padding; the
-     letters are the same size, but the lines now wrap to fit. */
-  .story-title{font-size:clamp(45px,12.375vw,78.75px);transform:none}
-  .story-title span:nth-child(2){transform:none;padding-left:3vw}
-  .story-title span:nth-child(3){transform:none;padding-left:6vw}
-}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
    is what reads as movement, since a single texture sliding looks static */
@@ -436,6 +430,8 @@ html.js-motion .story-scene{opacity:.001;scale:.82}
 @keyframes storyBubbleFive{from{transform:translate3d(0,0,0) scale(.8)}to{transform:translate3d(-30px,-45px,0) scale(1.15)}}
 @keyframes storyBubbleSix{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(40px,30px,0) scale(1.1)}}
 @media(max-width:600px){
+  .story-text{width:94vw}
+  .story-line{font-size:clamp(2.6rem,13vw,4.4rem);line-height:.95}
   .story-bubble-1{width:110px;height:110px}
   .story-bubble-3{width:160px;height:160px}
   .story-bubble-6{width:100px;height:100px}
@@ -443,7 +439,7 @@ html.js-motion .story-scene{opacity:.001;scale:.82}
 @media(prefers-reduced-motion:reduce){
   .story-section{height:auto}
   .story-sticky{position:static;height:auto;min-height:100vh;padding:12vh 0}
-  .story-scene{opacity:1!important;scale:none!important;translate:none!important}
+  .story-line{opacity:1!important;transform:none!important;filter:none!important}
   .story-water{transform:none!important}
   .story-water img,.story-water video{animation:none}
   .story-drip{display:none}
@@ -830,9 +826,11 @@ input::placeholder{color:var(--rule)}
       <span class="story-bubble story-bubble-5"></span>
       <span class="story-bubble story-bubble-6"></span>
     </div>
-    <div class="story-scene">
-      <div class="story-number">// 00.02&deg;</div>
-      <p class="story-title"><span>A DESIGN STUDIO</span><span>TRUSTED BY STARTUPS</span><span>AND LEADING BRANDS.</span></p>
+    <div class="story-text">
+      <div class="story-line">we listen</div>
+      <div class="story-line">we imagine</div>
+      <div class="story-line story-line-accent">we create</div>
+      <div class="story-line">beautiful things</div>
     </div>
   </div>
 </section>
@@ -1544,29 +1542,57 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): the second view of the hero scroll scene. As the
-   section slides up over the held hero, the statement rises through it with a
-   slight lag and settles, growing from 0.82 to full size as it fades in. The
-   offsets are the scene's rise ([100vh, 70vh, 15vh, 0]) less the section's own
-   travel, so on screen it follows that curve exactly. The water keeps its
-   drift once the stage pins. */
+/* story section (page 2): a scroll-controlled sequence. The stage pins while the
+   section scrolls past, and the phrases take the centre one after another. Each
+   phrase holds in the centre for a moment, then lifts away: it starts slowly,
+   as if unsticking, and gathers speed as it rises out through the top of the
+   page. The next phrase waits a beat and is then pulled up after it, easing to a
+   stop in the centre, so each phrase appears to drag the next one into place.
+   The last phrase leaves too. Every position is tied directly to scroll
+   progress, so the sequence stops wherever the reader stops and runs backwards
+   on the way up. */
 (function(){
  var section=document.getElementById("story-section");
- var scene=section?section.querySelector(".story-scene"):null;
+ var lines=section?section.querySelectorAll(".story-line"):[];
  var M=window.Motion;
- // without js-motion (reduced motion, or no library) the statement sits at rest
- if(!section||!scene||!M||!document.documentElement.classList.contains("js-motion"))return;
+ // without js-motion (reduced motion, or no library) the phrases stay stacked
+ if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
 
- M.scroll(function(p){
-  scene.style.translate="0 "+mapProgress(p,[0,.45,.75,1],[0,15,-10,0])+"vh";
-  scene.style.scale=mapProgress(p,[0,.55,1],[.82,.94,1]);
-  scene.style.opacity=mapProgress(p,[0,.3,.55,.8,1],[0,0,.5,1,1]);
- },{target:section,offset:["start end","start start"]});
+ var track={target:section,offset:["start start","end end"]};
+ var n=lines.length;
+ // in units of one move: how long a phrase holds in the centre, and how far
+ // into a move the next phrase waits before it is pulled along
+ var HOLD=.35, LAG=.08;
+ var LEAD=[.45,0,.7,.55];   // unsticks slowly, then speeds away
+ var FOLLOW=[.4,.1,.4,1];    // picks up gently after the pull, settles softly
 
+ // move k takes phrase k out (and phrase k+1 in) between start[k] and end[k]
+ var total=n*(HOLD+1), start=[], end=[];
+ for(var k=0;k<n;k++){start.push(((k+1)*HOLD+k)/total);end.push(((k+1)*(HOLD+1))/total)}
+
+ // clear of the stage: half the screen plus half the phrase, and a little more
+ function offset(d){return "translate3d(0,calc("+(d*54)+"vh + "+(d*50)+"%),0)"}
+
+ Array.prototype.forEach.call(lines,function(line,i){
+  // position is -1 gone above the page, 0 centred, 1 waiting below
+  var times=[0],pos=[i===0?0:1],ease=[];
+  if(i>0){
+   times.push(start[i-1]+LAG*(end[i-1]-start[i-1]),end[i-1]);
+   pos.push(1,0); ease.push("linear",FOLLOW);
+  }
+  times.push(start[i],end[i],1);
+  pos.push(0,-1,-1); ease.push("linear",LEAD,"linear");
+  M.scroll(M.animate(line,{
+   transform:pos.map(offset),
+   opacity:pos.map(function(d){return 1-.4*Math.abs(d)})
+  },{duration:1,times:times,ease:ease}),track);
+ });
+
+ // unchanged water drift across the pinned stretch
  var water=section.querySelector(".story-water");
  if(water)M.scroll(function(p){
   water.style.transform="translate3d(0,"+((0.5-p)*300).toFixed(2)+"px,0)";
- },{target:section,offset:["start start","end end"]});
+ },track);
 })();
 
 /* page 2 footage: decode only while the section is on screen */
