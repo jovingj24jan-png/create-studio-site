@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* Entrance poses are armed only when motion is allowed, so reduced-motion and
+   no-JS visitors get the finished page. If the entrance never starts, disarm. */
+(function(r){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ r.classList.add("js-motion");
+ setTimeout(function(){if(!r.classList.contains("motion-ready"))r.classList.remove("js-motion")},3000);
+})(document.documentElement)</script>
 <title>Create® — Design Studio</title>
 <meta name="description" content="Brands and products built to carry weight. An independent studio for brand, product and web.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23050609'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Helvetica,Arial' font-size='40' font-weight='600' fill='%23fff'%3EC%3C/text%3E%3Crect y='56' width='64' height='8' fill='%23ff6041'/%3E%3C/svg%3E">
@@ -142,8 +148,8 @@ body.menu .menu a.mi{opacity:1;transform:none}
 /* ═══════════════════════════════════════════════════ hero ══════════════ */
 .hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;background:var(--ink);color:#fff}
 .hero-bg{position:absolute;inset:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;animation:heroIn 1s var(--e-img) both}
-@keyframes heroIn{from{opacity:.001;transform:translateY(40px) scale(1.3)}to{opacity:1;transform:none}}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
 .hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(28px,5vh,70px));padding-bottom:clamp(28px,5vh,64px)}
 .rail{display:flex;align-items:center;gap:12px;white-space:nowrap;color:rgba(255,255,255,.65)}
@@ -165,37 +171,25 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .mask.in>span{transform:none}
 .mask-far>span{transform:translateX(-160px)}      /* statement lines travel further */
 
-/* Hero headline words arrive as a blur-and-fade, not a mask. */
+/* Hero headline words rise 20px as a blur-and-fade, not a mask. */
 .word{display:inline-block;vertical-align:top}
-.word>span{display:inline-block;opacity:.001;filter:blur(10px);
-  transition:opacity .4s var(--s-04),filter .4s var(--s-04)}
-.word.in>span{opacity:1;filter:blur(0)}
+.word>span{display:inline-block}
+html.js-motion .word>span{opacity:.001;filter:blur(4px);transform:translateY(20px)}
 
-/* Hero load timeline. Every row slides horizontally at t=0 — the left
-   marker from x -30, the row content from x 85 — then the pieces inside
-   land on their own delays (see data-d in the markup). */
-.hx-mark{transform:translateX(-30px);transition:transform 1s var(--e-slide)}
-.hx-row{transform:translateX(85px);transition:transform 1s var(--e-slide)}
-.hx-mark.in,.hx-row.in{transform:none}
-.hx-pop{opacity:.001;transition:opacity .6s var(--e-pop)}
-.hx-fade{opacity:.001;transition:opacity .4s var(--s-04)}
-.hx-fade6{opacity:.001;transition:opacity .6s var(--s-06)}
-.hx-pop.in,.hx-fade.in,.hx-fade6.in{opacity:1}
-.hx-lift{opacity:.001;transform:translateY(80px);
-  transition:opacity 2s var(--e-pop),transform 2s var(--e-pop)}
-.hx-lift.in{opacity:1;transform:none}
-/* the hero logo strip stays half-lit, so it fades to its own 0.5 */
-.hero-logos.hx-lift{opacity:.001}
-.hero-logos.hx-lift.in{opacity:.5}
-.hx-time{transform:translateY(40px);transition:transform 1s var(--e-pop)}
-.hx-time.in{transform:none}
-.hdr-logo{opacity:.001;transform:translateY(-48px);
-  transition:opacity 1s var(--e-logo),transform 1s var(--e-logo)}
-.hdr-logo.in{opacity:1;transform:none}
+/* Hero load timeline: the starting pose of each piece. The hero entrance
+   script drives them to rest with Motion — rows and markers slide at t=0
+   (markers from x -30, rows from x 85), then the pieces inside land on
+   their own delays. The logo strip rests half-lit, at its own 0.5. */
+html.js-motion .hx-mark{transform:translateX(-30px)}
+html.js-motion .hx-row{transform:translateX(85px)}
+html.js-motion .hx-pop,html.js-motion .hx-fade,html.js-motion .hx-fade6{opacity:.001}
+html.js-motion .hx-lift{opacity:.001;transform:translateY(80px)}
+html.js-motion .hx-time{transform:translateY(40px)}
+html.js-motion .hdr-logo,html.js-motion .hdr .nav{opacity:.001;transform:translateY(-48px)}
 /* button labels wipe up out of their own mask */
 .lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
-.lmask>span{display:block;transform:translateY(70px);transition:transform 1s var(--e-pop)}
-.lmask.in>span{transform:none}
+.lmask>span{display:block}
+html.js-motion .lmask>span{transform:translateY(70px)}
 .hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
 .hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
@@ -354,8 +348,9 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
   font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.04em;font-weight:700;color:var(--ink);
-  opacity:.001;transition:opacity .4s var(--s-04);will-change:opacity}
-.story-line.in{opacity:1}
+  transform-origin:50% 50%}
+/* hidden until the scroll timeline brings each phrase in */
+html.js-motion .story-line{opacity:.001}
 .story-line+.story-line{margin-top:.06em}
 .story-line-accent{color:var(--accent)}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
@@ -1125,6 +1120,7 @@ input::placeholder{color:var(--rule)}
   </div>
 </footer>
 
+<script src="js/motion.min.js"></script>
 <script>
 (function(){
 "use strict";
@@ -1344,17 +1340,75 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 
-/* hero mount stagger. Driven off DOM-ready rather than window.load: the hero
-   backdrop is a large jpg and gating the entrance on it left the fold blank. */
+/* hero entrance (page 1), driven by Motion. Travel and timing are measured
+   off the reference: rows and markers slide at t=0 while the backdrop settles
+   from 1.3, the header drops in at ~0.45s, then the headline, clock, stat and
+   button labels land on their own delays. Easing comes from the CSS tokens,
+   so the curves stay in one place. Driven off DOM-ready rather than
+   window.load: the hero backdrop is a large jpg and gating the entrance on it
+   left the fold blank. */
 (function(){
+ var root=document.documentElement, M=window.Motion;
+ if(!root.classList.contains("js-motion"))return;
+ if(!M){root.classList.remove("js-motion");return}
+ root.classList.add("motion-ready");
+
+ var css=getComputedStyle(root);
+ // cubic-bezier() tokens become arrays; sampled linear() springs become a
+ // piecewise-linear easing function
+ function ease(name){
+  var v=css.getPropertyValue(name).trim(), n=(v.match(/-?\d*\.?\d+/g)||[]).map(Number);
+  if(v.indexOf("cubic-bezier")===0&&n.length===4)return n;
+  if(v.indexOf("linear")===0&&n.length>1){
+   var k=n.length-1;
+   return function(t){var x=t*k,i=Math.floor(x);return i>=k?n[k]:n[i]+(n[i+1]-n[i])*(x-i)};
+  }
+  return "easeOut";
+ }
+ function go(sel,keyframes,opts){
+  var els=document.querySelectorAll(sel);
+  if(els.length)M.animate(els,keyframes,opts);
+ }
+
  function play(){
-  document.querySelectorAll(".hdr [data-d],.hero [data-d]").forEach(function(el){
-   setTimeout(function(){el.classList.add("in")},+el.dataset.d||0);
+  go(".hero-bg img",{opacity:[.001,1],y:[40,0],scale:[1.3,1]},{duration:1,ease:ease("--e-img")});
+  go(".hx-mark",{x:[-30,0]},{duration:.95,ease:ease("--e-slide")});
+  go(".hx-row",{x:[85,0]},{duration:1.1,ease:ease("--e-slide")});
+
+  go(".hdr-logo",{opacity:[.001,1],y:[-48,0]},{duration:1.15,delay:.45,ease:ease("--e-logo")});
+  go(".hdr .nav",{opacity:[.001,1],y:[-48,0]},{duration:1.15,delay:.5,ease:ease("--e-logo")});
+  go(".hx-fade6",{opacity:[.001,1]},{duration:1.1,delay:.46,ease:ease("--s-06")});
+
+  go("#heroH1 .word>span",
+   {opacity:[.001,1],y:[20,0],filter:["blur(4px)","blur(0px)"]},
+   {duration:1.2,delay:M.stagger(.05,{startDelay:.35}),ease:ease("--ease")});
+
+  go(".hx-time",{y:[40,0]},{duration:1.07,delay:.65,ease:ease("--e-pop")});
+  go(".hx-fade",{opacity:[.001,1]},{duration:.45,delay:.7,ease:ease("--s-04")});
+  go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:.95,ease:ease("--e-pop")});
+  go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:2,delay:.95,ease:ease("--e-pop")});
+
+  document.querySelectorAll(".hero .lmask>span").forEach(function(el,i){
+   M.animate(el,{y:[70,0]},{duration:1.15,delay:.95+i*.2,ease:ease("--e-pop")});
   });
  }
  function arm(){requestAnimationFrame(function(){requestAnimationFrame(play)})}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
  else arm();
+
+ // Leaving the hero, its content lifts away faster than the backdrop. The
+ // reference lifts groups at separate rates (0.2x-0.5x), but in this layout
+ // the paragraph sits ~55px under the wordmark and those rates drive rows into
+ // each other, so the whole content layer lifts as one at 0.3x and every row
+ // keeps its spacing. Written to the CSS translate property so it composes
+ // with, rather than overwrites, the entrance transforms.
+ var hero=document.querySelector(".hero"), content=hero&&hero.querySelector(".hero-in");
+ if(!content)return;
+ var heroH=hero.offsetHeight;
+ window.addEventListener("resize",function(){heroH=hero.offsetHeight});
+ M.scroll(function(p){
+  content.style.translate="0 "+(-p*heroH*.3).toFixed(1)+"px";
+ },{target:hero,offset:["start start","end start"]});
 })();
 
 /* scroll reveals */
@@ -1409,35 +1463,57 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): scroll-driven phrase reveal */
+/* story section (page 2), driven by Motion. Measured off the reference: each
+   phrase arrives from ~3x scale while fading in, roughly one phrase per screen
+   of scroll, the first landing as the stage pins. Once all four are placed the
+   earlier phrases shrink, lift and fade while the last drifts up into the next
+   section. Scroll tracking only runs while the section is near the viewport. */
 (function(){
- var storySection=document.getElementById("story-section");
- var storyLines=document.querySelectorAll(".story-line");
- if(!storySection||!storyLines.length)return;
- var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
- if(reduce){
-  storyLines.forEach(function(l){l.classList.add("in")});
-  return;
- }
- var storyWater=storySection.querySelector(".story-water");
- var ticking=0;
- function updateStoryScroll(){
-  var rect=storySection.getBoundingClientRect();
-  var total=Math.max(storySection.offsetHeight-window.innerHeight,1);
-  var progress=Math.min(Math.max(-rect.top/total,0),1);
-  // water drifts upward as the section is scrolled through, clamped to +-70px
-  if(storyWater)storyWater.style.transform="translate3d(0,"+((0.5-progress)*300).toFixed(2)+"px,0)";
-  for(var i=0;i<storyLines.length;i++){
-   storyLines[i].classList.toggle("in",progress>=i*0.20);
+ var section=document.getElementById("story-section");
+ var lines=section?section.querySelectorAll(".story-line"):[];
+ var M=window.Motion;
+ // without js-motion (reduced motion, or no library) the CSS finished state stands
+ if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
+ var water=section.querySelector(".story-water");
+
+ function clamp01(v){return v<0?0:v>1?1:v}
+ function seg(s,a,b){return clamp01((s-a)/(b-a))}
+
+ // positions in screens of scroll, counted from the section's top edge
+ // reaching the bottom of the viewport; the stage pins at 1
+ var LAND_FIRST=1, LAND_GAP=.65, ENTER=.5, EXIT_AT=3.05;
+ var span=1;
+ function measure(){span=section.offsetHeight/window.innerHeight}
+ measure();
+ window.addEventListener("resize",measure);
+
+ function render(p){
+  var s=p*span, last=lines.length-1;
+  for(var i=0;i<lines.length;i++){
+   var land=LAND_FIRST+i*LAND_GAP, from=land-ENTER;
+   var arrive=seg(s,from,land);
+   var scale=3-2*arrive, y=0, op=seg(s,from,from+ENTER*.35);
+   if(i<last){
+    var out=seg(s,EXIT_AT+i*.05,EXIT_AT+.4+i*.05);
+    scale*=1-.2*out; y=-100*out; op*=1-out;
+   }else{
+    var drift=seg(s,EXIT_AT,span);
+    scale*=1+.03*drift; y=-80*drift;
+   }
+   lines[i].style.opacity=Math.max(op,.001).toFixed(3);
+   lines[i].style.transform="translate3d(0,"+y.toFixed(1)+"px,0) scale("+scale.toFixed(4)+")";
+  }
+  // unchanged water drift, keyed to the pinned stretch of the section
+  if(water){
+   var pinned=clamp01((s-1)/Math.max(span-1,.001));
+   water.style.transform="translate3d(0,"+((0.5-pinned)*300).toFixed(2)+"px,0)";
   }
  }
- function onScroll(){
-  if(ticking)return;
-  ticking=requestAnimationFrame(function(){ticking=0;updateStoryScroll()});
- }
- window.addEventListener("scroll",onScroll,{passive:true});
- window.addEventListener("resize",onScroll);
- updateStoryScroll();
+
+ M.inView(section,function(){
+  var stop=M.scroll(render,{target:section,offset:["start end","end end"]});
+  return function(){stop()};
+ },{margin:"25% 0px 25% 0px"});
 })();
 
 /* page 2 footage: decode only while the section is on screen */
