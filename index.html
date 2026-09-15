@@ -190,8 +190,16 @@ html.js-motion .hdr-logo,html.js-motion .hdr .nav{opacity:.001;transform:transla
 .lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
 .lmask>span{display:block}
 html.js-motion .lmask>span{transform:translateY(70px)}
-.hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
+.hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%)}
 .hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
+/* The hero ticker runs vertically, one logo passing through a logo-high
+   window, as on the reference; the shared .mq horizontal loop stays with the
+   later client marquees. Each track is ten 40px slots on an 80px pitch, so a
+   track moved by -100% lands on an identical frame. Motion drives the loop. */
+.hero-logos{flex-direction:column;height:40px}
+.hero-logos .mq-track{flex-direction:column;align-items:flex-end;row-gap:40px;padding-bottom:40px;animation:none}
+.hero-logos .mq-track>span{display:flex;align-items:center;height:40px;padding:0!important}
+@media(max-width:809px){.hero-logos .mq-track{align-items:flex-start}}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
 .reel{position:relative;display:block;width:100%;aspect-ratio:1.70588;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#1b2129,#05070a)}
@@ -1395,6 +1403,17 @@ tick();setInterval(tick,1000);
  function arm(){requestAnimationFrame(function(){requestAnimationFrame(play)})}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
  else arm();
+
+ // Hero logo ticker: a continuous upward loop at the reference's rhythm of
+ // one logo every 3s, easing to ~0.75x while hovered as the reference does.
+ var ticker=document.querySelector(".hero-logos");
+ var tracks=ticker?ticker.querySelectorAll(".mq-track"):[];
+ if(tracks.length&&tracks[0].children.length){
+  var loop=M.animate(tracks,{transform:["translateY(0%)","translateY(-100%)"]},
+   {duration:3*tracks[0].children.length,ease:"linear",repeat:Infinity});
+  ticker.addEventListener("pointerenter",function(){loop.speed=.74});
+  ticker.addEventListener("pointerleave",function(){loop.speed=1});
+ }
 
  // Leaving the hero, its content lifts away faster than the backdrop. The
  // reference lifts groups at separate rates (0.2x-0.5x), but in this layout
