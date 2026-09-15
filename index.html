@@ -349,9 +349,9 @@ html.js-motion .lmask>span{transform:translateY(70px)}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
 /* ═══════════════════════ story section (page 2) — isolated namespace ═══ */
-/* 540vh of scroll track with a 100vh sticky stage; the pinned 440vh gives each
-   phrase about a screen of scroll, so the text drifts slower than the page. */
-.story-section{position:relative;width:100%;height:540vh;background:#f7f7f5}
+/* 640vh of scroll track with a 100vh sticky stage; the pinned 540vh gives each
+   phrase a short hold in the centre plus about a screen of scroll to move on. */
+.story-section{position:relative;width:100%;height:640vh;background:#f7f7f5}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
@@ -1487,13 +1487,14 @@ var cio=new IntersectionObserver(function(es){
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
 /* story section (page 2): a scroll-controlled sequence. The stage pins while the
-   section scrolls past, and across that pinned stretch the phrases rise through
-   it one after another: each comes up from below the stage to the centre, then
-   carries on up and out through the top of the page as the next one arrives.
-   The last phrase leaves too. Every line's position is tied directly to scroll
+   section scrolls past, and the phrases take the centre one after another. Each
+   phrase holds in the centre for a moment, then lifts away: it starts slowly,
+   as if unsticking, and gathers speed as it rises out through the top of the
+   page. The next phrase waits a beat and is then pulled up after it, easing to a
+   stop in the centre, so each phrase appears to drag the next one into place.
+   The last phrase leaves too. Every position is tied directly to scroll
    progress, so the sequence stops wherever the reader stops and runs backwards
-   on the way up, and each step covers about a screen of scroll so the text
-   drifts slower than the page. */
+   on the way up. */
 (function(){
  var section=document.getElementById("story-section");
  var lines=section?section.querySelectorAll(".story-line"):[];
@@ -1502,30 +1503,33 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
  if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
 
  var track={target:section,offset:["start start","end end"]};
- var n=lines.length, REST=.04;
+ var n=lines.length;
+ // in units of one move: how long a phrase holds in the centre, and how far
+ // into a move the next phrase waits before it is pulled along
+ var HOLD=.35, LAG=.08;
+ var LEAD=[.45,0,.7,.55];   // unsticks slowly, then speeds away
+ var FOLLOW=[.4,.1,.4,1];    // picks up gently after the pull, settles softly
 
- // state k (k<n) has phrase k in the centre; state n has the last one gone.
- // The short rest at the start lets the first phrase settle as the stage pins.
- var at=[];
- for(var k=0;k<=n;k++)at.push(REST+k*(1-REST)/n);
- var times=[0].concat(at);
- var ease=["linear"];
- for(var e=0;e<n;e++)ease.push([.37,0,.63,1]);
+ // move k takes phrase k out (and phrase k+1 in) between start[k] and end[k]
+ var total=n*(HOLD+1), start=[], end=[];
+ for(var k=0;k<n;k++){start.push(((k+1)*HOLD+k)/total);end.push(((k+1)*(HOLD+1))/total)}
 
  // clear of the stage: half the screen plus half the phrase, and a little more
  function offset(d){return "translate3d(0,calc("+(d*54)+"vh + "+(d*50)+"%),0)"}
 
  Array.prototype.forEach.call(lines,function(line,i){
-  var y=[],op=[];
-  for(var k=0;k<=n;k++){
-   // -1 gone above the page, 0 centred, 1 waiting below
-   var d=Math.max(-1,Math.min(1,i-k));
-   y.push(offset(d));
-   op.push(1-.4*Math.abs(d));
+  // position is -1 gone above the page, 0 centred, 1 waiting below
+  var times=[0],pos=[i===0?0:1],ease=[];
+  if(i>0){
+   times.push(start[i-1]+LAG*(end[i-1]-start[i-1]),end[i-1]);
+   pos.push(1,0); ease.push("linear",FOLLOW);
   }
-  y=[y[0]].concat(y);
-  op=[op[0]].concat(op);
-  M.scroll(M.animate(line,{transform:y,opacity:op},{duration:1,times:times,ease:ease}),track);
+  times.push(start[i],end[i],1);
+  pos.push(0,-1,-1); ease.push("linear",LEAD,"linear");
+  M.scroll(M.animate(line,{
+   transform:pos.map(offset),
+   opacity:pos.map(function(d){return 1-.4*Math.abs(d)})
+  },{duration:1,times:times,ease:ease}),track);
  });
 
  // unchanged water drift across the pinned stretch
