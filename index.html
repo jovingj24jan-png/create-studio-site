@@ -349,20 +349,20 @@ html.js-motion .lmask>span{transform:translateY(70px)}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
 /* ═══════════════════════ story section (page 2) — isolated namespace ═══ */
-/* 360vh of scroll track with a 100vh sticky stage; the pinned 260vh is shared
-   out across the phrases, so each gets its own scroll range. */
-.story-section{position:relative;width:100%;height:360vh;background:#f7f7f5}
+/* 540vh of scroll track with a 100vh sticky stage; the pinned 440vh gives each
+   phrase about a screen of scroll, so the text drifts slower than the page. */
+.story-section{position:relative;width:100%;height:540vh;background:#f7f7f5}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
   font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.04em;font-weight:700;color:var(--ink)}
-/* Scroll carousel: every phrase shares one grid cell, and the text box clips
-   to that cell so only the phrase in the centre shows. The inner padding keeps
-   descenders clear of the clip. Armed only when motion is allowed; otherwise
-   the phrases stack as they always have. */
-html.js-motion .story-text{display:grid;overflow:hidden}
-html.js-motion .story-line{grid-area:1/1;display:flex;align-items:center;justify-content:center;padding-block:.16em;margin-top:0}
-html.js-motion .story-line:not(:first-child){transform:translate3d(0,100%,0)}
+/* Scroll sequence: every phrase shares one grid cell at the centre of the
+   stage. Phrases wait below the stage, rise to the centre, then keep rising
+   out through the top of the page, where the stage clips them. Armed only
+   when motion is allowed; otherwise the phrases stack as they always have. */
+html.js-motion .story-text{display:grid}
+html.js-motion .story-line{grid-area:1/1;display:flex;align-items:center;justify-content:center;margin-top:0}
+html.js-motion .story-line:not(:first-child){transform:translate3d(0,calc(54vh + 50%),0)}
 .story-line+.story-line{margin-top:.06em}
 .story-line-accent{color:var(--accent)}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
@@ -1486,12 +1486,14 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): a scroll-controlled vertical carousel. The stage pins
-   while the section scrolls past, and across that pinned stretch each phrase
-   takes the centre in turn: the one in view lifts up and out of the clipped
-   window as the next rises into it. Every line's position is tied directly to
-   scroll progress, so the sequence stops wherever the reader stops and runs
-   backwards on the way up. */
+/* story section (page 2): a scroll-controlled sequence. The stage pins while the
+   section scrolls past, and across that pinned stretch the phrases rise through
+   it one after another: each comes up from below the stage to the centre, then
+   carries on up and out through the top of the page as the next one arrives.
+   The last phrase leaves too. Every line's position is tied directly to scroll
+   progress, so the sequence stops wherever the reader stops and runs backwards
+   on the way up, and each step covers about a screen of scroll so the text
+   drifts slower than the page. */
 (function(){
  var section=document.getElementById("story-section");
  var lines=section?section.querySelectorAll(".story-line"):[];
@@ -1500,27 +1502,29 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
  if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
 
  var track={target:section,offset:["start start","end end"]};
- var n=lines.length, HOLD=.07;
+ var n=lines.length, REST=.04;
 
- // scroll progress at which phrase k sits exactly in the centre; the hold at
- // each end lets the first and last phrase rest while the stage is pinned
- var centred=[];
- for(var k=0;k<n;k++)centred.push(n===1?.5:HOLD+k*(1-2*HOLD)/(n-1));
- var times=[0].concat(centred,[1]);
+ // state k (k<n) has phrase k in the centre; state n has the last one gone.
+ // The short rest at the start lets the first phrase settle as the stage pins.
+ var at=[];
+ for(var k=0;k<=n;k++)at.push(REST+k*(1-REST)/n);
+ var times=[0].concat(at);
  var ease=["linear"];
- for(var e=1;e<n;e++)ease.push("easeInOut");
- ease.push("linear");
+ for(var e=0;e<n;e++)ease.push([.37,0,.63,1]);
+
+ // clear of the stage: half the screen plus half the phrase, and a little more
+ function offset(d){return "translate3d(0,calc("+(d*54)+"vh + "+(d*50)+"%),0)"}
 
  Array.prototype.forEach.call(lines,function(line,i){
   var y=[],op=[];
-  for(var k=0;k<n;k++){
-   // -1 above the window, 0 centred, 1 waiting below
+  for(var k=0;k<=n;k++){
+   // -1 gone above the page, 0 centred, 1 waiting below
    var d=Math.max(-1,Math.min(1,i-k));
-   y.push("translate3d(0,"+d*100+"%,0)");
-   op.push(1-.75*Math.abs(d));
+   y.push(offset(d));
+   op.push(1-.4*Math.abs(d));
   }
-  y=[y[0]].concat(y,[y[n-1]]);
-  op=[op[0]].concat(op,[op[n-1]]);
+  y=[y[0]].concat(y);
+  op=[op[0]].concat(op);
   M.scroll(M.animate(line,{transform:y,opacity:op},{duration:1,times:times,ease:ease}),track);
  });
 
