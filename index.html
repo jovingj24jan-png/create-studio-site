@@ -201,9 +201,7 @@ html.js-motion .word>span{opacity:.001;filter:blur(4px);transform:translateY(20p
    script drives them to rest with Motion — rows and markers slide at t=0
    (markers from x -30, rows from x 85), then the pieces inside land on
    their own delays. The logo strip rests half-lit, at its own 0.5. */
-html.js-motion .hx-mark{transform:translateX(-100px)}
-html.js-motion .hero-in>.shell:nth-child(2) .hx-mark{transform:translateX(-160px)}
-html.js-motion .hero-in>.shell:nth-child(3) .hx-mark{transform:translateX(-240px)}
+html.js-motion .hx-mark{transform:translateX(-30px)}
 html.js-motion .hx-row{transform:translateX(85px)}
 html.js-motion .hx-pop,html.js-motion .hx-fade,html.js-motion .hx-fade6{opacity:.001}
 html.js-motion .hx-lift{opacity:.001;transform:translateY(80px)}
@@ -212,7 +210,7 @@ html.js-motion .hdr-logo,html.js-motion .hdr .nav{opacity:.001;transform:transla
 /* button labels wipe up out of their own mask */
 .lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
 .lmask>span{display:block}
-html.js-motion .hero .btn{opacity:.001;transform:translateY(20px)}
+html.js-motion .lmask>span{transform:translateY(70px)}
 html.js-motion .hero-card{opacity:.001}
 /* measured hover: a 300ms background fade on the standard ease */
 .hero .btn{transition:background-color .3s cubic-bezier(.4,0,.2,1),color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)}
@@ -749,8 +747,8 @@ input::placeholder{color:var(--rule)}
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
         <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:17ch" id="heroH1"></h1>
         <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="400" data-delay="700">0+</span></p>
-          <p class="t-mono-sm mt1 hx-fade" data-d="700" style="color:rgba(255,255,255,.8);max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
+          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
+          <p class="t-mono-sm mt1 hx-lift" data-d="1000" style="color:rgba(255,255,255,.8);max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
           <div class="mq mq-logos hero-logos mt2 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
         </div>
       </div>
@@ -774,7 +772,7 @@ input::placeholder{color:var(--rule)}
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.03°</div></div>
 
         <div class="hero-info hx-row" data-d="0">
-          <div><p class="t-mono" style="max-width:34ch">A design studio working with founders and established teams. We make the things people remember using.</p></div>
+          <div><p class="t-mono hx-fade" data-d="700" style="max-width:34ch">A design studio working with founders and established teams. We make the things people remember using.</p></div>
           <div class="hx-time mt3" data-d="600">
             <span class="hair" style="width:32px;background:rgba(255,255,255,.4);margin-bottom:12px;display:block"></span>
             <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
@@ -1417,29 +1415,30 @@ tick();setInterval(tick,1000);
 
  function play(){
   go(".hero-bg img",{opacity:[.001,1],y:[40,0],scale:[1.3,1]},{duration:1,ease:ease("--e-img")});
-  // the six index hairlines come in from three different distances
-  var markFrom=[-100,-160,-240];
-  document.querySelectorAll(".hx-mark").forEach(function(el,i){
-   M.animate(el,{x:[markFrom[i%3],0]},{duration:1,ease:ease("--e-slide")});
-  });
-  go(".hx-row",{x:[85,0]},{duration:1.1,ease:ease("--e-slide")});
+  go(".hx-mark",{x:[-30,0]},{duration:1,ease:ease("--e-slide")});
+  go(".hx-row",{x:[85,0]},{duration:1,ease:ease("--e-slide")});
 
-  go(".hdr-logo",{opacity:[.001,1],y:[-48,0]},{duration:1.15,delay:.45,ease:ease("--e-logo")});
-  go(".hdr .nav",{opacity:[.001,1],y:[-48,0]},{duration:1.15,delay:.5,ease:ease("--e-logo")});
-  go(".hx-fade6",{opacity:[.001,1]},{duration:1.1,delay:.46,ease:ease("--s-06")});
+  // the whole top row drops in together at 500ms over 1s
+  go(".hdr-logo,.hdr .nav",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:.5,ease:ease("--e-logo")});
+  go(".hx-fade6",{opacity:[.001,1]},{duration:1,delay:.5,ease:ease("--s-06")});
 
   go("#heroH1 .word>span",
    {opacity:[.001,1],y:[20,0],filter:["blur(4px)","blur(0px)"]},
    {duration:1.2,delay:M.stagger(.05,{startDelay:.35}),ease:ease("--ease")});
 
-  go(".hx-time",{y:[40,0]},{duration:1.07,delay:.65,ease:ease("--e-pop")});
-  go(".hx-fade",{opacity:[.001,1]},{duration:.45,delay:.7,ease:ease("--s-04")});
-  go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:.95,ease:ease("--e-pop")});
-  go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:2,delay:.95,ease:ease("--e-pop")});
+  go(".hx-time",{y:[40,0]},{duration:1,delay:.6,ease:ease("--e-pop")});
+  // the hairline above the clock settles back to 70% as it rises
+  go(".hx-time .hair",{opacity:[1,.7]},{duration:1,delay:.6,ease:ease("--e-pop")});
+  go(".hx-fade",{opacity:[.001,1]},{duration:.4,delay:.7,ease:ease("--s-04")});
+  go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:1,ease:ease("--e-pop")});
+  go(".hx-lift:not(.hero-logos)",{opacity:[.001,1],y:[80,0]},{duration:2,delay:1,ease:ease("--e-pop")});
+  go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:2,delay:1,ease:ease("--e-pop")});
 
-  // measured: the CTAs fade and rise 20px over 2s, starting at 2s, on a
-  // spring baked into a sampled curve (the --s-1 token)
-  go(".hero .btn",{opacity:[.001,1],y:[20,0]},{duration:2,delay:2,ease:ease("--s-1")});
+  // each CTA label wipes 70px up out of its mask, the second a beat later
+  document.querySelectorAll(".hero .lmask").forEach(function(m){
+   M.animate(m.firstElementChild,{y:[70,0]},
+    {duration:1,delay:(parseFloat(m.dataset.d)||0)/1000,ease:ease("--e-pop")});
+  });
   // measured: the showreel card reveals in 200ms at 1.3s
   go(".hero-card",{opacity:[.001,1]},{duration:.2,delay:1.3});
  }
