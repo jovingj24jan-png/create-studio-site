@@ -146,7 +146,7 @@ body.menu .menu{clip-path:inset(0 0 0 0);pointer-events:auto}
 body.menu .menu a.mi{opacity:1;transform:none}
 
 /* ═══════════════════════════════════════════════════ hero ══════════════ */
-.hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;background:var(--ink);color:#fff}
+.hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;overflow:clip;background:var(--ink);color:#fff}
 .hero-bg{position:absolute;inset:0}
 /* Hero scroll scene: a faint repeated wordmark sits back in depth behind the
    content, and while page 2 slides up over the hero its layers recede at
@@ -157,8 +157,6 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .hero-depth-word{position:absolute;font-size:clamp(100px,20vw,340px);font-weight:700;line-height:.8;white-space:nowrap;opacity:.035;transform:translateZ(-180px) rotateX(2deg)}
 .hero-depth-word+.hero-depth-word{transform:translateZ(-350px) translateY(12vh) scale(1.08)}
 @media(max-width:768px){.hero{perspective:900px}.hero-depth-word{font-size:30vw}}
-html.js-motion .hero{position:sticky;top:var(--hero-pin,0px)}
-html.js-motion .hero-in>.shell:first-child>.grid{perspective:1400px}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
@@ -166,9 +164,21 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .rail{display:flex;align-items:center;gap:12px;white-space:nowrap;color:rgba(255,255,255,.65)}
 .rail::before{content:"";display:block;width:36px;height:1px;background:rgba(255,255,255,.45);flex:none}
 @media(max-width:809px){.rail::before{width:24px}}
-.hero-h1{grid-column:3/9;padding-left:33px}
+.hero-h1{grid-column:3/9;padding-left:33px;letter-spacing:-.065em}
 .hero-stat{grid-column:10/13;text-align:right}
 .hero-mark{grid-column:2/13;padding-left:7px}
+/* The wordmark rides up out of its own mask; the mask is exactly the line
+   box, so the hero's spacing is unchanged and the letters cut off on a hard
+   edge rather than fading. */
+.hero-mark-clip{display:grid;overflow:hidden;overflow:clip}
+/* Second moving layer. It waits below the hero's clip and only comes into
+   view because scroll drives it upward. White through an overlay blend, so
+   the photo behind it decides how it reads. */
+.hero-create{position:absolute;bottom:-500px;left:50%;width:100%;margin:0;text-align:center;white-space:pre;
+  color:#fff;mix-blend-mode:overlay;translate:-50% 0;will-change:transform;z-index:1;pointer-events:none}
+/* the reference drops this typography parallax on small screens */
+@media(max-width:809px){.hero-create{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-create{display:none}}
 .hero-info{grid-column:2/7}
 .hero-card{grid-column:9/13;margin-left:auto;width:100%;max-width:387px}
 .r1{grid-column:1/2}
@@ -191,7 +201,9 @@ html.js-motion .word>span{opacity:.001;filter:blur(4px);transform:translateY(20p
    script drives them to rest with Motion — rows and markers slide at t=0
    (markers from x -30, rows from x 85), then the pieces inside land on
    their own delays. The logo strip rests half-lit, at its own 0.5. */
-html.js-motion .hx-mark{transform:translateX(-30px)}
+html.js-motion .hx-mark{transform:translateX(-100px)}
+html.js-motion .hero-in>.shell:nth-child(2) .hx-mark{transform:translateX(-160px)}
+html.js-motion .hero-in>.shell:nth-child(3) .hx-mark{transform:translateX(-240px)}
 html.js-motion .hx-row{transform:translateX(85px)}
 html.js-motion .hx-pop,html.js-motion .hx-fade,html.js-motion .hx-fade6{opacity:.001}
 html.js-motion .hx-lift{opacity:.001;transform:translateY(80px)}
@@ -200,7 +212,10 @@ html.js-motion .hdr-logo,html.js-motion .hdr .nav{opacity:.001;transform:transla
 /* button labels wipe up out of their own mask */
 .lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
 .lmask>span{display:block}
-html.js-motion .lmask>span{transform:translateY(70px)}
+html.js-motion .hero .btn{opacity:.001;transform:translateY(20px)}
+html.js-motion .hero-card{opacity:.001}
+/* measured hover: a 300ms background fade on the standard ease */
+.hero .btn{transition:background-color .3s cubic-bezier(.4,0,.2,1),color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)}
 .hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%)}
 .hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
 /* The hero ticker runs vertically, one logo passing through a logo-high
@@ -360,24 +375,20 @@ html.js-motion .lmask>span{transform:translateY(70px)}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
 /* ═══════════════════════ story section (page 2) — isolated namespace ═══ */
-/* 640vh of scroll track with a 100vh sticky stage; the pinned 540vh gives each
-   phrase a short hold in the centre plus about a screen of scroll to move on. */
-.story-section{position:relative;width:100%;height:640vh;background:#f7f7f5}
+/* 400vh of scroll track with a 100vh sticky stage, so each of the four
+   phrases owns roughly a screen of scroll as it stacks into place. */
+.story-section{position:relative;width:100%;height:400vh;background:#f7f7f5}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
-  font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.04em;font-weight:700;color:var(--ink)}
-/* Scroll sequence: every phrase shares one grid cell at the centre of the
-   stage. Phrases wait below the stage, rise to the centre, then keep rising
-   out through the top of the page, where the stage clips them. Armed only
-   when motion is allowed; otherwise the phrases stack as they always have. */
-html.js-motion .story-text{display:grid}
-html.js-motion .story-line{grid-area:1/1;display:flex;align-items:center;justify-content:center;margin-top:0}
-html.js-motion .story-line:not(:first-child){transform:translate3d(0,calc(54vh + 50%),0)}
+  font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.065em;font-weight:700;color:var(--ink)}
+/* Scroll-linked stacking reveal, on the measured values: the phrases sit in
+   normal flow and each owns an equal slice of the pinned track, rising 48px
+   and growing from 0.806 into place as its slice passes. They stay stacked
+   once they arrive. Armed only when motion is allowed. */
+html.js-motion .story-line{opacity:0;transform:translateY(48px) scale(.806);transform-origin:50% 50%}
 .story-line+.story-line{margin-top:.06em}
 .story-line-accent{color:var(--accent)}
-/* page 2 slides up over the held hero, so it sits above it */
-html.js-motion .story-section{z-index:1}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
    is what reads as movement, since a single texture sliding looks static */
@@ -726,9 +737,6 @@ input::placeholder{color:var(--rule)}
 
 <main id="top">
 
-<!-- the hero holds while page 2 slides up over it; this wrapper bounds that hold -->
-<div class="hero-story">
-
 <!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
 <section class="hero" aria-label="Introduction">
   <div class="hero-bg"><img src="hero.jpg" alt="" fetchpriority="high"></div>
@@ -741,7 +749,7 @@ input::placeholder{color:var(--rule)}
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
         <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:17ch" id="heroH1"></h1>
         <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+">0+</span></p>
+          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="400" data-delay="700">0+</span></p>
           <p class="t-mono-sm mt1 hx-fade" data-d="700" style="color:rgba(255,255,255,.8);max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
           <div class="mq mq-logos hero-logos mt2 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
         </div>
@@ -753,7 +761,9 @@ input::placeholder{color:var(--rule)}
       <div class="grid" style="align-items:center;row-gap:16px">
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.02°</div></div>
         <div class="hero-mark hx-row" data-d="0">
-          <p class="t-wordmark"><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></p>
+          <div class="hero-mark-clip">
+            <p class="t-wordmark hero-mark-text"><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></p>
+          </div>
         </div>
       </div>
     </div>
@@ -800,6 +810,8 @@ input::placeholder{color:var(--rule)}
         </div>
       </div>
     </div>
+
+    <p class="t-wordmark hero-create" aria-hidden="true">let's create</p>
   </div>
 </section>
 
@@ -834,8 +846,6 @@ input::placeholder{color:var(--rule)}
     </div>
   </div>
 </section>
-
-</div>
 
 <!-- ═══════════════════════════════════════════════ SELECTED WORK ════════ -->
 <section id="work" aria-label="Selected work">
@@ -1375,15 +1385,6 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 
-/* Map scroll progress onto keyframes, piecewise-linearly (the vanilla
-   equivalent of useTransform). */
-function mapProgress(p,input,output){
- if(p<=input[0])return output[0];
- for(var i=1;i<input.length;i++)if(p<=input[i])
-  return output[i-1]+(output[i]-output[i-1])*(p-input[i-1])/(input[i]-input[i-1]);
- return output[output.length-1];
-}
-
 /* hero entrance (page 1), driven by Motion. Travel and timing are measured
    off the reference: rows and markers slide at t=0 while the backdrop settles
    from 1.3, the header drops in at ~0.45s, then the headline, clock, stat and
@@ -1416,7 +1417,11 @@ function mapProgress(p,input,output){
 
  function play(){
   go(".hero-bg img",{opacity:[.001,1],y:[40,0],scale:[1.3,1]},{duration:1,ease:ease("--e-img")});
-  go(".hx-mark",{x:[-30,0]},{duration:.95,ease:ease("--e-slide")});
+  // the six index hairlines come in from three different distances
+  var markFrom=[-100,-160,-240];
+  document.querySelectorAll(".hx-mark").forEach(function(el,i){
+   M.animate(el,{x:[markFrom[i%3],0]},{duration:1,ease:ease("--e-slide")});
+  });
   go(".hx-row",{x:[85,0]},{duration:1.1,ease:ease("--e-slide")});
 
   go(".hdr-logo",{opacity:[.001,1],y:[-48,0]},{duration:1.15,delay:.45,ease:ease("--e-logo")});
@@ -1432,9 +1437,11 @@ function mapProgress(p,input,output){
   go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:.95,ease:ease("--e-pop")});
   go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:2,delay:.95,ease:ease("--e-pop")});
 
-  document.querySelectorAll(".hero .lmask>span").forEach(function(el,i){
-   M.animate(el,{y:[70,0]},{duration:1.15,delay:.95+i*.2,ease:ease("--e-pop")});
-  });
+  // measured: the CTAs fade and rise 20px over 2s, starting at 2s, on a
+  // spring baked into a sampled curve (the --s-1 token)
+  go(".hero .btn",{opacity:[.001,1],y:[20,0]},{duration:2,delay:2,ease:ease("--s-1")});
+  // measured: the showreel card reveals in 200ms at 1.3s
+  go(".hero-card",{opacity:[.001,1]},{duration:.2,delay:1.3});
  }
  function arm(){requestAnimationFrame(function(){requestAnimationFrame(play)})}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
@@ -1451,43 +1458,28 @@ function mapProgress(p,input,output){
   ticker.addEventListener("pointerleave",function(){loop.speed=1});
  }
 
- // Leaving the hero: it holds while page 2 slides up over it, and its layers
- // recede at different depths as that happens. The photo drifts up and grows,
- // the faint CREATE layer tilts back, the content lifts, swells then shrinks
- // away, and the headline tips back as it fades. Written to the individual
- // translate/scale/rotate properties so they compose with the entrance
- // transforms instead of overwriting them.
- var hero=document.querySelector(".hero"), content=hero&&hero.querySelector(".hero-in");
+ // Leaving the hero, two typography layers ride the page scroll: the wordmark
+ // leaves through its own mask at -0.7x the scroll position and "let's create"
+ // comes up from below the hero's clip at -0.8x. Both are read straight off
+ // scrollY, linear and unclamped, with no easing or smoothing. Nothing else
+ // moves: the photo stays put, so the overlay blend keeps reading against it.
+ var hero=document.querySelector(".hero");
  var story=document.getElementById("story-section");
- if(!content||!story)return;
- var backdrop=hero.querySelector(".hero-bg"), depth=hero.querySelector(".hero-depth"), title=document.getElementById("heroH1");
+ if(!hero||!story)return;
+ var mark=hero.querySelector(".hero-mark-text"), create=hero.querySelector(".hero-create");
 
- // pin once the hero's bottom reaches the bottom of the screen, so a hero
- // taller than the screen is still fully scrolled through first
- function pin(){root.style.setProperty("--hero-pin",Math.min(0,window.innerHeight-hero.offsetHeight)+"px")}
- pin();
- window.addEventListener("resize",pin);
- if(window.ResizeObserver)new ResizeObserver(pin).observe(hero);
-
- var m=mapProgress;
- M.scroll(function(p){
-  backdrop.style.translate="0 "+m(p,[0,1],[0,-18])+"%";
-  backdrop.style.scale=m(p,[0,1],[1,1.12]);
-  if(depth){
-   depth.style.translate="0 "+m(p,[0,1],[0,-32])+"%";
-   depth.style.scale=m(p,[0,.8,1],[1,1.04,.92]);
-   depth.style.rotate=m(p,[0,1],[0,-2])+"deg";
+ // the reference drops this parallax on small screens
+ var small=window.matchMedia("(max-width:809px)");
+ M.scroll(function(progress,info){
+  var y=info&&info.y?info.y.current:window.scrollY;
+  if(small.matches){
+   if(mark)mark.style.translate="";
+   if(create)create.style.translate="-50% 0";
+   return;
   }
-  content.style.translate="0 "+m(p,[0,1],[0,-55])+"%";
-  content.style.scale=m(p,[0,.65,1],[1,1.08,.72]);
-  content.style.opacity=m(p,[0,.55,.85,1],[1,1,.8,0]);
-  if(title){
-   title.style.translate="0 "+m(p,[0,1],[0,-48])+"vh";
-   title.style.scale=m(p,[0,.55,1],[1,1.08,.55]);
-   title.style.rotate="x "+m(p,[0,1],[0,8])+"deg";
-   title.style.opacity=m(p,[0,.55,.9,1],[1,1,.5,0]);
-  }
- },{target:story,offset:["start end","start start"]});
+  if(mark)mark.style.translate="0 "+(y*-0.7).toFixed(1)+"px";
+  if(create)create.style.translate="-50% "+(y*-0.8).toFixed(1)+"px";
+ });
 })();
 
 /* scroll reveals */
@@ -1532,67 +1524,45 @@ var cio=new IntersectionObserver(function(es){
   if(!e.isIntersecting)return; cio.unobserve(e.target);
   var el=e.target,to=parseFloat(el.dataset.to)||0,dec=parseInt(el.dataset.dec||"0",10),sfx=el.dataset.suffix||"";
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=to.toFixed(dec)+sfx;return}
-  var t0=performance.now(),dur=1900;
-  (function step(t){
-   var p=Math.min(1,(t-t0)/dur),v=to*(1-Math.pow(1-p,4));
-   el.textContent=v.toFixed(dec)+sfx;
-   if(p<1)requestAnimationFrame(step);
-  })(t0);
+  var dur=parseFloat(el.dataset.dur)||1900, wait=parseFloat(el.dataset.delay)||0;
+  setTimeout(function(){
+   var t0=performance.now();
+   (function step(t){
+    var p=Math.min(1,(t-t0)/dur),v=to*(1-Math.pow(1-p,4));
+    el.textContent=v.toFixed(dec)+sfx;
+    if(p<1)requestAnimationFrame(step);
+   })(t0);
+  },wait);
  });
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): a scroll-controlled sequence. The stage pins while the
-   section scrolls past, and the phrases take the centre one after another. Each
-   phrase holds in the centre for a moment, then lifts away: it starts slowly,
-   as if unsticking, and gathers speed as it rises out through the top of the
-   page. The next phrase waits a beat and is then pulled up after it, easing to a
-   stop in the centre, so each phrase appears to drag the next one into place.
-   The last phrase leaves too. Every position is tied directly to scroll
-   progress, so the sequence stops wherever the reader stops and runs backwards
-   on the way up. */
+/* story section (page 2): the stacking reveal, driven by scroll rather than
+   time. The stage pins while the section scrolls past, and each phrase owns an
+   equal slice of that track: across its slice it rises the measured 48px and
+   grows from 0.806 to full size as it fades in, then holds. Earlier phrases
+   stay where they landed, so the lines stack up while the page holds still. */
 (function(){
  var section=document.getElementById("story-section");
  var lines=section?section.querySelectorAll(".story-line"):[];
  var M=window.Motion;
- // without js-motion (reduced motion, or no library) the phrases stay stacked
+ // without js-motion (reduced motion, or no library) the phrases sit at rest
  if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
 
- var track={target:section,offset:["start start","end end"]};
- var n=lines.length;
- // in units of one move: how long a phrase holds in the centre, and how far
- // into a move the next phrase waits before it is pulled along
- var HOLD=.35, LAG=.08;
- var LEAD=[.45,0,.7,.55];   // unsticks slowly, then speeds away
- var FOLLOW=[.4,.1,.4,1];    // picks up gently after the pull, settles softly
-
- // move k takes phrase k out (and phrase k+1 in) between start[k] and end[k]
- var total=n*(HOLD+1), start=[], end=[];
- for(var k=0;k<n;k++){start.push(((k+1)*HOLD+k)/total);end.push(((k+1)*(HOLD+1))/total)}
-
- // clear of the stage: half the screen plus half the phrase, and a little more
- function offset(d){return "translate3d(0,calc("+(d*54)+"vh + "+(d*50)+"%),0)"}
-
- Array.prototype.forEach.call(lines,function(line,i){
-  // position is -1 gone above the page, 0 centred, 1 waiting below
-  var times=[0],pos=[i===0?0:1],ease=[];
-  if(i>0){
-   times.push(start[i-1]+LAG*(end[i-1]-start[i-1]),end[i-1]);
-   pos.push(1,0); ease.push("linear",FOLLOW);
+ var n=lines.length, slice=1/n;
+ M.scroll(function(p){
+  for(var i=0;i<n;i++){
+   var local=Math.min(1,Math.max(0,(p-i*slice)/slice));
+   lines[i].style.transform="translateY("+((1-local)*48).toFixed(1)+"px) scale("+(.806+local*.194).toFixed(4)+")";
+   lines[i].style.opacity=local.toFixed(3);
   }
-  times.push(start[i],end[i],1);
-  pos.push(0,-1,-1); ease.push("linear",LEAD,"linear");
-  M.scroll(M.animate(line,{
-   transform:pos.map(offset),
-   opacity:pos.map(function(d){return 1-.4*Math.abs(d)})
-  },{duration:1,times:times,ease:ease}),track);
- });
+ },{target:section,offset:["start start","end end"]});
 
  // unchanged water drift across the pinned stretch
  var water=section.querySelector(".story-water");
  if(water)M.scroll(function(p){
   water.style.transform="translate3d(0,"+((0.5-p)*300).toFixed(2)+"px,0)";
- },track);
+ },{target:section,offset:["start start","end end"]});
 })();
 
 /* page 2 footage: decode only while the section is on screen */
