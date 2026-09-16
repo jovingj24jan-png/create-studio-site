@@ -23,7 +23,7 @@
   --ink:#050609; --coal:#141414; --paper:#f2f2f2; --white:#fff;
   --mist:#f2f2f2; --line:#ebebeb; --rule:#d5d7de;
   --muted:#797d82; --deep:#5c6063; --accent:#ff6041;
-  --gutter:40px; --nav-h:60px;
+  --gutter:20px; --nav-h:60px;
   --ease:cubic-bezier(.22,1,.36,1);
   /* Entrance motion read off the reference build. The tween easings are its
      cubic-beziers verbatim; the --s-* curves are its springs sampled at the
@@ -41,8 +41,8 @@
   --s-04:linear(0,0.0235,0.083,0.1647,0.2582,0.3557,0.4517,0.5423,0.6252,0.6991,0.7636,0.8186,0.8647,0.9025,0.933,0.9571,0.9756,0.9895,0.9996,1.0065,1.0111,1.0137,1.0149,1.0151,1.0146,1.0136,1.0123,1.0108,1.0093,1.0079,1.0066,1.0053,1.0043,1.0033,1.0025,1.0019,1.0013,1.0009,1.0006,1);
   --s-02:linear(0,0.086,0.2539,0.428,0.5786,0.698,0.7879,0.8534,0.8998,0.9323,0.9546,0.9697,0.98,0.9868,0.9913,0.9943,0.9963,0.9976,0.9985,1);
 }
-@media(max-width:1439px){:root{--rfs:14px;--gutter:32px}}
-@media(max-width:1199px){:root{--rfs:12px;--mono:14px;--gutter:28px;--nav-h:56px}}
+@media(max-width:1439px){:root{--rfs:14px}}
+@media(max-width:1199px){:root{--rfs:12px;--mono:14px;--nav-h:56px}}
 @media(max-width:809px){:root{--rfs:9.6px;--mono:13px;--gutter:20px;--nav-h:54px}}
 @media(max-width:430px){:root{--rfs:8.4px;--mono:12px;--gutter:16px}}
 @media(max-width:375px){:root{--rfs:7.8px;--mono:11.5px}}
@@ -121,9 +121,10 @@ ul{list-style:none}
 .hdr-in{display:flex;align-items:center;height:var(--nav-h)}
 .logo{color:var(--accent);font-weight:800;font-size:calc(var(--mono)*1.75);letter-spacing:-.055em;line-height:1;display:inline-flex;align-items:flex-start}
 .logo sup{font-size:.36em;font-weight:600;margin-top:.25em}
-.nav{display:flex;align-items:center;gap:36px;margin-left:8%}
-@media(min-width:1024px){.nav{margin-left:14%}}
-.nav a{display:inline-flex;align-items:flex-start;color:rgba(255,255,255,.8);transition:color .3s}
+.nav{display:flex;align-items:center;gap:33px;margin-left:8%}
+@media(min-width:1024px){.nav{margin-left:calc(14% + 4px)}}
+.nav a{position:relative;display:inline-flex;align-items:flex-start;color:rgba(255,255,255,.8);transition:color .3s}
+.nav .badge{position:absolute;left:100%;top:-2px;margin-left:5px}
 .nav a:hover{color:#fff}
 .roll{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom}
 .roll span{display:block;transition:transform .45s var(--ease)}
@@ -155,12 +156,14 @@ body.menu .menu a.mi{opacity:1;transform:none}
    content, and while page 2 slides up over the hero its layers recede at
    different depths. The hero holds in place for that, pinned once its bottom
    reaches the bottom of the screen (--hero-pin is set by script). */
+/* the pin lives and dies inside this wrapper, which ends with page 2 */
+.scene{position:relative}
 html.js-motion .hero{position:sticky;top:var(--hero-pin,0px)}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
 .hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(28px,5vh,70px));padding-bottom:clamp(28px,5vh,64px)}
-.rail{display:flex;align-items:center;gap:12px;white-space:nowrap;color:rgba(255,255,255,.65)}
+.rail{display:flex;align-items:center;gap:10px;white-space:nowrap;color:rgba(255,255,255,.65)}
 /* the hero runs three mono sizes, not one: the index markers sit at .64 of
    the token, the clock and showreel labels at .8125, everything else at the
    token. Scoped to the hero so later sections keep their own scale. */
@@ -169,9 +172,9 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-info .t-mono{line-height:1.3}
 .rail::before{content:"";display:block;width:36px;height:1px;background:rgba(255,255,255,.45);flex:none}
 @media(max-width:809px){.rail::before{width:24px}}
-.hero-h1{grid-column:3/9;padding-left:33px;letter-spacing:-.05em}
-.hero-stat{grid-column:10/13;text-align:right}
-.hero-mark{grid-column:2/13;padding-left:7px}
+.hero-h1{grid-column:3/8;padding-left:0;letter-spacing:-.05em}
+.hero-stat{grid-column:9/11;text-align:right}
+.hero-mark{grid-column:2/11;padding-left:0}
 /* The wordmark rides up out of its own mask; the mask is exactly the line
    box, so the hero's spacing is unchanged and the letters cut off on a hard
    edge rather than fading. */
@@ -184,11 +187,15 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 /* the reference drops this typography parallax on small screens */
 @media(max-width:809px){.hero-create{display:none}}
 @media(prefers-reduced-motion:reduce){.hero-create{display:none}}
-.hero-info{grid-column:2/7}
-.hero-card{grid-column:9/13;margin-left:auto;width:100%;max-width:387px}
-.r1{grid-column:1/2}
-@media(max-width:1023px){.hero-h1{grid-column:3/10;padding-left:0}.hero-stat{grid-column:10/13}.hero-mark,.hero-info{grid-column:3/13;padding-left:0}.hero-card{grid-column:8/13}.r1{grid-column:1/3}}
-@media(max-width:809px){.hero-h1,.hero-stat,.hero-mark,.hero-info,.hero-card,.r1{grid-column:1/13;text-align:left;margin-left:0;max-width:none;padding-left:0}.hero-stat{margin-top:8px}}
+.hero-info{grid-column:2/6;padding-left:8px}
+.hero-card{grid-column:8/11;margin-left:auto;width:100%;max-width:387px}
+/* The reference lays the hero out on ten equal columns with no gap inside a
+   20px page gutter, so at 1440 the column edges fall on 20, 160, 300 ... 1420.
+   Scoped to the hero; every later section keeps the twelve-column grid. */
+.hero .grid{grid-template-columns:repeat(10,1fr);gap:0}
+.r1{grid-column:1/3;white-space:nowrap}
+@media(max-width:1023px){.hero-h1{grid-column:3/9;padding-left:0}.hero-stat{grid-column:8/11}.hero-mark,.hero-info{grid-column:3/11;padding-left:0}.hero-card{grid-column:7/11}.r1{grid-column:1/3}}
+@media(max-width:809px){.hero-h1,.hero-stat,.hero-mark,.hero-info,.hero-card,.r1{grid-column:1/11;text-align:left;margin-left:0;max-width:none;padding-left:0}.hero-stat{margin-top:8px}}
 /* The reference reveals a short text row by wiping it in from the left
    behind a mask: x -100 to 0 over 1s, opacity untouched. It is the single
    most-used motion on the page, so it stays the plain .mask. */
@@ -751,6 +758,7 @@ input::placeholder{color:var(--rule)}
 <main id="top">
 
 <!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
+<div class="scene">
 <section class="hero" aria-label="Introduction">
   <div class="hero-bg"><img src="hero.jpg" alt="" fetchpriority="high"></div>
   <div class="hero-in">
@@ -759,7 +767,7 @@ input::placeholder{color:var(--rule)}
     <div class="shell">
       <div class="grid" style="align-items:start;row-gap:24px">
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
-        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:23ch" id="heroH1"></h1>
+        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:550px" id="heroH1"></h1>
         <div class="hero-stat hx-row" data-d="0">
           <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
           <p class="t-mono mt1 hx-lift" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
@@ -860,6 +868,7 @@ input::placeholder{color:var(--rule)}
     </div>
   </div>
 </section>
+</div>
 
 <!-- ═══════════════════════════════════════════════ SELECTED WORK ════════ -->
 <section id="work" aria-label="Selected work">
