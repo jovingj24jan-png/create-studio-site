@@ -155,6 +155,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
    content, and while page 2 slides up over the hero its layers recede at
    different depths. The hero holds in place for that, pinned once its bottom
    reaches the bottom of the screen (--hero-pin is set by script). */
+html.js-motion .hero{position:sticky;top:var(--hero-pin,0px)}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
@@ -381,18 +382,23 @@ html.js-motion .hero-card{opacity:.001}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 
 /* ═══════════════════════ story section (page 2) — isolated namespace ═══ */
-/* 400vh of scroll track with a 100vh sticky stage, so each of the four
-   phrases owns roughly a screen of scroll as it stacks into place. */
-.story-section{position:relative;width:100%;height:400vh;background:#f2f2f2}
+/* 520vh of scroll track with a 100vh sticky stage: each phrase gets about a
+   screen of scroll to move plus a third of one standing still in the centre. */
+.story-section{position:relative;width:100%;height:520vh;background:#f2f2f2}
+/* page 2 slides up over the held hero, so it sits above it */
+html.js-motion .story-section{z-index:1}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
   font-size:clamp(3rem,11.11vw,10rem);line-height:1.2;letter-spacing:-.04em;font-weight:700;color:#000}
-/* Scroll-linked stacking reveal, on the measured values: the phrases sit in
-   normal flow and each owns an equal slice of the pinned track, rising 48px
-   and growing from 0.806 into place as its slice passes. They stay stacked
-   once they arrive. Armed only when motion is allowed. */
-html.js-motion .story-line{opacity:0;transform:translateY(48px) scale(.806);transform-origin:50% 50%}
+/* Every phrase shares one cell at the centre of the stage and takes its turn
+   there, so one fills the screen at a time. They wait below the stage until
+   the scroll pulls them up. Armed only when motion is allowed; otherwise the
+   phrases stack as they always have. */
+html.js-motion .story-text{display:grid}
+html.js-motion .story-line{grid-area:1/1;display:flex;align-items:center;justify-content:center;
+  transform-origin:50% 50%;will-change:transform}
+html.js-motion .story-line:not(:first-child){transform:translate3d(0,calc(54vh + 50%),0) scale(1.45)}
 .story-line-accent{color:var(--accent)}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
@@ -1476,6 +1482,14 @@ tick();setInterval(tick,1000);
  if(!hero||!story)return;
  var mark=hero.querySelector(".hero-mark-text"), create=hero.querySelector(".hero-create");
 
+ // the hero holds while page 2 rides up over it. Pinned only once its bottom
+ // reaches the bottom of the screen, so a hero taller than the screen is
+ // still scrolled all the way through first.
+ function pin(){root.style.setProperty("--hero-pin",Math.min(0,window.innerHeight-hero.offsetHeight)+"px")}
+ pin();
+ window.addEventListener("resize",pin);
+ if(window.ResizeObserver)new ResizeObserver(pin).observe(hero);
+
  // the reference drops this parallax on small screens
  var small=window.matchMedia("(max-width:809px)");
  M.scroll(function(progress,info){
@@ -1545,32 +1559,60 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): the stacking reveal, driven by scroll rather than
-   time. The stage pins while the section scrolls past, and each phrase owns an
-   equal slice of that track: across its slice it rises the measured 48px and
-   grows from 0.806 to full size as it fades in, then holds. Earlier phrases
-   stay where they landed, so the lines stack up while the page holds still. */
+/* story section (page 2): a scroll-controlled sequence. The stage pins while the
+   section scrolls past, and the phrases take the centre one after another. A
+   phrase arrives oversized and settles to full size as it reaches the middle,
+   then stands still for a moment. When it leaves it starts slowly, as if
+   unsticking, and gathers speed as it rises out through the top. The next
+   phrase waits a beat and is then pulled up after it, easing to a stop in the
+   centre, so each phrase appears to drag the next one into place. Every
+   position is tied directly to scroll progress, so the sequence stops wherever
+   the reader stops and runs backwards on the way up. */
 (function(){
  var section=document.getElementById("story-section");
  var lines=section?section.querySelectorAll(".story-line"):[];
  var M=window.Motion;
- // without js-motion (reduced motion, or no library) the phrases sit at rest
+ // without js-motion (reduced motion, or no library) the phrases stay stacked
  if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
 
- var n=lines.length, slice=1/n;
- M.scroll(function(p){
-  for(var i=0;i<n;i++){
-   var local=Math.min(1,Math.max(0,(p-i*slice)/slice));
-   lines[i].style.transform="translateY("+((1-local)*48).toFixed(1)+"px) scale("+(.806+local*.194).toFixed(4)+")";
-   lines[i].style.opacity=local.toFixed(3);
+ var track={target:section,offset:["start start","end end"]};
+ var n=lines.length;
+ // in units of one move: how long a phrase holds in the centre, and how far
+ // into a move the next phrase waits before it is pulled along
+ var HOLD=.35, LAG=.2;
+ var LEAD=[.45,0,.7,.55];    // unsticks slowly, then speeds away
+ var FOLLOW=[.35,.15,.25,1]; // picks up after the pull, settles softly
+
+ // move k takes phrase k out (and phrase k+1 in) between start[k] and end[k]
+ var total=n*(HOLD+1), start=[], end=[];
+ for(var k=0;k<n;k++){start.push(((k+1)*HOLD+k)/total);end.push(((k+1)*(HOLD+1))/total)}
+
+ // position is -1 gone above the page, 0 centred, 1 waiting below. Clear of the
+ // stage is half the screen plus half the phrase; a waiting phrase is also held
+ // oversized, so arriving at the centre reads as settling into place.
+ function pose(d){
+  return "translate3d(0,calc("+(d*54)+"vh + "+(d*50)+"%),0) scale("+(1+Math.max(0,d)*.45).toFixed(3)+")";
+ }
+
+ Array.prototype.forEach.call(lines,function(line,i){
+  var times=[0],pos=[i===0?0:1],ease=[];
+  if(i>0){
+   times.push(start[i-1]+LAG*(end[i-1]-start[i-1]),end[i-1]);
+   pos.push(1,0); ease.push("linear",FOLLOW);
   }
- },{target:section,offset:["start start","end end"]});
+  times.push(start[i],end[i],1);
+  pos.push(0,-1,-1); ease.push("linear",LEAD,"linear");
+  M.scroll(M.animate(line,{
+   transform:pos.map(pose),
+   opacity:pos.map(function(d){return 1-.4*Math.abs(d)})
+  },{duration:1,times:times,ease:ease}),track);
+ });
 
  // unchanged water drift across the pinned stretch
  var water=section.querySelector(".story-water");
  if(water)M.scroll(function(p){
   water.style.transform="translate3d(0,"+((0.5-p)*300).toFixed(2)+"px,0)";
- },{target:section,offset:["start start","end end"]});
+ },track);
 })();
 
 /* page 2 footage: decode only while the section is on screen */
