@@ -388,7 +388,8 @@ html.js-motion .hero-card{opacity:.001}
 /* page 2 slides up over the held hero, so it sits above it */
 html.js-motion .story-section{z-index:1}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
+.story-text{position:relative;z-index:5;width:100%;text-align:center}
+.story-line{white-space:nowrap}
 .story-line{
   font-size:clamp(3rem,11.11vw,10rem);line-height:1.2;letter-spacing:-.04em;font-weight:700;color:#000}
 /* Every phrase shares one cell at the centre of the stage and takes its turn
@@ -1574,6 +1575,26 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
  var M=window.Motion;
  // without js-motion (reduced motion, or no library) the phrases stay stacked
  if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
+
+ // The reference sizes each phrase to the screen rather than to a common
+ // font-size, so a short phrase and a long one both read edge to edge.
+ // Measure each one's ink at a known size, then scale it to fill 92% of the
+ // window -- the width "we listen" holds in the reference clip.
+ var FILL=.92, PROBE=200;
+ function fit(){
+  var rg=document.createRange();
+  Array.prototype.forEach.call(lines,function(line){
+   line.style.fontSize=PROBE+"px";
+   rg.selectNodeContents(line);
+   var ink=rg.getBoundingClientRect().width;
+   if(ink>0)line.style.fontSize=(PROBE*window.innerWidth*FILL/ink).toFixed(1)+"px";
+   else line.style.fontSize="";
+  });
+ }
+ fit();
+ var fitWait; window.addEventListener("resize",function(){
+  clearTimeout(fitWait); fitWait=setTimeout(fit,120);
+ });
 
  var track={target:section,offset:["start start","end end"]};
  var n=lines.length;
