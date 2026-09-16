@@ -132,6 +132,9 @@ ul{list-style:none}
 .nav a:hover .roll span:last-child{transform:translateY(0)}
 .badge{font-family:"Fragment Mono",monospace;font-size:10px;line-height:1;margin-left:2px;padding:3px;min-width:15px;height:15px;display:inline-flex;align-items:center;justify-content:center;border-radius:3px;background:rgba(255,255,255,.16);color:#fff;letter-spacing:0}
 .hdr-right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.hdr-right>a .roll span:last-child{color:var(--accent)}
+.hdr-right>a:hover .roll span:first-child{transform:translateY(-100%)}
+.hdr-right>a:hover .roll span:last-child{transform:translateY(0)}
 .hdr-right a{color:rgba(255,255,255,.85)}
 .burger{display:none;width:44px;height:44px;align-items:center;justify-content:center;margin-right:-8px;cursor:pointer}
 .burger i{position:relative;display:block;width:24px;height:12px}
@@ -157,9 +160,15 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
 .hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(28px,5vh,70px));padding-bottom:clamp(28px,5vh,64px)}
 .rail{display:flex;align-items:center;gap:12px;white-space:nowrap;color:rgba(255,255,255,.65)}
+/* the hero runs three mono sizes, not one: the index markers sit at .64 of
+   the token, the clock and showreel labels at .8125, everything else at the
+   token. Scoped to the hero so later sections keep their own scale. */
+.hero .rail.t-mono-sm{font-size:calc(var(--mono)*.64);line-height:1.2;letter-spacing:-.04em}
+.hero .t-mono-sm{font-size:calc(var(--mono)*.8125);line-height:1.3;letter-spacing:-.05em}
+.hero-info .t-mono{line-height:1.3}
 .rail::before{content:"";display:block;width:36px;height:1px;background:rgba(255,255,255,.45);flex:none}
 @media(max-width:809px){.rail::before{width:24px}}
-.hero-h1{grid-column:3/9;padding-left:33px;letter-spacing:-.065em}
+.hero-h1{grid-column:3/9;padding-left:33px;letter-spacing:-.05em}
 .hero-stat{grid-column:10/13;text-align:right}
 .hero-mark{grid-column:2/13;padding-left:7px}
 /* The wordmark rides up out of its own mask; the mask is exactly the line
@@ -170,7 +179,6 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
    view because scroll drives it upward. White through an overlay blend, so
    the photo behind it decides how it reads. */
 .hero-create{position:absolute;bottom:-500px;left:50%;width:100%;margin:0;text-align:center;white-space:pre;
-  font-size:min(calc(var(--rfs)*9.1),15.1vw);
   color:#fff;mix-blend-mode:overlay;translate:-50% 0;will-change:transform;z-index:1;pointer-events:none}
 /* the reference drops this typography parallax on small screens */
 @media(max-width:809px){.hero-create{display:none}}
@@ -209,7 +217,11 @@ html.js-motion .hdr-logo,html.js-motion .hdr .nav{opacity:.001;transform:transla
 html.js-motion .lmask>span{transform:translateY(70px)}
 html.js-motion .hero-card{opacity:.001}
 /* measured hover: a 300ms background fade on the standard ease */
-.hero .btn{transition:background-color .3s cubic-bezier(.4,0,.2,1),color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)}
+.hero .btn{letter-spacing:-.05em;line-height:1.5;
+  transition:background-color .3s cubic-bezier(.4,0,.2,1),color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)}
+.hero .btn-accent{color:#141414}
+.hero .btn-accent:hover{color:#fff}
+.hero .btn-light{color:var(--accent)}
 .hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%)}
 .hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
 /* The hero ticker runs vertically, one logo passing through a logo-high
@@ -371,17 +383,16 @@ html.js-motion .hero-card{opacity:.001}
 /* ═══════════════════════ story section (page 2) — isolated namespace ═══ */
 /* 400vh of scroll track with a 100vh sticky stage, so each of the four
    phrases owns roughly a screen of scroll as it stacks into place. */
-.story-section{position:relative;width:100%;height:400vh;background:#f7f7f5}
+.story-section{position:relative;width:100%;height:400vh;background:#f2f2f2}
 .story-sticky{position:sticky;top:0;height:100vh;min-height:100vh;width:100%;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .story-text{position:relative;z-index:5;width:min(90vw,1100px);text-align:center}
 .story-line{
-  font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.065em;font-weight:700;color:var(--ink)}
+  font-size:clamp(3rem,11.11vw,10rem);line-height:1.2;letter-spacing:-.04em;font-weight:700;color:#000}
 /* Scroll-linked stacking reveal, on the measured values: the phrases sit in
    normal flow and each owns an equal slice of the pinned track, rising 48px
    and growing from 0.806 into place as its slice passes. They stay stacked
    once they arrive. Armed only when motion is allowed. */
 html.js-motion .story-line{opacity:0;transform:translateY(48px) scale(.806);transform-origin:50% 50%}
-.story-line+.story-line{margin-top:.06em}
 .story-line-accent{color:var(--accent)}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
@@ -711,6 +722,7 @@ input::placeholder{color:var(--rule)}
       <a href="#whispers"><span class="roll"><span>WHISPERS</span><span aria-hidden="true">WHISPERS</span></span><sup class="badge num">7</sup></a>
     </nav>
     <div class="hdr-right">
+      <a class="t-mono" href="#site-foot"><span class="roll"><span>CONTACT</span><span aria-hidden="true">CONTACT</span></span></a>
       <button class="burger hx-fade6" data-d="1200" id="burger" aria-label="Open menu" aria-expanded="false"><i></i></button>
     </div>
   </div>
@@ -740,10 +752,10 @@ input::placeholder{color:var(--rule)}
     <div class="shell">
       <div class="grid" style="align-items:start;row-gap:24px">
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
-        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:17ch" id="heroH1"></h1>
+        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:23ch" id="heroH1"></h1>
         <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
-          <p class="t-mono-sm mt1 hx-lift" data-d="1000" style="color:rgba(255,255,255,.8);max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
+          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
+          <p class="t-mono mt1 hx-lift" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
           <div class="mq mq-logos hero-logos mt2 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
         </div>
       </div>
@@ -767,7 +779,10 @@ input::placeholder{color:var(--rule)}
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.03°</div></div>
 
         <div class="hero-info hx-row" data-d="0">
-          <div><p class="t-mono hx-fade" data-d="700" style="max-width:34ch">A design studio working with founders and established teams. We make the things people remember using.</p></div>
+          <div style="max-width:356px">
+            <p class="t-mono hx-fade" data-d="700">A design studio trusted by startups and leading brands.</p>
+            <p class="t-mono hx-fade" data-d="700">We create stories people remember.</p>
+          </div>
           <div class="hx-time mt3" data-d="600">
             <span class="hair" style="width:32px;background:rgba(255,255,255,.4);margin-bottom:12px;display:block"></span>
             <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
@@ -835,7 +850,6 @@ input::placeholder{color:var(--rule)}
       <div class="story-line">we listen</div>
       <div class="story-line">we imagine</div>
       <div class="story-line story-line-accent">we create</div>
-      <div class="story-line">beautiful things</div>
     </div>
   </div>
 </section>
@@ -1241,7 +1255,7 @@ var posts=[
 
 /* ───────────────────────────────────────────── hero headline ────────── */
 var h1=document.getElementById("heroH1");
-var heroLines=["Digital experiences","that connect,","scale and perform."];
+var heroLines=["Digital experiences that","connect, scale and perform."];
 var wordCount=heroLines.join(" ").split(" ").length, wordAt=0;
 h1.innerHTML=heroLines.map(function(line){
  return line.split(" ").map(function(w){
