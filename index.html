@@ -152,11 +152,6 @@ body.menu .menu a.mi{opacity:1;transform:none}
    content, and while page 2 slides up over the hero its layers recede at
    different depths. The hero holds in place for that, pinned once its bottom
    reaches the bottom of the screen (--hero-pin is set by script). */
-.hero{perspective:1400px}
-.hero-depth{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;transform-style:preserve-3d}
-.hero-depth-word{position:absolute;font-size:clamp(100px,20vw,340px);font-weight:700;line-height:.8;white-space:nowrap;opacity:.035;transform:translateZ(-180px) rotateX(2deg)}
-.hero-depth-word+.hero-depth-word{transform:translateZ(-350px) translateY(12vh) scale(1.08)}
-@media(max-width:768px){.hero{perspective:900px}.hero-depth-word{font-size:30vw}}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
@@ -175,6 +170,7 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
    view because scroll drives it upward. White through an overlay blend, so
    the photo behind it decides how it reads. */
 .hero-create{position:absolute;bottom:-500px;left:50%;width:100%;margin:0;text-align:center;white-space:pre;
+  font-size:min(calc(var(--rfs)*9.1),15.1vw);
   color:#fff;mix-blend-mode:overlay;translate:-50% 0;will-change:transform;z-index:1;pointer-events:none}
 /* the reference drops this typography parallax on small screens */
 @media(max-width:809px){.hero-create{display:none}}
@@ -738,7 +734,6 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
 <section class="hero" aria-label="Introduction">
   <div class="hero-bg"><img src="hero.jpg" alt="" fetchpriority="high"></div>
-  <div class="hero-depth" aria-hidden="true"><span class="hero-depth-word">CREATE</span><span class="hero-depth-word">CREATE</span></div>
   <div class="hero-in">
 
     <!-- 00.01 -->
