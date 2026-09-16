@@ -156,9 +156,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
    content, and while page 2 slides up over the hero its layers recede at
    different depths. The hero holds in place for that, pinned once its bottom
    reaches the bottom of the screen (--hero-pin is set by script). */
-/* the pin lives and dies inside this wrapper, which ends with page 2 */
 .scene{position:relative}
-html.js-motion .hero{position:sticky;top:var(--hero-pin,0px)}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
@@ -183,7 +181,7 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
    view because scroll drives it upward. White through an overlay blend, so
    the photo behind it decides how it reads. */
 .hero-create{position:absolute;bottom:-500px;left:50%;width:100%;margin:0;text-align:center;white-space:pre;
-  color:#fff;mix-blend-mode:overlay;translate:-50% 0;will-change:transform;z-index:1;pointer-events:none}
+  color:rgba(255,255,255,.72);mix-blend-mode:screen;translate:-50% 0;will-change:transform;z-index:1;pointer-events:none}
 /* the reference drops this typography parallax on small screens */
 @media(max-width:809px){.hero-create{display:none}}
 @media(prefers-reduced-motion:reduce){.hero-create{display:none}}
@@ -1491,14 +1489,6 @@ tick();setInterval(tick,1000);
  var story=document.getElementById("story-section");
  if(!hero||!story)return;
  var mark=hero.querySelector(".hero-mark-text"), create=hero.querySelector(".hero-create");
-
- // the hero holds while page 2 rides up over it. Pinned only once its bottom
- // reaches the bottom of the screen, so a hero taller than the screen is
- // still scrolled all the way through first.
- function pin(){root.style.setProperty("--hero-pin",Math.min(0,window.innerHeight-hero.offsetHeight)+"px")}
- pin();
- window.addEventListener("resize",pin);
- if(window.ResizeObserver)new ResizeObserver(pin).observe(hero);
 
  // the reference drops this parallax on small screens
  var small=window.matchMedia("(max-width:809px)");
