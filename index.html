@@ -252,6 +252,7 @@ html.js-motion .hdr-logo,html.js-motion .hdr .nav{opacity:.001;transform:transla
 .lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
 .lmask>span{display:block}
 html.js-motion .lmask>span{transform:translateY(70px)}
+html.js-motion .hero .btn{opacity:0}
 html.js-motion .hero-card{opacity:.001}
 /* measured hover: a 300ms background fade on the standard ease */
 /* the reference's hero buttons are padded 16px all round with an 8px gap and
@@ -1540,6 +1541,20 @@ tick();setInterval(tick,1000);
   go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:1,ease:ease("--e-pop")});
   go(".hx-lift:not(.hero-logos)",{opacity:[.001,1],y:[80,0]},{duration:2,delay:1,ease:ease("--e-pop")});
   go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:.6,delay:1.2,ease:ease("--s-06")});
+
+  /* ScrollTrigger, in Motion: inView fires once when the element comes into
+     view, which is what gsap's scrollTrigger shorthand does. The pair slides
+     in from the right. 500px flat would run a phone off its own screen, so
+     the distance is capped at 34vw below about 1470px. */
+  var ctaSlide=Math.min(500,Math.round(window.innerWidth*.34));
+  document.querySelectorAll(".hero .btn").forEach(function(el,i){
+   M.inView(el,function(){
+    if(el.dataset.slid)return;
+    el.dataset.slid="1";
+    M.animate(el,{x:[ctaSlide,0],opacity:[0,1]},
+     {duration:.9,delay:.1+i*.08,ease:ease("--e-slide")});
+   },{amount:.3});
+  });
 
   // each CTA label wipes 70px up out of its mask, the second a beat later
   document.querySelectorAll(".hero .lmask").forEach(function(m){
