@@ -262,9 +262,14 @@ html.js-motion .hero-card{opacity:.001}
    content and the label mask clipped the text. */
 .hero .btn{border-width:0;flex:none}
 .hero .btn-light:hover{box-shadow:inset 0 0 0 1px var(--accent)}
-.hero .btn-accent{color:#141414}
+/* translucent fills so the blur behind them actually renders: at full opacity
+   backdrop-filter has nothing to show through */
+.hero .btn-accent{background:rgba(255,96,65,.72);color:#141414}
 .hero .btn-accent:hover{color:#fff}
-.hero .btn-light{color:var(--accent)}
+/* the label goes dark here: orange on this fill measures 1.57:1, and no alpha
+   rescues it -- even solid white only reaches 3.00:1. Dark ink reads 9.76:1. */
+.hero .btn-light{background:rgba(255,255,255,.72);color:#141414}
+.hero .btn-light svg{color:var(--accent)}
 .hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%)}
 .hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
 /* The hero ticker runs vertically, one logo passing through a logo-high
