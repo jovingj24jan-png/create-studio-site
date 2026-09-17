@@ -157,8 +157,24 @@ body.menu .menu a.mi{opacity:1;transform:none}
 /* the reference's hero sits on flat black and caps its content at 1760px, a
    width it uses only here -- the rest of that page runs 1800, 1740, 1600 and
    others -- so both stay scoped to the hero */
-.hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;overflow:clip;background:#000;color:#fff}
-.hero>.shell,.hero .hero-in>.shell{max-width:1760px}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  align-items:center;text-align:center;padding:2rem;background:#f2f2f2;color:#141414;
+  font-family:"Figtree",system-ui,sans-serif}
+.hero h1{font-size:3rem;font-weight:700;line-height:1.1;letter-spacing:-.03em;color:#000;max-width:20ch;
+  animation:heroRise 1s ease-out both}
+.hero p{font-size:1.25rem;line-height:1.5;color:#5c6063;margin-top:1rem;max-width:600px;
+  animation:heroRise 1.5s ease-out both}
+.hero .cta{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.hero .cta a{padding:.75rem 1.5rem;border-radius:4px;text-decoration:none;font-weight:600;
+  transition:transform .2s ease}
+.hero .cta a.primary{background:#ff6041;color:#fff}
+.hero .cta a.secondary{background:transparent;border:2px solid #141414;color:#141414}
+.hero .cta a:hover{transform:scale(1.05)}
+.hero .icon{margin-top:2rem;color:#ff6041;line-height:0;animation:heroBounce 2s infinite}
+@keyframes heroRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes heroBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+/* the supplied CSS has no small-screen sizes; 3rem overflows a phone */
+@media(max-width:600px){.hero{padding:1.5rem}.hero h1{font-size:2rem}.hero p{font-size:1.05rem}}
 .hero-bg{position:absolute;inset:0}
 /* Hero scroll scene: a faint repeated wordmark sits back in depth behind the
    content, and while page 2 slides up over the hero its layers recede at
@@ -801,83 +817,13 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
 <div class="scene">
 <section class="hero" aria-label="Introduction">
-  <div class="hero-bg"><img src="hero.jpg" alt="" fetchpriority="high"></div>
-  <div class="hero-in">
-
-    <!-- 00.01 -->
-    <div class="shell">
-      <div class="grid" style="align-items:start;row-gap:24px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
-        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:550px" id="heroH1"></h1>
-        <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
-          <p class="t-mono mt1 hx-lift" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
-          <div class="mq mq-logos hero-logos mt1 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 00.02 -->
-    <div class="shell hero-row2">
-      <div class="grid" style="align-items:start;row-gap:16px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.02°</div></div>
-        <div class="hero-mark hx-row" data-d="0">
-          <div class="hero-mark-clip">
-            <p class="t-wordmark hero-mark-text"><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 00.03 -->
-    <div class="shell">
-      <div class="grid" style="align-items:start;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.03°</div></div>
-
-        <div class="hero-info hx-row" data-d="0">
-          <div style="max-width:356px">
-            <p class="t-mono hx-fade" data-d="700">A design studio trusted by startups and leading brands.</p>
-            <p class="t-mono hx-fade" data-d="700">We create stories people remember.</p>
-          </div>
-          <div class="hx-time mt3" data-d="600">
-            <span class="hair" style="width:32px;background:rgba(255,255,255,.4);margin-bottom:12px;display:block"></span>
-            <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
-            <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">UTC−8 Los Angeles</p>
-          </div>
-          <div class="flex wrap g1" style="gap:12px;margin-top:28px;margin-left:-8px">
-            <a href="#work" class="btn btn-accent"><span class="lmask" data-d="1000"><span>See work</span></span> <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l9 9h-3v9h-12v-9h-3l9-9z"/></svg></a>
-            <a href="#site-foot" class="btn btn-light"><span class="lmask" data-d="1200"><span>Let's chat</span></span> <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.782 1.402 8.174-7.336-3.857-7.336 3.857 1.402-8.174-5.934-5.782 8.2-1.193z"/></svg></a>
-          </div>
-
-        <div class="hero-card hx-row" data-d="0">
-          <div class="reel-head t-mono-sm"><span>Showreel</span><span class="hair"></span><span>\\2026</span></div>
-          <a class="reel" id="reel" href="#work" aria-label="Watch showreel 2025">
-            <video src="public/video/showreel.mp4" poster="public/img/showreel.svg"
-                   muted loop autoplay playsinline preload="auto" aria-hidden="true"></video>
-            <span class="reel-cta">
-              <span class="reel-cta-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></span>
-              <span class="reel-cta-label">Showreel 2025</span>
-            </span>
-          </a>
-          <p class="reel-note t-mono-sm"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5 11.9 7.1 17.5 7.4 13.2 11 14.6 16.5 10 13.4 5.4 16.5 6.8 11 2.5 7.4 8.1 7.1Z"/></svg><span>Best digital campaign, Signal Awards</span></p>
-        </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 00.04 + showreel -->
-    <div class="shell">
-      <div class="grid" style="align-items:start;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.04°</div></div>
-
-        <div class="hero-info hx-row" data-d="0">
-        </div>
-
-      </div>
-    </div>
-
-    <p class="t-wordmark hero-create" aria-hidden="true">let's create</p>
+  <h1>Digital experiences that connect, scale and perform.</h1>
+  <p>We create stories people remember. Trusted by startups and leading brands worldwide.</p>
+  <div class="cta">
+    <a href="#work" class="primary">See Work</a>
+    <a href="#site-foot" class="secondary">Let's Chat</a>
   </div>
+  <div class="icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.782 1.402 8.174-7.336-3.857-7.336 3.857 1.402-8.174-5.934-5.782 8.2-1.193z"/></svg></div>
 </section>
 
 <!-- ═══════════════════════════════════════════════ STORY (page 2) ═══════ -->
@@ -1313,10 +1259,12 @@ var posts=[
 ];
 
 /* ───────────────────────────────────────────── hero headline ────────── */
+/* the redesigned hero writes its headline in the markup, so this only runs if
+   the split-word container is present */
 var h1=document.getElementById("heroH1");
 var heroLines=["Digital experiences that","connect, scale and perform."];
 var wordCount=heroLines.join(" ").split(" ").length, wordAt=0;
-h1.innerHTML=heroLines.map(function(line){
+if(h1)h1.innerHTML=heroLines.map(function(line){
  return line.split(" ").map(function(w){
   var i=wordAt++;
   var t=i===wordCount-1?esc(w.replace(/\.$/,""))+'<span class="accent">.</span>':esc(w);
