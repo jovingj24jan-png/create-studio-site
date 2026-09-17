@@ -236,6 +236,9 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 
 /* Hero headline words rise 20px as a blur-and-fade, not a mask. */
 .word{display:inline-block;vertical-align:top}
+.line{display:inline}
+.char{display:inline-block;will-change:transform}
+html.js-motion .char{opacity:0;transform:translateY(28px)}
 .word>span{display:inline-block}
 
 /* Hero load timeline: the starting pose of each piece. The hero entrance
@@ -767,6 +770,7 @@ input::placeholder{color:var(--rule)}
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
   .hero-logos.hx-lift{opacity:.5}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
+  .char{opacity:1!important;transform:none!important}
   .word>span{filter:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
 }
@@ -1322,14 +1326,32 @@ var posts=[
 /* ───────────────────────────────────────────── hero headline ────────── */
 var h1=document.getElementById("heroH1");
 var heroLines=["Digital experiences that","connect, scale and perform."];
-var wordCount=heroLines.join(" ").split(" ").length, wordAt=0;
-h1.innerHTML=heroLines.map(function(line){
- return line.split(" ").map(function(w){
-  var i=wordAt++;
-  var t=i===wordCount-1?esc(w.replace(/\.$/,""))+'<span class="accent">.</span>':esc(w);
-  return '<span class="word" data-d="'+(200+i*40)+'"><span>'+t+'&nbsp;</span></span>';
- }).join("");
-}).join("<br>");
+
+/* Split the headline into lines, words and characters so it can be revealed a
+   letter at a time. Returns the same three collections GSAP's SplitText gives
+   you, written out because this project carries no third-party animation
+   library and has to run with no network. The pieces are decoration: the real
+   sentence stays on the heading as its label and the spans are hidden from
+   assistive tech, or a screen reader would announce it letter by letter. */
+function splitText(el,lines){
+ el.innerHTML=lines.map(function(line,li){
+  var parts=line.split(" ");
+  return '<span class="line">'+parts.map(function(w,wi){
+   var body=w, tail="";
+   if(li===lines.length-1&&wi===parts.length-1&&/\.$/.test(w)){
+    body=w.slice(0,-1); tail='<span class="char accent">.</span>';
+   }
+   var chars=body.split("").map(function(c){return '<span class="char">'+esc(c)+'</span>'}).join("");
+   return '<span class="word">'+chars+tail+'&nbsp;</span>';
+  }).join("")+'</span>';
+ }).join("<br>");
+ el.setAttribute("aria-label",lines.join(" "));
+ Array.prototype.forEach.call(el.children,function(n){n.setAttribute("aria-hidden","true")});
+ return {lines:el.querySelectorAll(".line"),
+         words:el.querySelectorAll(".word"),
+         chars:el.querySelectorAll(".char")};
+}
+if(h1)splitText(h1,heroLines);
 
 /* ───────────────────────────────────────────── project panels ───────── */
 document.getElementById("panels").innerHTML=projects.map(function(p,i){
@@ -1528,6 +1550,9 @@ tick();setInterval(tick,1000);
   go(".hdr-logo,.hdr .nav",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:.5,ease:ease("--e-logo")});
   go(".hx-fade6",{opacity:[.001,1]},{duration:1,delay:.5,ease:ease("--s-06")});
 
+  // the headline lifts in a letter at a time
+  go("#heroH1 .char",{opacity:[0,1],y:[28,0]},
+   {duration:.8,delay:M.stagger(.018,{startDelay:.35}),ease:ease("--ease")});
   go(".hx-time",{y:[40,0]},{duration:1,delay:.6,ease:ease("--e-pop")});
   // the hairline above the clock settles back to 70% as it rises
   go(".hx-time .hair",{opacity:[1,.7]},{duration:1,delay:.6,ease:ease("--e-pop")});
