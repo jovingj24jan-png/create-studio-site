@@ -96,7 +96,7 @@ ul{list-style:none}
 .muted{color:var(--muted)}.deep{color:var(--deep)}.accent{color:var(--accent)}
 
 /* ═══════════════════════════════════════════════════ buttons ═══════════ */
-.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:56px;padding:0 15px;border-radius:12px;border:1px solid transparent;font-family:"Fragment Mono",monospace;font-size:var(--mono);letter-spacing:-.04em;line-height:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;isolation:isolate;cursor:pointer;transition:color .45s var(--ease),border-color .45s var(--ease)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:56px;padding:0 30px;border-radius:999px;border:1px solid transparent;font-family:"Fragment Mono",monospace;font-size:var(--mono);letter-spacing:-.04em;line-height:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;isolation:isolate;cursor:pointer;transition:color .45s var(--ease),border-color .45s var(--ease)}
 .btn::before{content:"";position:absolute;inset:0;z-index:-1;transform:translateY(101%);transition:transform .55s var(--ease)}
 .btn:hover::before{transform:translateY(0)}
 .btn svg{transition:transform .45s var(--ease)}
@@ -245,7 +245,7 @@ html.js-motion .hero-card{opacity:.001}
 /* measured hover: a 300ms background fade on the standard ease */
 /* the reference's hero buttons are padded 16px all round with an 8px gap and
    no minimum height -- 16 + a 24px line + 16 is exactly the 56px they stand */
-.hero .btn{letter-spacing:-.05em;line-height:1.5;padding:16px;gap:8px;min-height:0;
+.hero .btn{letter-spacing:-.05em;line-height:1.5;padding:16px;gap:8px;min-height:0;border-radius:12px;
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   transition:background-color .3s cubic-bezier(.4,0,.2,1),color .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)}
 /* pin the mask to its line box, and drop the 1px border the reference's
