@@ -1562,13 +1562,15 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): the phrases build up a list rather than passing one
-   by one. The first arrives alone in the middle; when the second comes up the
-   pair re-centres so both are read together; the third joins them and all
-   three sit on screen at once. Then the list clears and the fourth arrives on
-   its own, and the page carries on. Each step slides into place and then stands
-   still for a beat before the next begins, so the section reads as four held
-   states rather than a continuous drift. Tied to scroll throughout. */
+/* story section (page 2): one continuous column of phrases, moved by scroll.
+   They sit a fixed distance apart and the whole column slides upward as the
+   section is scrolled, so a phrase rises out through the top while the next
+   comes up from below into the place it left. Nothing fades and nothing plays
+   on its own clock: position is read straight off scroll progress, so the
+   sequence is exactly as far along as the reader has scrolled and runs
+   backwards on the way up. The stage clips whatever is off it. The column
+   stops once the last phrase reaches the middle, which leaves it centred on
+   its own while the section finishes. */
 (function(){
  var section=document.getElementById("story-section");
  var lines=section?section.querySelectorAll(".story-line"):[];
@@ -1602,36 +1604,19 @@ document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
  var track={target:section,offset:["start start","end end"]};
  var n=lines.length;
 
- // Where each phrase sits at each of the four steps, as a fraction of the
- // stage: 0.5 is the middle, past 1 is below it, below 0 is above it. A block
- // of phrases always straddles the middle, so adding one nudges the rest up.
- var BELOW=1.4, ABOVE=-0.4;
- var STEP=[
-  [ 0.50, BELOW, BELOW, BELOW],   // one, on its own
-  [ 0.34,  0.66, BELOW, BELOW],   // two, read together
-  [ 0.16,  0.50,  0.84, BELOW],   // three, all on screen
-  [ABOVE, ABOVE, ABOVE,  0.50]    // the list clears, the fourth arrives alone
- ];
- var SHOW=[[1,0,0,0],[1,1,0,0],[1,1,1,0],[0,0,0,1]];
- var steps=STEP.length-1;
+ // Distance between phrases, as a fraction of the stage: at 0.85 the one
+ // leaving and the one arriving are both partly on screen through the
+ // handover, which is what makes it read as a single moving column.
+ var GAP=.85, SETTLE=.85;
 
- // move across the first 62% of a step, then hold: the pause is what makes
- // each state register before the next one starts
- function ease(t){
-  if(t>=.62)return 1;
-  var v=t/.62;
-  return v*v*(3-2*v);
- }
+ // nothing is faded in or out; the stage's own clip is what hides a phrase
+ Array.prototype.forEach.call(lines,function(line){line.style.opacity="1"});
 
  M.scroll(function(p){
-  var f=Math.max(0,Math.min(steps,p*steps));
-  var k=Math.min(steps-1,Math.floor(f)), t=ease(f-k);
-  for(var i=0;i<n;i++){
-   var y=STEP[k][i]+(STEP[k+1][i]-STEP[k][i])*t;
-   var o=SHOW[k][i]+(SHOW[k+1][i]-SHOW[k][i])*t;
-   lines[i].style.transform="translate3d(0,"+((y-.5)*100).toFixed(2)+"vh,0)";
-   lines[i].style.opacity=o.toFixed(3);
-  }
+  var q=Math.min(1,Math.max(0,p)/SETTLE);   // column halts once the last is centred
+  var travel=GAP*(n-1)*q;
+  for(var i=0;i<n;i++)
+   lines[i].style.transform="translate3d(0,"+((i*GAP-travel)*100).toFixed(2)+"vh,0)";
  },track);
 
  // unchanged water drift across the pinned stretch
