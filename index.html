@@ -253,7 +253,10 @@ html.js-motion .hero-card{opacity:.001}
    16 + 24 + 16, standing them 58px instead of 56. The light button's hover
    outline moves to an inset shadow so it no longer affects the box. */
 .hero .btn .lmask{height:24px}
-.hero .btn{border-width:0}
+/* the reference holds each CTA at its natural size (flex:none). Ours were
+   shrinkable, so below about 1200px they squeezed 9px narrower than their
+   content and the label mask clipped the text. */
+.hero .btn{border-width:0;flex:none}
 .hero .btn-light:hover{box-shadow:inset 0 0 0 1px var(--accent)}
 .hero .btn-accent{color:#141414}
 .hero .btn-accent:hover{color:#fff}
