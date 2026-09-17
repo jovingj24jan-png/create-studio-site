@@ -206,7 +206,6 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 /* Hero headline words rise 20px as a blur-and-fade, not a mask. */
 .word{display:inline-block;vertical-align:top}
 .word>span{display:inline-block}
-html.js-motion .word>span{opacity:.001;filter:blur(4px);transform:translateY(20px)}
 
 /* Hero load timeline: the starting pose of each piece. The hero entrance
    script drives them to rest with Motion — rows and markers slide at t=0
@@ -1448,17 +1447,13 @@ tick();setInterval(tick,1000);
   go(".hdr-logo,.hdr .nav",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:.5,ease:ease("--e-logo")});
   go(".hx-fade6",{opacity:[.001,1]},{duration:1,delay:.5,ease:ease("--s-06")});
 
-  go("#heroH1 .word>span",
-   {opacity:[.001,1],y:[20,0],filter:["blur(4px)","blur(0px)"]},
-   {duration:1.2,delay:M.stagger(.05,{startDelay:.35}),ease:ease("--ease")});
-
   go(".hx-time",{y:[40,0]},{duration:1,delay:.6,ease:ease("--e-pop")});
   // the hairline above the clock settles back to 70% as it rises
   go(".hx-time .hair",{opacity:[1,.7]},{duration:1,delay:.6,ease:ease("--e-pop")});
   go(".hx-fade",{opacity:[.001,1]},{duration:.4,delay:.7,ease:ease("--s-04")});
   go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:1,ease:ease("--e-pop")});
   go(".hx-lift:not(.hero-logos)",{opacity:[.001,1],y:[80,0]},{duration:2,delay:1,ease:ease("--e-pop")});
-  go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:2,delay:1,ease:ease("--e-pop")});
+  go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:.6,delay:1.2,ease:ease("--s-06")});
 
   // each CTA label wipes 70px up out of its mask, the second a beat later
   document.querySelectorAll(".hero .lmask").forEach(function(m){
