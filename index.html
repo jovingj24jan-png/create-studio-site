@@ -117,7 +117,10 @@ ul{list-style:none}
 .ulink:hover::after{transform:scaleX(1);transform-origin:left}
 
 /* ═══════════════════════════════════════════════════ header ════════════ */
-.hdr{position:fixed;inset:0 0 auto;z-index:120;background:var(--coal);transition:transform .5s var(--ease)}
+/* the reference's top bar is 90% black over a 6px backdrop blur, so what
+   scrolls under it stays faintly readable instead of being cut off flat */
+.hdr{position:fixed;inset:0 0 auto;z-index:120;background:rgba(0,0,0,.9);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .5s var(--ease)}
 .hdr.hide{transform:translateY(-102%)}
 .hdr-in{display:flex;align-items:center;height:var(--nav-h)}
 .logo{color:var(--accent);font-weight:800;font-size:calc(var(--mono)*1.75);letter-spacing:-.055em;line-height:1;display:inline-flex;align-items:flex-start}
