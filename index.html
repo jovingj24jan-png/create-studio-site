@@ -160,7 +160,16 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
-.hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(28px,5vh,70px));padding-bottom:clamp(28px,5vh,64px)}
+.hero-row2{margin:32px 0}
+.hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(40px,13.2vh,140px));padding-bottom:clamp(16px,2.2vh,30px)}
+@media(min-width:1024px){
+  /* index rows land on 182, 332, 552 and 794 of a 900px stage, as the
+     reference's do; in vh so the proportions hold at other heights */
+  .hero-in{justify-content:flex-start;padding-top:calc(var(--nav-h) + 13.56vh)}
+  .hero-row2{margin:-0.78vh 0 0}
+  .hero-in>.shell:nth-child(3){margin:8.22vh 0 0}
+  .hero-in>.shell:nth-child(4){margin:3vh 0 0}
+}
 .rail{display:flex;align-items:center;gap:10px;white-space:nowrap;color:rgba(255,255,255,.65)}
 /* the hero runs three mono sizes, not one: the index markers sit at .64 of
    the token, the clock and showreel labels at .8125, everything else at the
@@ -188,11 +197,17 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
 @media(prefers-reduced-motion:reduce){.hero-create{display:none}}
 .hero-info{grid-column:2/6;padding-left:8px}
 .hero-card{grid-column:8/11;margin-left:auto;width:100%;max-width:387px}
+@media(min-width:1024px){
+  .hero-card{position:absolute;right:var(--gutter);top:55.5%;width:27vw;max-width:387px;margin-left:0}
+}
 /* The reference lays the hero out on ten equal columns with no gap inside a
    20px page gutter, so at 1440 the column edges fall on 20, 160, 300 ... 1420.
    Scoped to the hero; every later section keeps the twelve-column grid. */
 .hero .grid{grid-template-columns:repeat(10,1fr);gap:0}
-.r1{grid-column:1/3;white-space:nowrap}
+/* the rail keeps to column 1: spanning into column 2 collided with the
+   wordmark and the studio copy, and grid pushed them onto a row of their
+   own, which is what dropped them below their markers */
+.r1{grid-column:1/2;white-space:nowrap}
 @media(max-width:1023px){.hero-h1{grid-column:3/9;padding-left:0}.hero-stat{grid-column:8/11}.hero-mark,.hero-info{grid-column:3/11;padding-left:0}.hero-card{grid-column:7/11}.r1{grid-column:1/3}}
 @media(max-width:809px){.hero-h1,.hero-stat,.hero-mark,.hero-info,.hero-card,.r1{grid-column:1/11;text-align:left;margin-left:0;max-width:none;padding-left:0}.hero-stat{margin-top:8px}}
 /* The reference reveals a short text row by wiping it in from the left
@@ -770,14 +785,14 @@ input::placeholder{color:var(--rule)}
         <div class="hero-stat hx-row" data-d="0">
           <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
           <p class="t-mono mt1 hx-lift" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
-          <div class="mq mq-logos hero-logos mt2 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
+          <div class="mq mq-logos hero-logos mt1 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
         </div>
       </div>
     </div>
 
     <!-- 00.02 -->
-    <div class="shell" style="margin:32px 0">
-      <div class="grid" style="align-items:center;row-gap:16px">
+    <div class="shell hero-row2">
+      <div class="grid" style="align-items:start;row-gap:16px">
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.02°</div></div>
         <div class="hero-mark hx-row" data-d="0">
           <div class="hero-mark-clip">
@@ -789,7 +804,7 @@ input::placeholder{color:var(--rule)}
 
     <!-- 00.03 -->
     <div class="shell">
-      <div class="grid" style="align-items:end;row-gap:32px">
+      <div class="grid" style="align-items:start;row-gap:32px">
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.03°</div></div>
 
         <div class="hero-info hx-row" data-d="0">
@@ -802,21 +817,10 @@ input::placeholder{color:var(--rule)}
             <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
             <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">UTC−8 Los Angeles</p>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 00.04 + showreel -->
-    <div class="shell mt4">
-      <div class="grid" style="align-items:end;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.04°</div></div>
-
-        <div class="hero-info hx-row" data-d="0">
-          <div class="flex wrap g1" style="gap:12px">
+          <div class="flex wrap g1" style="gap:12px;margin-top:28px">
             <a href="#work" class="btn btn-accent"><span class="lmask" data-d="1000"><span>See work</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
             <a href="#site-foot" class="btn btn-light"><span class="lmask" data-d="1200"><span>Let's chat</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
           </div>
-        </div>
 
         <div class="hero-card hx-row" data-d="0">
           <div class="reel-head t-mono-sm"><span>Showreel</span><span class="hair"></span><span>\\2026</span></div>
@@ -830,6 +834,18 @@ input::placeholder{color:var(--rule)}
           </a>
           <p class="reel-note t-mono-sm"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5 11.9 7.1 17.5 7.4 13.2 11 14.6 16.5 10 13.4 5.4 16.5 6.8 11 2.5 7.4 8.1 7.1Z"/></svg><span>Best digital campaign, Signal Awards</span></p>
         </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 00.04 + showreel -->
+    <div class="shell">
+      <div class="grid" style="align-items:start;row-gap:32px">
+        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.04°</div></div>
+
+        <div class="hero-info hx-row" data-d="0">
+        </div>
+
       </div>
     </div>
 
