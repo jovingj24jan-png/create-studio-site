@@ -154,7 +154,11 @@ body.menu .menu{clip-path:inset(0 0 0 0);pointer-events:auto}
 body.menu .menu a.mi{opacity:1;transform:none}
 
 /* ═══════════════════════════════════════════════════ hero ══════════════ */
-.hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;overflow:clip;background:var(--ink);color:#fff}
+/* the reference's hero sits on flat black and caps its content at 1760px, a
+   width it uses only here -- the rest of that page runs 1800, 1740, 1600 and
+   others -- so both stay scoped to the hero */
+.hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;overflow:clip;background:#000;color:#fff}
+.hero>.shell,.hero .hero-in>.shell{max-width:1760px}
 .hero-bg{position:absolute;inset:0}
 /* Hero scroll scene: a faint repeated wordmark sits back in depth behind the
    content, and while page 2 slides up over the hero its layers recede at
