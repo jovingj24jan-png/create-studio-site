@@ -298,16 +298,13 @@ html.js-motion .hero-card{opacity:.001}
 .hero .btn-light{background:#fff;color:#000}
 .hero .btn-light:hover,.hero .btn-light:focus-visible,.hero .btn-light:active{color:var(--accent);border-color:#fff}
 .hero .btn-light svg{color:var(--accent)}
-.hero-logos{opacity:.5;-webkit-mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%);mask-image:linear-gradient(transparent 0%,#000 25%,#000 75%,transparent 100%)}
-.hero-logos img{height:26px;width:auto;filter:brightness(0) invert(1)}
-/* The hero ticker runs vertically, one logo passing through a logo-high
-   window, as on the reference; the shared .mq horizontal loop stays with the
-   later client marquees. Each track is ten 40px slots on an 80px pitch, so a
-   track moved by -100% lands on an identical frame. Motion drives the loop. */
-.hero-logos{flex-direction:column;height:40px}
-.hero-logos .mq-track{flex-direction:column;align-items:flex-end;row-gap:40px;padding-bottom:40px;animation:none}
-.hero-logos .mq-track>span{display:flex;align-items:center;height:40px;padding:0!important}
-@media(max-width:809px){.hero-logos .mq-track{align-items:flex-start}}
+/* Three client logos in a still row under the caption, in place of the old
+   scrolling ticker. The row keeps the ticker's 40px height so nothing below
+   it moves; logos wrap if a narrow column cannot hold all three. */
+.hero-logos{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;align-content:center;
+  gap:8px 14px;min-height:40px}
+.hero-logos img{display:block;height:22px;width:auto}
+@media(max-width:809px){.hero-logos{justify-content:flex-start}}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
 .reel{position:relative;display:block;width:100%;aspect-ratio:1.70588;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#1b2129,#05070a)}
@@ -786,7 +783,7 @@ input::placeholder{color:var(--rule)}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
-  .hero-logos.hx-lift{opacity:.5}
+  .hero-logos.hx-lift{opacity:1}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
   .word>span{filter:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
@@ -840,7 +837,7 @@ input::placeholder{color:var(--rule)}
         <div class="hero-stat hx-row" data-d="0">
           <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
           <p class="t-mono mt1 hx-lift" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
-          <div class="mq mq-logos hero-logos mt1 hx-lift" data-d="1000" style="--dur:26s"><div class="mq-track"></div><div class="mq-track" aria-hidden="true"></div></div>
+          <div class="hero-logos mt1 hx-lift" data-d="1000"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" width="140" height="44"></div>
         </div>
       </div>
     </div>
@@ -1554,7 +1551,7 @@ tick();setInterval(tick,1000);
   go(".hero-stat",{opacity:[.001,1],x:[85,0]},{duration:1,delay:S.corner,ease:ease("--e-slide")});
   go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:S.corner,ease:ease("--e-pop")});
   go(".hx-lift:not(.hero-logos)",{opacity:[.001,1],y:[80,0]},{duration:1.4,delay:S.corner+.1,ease:ease("--e-pop")});
-  go(".hero-logos.hx-lift",{opacity:[.001,.5],y:[80,0]},{duration:.6,delay:S.corner+.3,ease:ease("--s-06")});
+  go(".hero-logos.hx-lift",{opacity:[.001,1],y:[80,0]},{duration:.6,delay:S.corner+.3,ease:ease("--s-06")});
 
   // 3. the navigation bar
   go(".hdr-logo,.hdr .nav,.hdr-right>a",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:S.bar,ease:ease("--e-logo")});
@@ -1613,17 +1610,6 @@ tick();setInterval(tick,1000);
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
  else arm();
-
- // Hero logo ticker: a continuous upward loop at the reference's rhythm of
- // one logo every 3s, easing to ~0.75x while hovered as the reference does.
- var ticker=document.querySelector(".hero-logos");
- var tracks=ticker?ticker.querySelectorAll(".mq-track"):[];
- if(tracks.length&&tracks[0].children.length){
-  var loop=M.animate(tracks,{transform:["translateY(0%)","translateY(-100%)"]},
-   {duration:3*tracks[0].children.length,ease:"linear",repeat:Infinity});
-  ticker.addEventListener("pointerenter",function(){loop.speed=.74});
-  ticker.addEventListener("pointerleave",function(){loop.speed=1});
- }
 
  // Leaving the hero, two typography layers ride the page scroll: the wordmark
  // leaves through its own mask at -0.7x the scroll position and "let's create"
