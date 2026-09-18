@@ -305,18 +305,19 @@ html.js-motion .hero-card{opacity:.001}
 .hero .btn-light{background:#fff;color:#000}
 .hero .btn-light:hover,.hero .btn-light:focus-visible,.hero .btn-light:active{color:var(--accent);border-color:#fff}
 .hero .btn-light svg{color:var(--accent)}
-/* Three client logos on an endless ticker under the caption. The track holds
-   the set twice and moves left by exactly one set, so the loop has no seam;
-   each logo carries its own trailing space so the halves are equal. Edges
-   fade out, and hovering pauses it. */
-.hero-logos{display:flex;align-items:center;min-height:40px;width:min(100%,280px);margin-left:auto;overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
-          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.logo-track{display:flex;flex:none;animation:logo-loop 14s linear infinite}
+/* Three client logos, one per line, on an endless upward ticker under the
+   caption. The track holds the set twice and moves up by exactly one set, so
+   the loop has no seam; each logo carries its own space below so the halves
+   are equal. The window is one set tall, top and bottom fade out, and
+   hovering pauses it. */
+.hero-logos{height:108px;width:min(100%,280px);margin-left:auto;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent);
+          mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent)}
+.logo-track{display:flex;flex-direction:column;animation:logo-loop 9s linear infinite}
 .hero-logos:hover .logo-track{animation-play-state:paused}
-.logo-set{display:flex;flex:none;align-items:center}
-.hero-logos img{display:block;height:22px;width:auto;margin-right:36px}
-@keyframes logo-loop{to{transform:translateX(-50%)}}
+.logo-set{display:flex;flex-direction:column;align-items:flex-end}
+.hero-logos img{display:block;height:22px;width:auto;margin-bottom:14px}
+@keyframes logo-loop{to{transform:translateY(-50%)}}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
 .reel{position:relative;display:block;width:100%;aspect-ratio:1.70588;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#1b2129,#05070a)}
