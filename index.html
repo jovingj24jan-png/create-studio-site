@@ -306,19 +306,22 @@ html.js-motion .hero-card{opacity:.001}
 .hero .btn-light:hover,.hero .btn-light:focus-visible,.hero .btn-light:active{color:var(--accent);border-color:#fff}
 .hero .btn-light svg{color:var(--accent)}
 /* Three client logos in a one-line window under the caption, taking turns:
-   each holds for 1.6s, then the next slides up into its place. The track
-   holds the set twice and moves up by exactly one set (3 x 40px), so the
-   loop has no seam. The window keeps the old 40px row height so nothing
+   each holds for 1.6s, then the next glides up into its place over 1s on a
+   sine ease, fading through the window's soft top and bottom edges. The
+   track holds the set twice and moves up by exactly one set (3 x 40px), so
+   the loop has no seam. The window keeps the old 40px row height so nothing
    below moves; hovering pauses it. */
-.hero-logos{height:40px;width:min(100%,280px);margin-left:auto;overflow:hidden}
-.logo-track{display:flex;flex-direction:column;animation:logo-loop 6.6s cubic-bezier(.65,0,.35,1) infinite}
+.hero-logos{height:40px;width:min(100%,280px);margin-left:auto;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
+          mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
+.logo-track{display:flex;flex-direction:column;will-change:transform;animation:logo-loop 7.8s cubic-bezier(.37,0,.63,1) infinite}
 .hero-logos:hover .logo-track{animation-play-state:paused}
 .logo-set{display:flex;flex-direction:column;align-items:flex-end}
 .hero-logos img{display:block;height:22px;width:auto;margin:9px 0}
 @keyframes logo-loop{
-  0%,24.24%{transform:translateY(0)}
-  33.33%,57.58%{transform:translateY(-40px)}
-  66.67%,90.91%{transform:translateY(-80px)}
+  0%,20.51%{transform:translateY(0)}
+  33.33%,53.85%{transform:translateY(-40px)}
+  66.67%,87.18%{transform:translateY(-80px)}
   100%{transform:translateY(-120px)}}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
