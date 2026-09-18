@@ -170,6 +170,10 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .hero{position:relative;display:flex;flex-direction:column;min-height:100svh;overflow:hidden;overflow:clip;background:#000;color:#fff}
 .hero>.shell,.hero .hero-in>.shell{max-width:1760px}
 .hero-bg{position:absolute;inset:0}
+/* CreateIllusion lifts this layer 18% and zooms it to 1.15 as the hero
+   scrolls away: it hangs 5% below the hero and zooms from its top edge, so
+   the growth always covers the lift and no black band opens at the bottom. */
+html.js-motion .hero-bg{bottom:-5%;transform-origin:50% 0}
 /* Hero scroll scene: a faint repeated wordmark sits back in depth behind the
    content, and while page 2 slides up over the hero its layers recede at
    different depths. The hero holds in place for that, pinned once its bottom
@@ -1677,28 +1681,47 @@ tick();setInterval(tick,1000);
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
  else arm();
 
- // Leaving the hero, two typography layers ride the page scroll: the wordmark
- // leaves through its own mask at -0.7x the scroll position and "let's create"
- // comes up from below the hero's clip at -0.8x. Both are read straight off
- // scrollY, linear and unclamped, with no easing or smoothing. Nothing else
- // moves: the photo stays put, so the overlay blend keeps reading against it.
+ // CreateIllusion (the reference's framer-motion hero): progress runs from
+ // the hero's top at the top of the screen ("start start") to its bottom
+ // leaving it ("end start"), smoothed by useSpring(stiffness 80, damping 25,
+ // mass 0.2). The background layer rides it: y 0 to -18%, scale 1 to 1.15
+ // (the pasted code is cut off after "1."). The wordmark and "let's create"
+ // keep their -0.45x / -0.55x rates, now read off the same smoothed scroll.
  var hero=document.querySelector(".hero");
  var story=document.getElementById("story-section");
  if(!hero||!story)return;
- var mark=hero.querySelector(".hero-mark-text"), create=hero.querySelector(".hero-create");
-
- // the reference drops this parallax on small screens
+ var mark=hero.querySelector(".hero-mark-text"), create=hero.querySelector(".hero-create"), bg=hero.querySelector(".hero-bg");
  var small=window.matchMedia("(max-width:809px)");
- M.scroll(function(progress,info){
-  var y=info&&info.y?info.y.current:window.scrollY;
+ var K=80, C=25, MASS=.2, pos=scrollY, vel=0, last=0, raf=0;
+
+ function draw(){
+  var h=hero.offsetHeight||1, p=Math.min(1,Math.max(0,pos/h));
+  if(bg){bg.style.translate="0 "+(-18*p).toFixed(3)+"%";bg.style.scale=(1+.15*p).toFixed(4)}
+  // the reference drops the type parallax on small screens
   if(small.matches){
    if(mark)mark.style.translate="";
    if(create)create.style.translate="-50% 0";
    return;
   }
-  if(mark)mark.style.translate="0 "+(y*-0.45).toFixed(1)+"px";
-  if(create)create.style.translate="-50% "+(y*-0.55).toFixed(1)+"px";
- });
+  if(mark)mark.style.translate="0 "+(pos*-0.45).toFixed(1)+"px";
+  if(create)create.style.translate="-50% "+(pos*-0.55).toFixed(1)+"px";
+ }
+ function tick(now){
+  var dt=Math.min(.064,last?(now-last)/1000:.016); last=now;
+  var target=scrollY;
+  // semi-implicit Euler in 2ms steps: the spring is stiff for its mass
+  for(var t=0;t<dt;t+=.002){
+   var step=Math.min(.002,dt-t);
+   vel+=((-K*(pos-target)-C*vel)/MASS)*step;
+   pos+=vel*step;
+  }
+  if(Math.abs(pos-target)<.1&&Math.abs(vel)<1){pos=target;vel=0;raf=0;last=0}
+  else raf=requestAnimationFrame(tick);
+  draw();
+ }
+ addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
+ addEventListener("resize",draw);
+ draw();
 })();
 
 /* scroll reveals */
