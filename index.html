@@ -275,6 +275,11 @@ html.js-motion .hero-card{opacity:.001}
    16 + 24 + 16, standing them 58px instead of 56. The light button's hover
    outline moves to an inset shadow so it no longer affects the box. */
 .hero .btn .lmask{height:24px}
+/* the pasted type reset, applied to the hero pair only: system sans at 14px on
+   a 1.5 line, antialiased. The mask follows the line so the label stays centred */
+.hero .btn{font-family:sans-serif;font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;box-sizing:border-box}
+.hero .btn .lmask{height:1.5em}
 /* the reference holds each CTA at its natural size (flex:none). Ours were
    shrinkable, so below about 1200px they squeezed 9px narrower than their
    content and the label mask clipped the text. */
