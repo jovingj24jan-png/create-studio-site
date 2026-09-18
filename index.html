@@ -1570,6 +1570,25 @@ tick();setInterval(tick,1000);
    M.animate(m.firstElementChild,{y:[70,0]},{duration:1,delay:S.rest+.3+i*.2,ease:ease("--e-pop")});
   });
   go(".hero-card",{opacity:[.001,1],x:[85,0]},{duration:.7,delay:S.rest+.4,ease:ease("--e-slide")});
+
+  // gsap.from(el,{scrollTrigger,opacity:0,y:30,duration:.8,stagger:.2}), replayed
+  // each time the two buttons come back into view on the way up. Motion's inView
+  // stands in for scrollTrigger. Their first arrival belongs to the entrance
+  // above, so they only re-animate once they have scrolled off the top; the
+  // margin keeps the trigger clear of the 60px fixed header, so the replay is
+  // not spent hidden behind it.
+  document.querySelectorAll(".hero .btn").forEach(function(el,i){
+   var gone=false;
+   M.inView(el,function(){
+    if(gone){
+     gone=false;
+     M.animate(el,{opacity:[0,1],y:[30,0]},{duration:.8,delay:i*.2,ease:ease("--ease")});
+    }
+    return function(){
+     if(el.getBoundingClientRect().top<60){gone=true;el.style.opacity="0";}
+    };
+   },{margin:"-60px 0px 0px 0px"});
+  });
  }
  // Hold the entrance until the photo has decoded, so its fade-in never plays
  // over an empty box. Capped, so a slow image cannot keep the page blank.
