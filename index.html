@@ -1708,19 +1708,41 @@ var io=new IntersectionObserver(function(es){
 document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc,.wcard,.panel")
  .forEach(function(el){io.observe(el)});
 
-/* Scroll-driven parallax on every paragraph and button, tied to the scroll
-   bar, no pinning. Each one rises from 60px below and fades in over the
+/* Scroll-driven parallax on every piece of content (text, headings, links,
+   list items, buttons, icons, images, video, form fields), tied to the
+   scroll bar, no pinning. Each one rises from 60px below and fades in over the
    lower half of the screen, then keeps drifting up (up to 36px) as it
    climbs, so it moves at its own pace against the page; scrolling back
    plays it in reverse. Things near the very end of the page, which can
    never reach mid-screen, finish at the furthest point they can reach.
    Uses the translate property, so it stacks with any reveal transform.
-   Skipped: the hero and header (own entrance), anything inside a sticky
-   area (it would freeze mid-fade) and closed accordion contents. */
+   Something inside a cropping box (an image in its frame, a line in its
+   mask) moves the box, so no gap opens inside it; nested matches move with
+   their outermost one. Tall blocks count as arrived once their top part is
+   in, not their centre. Skipped: the hero and header (own entrance),
+   anything inside a sticky area (it would freeze mid-fade), closed
+   accordion contents, fixed overlays and plain inline text runs. */
 (function(){
  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  var skip=".hero,.hdr,.story-section,.panel,.svc,.acc";
- var els=[].filter.call(document.querySelectorAll("main p,main .btn,footer p,footer .btn"),function(el){return !el.closest(skip)});
+ var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
+ var stop="body,main,footer,section,.shell,.grid";
+ function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
+ function box(el){                                                  // climb out of any cropping box
+  var t=el;
+  while(t.parentElement&&!t.parentElement.matches(stop)&&/hidden|clip/.test(getComputedStyle(t.parentElement).overflow+getComputedStyle(t.parentElement).overflowY))t=t.parentElement;
+  return t;
+ }
+ var els=[];
+ kinds.split(",").forEach(function(k){
+  document.querySelectorAll("main "+k+",footer "+k).forEach(function(el){
+   if(el.closest(skip)||fixed(el))return;
+   var t=box(el);
+   if(t.closest(skip)||els.indexOf(t)>=0)return;
+   if(getComputedStyle(t).display==="inline"&&!/^(IMG|SVG|VIDEO|INPUT|SELECT|TEXTAREA)$/i.test(t.tagName))return;
+   els.push(t);
+  });
+ });
  els=els.filter(function(el){return !els.some(function(o){return o!==el&&o.contains(el)})});
  var items=els.map(function(el){return {el:el,y:0,mid:0,rest:.1}}), vh=innerHeight, raf=0;
  function measure(){
@@ -1728,7 +1750,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
   var maxY=document.documentElement.scrollHeight-vh;
   items.forEach(function(it){
    var r=it.el.getBoundingClientRect();
-   it.mid=r.top+scrollY-it.y+r.height/2;                          // page position, minus our own offset
+   it.mid=r.top+scrollY-it.y+Math.min(r.height/2,vh*.25);          // page position, minus our own offset
    it.rest=Math.max(.1,(it.mid-maxY)/vh-.5);                        // mid-screen, or as close as the page end allows
   });
  }
