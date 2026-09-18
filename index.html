@@ -354,12 +354,6 @@ html.js-motion .hero-card{opacity:.001}
 /* counters hold until the block has settled */
 .rv-num{opacity:.001;transition:opacity .6s var(--e-pop) .8s}
 .rv-num.in{opacity:1}
-/* Swipe: paragraphs and buttons that have no reveal of their own rise 40px
-   and fade in each time they scroll into view, from either direction. Uses
-   the separate translate property so it never fights a transform. The class
-   is added by script, so without it everything simply shows. */
-.sw{opacity:.001;translate:0 40px;transition:opacity .8s var(--ease),translate .8s var(--ease)}
-.sw.in{opacity:1;translate:none}
 .imgbox{position:relative;overflow:hidden}
 .imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .imgbox.in img{transform:none}
@@ -800,13 +794,12 @@ input::placeholder{color:var(--rule)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
-  .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,.sw,
+  .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
   .sl-in{transform:none!important}.logo-track{animation:none}
   .hero-logos.hx-lift{opacity:1}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
   .word>span{filter:none}
-  .sw{translate:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
 }
 </style>
@@ -1715,29 +1708,50 @@ var io=new IntersectionObserver(function(es){
 document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc,.wcard,.panel")
  .forEach(function(el){io.observe(el)});
 
-/* Swipe every paragraph and button that is not already animated by its own
-   block. It replays: leaving the viewport resets it, so it swipes in again
-   on the next pass, up or down. Buttons in one row follow each other. */
+/* Scroll-driven parallax on every paragraph and button, tied to the scroll
+   bar, no pinning. Each one rises from 60px below and fades in over the
+   lower half of the screen, then keeps drifting up (up to 36px) as it
+   climbs, so it moves at its own pace against the page; scrolling back
+   plays it in reverse. Things near the very end of the page, which can
+   never reach mid-screen, finish at the furthest point they can reach.
+   Uses the translate property, so it stacks with any reveal transform.
+   Skipped: the hero and header (own entrance), anything inside a sticky
+   area (it would freeze mid-fade) and closed accordion contents. */
 (function(){
- var skip=".hero,.story-section,.hdr,.acc,.rv,.rv-tag,.rv-h,.rv-lead,.mask,.word,.svc,.wcard,.panel,.sw";
- var els=[].filter.call(document.querySelectorAll("main p,main .btn,footer p,footer .btn"),function(el){
-  return !(el.parentElement&&el.parentElement.closest(skip))&&!el.matches(".rv,.rv-tag,.rv-h,.rv-lead,.mask,.word");
- });
- els=els.filter(function(el,i){return els.indexOf(el)===i});
- els.forEach(function(el){
-  el.classList.add("sw");
-  if(el.matches(".btn")){
-   var sibs=[].filter.call(el.parentElement.children,function(c){return c.matches(".btn")});
-   el.style.transitionDelay=(sibs.indexOf(el)*120)+"ms";
-  }
- });
- var sio=new IntersectionObserver(function(es){
-  es.forEach(function(e){
-   if(e.isIntersecting)e.target.classList.add("in");
-   else if(e.intersectionRatio===0)e.target.classList.remove("in");
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc";
+ var els=[].filter.call(document.querySelectorAll("main p,main .btn,footer p,footer .btn"),function(el){return !el.closest(skip)});
+ els=els.filter(function(el){return !els.some(function(o){return o!==el&&o.contains(el)})});
+ var items=els.map(function(el){return {el:el,y:0,mid:0,rest:.1}}), vh=innerHeight, raf=0;
+ function measure(){
+  vh=innerHeight;
+  var maxY=document.documentElement.scrollHeight-vh;
+  items.forEach(function(it){
+   var r=it.el.getBoundingClientRect();
+   it.mid=r.top+scrollY-it.y+r.height/2;                          // page position, minus our own offset
+   it.rest=Math.max(.1,(it.mid-maxY)/vh-.5);                        // mid-screen, or as close as the page end allows
   });
- },{threshold:0,rootMargin:"0px 0px -6% 0px"});
- els.forEach(function(el){sio.observe(el)});
+ }
+ function draw(){
+  raf=0;
+  items.forEach(function(it){
+   var d=(it.mid-scrollY)/vh-.5;                                   // +.5 at the bottom edge, -.5 at the top
+   if(d>.9||d<-.9)return;
+   var t=it.rest>=.45?1:Math.min(1,Math.max(0,(.5-d)/(.5-it.rest)));
+   var y=(1-t)*60+Math.max(-36,Math.min(0,(d-it.rest)*60));
+   it.y=y;
+   it.el.style.translate="0 "+y.toFixed(1)+"px";
+   it.el.style.opacity=t<1?Math.max(.001,t).toFixed(3):"";
+  });
+ }
+ function ask(){if(!raf)raf=requestAnimationFrame(draw)}
+ function remeasure(){measure();draw()}
+ remeasure();
+ addEventListener("scroll",ask,{passive:true});
+ addEventListener("resize",remeasure);
+ addEventListener("load",remeasure);
+ // accordions and late images change the page height under us
+ if(window.ResizeObserver)new ResizeObserver(function(){requestAnimationFrame(remeasure)}).observe(document.body);
 })();
 
 /* the benefit cards read as one thought, so their lines keep a stagger */
