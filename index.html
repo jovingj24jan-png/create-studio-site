@@ -260,18 +260,12 @@ html.js-motion .hx-lift{opacity:.001;transform:translateY(80px)}
 /* Responsive line split: each line of the caption sits in its own mask and
    rises out of it, and the logos follow one at a time. The caption and the
    logo row stay put as blocks; only their pieces move. */
-/* pin: true, start "top top", end "+=500". The wrapper is the hero plus
-   500px of scroll, and the hero sticks to the top for that stretch. */
-/* the extra 500px has to be content, not padding: a sticky element only
-   travels inside its container's content box */
-html.js-motion .hero-pin::after{content:"";display:block;height:500px}
-html.js-motion .hero-pin>.hero{position:sticky;top:0}
 .hero-logos img{transform-origin:50% 50%;will-change:transform,opacity}
 .sl-line{display:block;overflow:hidden}
 .sl-in{display:block}
 html.js-motion .hero .split-lines,html.js-motion .hero-logos.hx-lift{transform:none}
 html.js-motion .hero .sl-in{transform:translateY(110%)}
-html.js-motion .hero-logos img{opacity:0}
+html.js-motion .hero-logos img{transform:translateX(500px)}
 html.js-motion .hx-time{transform:translateY(40px)}
 html.js-motion .hdr-logo,html.js-motion .hdr .nav,html.js-motion .hdr-right>a{opacity:.001;transform:translateY(-48px)}
 /* button labels wipe up out of their own mask */
@@ -798,7 +792,7 @@ input::placeholder{color:var(--rule)}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
-  .sl-in{transform:none!important}.hero-logos img{opacity:1!important}
+  .sl-in{transform:none!important}.hero-logos img{opacity:1!important;transform:none!important}
   .hero-logos.hx-lift{opacity:1}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
   .word>span{filter:none}
@@ -841,7 +835,6 @@ input::placeholder{color:var(--rule)}
 
 <!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
 <div class="scene">
-<div class="hero-pin">
 <section class="hero" aria-label="Introduction">
   <div class="hero-bg"><img src="hero.jpg" alt="" fetchpriority="high"></div>
   <div class="hero-in">
@@ -921,7 +914,6 @@ input::placeholder{color:var(--rule)}
     <p class="t-wordmark hero-create" aria-hidden="true">let's create</p>
   </div>
 </section>
-</div>
 
 <!-- ═══════════════════════════════════════════════ STORY (page 2) ═══════ -->
 <section class="story-section" id="story-section" aria-label="Studio statement">
@@ -1586,60 +1578,6 @@ tick();setInterval(tick,1000);
   },150);
  });
 
- /* The logo timeline, after gsap.timeline({scrollTrigger:{pin, start "top top",
-    end "+=500", scrub:1, snap:{snapTo:"labels", duration:{min:.2,max:3},
-    delay:.2, ease:"power1.inOut"}}}). Labels sit at start, Obliqon, Numeriq and
-    aurelis; each step is the snippet's from(scale .3, rotation 45, alpha 0).
-    Scroll sets a target, the drawn progress eases toward it over about a
-    second (scrub:1), and 0.2s after scrolling stops the page settles onto the
-    nearest label. */
- (function(){
-  var pinBox=document.querySelector(".hero-pin");
-  var logos=Array.prototype.slice.call(document.querySelectorAll(".hero-logos img"));
-  if(!pinBox||!logos.length)return;
-  var DIST=500, n=logos.length, labels=[];
-  for(var i=0;i<=n;i++)labels.push(i/n);
-  var target=0, cur=0, last=performance.now();
-  function draw(){
-   logos.forEach(function(img,i){
-    var k=Math.min(1,Math.max(0,cur*n-i));
-    img.style.opacity=k.toFixed(3);
-    img.style.transform="scale("+(.3+.7*k).toFixed(3)+") rotate("+(45*(1-k)).toFixed(2)+"deg)";
-   });
-  }
-  function read(){target=Math.min(1,Math.max(0,(window.scrollY-pinBox.offsetTop)/DIST))}
-  (function tick(now){
-   var dt=Math.min(.1,(now-last)/1000); last=now;
-   cur+=(target-cur)*(1-Math.exp(-dt*4));
-   if(Math.abs(target-cur)<.0005)cur=target;
-   draw(); requestAnimationFrame(tick);
-  })(last);
-
-  var idle, snapping=false, abort=false;
-  function stop(){abort=true}
-  ["wheel","touchstart","keydown"].forEach(function(t){window.addEventListener(t,stop,{passive:true})});
-  window.addEventListener("scroll",function(){
-   read(); if(snapping)return;
-   clearTimeout(idle); idle=setTimeout(snap,200);
-  },{passive:true});
-  function snap(){
-   var p=target; if(p<=0||p>=1)return;
-   var best=labels.reduce(function(a,b){return Math.abs(b-p)<Math.abs(a-p)?b:a});
-   var from=window.scrollY, d=pinBox.offsetTop+best*DIST-from;
-   if(Math.abs(d)<1)return;
-   var dur=Math.min(3,Math.max(.2,Math.abs(d)/600))*1000, t0=performance.now();
-   var html=document.documentElement, was=html.style.scrollBehavior;
-   snapping=true; abort=false; html.style.scrollBehavior="auto";
-   (function step(now){
-    var t=Math.min(1,(now-t0)/dur), e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;   // power1.inOut
-    if(!abort)window.scrollTo(0,from+d*e);
-    if(t<1&&!abort)requestAnimationFrame(step);
-    else{snapping=false; html.style.scrollBehavior=was}
-   })(t0);
-  }
-  read(); cur=target; draw();
- })();
-
  function cornerIn(delay){
   var lines=document.querySelectorAll(".hero .split-lines .sl-in");
   if(lines.length)M.animate(lines,{transform:["translateY(110%)","translateY(0%)"]},
@@ -1661,6 +1599,20 @@ tick();setInterval(tick,1000);
   go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:S.corner,ease:ease("--e-pop")});
   go(".hx-lift",{opacity:[.001,1]},{duration:.2,delay:S.corner});
   cornerIn(S.corner+.1);
+
+  // gsap.to(logos,{scrollTrigger:logos, x:500}), read as a slide in: each logo
+  // waits 500px to the right, outside the hero's clip, and slides home the
+  // first time it is in view -- once, as scrollTrigger's shorthand does. On
+  // load that lands just after the caption lines; if the page opens scrolled
+  // down, it plays straight away when the logos come into view instead.
+  // The trigger is the row, not the logos: parked 500px out, the logos
+  // themselves are off screen and would never count as in view.
+  var playStart=performance.now(), logoRow=document.querySelector(".hero-logos"), logosDone=false;
+  if(logoRow)M.inView(logoRow,function(){
+   if(logosDone)return; logosDone=true;
+   var wait=Math.max(0,S.corner+.5-(performance.now()-playStart)/1000);
+   M.animate(logoRow.querySelectorAll("img"),{x:[500,0]},{duration:.5,delay:M.stagger(.1,{startDelay:wait}),ease:[.25,.46,.45,.94]});   // power1.out
+  });
 
   // 3. the navigation bar
   go(".hdr-logo,.hdr .nav,.hdr-right>a",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:S.bar,ease:ease("--e-logo")});
@@ -1749,10 +1701,6 @@ tick();setInterval(tick,1000);
  var small=window.matchMedia("(max-width:809px)");
  M.scroll(function(progress,info){
   var y=info&&info.y?info.y.current:window.scrollY;
-  // the hero holds still for the pinned stretch, so its layers count scroll
-  // only from where the pin lets go
-  var pinEl=document.querySelector(".hero-pin");
-  if(pinEl&&document.documentElement.classList.contains("js-motion"))y=Math.max(0,y-500);
   if(small.matches){
    if(mark)mark.style.translate="";
    if(create)create.style.translate="-50% 0";
