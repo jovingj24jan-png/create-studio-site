@@ -260,12 +260,10 @@ html.js-motion .hx-lift{opacity:.001;transform:translateY(80px)}
 /* Responsive line split: each line of the caption sits in its own mask and
    rises out of it, and the logos follow one at a time. The caption and the
    logo row stay put as blocks; only their pieces move. */
-.hero-logos img{transform-origin:50% 50%;will-change:transform,opacity}
 .sl-line{display:block;overflow:hidden}
 .sl-in{display:block}
 html.js-motion .hero .split-lines,html.js-motion .hero-logos.hx-lift{transform:none}
 html.js-motion .hero .sl-in{transform:translateY(110%)}
-html.js-motion .hero-logos img{transform:translateX(500px)}
 html.js-motion .hx-time{transform:translateY(40px)}
 html.js-motion .hdr-logo,html.js-motion .hdr .nav,html.js-motion .hdr-right>a{opacity:.001;transform:translateY(-48px)}
 /* button labels wipe up out of their own mask */
@@ -307,13 +305,18 @@ html.js-motion .hero-card{opacity:.001}
 .hero .btn-light{background:#fff;color:#000}
 .hero .btn-light:hover,.hero .btn-light:focus-visible,.hero .btn-light:active{color:var(--accent);border-color:#fff}
 .hero .btn-light svg{color:var(--accent)}
-/* Three client logos in a still row under the caption, in place of the old
-   scrolling ticker. The row keeps the ticker's 40px height so nothing below
-   it moves; logos wrap if a narrow column cannot hold all three. */
-.hero-logos{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;align-content:center;
-  gap:8px 14px;min-height:40px}
-.hero-logos img{display:block;height:22px;width:auto}
-@media(max-width:809px){.hero-logos{justify-content:flex-start}}
+/* Three client logos on an endless ticker under the caption. The track holds
+   the set twice and moves left by exactly one set, so the loop has no seam;
+   each logo carries its own trailing space so the halves are equal. Edges
+   fade out, and hovering pauses it. */
+.hero-logos{display:flex;align-items:center;min-height:40px;width:min(100%,280px);margin-left:auto;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.logo-track{display:flex;flex:none;animation:logo-loop 14s linear infinite}
+.hero-logos:hover .logo-track{animation-play-state:paused}
+.logo-set{display:flex;flex:none;align-items:center}
+.hero-logos img{display:block;height:22px;width:auto;margin-right:36px}
+@keyframes logo-loop{to{transform:translateX(-50%)}}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
 .reel{position:relative;display:block;width:100%;aspect-ratio:1.70588;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#1b2129,#05070a)}
@@ -792,7 +795,7 @@ input::placeholder{color:var(--rule)}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
-  .sl-in{transform:none!important}.hero-logos img{opacity:1!important;transform:none!important}
+  .sl-in{transform:none!important}.logo-track{animation:none}
   .hero-logos.hx-lift{opacity:1}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
   .word>span{filter:none}
@@ -847,7 +850,7 @@ input::placeholder{color:var(--rule)}
         <div class="hero-stat hx-row" data-d="0">
           <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
           <p class="t-mono mt1 hx-lift split-lines" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
-          <div class="hero-logos mt1 hx-lift" data-d="1000"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" width="140" height="44"></div>
+          <div class="hero-logos mt1 hx-lift" data-d="1000"><div class="logo-track"><div class="logo-set"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" width="140" height="44"></div><div class="logo-set" aria-hidden="true"><img src="public/img/hero-logos/obliqon.svg" alt="" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="" width="140" height="44"></div></div></div>
         </div>
       </div>
     </div>
@@ -1599,20 +1602,6 @@ tick();setInterval(tick,1000);
   go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:S.corner,ease:ease("--e-pop")});
   go(".hx-lift",{opacity:[.001,1]},{duration:.2,delay:S.corner});
   cornerIn(S.corner+.1);
-
-  // gsap.to(logos,{scrollTrigger:logos, x:500}), read as a slide in: each logo
-  // waits 500px to the right, outside the hero's clip, and slides home the
-  // first time it is in view -- once, as scrollTrigger's shorthand does. On
-  // load that lands just after the caption lines; if the page opens scrolled
-  // down, it plays straight away when the logos come into view instead.
-  // The trigger is the row, not the logos: parked 500px out, the logos
-  // themselves are off screen and would never count as in view.
-  var playStart=performance.now(), logoRow=document.querySelector(".hero-logos"), logosDone=false;
-  if(logoRow)M.inView(logoRow,function(){
-   if(logosDone)return; logosDone=true;
-   var wait=Math.max(0,S.corner+.5-(performance.now()-playStart)/1000);
-   M.animate(logoRow.querySelectorAll("img"),{x:[500,0]},{duration:.5,delay:M.stagger(.1,{startDelay:wait}),ease:[.25,.46,.45,.94]});   // power1.out
-  });
 
   // 3. the navigation bar
   go(".hdr-logo,.hdr .nav,.hdr-right>a",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:S.bar,ease:ease("--e-logo")});
