@@ -354,6 +354,12 @@ html.js-motion .hero-card{opacity:.001}
 /* counters hold until the block has settled */
 .rv-num{opacity:.001;transition:opacity .6s var(--e-pop) .8s}
 .rv-num.in{opacity:1}
+/* Swipe: paragraphs and buttons that have no reveal of their own rise 40px
+   and fade in each time they scroll into view, from either direction. Uses
+   the separate translate property so it never fights a transform. The class
+   is added by script, so without it everything simply shows. */
+.sw{opacity:.001;translate:0 40px;transition:opacity .8s var(--ease),translate .8s var(--ease)}
+.sw.in{opacity:1;translate:none}
 .imgbox{position:relative;overflow:hidden}
 .imgbox img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.5s var(--ease)}
 .imgbox.in img{transform:none}
@@ -794,12 +800,13 @@ input::placeholder{color:var(--rule)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
-  .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
+  .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,.sw,
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
   .sl-in{transform:none!important}.logo-track{animation:none}
   .hero-logos.hx-lift{opacity:1}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
   .word>span{filter:none}
+  .sw{translate:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
 }
 </style>
@@ -1707,6 +1714,31 @@ var io=new IntersectionObserver(function(es){
 },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc,.wcard,.panel")
  .forEach(function(el){io.observe(el)});
+
+/* Swipe every paragraph and button that is not already animated by its own
+   block. It replays: leaving the viewport resets it, so it swipes in again
+   on the next pass, up or down. Buttons in one row follow each other. */
+(function(){
+ var skip=".hero,.story-section,.hdr,.acc,.rv,.rv-tag,.rv-h,.rv-lead,.mask,.word,.svc,.wcard,.panel,.sw";
+ var els=[].filter.call(document.querySelectorAll("main p,main .btn,footer p,footer .btn"),function(el){
+  return !(el.parentElement&&el.parentElement.closest(skip))&&!el.matches(".rv,.rv-tag,.rv-h,.rv-lead,.mask,.word");
+ });
+ els=els.filter(function(el,i){return els.indexOf(el)===i});
+ els.forEach(function(el){
+  el.classList.add("sw");
+  if(el.matches(".btn")){
+   var sibs=[].filter.call(el.parentElement.children,function(c){return c.matches(".btn")});
+   el.style.transitionDelay=(sibs.indexOf(el)*120)+"ms";
+  }
+ });
+ var sio=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+   if(e.isIntersecting)e.target.classList.add("in");
+   else if(e.intersectionRatio===0)e.target.classList.remove("in");
+  });
+ },{threshold:0,rootMargin:"0px 0px -6% 0px"});
+ els.forEach(function(el){sio.observe(el)});
+})();
 
 /* the benefit cards read as one thought, so their lines keep a stagger */
 document.querySelectorAll(".bcard").forEach(function(card){
