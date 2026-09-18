@@ -1689,22 +1689,25 @@ tick();setInterval(tick,1000);
  // read through the reference's useSpring (stiffness 80, damping 25, mass
  // 0.2), so wheel steps and trackpad flicks both glide instead of jumping.
  //   pinned, p 0..1:  photo zooms 1 to 1.15 and lifts 8%
- //                    the rows drift up at different depths, nothing fades:
- //                    top row 60px, wordmark row 40px, lower rows 20px (half
- //                    on phones), so gaps only widen and nothing overlaps
+ //                    headline + top-right corner lift 140px and fade (p 0-.5)
+ //                    Create\Studio slides up out of its mask (p .1-.7)
+ //                    studio copy, buttons, showreel lift and fade (p .25-.75)
+ //                    "let's create" rises to the middle (p .35-1)
  //   leaving, q 0..1: photo lifts on to -18% (CreateIllusion's end state)
- //                    and "let's create" rides up from below at -0.55x
- // Only transforms, on containers the load entrance never animates, so the
- // two never fight; every word stays visible, and at p=0 all is cleared.
+ // Everything is transform/opacity on containers the load entrance never
+ // animates, so the two never fight, and at p=0 every style is cleared.
  var hero=document.querySelector(".hero"), pin=document.querySelector(".hero-pin");
  if(!hero||!pin)return;
  var inner=hero.querySelector(".hero-in"), rows=inner?[].slice.call(inner.children).filter(function(e){return e.classList.contains("shell")}):[];
- var create=hero.querySelector(".hero-create"), bg=hero.querySelector(".hero-bg");
+ var mark=hero.querySelector(".hero-mark-text"), create=hero.querySelector(".hero-create"), bg=hero.querySelector(".hero-bg");
+ var rail2=rows[1]&&rows[1].querySelector(".r1");
  var small=window.matchMedia("(max-width:809px)");
  var K=80, C=25, MASS=.2, pos=scrollY, vel=0, last=0, raf=0;
  var H=0, VH=0, PIN=0, START=0;
 
  function clamp(v){return v<0?0:v>1?1:v}
+ function smooth(v){v=clamp(v);return v*v*(3-2*v)}
+ function span(p,a,b){return smooth((p-a)/(b-a))}
  function layout(){
   VH=innerHeight; H=hero.offsetHeight;
   PIN=Math.round(VH*(small.matches?.6:.8));
@@ -1712,8 +1715,10 @@ tick();setInterval(tick,1000);
   hero.style.top=Math.min(0,VH-H)+"px";
   pin.style.height=(H+PIN)+"px";
  }
- function set(el,y){
-  if(el)el.style.translate=Math.abs(y)>=.05?"0 "+y.toFixed(1)+"px":"";
+ function set(el,y,o){
+  if(!el)return;
+  el.style.translate=Math.abs(y)>=.05?"0 "+y.toFixed(1)+"px":"";
+  el.style.opacity=o<.999?Math.max(0,o).toFixed(3):"";
  }
  function draw(){
   var p=clamp((pos-START)/PIN), q=clamp((pos-START-PIN)/VH);
@@ -1722,14 +1727,25 @@ tick();setInterval(tick,1000);
    bg.style.translate=lift>=.005?"0 "+(-lift).toFixed(3)+"%":"";
    bg.style.scale=p>=.001?(1+.15*p).toFixed(4):"";
   }
-  var k=small.matches?.5:1;
-  set(rows[0],-60*k*p);
-  set(rows[1],-40*k*p);
-  set(rows[2],-20*k*p);
-  set(rows[3],-20*k*p);
+  // phones stack the rows tightly, so there the rows mostly fade (a 30px
+  // lift) and the wordmark row fades with them instead of leaving by mask
+  var a=span(p,0,.5), c=span(p,.25,.75);
+  set(rows[0],-(small.matches?30:140)*a,1-a);
+  set(rows[2],-(small.matches?30:100)*c,1-c);
+  set(rows[3],-(small.matches?30:100)*c,1-c);
+  if(small.matches)set(rows[1],-30*c,1-c);
+  else{set(rows[1],0,1);set(rail2,0,1-c)}
+  if(mark){
+   var m=small.matches?0:span(p,.1,.7);
+   mark.style.translate=m>=.001?"0 "+(-(mark.offsetHeight+24)*m).toFixed(1)+"px":"";
+  }
   if(create){
-   var out=Math.max(0,pos-START-PIN);
-   create.style.translate=small.matches?"-50% 0":"-50% "+(out*-0.55).toFixed(1)+"px";
+   if(small.matches){create.style.translate="-50% 0";}
+   else{
+    // bottom:-500px puts it below the clip; lift it so its middle meets the hero's
+    var rise=500+H/2-create.offsetHeight/2, e=span(p,.35,1);
+    create.style.translate="-50% "+(-rise*e).toFixed(1)+"px";
+   }
   }
  }
  function tick(now){
