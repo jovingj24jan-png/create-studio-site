@@ -281,7 +281,8 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 .hero .btn .lmask{height:24px}
 /* the pasted type reset, applied to the hero pair only: system sans at 14px on
    a 1.5 line, antialiased. The mask follows the line so the label stays centred */
-.hero .btn{font-family:sans-serif;font-size:14px;line-height:1.5;
+/* measured on the reference: Fragment Mono 16/24, -0.05em, at every width */
+.hero .btn{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;
   -webkit-font-smoothing:antialiased;box-sizing:border-box}
 .hero .btn .lmask{height:1.5em}
 /* the reference holds each CTA at its natural size (flex:none). Ours were
@@ -326,6 +327,7 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 .reel-cta-icon svg{display:block;width:20px;height:20px}
 .reel:hover .reel-cta-icon{background:var(--ink);transform:translateX(3px)}
 .reel-cta-label{font-size:16px;font-weight:400;letter-spacing:-.05em;line-height:1.4}
+@media(min-width:1200px){.reel-cta-label{font-size:18.1px;letter-spacing:-.04em}}
 .reel-note{display:flex;align-items:flex-start;gap:6px;padding:8px;color:#fff}
 .reel-note svg{flex:none;width:14px;height:14px;margin-top:3px;color:var(--accent)}
 
@@ -344,6 +346,8 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
   transition:opacity 1.4s var(--s-head) .5s,transform 1.4s var(--s-head) .5s}
 .rv-tag.in,.rv-h.in,.rv-lead.in{opacity:1;transform:none}
 .sechead-tag.rv-tag,.hww-kick.rv-tag{display:inline-block}
+/* section labels, measured on the reference: Fragment Mono 16/22.4, -0.04em, at every width */
+.rv-tag.t-mono-sm,.rv-tag.t-mono,.svc-head .t-mono-sm{font-size:16px;line-height:1.4;letter-spacing:-.04em}
 /* each heading word also lifts 20px out of the rising block */
 .rv-h .w{display:inline-block;opacity:.001;transform:translateY(20px);
   transition:opacity .4s var(--s-04),transform .4s var(--s-04)}
@@ -587,12 +591,15 @@ html.js-motion .panel img.bg{will-change:transform}
    a flat 4rem (2.5rem on phones), the sub 1.13rem and the stack and year
    1rem, all Fragment Mono except the title. Scoped to .panel so the shared
    .t-project / .t-mono classes keep their own sizes elsewhere. */
-.panel .t-project{font-size:64px}
+/* Measured on the reference: title 80/88 -0.07em (48/52.8 weight 600 on
+   tablet, 30.4/36.5 on phones); stack and year stay visible on phones at 13px. */
+.panel .t-project{font-size:80px;line-height:1.1;letter-spacing:-.07em}
 .panel .p3-mid .t-mono{font-size:1.13rem;line-height:1.3}
 .panel .body .t-mono-sm{font-size:1rem;letter-spacing:-.05em}
+@media(max-width:1199px){.panel .t-project{font-size:48px;font-weight:600;letter-spacing:-.05em}}
 @media(max-width:809px){
-  .panel .stack{display:none}
-  .panel .t-project{font-size:40px}
+  .panel .t-project{font-size:30.4px;line-height:1.2;font-weight:500}
+  .panel .body .t-mono-sm{font-size:13px;line-height:1.3}
 }
 .panel .cta{opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
 .panel a:hover .cta{opacity:1;transform:none}
@@ -849,7 +856,7 @@ input::placeholder{color:var(--rule)}
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
         <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:550px" id="heroH1"></h1>
         <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="120" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
+          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
           <p class="t-mono mt1 hx-lift split-lines" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
           <div class="hero-logos mt1 hx-lift" data-d="1000"><div class="logo-track"><div class="logo-set"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" width="140" height="44"></div><div class="logo-set" aria-hidden="true"><img src="public/img/hero-logos/obliqon.svg" alt="" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="" width="140" height="44"></div></div></div>
         </div>
@@ -1662,7 +1669,7 @@ tick();setInterval(tick,1000);
  // the first line of the studio copy...). Rates, as screen speed / page speed:
  //   side labels 0.9 (they drop out through the bottom of their masks)
  //   buttons 1.2, studio copy 1.3, headline and clock 1.4, showreel 1.5,
- //   120+ corner 1.6, its logos and the wordmark 1.7, "let's create" 1.8
+ //   10+ corner 1.6, its logos and the wordmark 1.7, "let's create" 1.8
  // The offset is read straight off scrollY every frame, with no smoothing, so
  // it stops the instant scrolling stops and reverses exactly on the way up.
  // Only `translate` and `clip-path` are touched, which the load entrance
