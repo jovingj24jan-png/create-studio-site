@@ -552,10 +552,24 @@ html.js-motion .story-line{will-change:transform}
 }
 
 /* ═══════════════════════════════════════════════ project panels ════════ */
-.panel{position:sticky;top:0;height:100svh;width:100%}
+/* Measured on the reference: three full-screen project blocks in plain flow
+   (no pinning), so the next project pushes the last one up and every piece
+   of a project -- image, logo, title, stack, year, CTA -- travels inside its
+   own block. Each image zooms 1.5 -> 1 as its block rises into view (script,
+   tied to scroll). */
+.panel{position:relative;height:100svh;width:100%}
 .panel a{position:relative;display:block;height:100%;overflow:hidden;background:var(--ink)}
-.panel img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 1.6s var(--ease)}
-.panel.in img.bg{transform:none}
+.panel img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+html.js-motion .panel img.bg{will-change:transform}
+/* the reference's case-study CTA: a 200px accent disc that lives inside the
+   project it belongs to and trails the pointer while it is over the panel */
+.p3-cta{position:absolute;left:0;top:0;z-index:3;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:var(--accent);color:#fff;pointer-events:none;
+  font-family:"Fragment Mono",ui-monospace,monospace;font-size:1rem;letter-spacing:-.04em;text-transform:uppercase;
+  opacity:0;scale:.4;transition:opacity .35s var(--ease),scale .35s var(--ease)}
+.p3-cta svg{width:44px;height:44px;display:block}
+.panel a.hovered .p3-cta{opacity:1;scale:1}
 .panel .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.30),rgba(5,6,9,.10) 32%,rgba(5,6,9,.14) 62%,rgba(5,6,9,.36))}
 .panel.bright .veil{background:linear-gradient(180deg,rgba(5,6,9,.42),rgba(5,6,9,.34) 32%,rgba(5,6,9,.38) 62%,rgba(5,6,9,.48))}
 .panel .body{position:relative;display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:14.3vh 7.5% 11.2vh;color:#fff}
@@ -582,17 +596,6 @@ html.js-motion .story-line{will-change:transform}
 }
 .panel .cta{opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
 .panel a:hover .cta{opacity:1;transform:none}
-/* cursor-following label over a project panel, as the reference does it. Only
-   mounted for fine pointers; touch keeps the .cta button as the affordance. */
-.vc-cursor{position:fixed;left:0;top:0;z-index:80;pointer-events:none;
-  display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;
-  background:var(--accent);color:#fff;white-space:nowrap;
-  font-family:"Fragment Mono",ui-monospace,monospace;font-size:calc(var(--mono)*.8);
-  letter-spacing:-.04em;line-height:1;text-transform:uppercase;
-  opacity:0;transform:translate3d(-50%,-50%,0) scale(.72);
-  transition:opacity .32s var(--ease),transform .32s var(--ease)}
-.vc-cursor.on{opacity:1;transform:translate3d(-50%,-50%,0) scale(1)}
-.vc-cursor svg{width:14px;height:14px;display:block}
 
 /* ═══════════════════════════════════════════════════ dark bands ════════ */
 .dark{background:var(--ink);color:#fff}
@@ -1298,8 +1301,8 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 /* ───────────────────────────────────────────────────── data ─────────── */
 var projects=[
  {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
- {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",noSub:true,ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
- {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Lindholm"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
+ {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
+ {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
 var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
@@ -1367,6 +1370,7 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
  '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'"'+
    (p.pos?' style="object-position:'+p.pos+'"':'')+' alt="">'+
  '<span class="veil"></span>'+
+ (p.case?'<span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>':'')+
  '<div class="body shell">'+
    '<div class="flex between center g3">'+(p.logo
      ? (p.logo.length>1
@@ -1945,28 +1949,63 @@ document.querySelectorAll(".count").forEach(function(el){
  els.forEach(function(el){io.observe(el)});
 })();
 
-/* project panels: cursor-following "view case study" label (reference behaviour —
-   the panel art itself does not move on hover, the label tracks the pointer). */
+/* Project panels, as measured on the reference. Each image zooms 1.5 -> 1
+   while its block rises from the bottom of the screen to the top -- linear
+   in scroll, read straight off scrollY, so it stops and reverses with the
+   scroll. The CTA disc belongs to the panel the pointer is over: it is
+   positioned inside that panel and eases after the pointer (it keeps
+   tracking while the page scrolls under a still pointer). */
 (function(){
- var panels=document.querySelectorAll(".panel a[data-case]");
+ var panels=[].slice.call(document.querySelectorAll(".panel"));
  if(!panels.length)return;
+ var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ var imgs=panels.map(function(p){return p.querySelector("img.bg")}), raf=0;
+ function zoom(){
+  raf=0;
+  panels.forEach(function(p,i){
+   var r=p.getBoundingClientRect(), H=r.height||innerHeight, img=imgs[i];
+   if(!img||r.bottom<-H||r.top>innerHeight+H)return;
+   var t=Math.min(1,Math.max(0,r.top/H));
+   img.style.transform=t?"scale("+(1+.5*t).toFixed(4)+")":"";
+  });
+ }
+ if(!reduce){
+  addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(zoom)},{passive:true});
+  addEventListener("resize",zoom); zoom();
+ }
+
  var fine=window.matchMedia("(hover:hover) and (pointer:fine)");
- var reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
- if(!fine.matches||reduce.matches)return;
- var el=document.createElement("div");
- el.className="vc-cursor";
- el.setAttribute("aria-hidden","true");
- el.innerHTML='<svg viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg><span>View case study</span>';
- document.body.appendChild(el);
- var x=0,y=0,frame=0;
- function draw(){frame=0;el.style.translate=x+"px "+y+"px"}
- function move(e){x=e.clientX;y=e.clientY;if(!frame)frame=requestAnimationFrame(draw)}
- panels.forEach(function(a){
-  a.addEventListener("pointerenter",function(e){x=e.clientX;y=e.clientY;draw();el.classList.add("on")});
-  a.addEventListener("pointermove",move);
-  a.addEventListener("pointerleave",function(){el.classList.remove("on")});
+ if(!fine.matches)return;
+ var active=null, px=0, py=0, cx=0, cy=0, follow=0;
+ function aim(){
+  if(!active)return;
+  var r=active.getBoundingClientRect();
+  return [px-r.left,py-r.top];
+ }
+ function step(){
+  follow=0;
+  if(!active)return;
+  var t=aim(), k=reduce?1:.2;
+  cx+=(t[0]-cx)*k; cy+=(t[1]-cy)*k;
+  active.cta.style.translate=cx.toFixed(1)+"px "+cy.toFixed(1)+"px";
+  if(Math.abs(t[0]-cx)>.5||Math.abs(t[1]-cy)>.5)follow=requestAnimationFrame(step);
+ }
+ function kick(){if(!follow)follow=requestAnimationFrame(step)}
+ panels.forEach(function(p){
+  var a=p.querySelector("a[data-case]"), cta=a&&a.querySelector(".p3-cta");
+  if(!cta)return;
+  a.cta=cta;
+  a.addEventListener("pointerenter",function(e){
+   px=e.clientX;py=e.clientY;
+   if(active&&active!==a)active.classList.remove("hovered");
+   active=a;var t=aim();cx=t[0];cy=t[1];
+   cta.style.translate=cx+"px "+cy+"px";
+   a.classList.add("hovered");
+  });
+  a.addEventListener("pointermove",function(e){px=e.clientX;py=e.clientY;kick()});
+  a.addEventListener("pointerleave",function(){a.classList.remove("hovered");if(active===a)active=null});
  });
- window.addEventListener("blur",function(){el.classList.remove("on")});
+ addEventListener("scroll",kick,{passive:true});
 })();
 
 /* header hide on scroll-down */
