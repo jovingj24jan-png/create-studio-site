@@ -172,7 +172,7 @@ body.menu .menu a.mi{opacity:1;transform:none}
 .hero-bg{position:absolute;inset:0}
 .scene{position:relative}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
-html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
+html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.44)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.72) 0%,rgba(5,6,9,.25) 30%,rgba(5,6,9,.35) 70%,rgba(5,6,9,.85) 100%)}
 .hero-row2{margin-top:32px;margin-bottom:32px}
 .hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(40px,13.2vh,140px));padding-bottom:clamp(16px,2.2vh,30px)}
@@ -249,24 +249,25 @@ html.js-motion .hero-bg img{opacity:.001;transform:translateY(40px) scale(1.3)}
    script drives them to rest with Motion — rows and markers slide at t=0
    (markers from x -30, rows from x 85), then the pieces inside land on
    their own delays. The logo strip rests half-lit, at its own 0.5. */
-html.js-motion .hx-mark{opacity:.001;transform:translateX(-30px)}
-html.js-motion .hx-row{opacity:.001;transform:translateX(85px)}
+html.js-motion .hx-mark{opacity:.001;transform:translateY(80px)}
+html.js-motion .hero-h1{opacity:.001;transform:translateY(20px)}
+html.js-motion .hero-mark-text{opacity:.001;transform:translateY(80px)}
+html.js-motion .hero .btn{opacity:.001}
 html.js-motion .hx-pop,html.js-motion .hx-fade,html.js-motion .hx-fade6{opacity:.001}
+html.js-motion .hx-pop{transform:translateY(80px)}
 html.js-motion .hx-lift{opacity:.001;transform:translateY(80px)}
 /* Responsive line split: each line of the caption sits in its own mask and
    rises out of it, and the logos follow one at a time. The caption and the
    logo row stay put as blocks; only their pieces move. */
 .sl-line{display:block;overflow:hidden}
 .sl-in{display:block}
-html.js-motion .hero .split-lines,html.js-motion .hero-logos.hx-lift{transform:none}
-html.js-motion .hero .sl-in{transform:translateY(110%)}
-html.js-motion .hx-time{transform:translateY(40px)}
+html.js-motion .hx-time{opacity:.001;transform:translateY(40px)}
 html.js-motion .hdr-logo,html.js-motion .hdr .nav,html.js-motion .hdr-right>a{opacity:.001;transform:translateY(-48px)}
 /* button labels wipe up out of their own mask */
 .lmask{display:inline-block;overflow:hidden;vertical-align:bottom}
 .lmask>span{display:block}
 html.js-motion .lmask>span{transform:translateY(70px)}
-html.js-motion .hero-card{opacity:.001}
+html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 /* measured hover: a 300ms background fade on the standard ease */
 /* the reference's hero buttons are padded 16px all round with an 8px gap and
    no minimum height -- 16 + a 24px line + 16 is exactly the 56px they stand */
@@ -302,14 +303,14 @@ html.js-motion .hero-card{opacity:.001}
 .hero .btn-light:hover,.hero .btn-light:focus-visible,.hero .btn-light:active{color:var(--accent);border-color:#fff}
 .hero .btn-light svg{color:var(--accent)}
 /* Three client logos in a one-line window under the caption, rolling
-   upward at a steady 16px/s with no stops, fading through the window's
+   upward at the reference's steady 21.5px/s with no stops, fading through the window's
    soft top and bottom edges. The track holds the set twice and moves up by
    exactly one set (3 x 40px), so the loop has no seam. The window keeps the old 40px row height so nothing
    below moves; hovering pauses it. */
 .hero-logos{height:40px;width:min(100%,280px);margin-left:auto;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
           mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
-.logo-track{display:flex;flex-direction:column;will-change:transform;animation:logo-loop 7.5s linear infinite}
+.logo-track{display:flex;flex-direction:column;will-change:transform;animation:logo-loop 5.6s linear infinite}
 .hero-logos:hover .logo-track{animation-play-state:paused}
 .logo-set{display:flex;flex-direction:column;align-items:flex-end}
 .hero-logos img{display:block;height:22px;width:auto;margin:9px 0}
@@ -887,8 +888,8 @@ input::placeholder{color:var(--rule)}
         <div class="hero-card hx-row" data-d="0">
           <div class="reel-head t-mono-sm"><span>Showreel</span><span class="hair"></span><span>\\2026</span></div>
           <a class="reel" id="reel" href="#work" aria-label="Watch showreel 2025">
-            <video src="public/video/showreel.mp4" poster="public/img/showreel.svg"
-                   muted loop autoplay playsinline preload="auto" aria-hidden="true"></video>
+            <video data-src="public/video/showreel.mp4" poster="public/img/showreel.svg"
+                   muted loop playsinline preload="none" aria-hidden="true"></video>
             <span class="reel-cta">
               <span class="reel-cta-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></span>
               <span class="reel-cta-label">Showreel 2025</span>
@@ -1578,97 +1579,72 @@ tick();setInterval(tick,1000);
   },150);
  });
 
- function cornerIn(delay){
-  var lines=document.querySelectorAll(".hero .split-lines .sl-in");
-  if(lines.length)M.animate(lines,{transform:["translateY(110%)","translateY(0%)"]},
-   {duration:.7,delay:M.stagger(.15,{startDelay:delay}),ease:ease("--e-pop")});
+ /* The entrance, measured frame by frame on the reference
+    (createstudio.framer.media, 1440x900, two loads agreeing to ~0.1s) and
+    timed from the moment its photo starts to show. One composition in two
+    beats: the photo swells in with the frame around it, then settles back as
+    the type rises into it.
+      0      photo  opacity in over .8s, up 40px, scale 1.44 -> 1.11
+      .29    nav bar down 48px, 1s          .39  clock up 40px, .45s
+      .79    10+, caption and logos up 80px, .9s; button labels up 70px, .52s
+      2.4    photo scale 1.11 -> 1, 1.2s (a gentler, cubic ease-out)
+      2.63   // 00.0x labels up 80px, .95s   2.86 Create\Studio up 80px
+             inside its mask, .9s            3.05 headline up 20px, .6s
+      3.68   showreel card up 66px, .85s
+    Everything but the headline runs on the reference's steep ease-out (half
+    the travel in the first tenth); the photo swell starts gently and the
+    headline, which arrives word by word there, eases in and out. */
+ function countUp(el){
+  var to=parseFloat(el.dataset.to)||0,dur=parseFloat(el.dataset.dur)||600,sfx=el.dataset.suffix||"",t0=performance.now();
+  (function step(t){var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(to*(1-Math.pow(1-p,4)))+sfx;if(p<1)requestAnimationFrame(step)})(t0);
  }
+ var OUT=[.16,1,.3,1], SWELL=[.4,0,.2,1];
+ function photoIn(){
+  go(".hero-bg img",{opacity:[.001,1],y:[40,0]},{duration:.8,ease:SWELL});
+  go(".hero-bg img",{scale:[1.44,1.11,1.11,1]},{duration:3.6,times:[0,.222,.667,1],ease:[SWELL,"linear",[.33,1,.68,1]]});
+ }
+ function play(photoLate){
+  if(!photoLate)photoIn();
 
- function play(){
-  // The page assembles in five stages: the photo, then the stat in the top
-  // right, then the navigation bar, then the wordmark, then everything else.
-  // Each stage starts as the one before it is settling, so the order is plain
-  // to see without the page feeling slow to arrive.
-  var S={corner:.6,bar:1.1,mark:1.6,rest:2.1};
+  go(".hdr-logo,.hdr .nav,.hdr-right>a",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:.29,ease:OUT});
+  go(".hx-fade6",{opacity:[.001,1]},{duration:1,delay:.29,ease:OUT});
 
-  // 1. the photo
-  go(".hero-bg img",{opacity:[.001,1],y:[40,0],scale:[1.3,1]},{duration:1,ease:ease("--e-img")});
-
-  // 2. top right: the 120+ stat, its caption and the logo strip
-  go(".hero-stat",{opacity:[.001,1],x:[85,0]},{duration:1,delay:S.corner,ease:ease("--e-slide")});
-  go(".hx-pop",{opacity:[.001,1]},{duration:.6,delay:S.corner,ease:ease("--e-pop")});
-  go(".hx-lift",{opacity:[.001,1]},{duration:.2,delay:S.corner});
-  cornerIn(S.corner+.1);
-
-  // 3. the navigation bar
-  go(".hdr-logo,.hdr .nav,.hdr-right>a",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:S.bar,ease:ease("--e-logo")});
-  go(".hx-fade6",{opacity:[.001,1]},{duration:1,delay:S.bar,ease:ease("--s-06")});
-
-  // 4. Create\Studio
-  go(".hero-mark",{opacity:[.001,1],x:[85,0]},{duration:1,delay:S.mark,ease:ease("--e-slide")});
-
-  // 5. everything else: index markers, headline, studio copy, clock,
-  //    buttons and the showreel card
-  go(".hx-mark",{opacity:[.001,1],x:[-30,0]},{duration:1,delay:S.rest,ease:ease("--e-slide")});
-  go("#heroH1,.hero-info",{opacity:[.001,1],x:[85,0]},{duration:1,delay:S.rest,ease:ease("--e-slide")});
-  go(".hx-time",{y:[40,0]},{duration:1,delay:S.rest+.1,ease:ease("--e-pop")});
-  // the hairline above the clock settles back to 70% as it rises
-  go(".hx-time .hair",{opacity:[1,.7]},{duration:1,delay:S.rest+.1,ease:ease("--e-pop")});
-  go(".hx-fade",{opacity:[.001,1]},{duration:.4,delay:S.rest+.1,ease:ease("--s-04")});
-  // the studio line decodes as it fades up
+  go(".hx-time",{opacity:[.001,1],y:[40,0]},{duration:.45,delay:.39,ease:OUT});
+  go(".hx-time .hair",{opacity:[1,.7]},{duration:.45,delay:.39,ease:OUT});
+  // the studio lines decode in place beside the clock
+  go(".hx-fade",{opacity:[.001,1]},{duration:.4,delay:.39,ease:OUT});
   document.querySelectorAll(".hero .hx-fade").forEach(function(el){
-   setTimeout(function(){scrambleText(el,{duration:1,revealDelay:.25,speed:.35});},(S.rest+.1)*1000);
+   setTimeout(function(){scrambleText(el,{duration:1,revealDelay:.25,speed:.35});},390);
   });
-  // each CTA label wipes up out of its mask, the second a beat later
-  document.querySelectorAll(".hero .lmask").forEach(function(m,i){
-   M.animate(m.firstElementChild,{y:[70,0]},{duration:1,delay:S.rest+.3+i*.2,ease:ease("--e-pop")});
-  });
-  go(".hero-card",{opacity:[.001,1],x:[85,0]},{duration:.7,delay:S.rest+.4,ease:ease("--e-slide")});
 
-  // gsap.from(el,{scrollTrigger,opacity:0,y:30,duration:.8,stagger:.2}), replayed
-  // each time the two buttons come back into view on the way up. Motion's inView
-  // stands in for scrollTrigger. Their first arrival belongs to the entrance
-  // above, so they only re-animate once they have scrolled off the top; the
-  // margin keeps the trigger clear of the 60px fixed header, so the replay is
-  // not spent hidden behind it.
-  // the corner replays one by one each time it comes back into view on the way up
-  var corner=document.querySelector(".hero-stat");
-  if(corner){
-   var cornerGone=false;
-   M.inView(corner,function(){
-    if(cornerGone){cornerGone=false;cornerIn(0);}
-    return function(){
-     if(corner.getBoundingClientRect().top<60){
-      cornerGone=true;
-      Array.prototype.forEach.call(document.querySelectorAll(".hero .split-lines .sl-in"),function(n){n.style.transform="translateY(110%)"});
-     }
-    };
-   },{margin:"-60px 0px 0px 0px"});
-  }
-
-  document.querySelectorAll(".hero .btn").forEach(function(el,i){
-   var gone=false;
-   M.inView(el,function(){
-    if(gone){
-     gone=false;
-     M.animate(el,{opacity:[0,1],y:[30,0]},{duration:.8,delay:i*.2,ease:ease("--ease")});
-    }
-    return function(){
-     if(el.getBoundingClientRect().top<60){gone=true;el.style.opacity="0";}
-    };
-   },{margin:"-60px 0px 0px 0px"});
+  go(".hx-pop,.hx-lift",{opacity:[.001,1],y:[80,0]},{duration:.9,delay:.79,ease:OUT});
+  document.querySelectorAll(".hero .count").forEach(function(el){setTimeout(function(){countUp(el)},790)});
+  go(".hero .btn",{opacity:[.001,1]},{duration:.3,delay:.79,ease:OUT});
+  document.querySelectorAll(".hero .lmask").forEach(function(m){
+   M.animate(m.firstElementChild,{y:[70,0]},{duration:.52,delay:.79,ease:OUT});
   });
+
+  go(".hx-mark",{opacity:[.001,1],y:[80,0]},{duration:.95,delay:2.63,ease:OUT});
+  go(".hero-mark-text",{opacity:[.001,1],y:[80,0]},{duration:.9,delay:2.86,ease:OUT});
+  go("#heroH1",{opacity:[.001,1],y:[20,0]},{duration:.6,delay:3.05,ease:[.45,0,.55,1]});
+  go(".hero-card",{opacity:[.001,1],y:[66,0]},{duration:.85,delay:3.68,ease:OUT});
  }
- // Hold the entrance until the photo has decoded, so its fade-in never plays
- // over an empty box. Capped, so a slow image cannot keep the page blank.
+ // The whole composition starts from the photo, so wait until it is decoded:
+ // starting earlier played the type over an empty black hero while the 1.8MB
+ // photo was still painting in, strip by strip, seconds later. If the photo is
+ // very slow the type goes ahead after 4s, and the photo, kept invisible while it
+ // downloads, swells in by itself the moment it is ready.
  function arm(){
-  var img=document.querySelector(".hero-bg img"), done=false;
-  function fire(){if(done)return;done=true;
-   requestAnimationFrame(function(){requestAnimationFrame(play)})}
+  var img=document.querySelector(".hero-bg img"), done=false, late=false;
+  function ready(){
+   if(!done){done=true;requestAnimationFrame(function(){requestAnimationFrame(function(){play(false)})});return}
+   if(late){late=false;requestAnimationFrame(photoIn)}
+  }
+  function timeout(){if(done)return;done=true;late=true;play(true)}
   if(img&&!(img.complete&&img.naturalWidth)&&img.decode){
-   img.decode().then(fire,fire);
-   setTimeout(fire,2500);
-  }else fire();
+   img.decode().then(ready,ready);
+   setTimeout(timeout,4000);
+  }else ready();
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
  else arm();
@@ -1722,6 +1698,17 @@ tick();setInterval(tick,1000);
  addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(draw)},{passive:true});
  addEventListener("resize",function(){drawn=-1;draw()});
  draw();
+})();
+
+/* The showreel footage waits for the hero photo, so the two are not
+   splitting the connection while the page is still black. */
+(function(){
+ var v=document.querySelector(".reel video[data-src]"), img=document.querySelector(".hero-bg img");
+ if(!v)return;
+ function load(){if(!v.dataset.src)return;v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";
+  var t=v.play();if(t&&t.catch)t.catch(function(){})}
+ if(!img||(img.complete&&img.naturalWidth))load();
+ else{img.addEventListener("load",load);img.addEventListener("error",load);setTimeout(load,20000)}
 })();
 
 /* scroll reveals */
@@ -1845,7 +1832,11 @@ var cio=new IntersectionObserver(function(es){
   },wait);
  });
 },{threshold:.4});
-document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
+document.querySelectorAll(".count").forEach(function(el){
+ // the hero's counter is part of the entrance timeline when that runs
+ if(el.closest(".hero")&&document.documentElement.classList.contains("motion-ready"))return;
+ cio.observe(el);
+});
 
 /* story section (page 2), measured on the reference at 1440x900 and
    1920x1080. It is built there as four full-screen layers stacked one stage
