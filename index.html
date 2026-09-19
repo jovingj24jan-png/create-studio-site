@@ -474,14 +474,14 @@ html.js-motion .story-section{z-index:1}
 .story-line{white-space:nowrap}
 .story-line{
   font-size:clamp(3rem,11.11vw,10rem);line-height:1.2;letter-spacing:-.04em;font-weight:700;color:#000}
-/* Every phrase shares one cell at the centre of the stage and takes its turn
-   there, so one fills the screen at a time. They wait below the stage until
-   the scroll pulls them up. Armed only when motion is allowed; otherwise the
-   phrases stack as they always have. */
-html.js-motion .story-text{display:grid}
-html.js-motion .story-line{grid-area:1/1;display:flex;align-items:center;justify-content:center;
-  transform-origin:50% 50%;will-change:transform}
-html.js-motion .story-line{opacity:0}
+/* The four phrases stack in rows one line-height tall, the stack centred on
+   the stage, exactly as the reference lays them out; "beautiful things" is
+   set 1.094x the others there (175 against 160px) but keeps their row
+   height, overflowing it evenly. Script moves each row with scroll; the rows
+   themselves never change, so without it they simply read as a stacked list. */
+.story-line{transform-origin:50% 50%}
+.story-line:last-child{font-size:clamp(3.28rem,12.15vw,10.94rem);line-height:1.097}
+html.js-motion .story-line{will-change:transform}
 .story-line-accent{color:var(--accent)}
 .story-water{position:absolute;left:0;right:0;top:-20%;height:140%;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
 /* two counter-drifting copies of the droplet macro: the parallax between them
@@ -1847,78 +1847,58 @@ var cio=new IntersectionObserver(function(es){
 },{threshold:.4});
 document.querySelectorAll(".count").forEach(function(el){cio.observe(el)});
 
-/* story section (page 2): the phrases build up a list rather than passing one
-   by one. The first arrives alone in the middle; when the second comes up the
-   pair re-centres so both are read together; the third joins them and all
-   three sit on screen at once. Then the list clears and the fourth arrives on
-   its own, and the page carries on. Each step slides into place and then stands
-   still for a beat before the next begins, so the section reads as four held
-   states rather than a continuous drift. Tied to scroll throughout. */
+/* story section (page 2), measured on the reference at 1440x900 and
+   1920x1080. It is built there as four full-screen layers stacked one stage
+   height apart in a 4.3-stage track; each holds one phrase in its own row and
+   sticks when it reaches the top. So each phrase rides up from below with its
+   layer while shrinking into its row, and once it has landed it settles back
+   while the next one arrives. Nothing fades; all four end on screen together.
+   With s = scroll into the section and V = the stage height, per phrase:
+     arrive  s (i-1)V..iV   rises from V below, scale 3 / 4 / 4 / 2 -> 1
+     settle  listen   V..2V      scale 1 -> .8, down .26 of a row (50 of 192px)
+             imagine  2V..3V     scale 1 -> .8, up .16 of a row (30px)
+             create   3V..3.3V   scale 1 -> .8, up .52 of a row (100px)
+     leave   past 3.3V the stage lets go; "beautiful things" also drifts up
+             .186px per px and grows .065 per stage as it goes
+   All linear in scroll, scaled about each row's centre, read straight off
+   scrollY each frame: it stops when scrolling stops and reverses exactly. */
 (function(){
  var section=document.getElementById("story-section");
  var lines=section?section.querySelectorAll(".story-line"):[];
  var M=window.Motion;
  // without js-motion (reduced motion, or no library) the phrases stay stacked
- if(!section||!lines.length||!M||!document.documentElement.classList.contains("js-motion"))return;
+ if(!section||lines.length!==4||!M||!document.documentElement.classList.contains("js-motion"))return;
+ var stage=section.querySelector(".story-sticky");
 
- // The reference sizes each phrase to the screen rather than to a common
- // font-size, so a short phrase and a long one both read edge to edge.
- // Measure each one's ink at a known size, then scale it to fill 92% of the
- // window -- the width "we listen" holds in the reference clip.
- var FILL=.86, PROBE=200;
- function fit(){
-  var rg=document.createRange();
-  Array.prototype.forEach.call(lines,function(line){
-   var keep=line.style.transform;
-   line.style.transform="none";          // measure unscaled
-   line.style.fontSize=PROBE+"px";
-   rg.selectNodeContents(line);
-   var ink=rg.getBoundingClientRect().width;
-   if(ink>0)line.style.fontSize=(PROBE*window.innerWidth*FILL/ink).toFixed(1)+"px";
-   else line.style.fontSize="";
-   line.style.transform=keep;
-  });
+ var FROM=[3,4,4,2];                                          // arrival scale
+ var SETTLE=[[1,2,.2604],[2,3,-.15625],[3,3.3,-.5208]];      // [from V, to V, move in rows]
+ function clamp(v){return v<0?0:v>1?1:v}
+ var raf=0;
+ function draw(){
+  raf=0;
+  var V=stage.offsetHeight||innerHeight, s=-section.getBoundingClientRect().top;
+  if(s<-V*1.2||s>section.offsetHeight+V)return;              // nowhere near: leave it
+  for(var i=0;i<4;i++){
+   var line=lines[i], R=line.offsetHeight;
+   var arrive=clamp((s-(i-1)*V)/V);
+   var sc=FROM[i]+(1-FROM[i])*arrive;
+   var y=i?Math.max(0,i*V-s):0;                              // its layer still rising
+   if(i<3){
+    var st=SETTLE[i], t=clamp((s-st[0]*V)/((st[1]-st[0])*V));
+    sc*=1-.2*t; y+=st[2]*R*t;
+   }else{
+    var out=Math.max(0,s-3.3*V);
+    y-=.186*out; sc*=1+.065*out/V;
+   }
+   line.style.transform="translate3d(0,"+y.toFixed(2)+"px,0) scale("+sc.toFixed(4)+")";
+  }
  }
- fit();
- var fitWait; window.addEventListener("resize",function(){
-  clearTimeout(fitWait); fitWait=setTimeout(fit,120);
- });
+ function ask(){if(!raf)raf=requestAnimationFrame(draw)}
+ addEventListener("scroll",ask,{passive:true});
+ addEventListener("resize",ask);
+ draw();
 
  var track={target:section,offset:["start start","end end"]};
- var n=lines.length;
-
- // Where each phrase sits at each of the four steps, as a fraction of the
- // stage: 0.5 is the middle, past 1 is below it, below 0 is above it. A block
- // of phrases always straddles the middle, so adding one nudges the rest up.
- var BELOW=1.4, ABOVE=-0.4;
- var STEP=[
-  [ 0.50, BELOW, BELOW, BELOW],   // one, on its own
-  [ 0.34,  0.66, BELOW, BELOW],   // two, read together
-  [ 0.16,  0.50,  0.84, BELOW],   // three, all on screen
-  [ABOVE, ABOVE, ABOVE,  0.50]    // the list clears, the fourth arrives alone
- ];
- var SHOW=[[1,0,0,0],[1,1,0,0],[1,1,1,0],[0,0,0,1]];
- var steps=STEP.length-1;
-
- // move across the first 62% of a step, then hold: the pause is what makes
- // each state register before the next one starts
- function ease(t){
-  if(t>=.62)return 1;
-  var v=t/.62;
-  return v*v*(3-2*v);
- }
-
- M.scroll(function(p){
-  var f=Math.max(0,Math.min(steps,p*steps));
-  var k=Math.min(steps-1,Math.floor(f)), t=ease(f-k);
-  for(var i=0;i<n;i++){
-   var y=STEP[k][i]+(STEP[k+1][i]-STEP[k][i])*t;
-   var o=SHOW[k][i]+(SHOW[k+1][i]-SHOW[k][i])*t;
-   lines[i].style.transform="translate3d(0,"+((y-.5)*100).toFixed(2)+"vh,0)";
-   lines[i].style.opacity=o.toFixed(3);
-  }
- },track);
-
  // unchanged water drift across the pinned stretch
  var water=section.querySelector(".story-water");
  if(water)M.scroll(function(p){
