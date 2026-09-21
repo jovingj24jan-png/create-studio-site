@@ -792,8 +792,32 @@ html.js-motion .panel img.bg{will-change:transform}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .svc{background:var(--paper)}}
 #hww{position:relative;z-index:2}
-@media(max-width:809px){.svc{position:static;padding:clamp(56px,6vw,96px) 0 0;
-  background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
+/* Below desktop the reference still stacks the cards (sticky 20px on phones,
+   0 on tablet) but lets the last one scroll on, with no hold. */
+@media(max-width:1199px){.svc:last-child{position:relative}}
+@media(min-width:810px) and (max-width:1199px){.svc{top:0}}
+/* Card type below desktop, measured on the reference: title 48px on tablet
+   and 30.4px on phones, index 30.4px, copy and list 16px with the list on a
+   37px pitch. Keeps each phone card within one screen, so nothing is covered
+   before it can be read. */
+@media(max-width:1199px){
+  #services .svc .t-service{font-size:48px;line-height:1.1}
+  #services .svc .svc-idx{font-size:30.4px;line-height:1.1}
+  #services .svc .grid p.t-body,#services .svc ul li .t-body{font-size:16px;line-height:1.3}
+  #services .svc ul li{padding:8.1px 0}
+}
+@media(min-width:810px) and (max-width:1199px){
+  #services .svc{padding-top:76px}
+  #services .svc .grid.mt5{margin-top:64px}
+}
+@media(max-width:809px){
+  #services .svc{padding-top:52px}
+  #services .svc .t-service{font-size:30.4px}
+  #services .svc h3.mt5{margin-top:40px}
+  #services .svc .grid.mt5{margin-top:33px;row-gap:0!important}
+  #services .svc .grid p.t-body{line-height:1.4}
+  #services .svc .grid>ul{margin-top:17px}
+}
 @media(prefers-reduced-motion:reduce){.svc{position:static;padding:clamp(56px,6vw,96px) 0 0;
   background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
 .svc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
@@ -822,9 +846,12 @@ html.js-motion .panel img.bg{will-change:transform}
     letter-spacing:-.05em;text-transform:uppercase;width:565px;max-width:none!important;margin-left:30px;text-align:right}
   .svc{height:683px;box-sizing:border-box}
   .svc>.shell{padding-left:54px;padding-right:52px}
-  /* the last card holds for 479px more before "How we work" slides over it:
-     BUILD to HOW WE WORK is 1231px on the reference */
-  .svc-stack{padding-bottom:479px}
+  /* On the reference the last card (Build) stays pinned for 400px of scroll
+     before the stack releases, then 79px of space before "How we work".
+     Padding would not do it: a sticky box cannot travel into its parent's
+     padding, so the hold has to be in-flow content. */
+  .svc-stack{padding-bottom:79px}
+  .svc-stack::after{content:"";display:block;height:400px}
 }
 
 /* ═══════════════════════════════════════════════════ pricing ═══════════ */
@@ -1600,12 +1627,12 @@ var projects=[
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
 var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
 var services=[
- {no:"01",k:"Foundation",t:"Brand Identity",img:"identity",file:"identity.jpg",c:"The base layer of every engagement — how a brand looks, sounds and holds together in use.",p:["Positioning and messaging frameworks","Visual identity systems","Guidelines written to be followed","Digital-first brand systems","Asset kits across campaigns and touchpoints"]},
- {no:"02",k:"Growth",t:"Strategy",img:"strategy",file:"market.jpg",round:1,c:"Direction backed by research and planning, so the route from idea to execution stays short.",p:["Market and audience research","Product and campaign strategy","User journey mapping","Roadmaps and rollout planning","Workshops and alignment sessions"]},
- {no:"03",k:"Creative",t:"Design & Innovation",img:"design",file:"innovation.jpg",round:1,c:"From first concepts to shipped products people actually want to keep using.",p:["UX and UI design","Prototyping and user testing","Digital product and service design","Iteration and validation","Launch planning and support"]},
- {no:"04",k:"Smart AI",t:"AI Systems",img:"ai",file:"face.jpg",round:1,c:"Applied, unglamorous uses of AI that make products and internal workflows measurably faster.",p:["Define an AI vision and roadmap","Intelligent experience design","Prototyping and proof-of-concepts","Integration into platforms and workflows","Team enablement and training"]},
+ {no:"01",k:"Foundation",t:"Brand Identity",img:"identity",file:"identity.jpg",c:"The foundation of every project — how your brand looks, feels, and communicates.",p:["Positioning and messaging frameworks","Visual identity systems","Brand guidelines for consistent use","Digital-first brand systems","Branded assets across campaigns and touchpoints"]},
+ {no:"02",k:"Growth",t:"Strategy",img:"strategy",file:"market.jpg",round:1,c:"Clear direction backed by insight and planning to move from idea to execution.",p:["Market and audience research","Product and campaign strategy","User journey mapping","Roadmaps and rollout planning","Workshops and alignment sessions"]},
+ {no:"03",k:"Creative",t:"Design & Innovation",img:"design",file:"innovation.jpg",round:1,c:"From first concepts to polished products that people want to use and share.",p:["UX and UI design","Prototyping and user testing","Digital product and service design","Iteration and validation","Launch planning and support"]},
+ {no:"04",k:"Smart AI",t:"AI Systems",img:"ai",file:"face.jpg",round:1,c:"Practical applications of AI to unlock smarter products and workflows.",p:["Define AI vision and roadmap","Intelligent experience design","Prototyping and proof-of-concepts","Integration into platforms and workflows","Team enablement and training"]},
  {no:"05",k:"Discoverable",t:"SEO",img:"seo",file:"peak.jpg",round:1,c:"Structure, content and speed working together so the right people find the work.",p:["Technical site audit","Keyword research and content strategy","On-page and metadata optimisation","Link-building and authority growth","Performance tracking and reporting"]},
- {no:"06",k:"Build",t:"Development",img:"development",c:"Turning designs into products that stay fast, accessible and maintainable after handover.",p:["Web and app development","CMS integration and setup","E-commerce builds and optimisation","Custom feature development","Ongoing technical support"]}
+ {no:"06",k:"Build",t:"Development",img:"development",c:"Turning ideas and designs into scalable, functional, and reliable digital products.",p:["Web and app development","CMS integration and setup","E-commerce builds and optimisation","Custom feature development","Ongoing technical support"]}
 ];
 var process=[
  ["//01","d","Discovery","We start by listening. Goals, challenges, and vision are mapped out clearly, setting the foundation for everything that follows."],
