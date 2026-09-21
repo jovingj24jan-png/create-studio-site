@@ -633,8 +633,6 @@ html.js-motion .panel img.bg{will-change:transform}
 .perf-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:48px 20px;margin-top:64px}
 .perf-num{display:flex;align-items:flex-start;font-size:clamp(56px,8vw,80px);line-height:1;font-weight:500;letter-spacing:-.07em}
 .nf-d{display:inline-block;height:1em;overflow:hidden}
-.nf-reel{display:flex;flex-direction:column}
-.nf-reel>span{display:block;height:1em;line-height:1}
 .perf-lab{margin-top:20px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:#f2f2f2}
 .perf-meta{margin-top:16px}
 .perf-no{font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;color:#fff;opacity:.6}
@@ -1686,15 +1684,11 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
 }).join("");
 
 /* ───────────────────────────────────────────────── performance ──────── */
-/* Stats as digit reels, the way the reference renders them (NumberFlow): every
-   digit is its own column of 0-9 inside a one-digit window. They start on
-   "10", as the reference's do, and roll to their values with scroll (see the
-   scroll script below). */
-function reel(){var h='';for(var d=0;d<=10;d++)h+='<span>'+(d%10)+'</span>';return '<span class="nf-d"><span class="nf-reel">'+h+'</span></span>'}
+/* Stats are static figures: no count-up and no scroll-linked number flow. */
 document.getElementById("perf").innerHTML=perf.map(function(s){
  var digits=String(s[1]).split("");
  return '<div class="perf-stat">'+
- '<dd class="perf-num num accent" aria-label="'+s[1]+s[2]+'" data-to="'+s[1]+'">'+digits.map(reel).join("")+
+ '<dd class="perf-num num accent" aria-label="'+s[1]+s[2]+'">'+digits.map(function(d){return '<span class="nf-d">'+d+'</span>'}).join("")+
    (s[2]?'<span class="nf-sfx" aria-hidden="true">'+s[2]+'</span>':'')+'</dd>'+
  '<dt class="perf-lab">'+esc(s[3])+'</dt>'+
  '<div class="perf-meta"><span class="perf-bar"></span><span class="perf-line"></span>'+
@@ -2054,54 +2048,6 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".nl-h"),function(el){
   M.animate(el,{scale:[.81,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
-})();
-
-/* Number flow, played once per page load. Like the reference, the numbers
-   hold "10" until their top edge is 100px above the bottom of the screen
-   (at once if a refresh lands there), then every digit column slides
-   (translateY in em, clipped to one digit by .nf-d) to its final digit over
-   1.4s, the ones column taking one extra turn. After that scrolling leaves
-   them alone until the next load. Reduced motion shows the final numbers. */
-(function(){
- var nums=[].slice.call(document.querySelectorAll(".perf-num"));
- if(!nums.length)return;
- var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
- var cols=nums.map(function(n){
-  var to=String(n.dataset.to).split("").map(Number), from=("10").split("").map(Number);
-  while(from.length<to.length)from.unshift(0);
-  return {el:n,reels:[].slice.call(n.querySelectorAll(".nf-reel")),to:to,from:from.slice(-to.length)};
- });
- function set(c,t){
-  c.reels.forEach(function(r,i){
-   var a=c.from[i], b=c.to[i], spins=(i===c.reels.length-1)?1:0;
-   if(b<a)b+=10;                       // always roll upward, like the reference's reels
-   var pos=a+(b-a+10*spins)*t;         // may run past 9; the reel repeats 0 at the end
-   r.style.transform="translateY("+(-(pos%10)).toFixed(3)+"em)";
-  });
- }
- var DUR=1400, raf=0, done=false;
- function ease(t){return 1-Math.pow(1-t,3)}
- if(reduce){cols.forEach(function(c){set(c,1)});return}
- cols.forEach(function(c){set(c,0)});
- function play(){
-  var t0=performance.now();
-  (function tick(now){
-   var t=Math.min(1,(now-t0)/DUR);
-   cols.forEach(function(c){set(c,ease(t))});
-   if(t<1)requestAnimationFrame(tick);
-  })(t0);
- }
- function check(){
-  raf=0; if(done)return;
-  var r=nums[0].getBoundingClientRect();
-  if(r.top<=innerHeight-100&&r.bottom>0){
-   done=true; removeEventListener("scroll",onScroll); play();
-  }
- }
- function onScroll(){if(!raf)raf=requestAnimationFrame(check)}
- addEventListener("scroll",onScroll,{passive:true});
- addEventListener("load",check);
- check();
 })();
 
 /* scroll reveals */
