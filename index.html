@@ -719,6 +719,16 @@ html.js-motion .panel img.bg{will-change:transform}
 .gcard-c{margin-top:clamp(14px,1.2vw,20px);font-size:calc(var(--rfs)*1.18);letter-spacing:-.02em;
   line-height:1.5;color:#a7a9b0}
 @media(max-width:1023px){.grow-in{grid-template-columns:1fr}.grow-h{max-width:none}}
+/* One-time entrances measured on the reference (each plays once when it
+   comes into view, on its own clock, not scrubbed by scroll): the visual
+   settles from 1.11x (.8s); the text column and card grid rise 60px and fade
+   in together; the four cards then rise 20px and fade in as one; the case row
+   below grows in from 1.3x. All on an ease-out quad, .6s unless noted.
+   Start poses only when motion is allowed. */
+.grow::before{transform-origin:50% 50%;transition:transform .8s cubic-bezier(.5,1,.89,1)}
+html.js-motion .grow::before{transform:scale(1.11)}
+html.js-motion .grow.bg-in::before{transform:none}
+html.js-motion .grow-in,html.js-motion #process>.gcard,html.js-motion .fcase-in{opacity:.001}
 @media(max-width:639px){.grow-r{grid-template-columns:1fr}}
 
 /* ═══════════════════════════════════════════════════ featured case ═════ */
@@ -761,17 +771,20 @@ html.js-motion .panel img.bg{will-change:transform}
   .grow-p{margin-top:39px;max-width:420px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--rule)}
   .grow-cta{margin-top:52px;gap:16px;font-size:18.1px;letter-spacing:-.04em}
   .grow-btn{width:44px;height:44px;border-radius:8px}
-  .grow-r{width:548px;justify-self:end;margin-right:18px;gap:20px}
-  .gcard{padding:26px}
+  .grow-r{width:538px;justify-self:end;margin-right:35px;gap:24px;grid-auto-rows:1fr}
+  .gcard{padding:24px}
+  .gcard-no{font-size:12px;line-height:1.3;letter-spacing:-.05em}
+  .gcard-top{align-items:center}
+  .gcard-rule{margin:18px 0}
   .gcard-h{font-size:20px;line-height:1.4;letter-spacing:-.04em}
   .gcard-c{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-  .fcase-in{grid-template-columns:328px 350px 1fr;column-gap:72px;padding-left:100px}
+  .fcase-in{grid-template-columns:328px 350px 1fr;column-gap:67px;padding-left:100px}
   /* vertical rhythm: 113px from the tick rule to the band; the card grid
      starts 50px into it with 64px below, the heading block centred beside it */
   .hww-head{padding-bottom:0}
   .grow{margin-top:113px}
-  .grow-in{align-items:center;padding-top:80px;padding-bottom:73px}
-  #fcase{padding-bottom:181px}
+  .grow-in{align-items:center;padding-top:59px;padding-bottom:57px}
+  #fcase{padding-bottom:208px}
   .fcase-p{font-size:18.1px;line-height:1.4;letter-spacing:-.04em}
   .fcase-r{padding-left:50px}
   .fcase-h{max-width:408px;font-size:32px;line-height:1.1;letter-spacing:-.06em}
@@ -1329,8 +1342,8 @@ input::placeholder{color:var(--rule)}
     </a>
     <p class="fcase-p">Step inside one of our featured projects. From first brief to launch, follow the process that shows what makes Create&#174; different.</p>
     <div class="fcase-r">
-      <h2 class="fcase-h rv-h">Our process in motion</h2>
-      <p class="fcase-s rv-lead">Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
+      <h2 class="fcase-h">Our process in motion</h2>
+      <p class="fcase-s">Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
       <a href="#work" class="grow-cta fcase-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg></span>Explore Case Studies</a>
     </div>
   </div>
@@ -1761,7 +1774,7 @@ document.getElementById("services").innerHTML=services.map(function(s){
 
 /* ───────────────────────────────────────────────────── process ──────── */
 document.getElementById("process").innerHTML=process.map(function(p){
- return '<li class="gcard rv"><div class="gcard-top"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+growIcons[p[1]]+'</svg><span class="gcard-no">'+p[0]+'</span></div>'+
+ return '<li class="gcard"><div class="gcard-top"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+growIcons[p[1]]+'</svg><span class="gcard-no">'+p[0]+'</span></div>'+
  '<div class="gcard-rule"></div><h4 class="gcard-h">'+esc(p[2])+'</h4>'+
  '<p class="gcard-c">'+esc(p[3])+'</p></li>';
 }).join("");
@@ -2082,6 +2095,21 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".nl-h"),function(el){
   M.animate(el,{scale:[.81,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
+ /* How we work (trigger points from the reference at 1440x900): the
+    visual zooms as the band enters the screen; the text column + grid a
+    beat later; the cards together once the grid is 60% of the way up; the
+    case row just before it arrives. */
+ var QUAD=[.5,1,.89,1];
+ once(document.querySelectorAll(".grow"),function(el){el.classList.add("bg-in")},"0px");
+ once(document.querySelectorAll(".grow-in"),function(el){
+  M.animate(el,{opacity:[0,1],y:[60,0]},{duration:.6,ease:QUAD});
+ },"0px 0px -60px 0px");
+ once(document.querySelectorAll("#process"),function(el){
+  M.animate(el.querySelectorAll(".gcard"),{opacity:[0,1],y:[20,0]},{duration:.6,ease:QUAD});
+ },"0px 0px -40% 0px");
+ once(document.querySelectorAll(".fcase-in"),function(el){
+  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.6,ease:QUAD});
+ },"0px 0px 190px 0px");
 })();
 
 /* scroll reveals */
@@ -2107,9 +2135,9 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
    accordion contents, fixed overlays and plain inline text runs. */
 (function(){
  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
- // page 4 and the footer scroll 1:1 on the reference, with their own
- // one-time reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,.wh,.wh-close,#site-foot";
+ // How we work, the case row, page 4 and the footer scroll 1:1 on the
+ // reference, with their own one-time reveals, so they stay out of this
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,.grow,#fcase,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
