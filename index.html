@@ -610,11 +610,12 @@ html.js-motion .panel img.bg{will-change:transform}
 .dark .t-h2{color:var(--muted)}
 .dark .hair{background:rgba(255,255,255,.16)}
 .perf{position:relative;overflow:hidden}
-.perf::before{content:"";position:absolute;inset:-20% -10%;pointer-events:none;
-  background:radial-gradient(60% 40% at 22% 28%,rgba(150,165,185,.13),transparent 70%),
-             radial-gradient(50% 38% at 78% 66%,rgba(120,140,165,.10),transparent 72%),
-             conic-gradient(from 210deg at 60% 45%,transparent 0deg,rgba(140,155,175,.07) 90deg,transparent 190deg);
+/* supplied background image, keeping the slow drift the gradient had */
+.perf::before{content:"";position:absolute;inset:-6% -4%;pointer-events:none;
+  /* a 35% dark tint keeps the labels readable over the brightest streaks */
+  background:linear-gradient(rgba(5,6,9,.35),rgba(5,6,9,.35)),#050609 url(public/img/perf-bg.png) center/cover no-repeat;
   animation:perfSheen 26s ease-in-out infinite alternate}
+@media(prefers-reduced-motion:reduce){.perf::before{animation:none}}
 @keyframes perfSheen{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-3%,2%,0) scale(1.08)}}
 .perf>*{position:relative;z-index:1}
 .perf-rule{height:12px;max-width:48%;background-image:repeating-linear-gradient(to right,rgba(255,255,255,.42) 0 1px,transparent 1px 11px)}
