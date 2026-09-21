@@ -1258,6 +1258,76 @@ html.js-motion .nl-h{transform:scale(.81);transform-origin:0 50%}
 .kpi{position:absolute;inset:auto 0 0;padding:16px;background:rgba(5,6,9,.86);color:#fff;transform:translateY(100%);transition:transform .5s var(--ease)}
 .member:hover .kpi{transform:none}
 
+/* Team, measured on the reference at 1440: a dark section (#141414 under a
+   dark photographic wash) with the How-we-work style head; four 315 x 639
+   portrait cards tilted back 25deg in perspective; hovering (or focusing) a
+   card turns it to face you, blurs and darkens the portrait under a 50%
+   veil and brings in the KPI (80px), its line, the role and the social
+   links; then a three-column row about the leadership team. */
+.team{position:relative;overflow:hidden;background:#141414;color:#fff}
+.team-bg{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(70% 45% at 78% 8%,rgba(255,255,255,.10),rgba(255,255,255,0) 70%),
+   radial-gradient(60% 50% at 10% 55%,rgba(255,255,255,.05),rgba(255,255,255,0) 70%),
+   linear-gradient(180deg,#1b1b1b 0%,#141414 55%,#0d0d0d 100%)}
+.team>.shell{position:relative}
+.team-sub{max-width:600px}
+.tm-row{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:64px}
+.tm-card{perspective:1000px}
+.tm-tilt{position:relative;overflow:hidden;aspect-ratio:315/639;border-radius:8px;background:#222;
+  transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.tm-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.tm-veil{position:absolute;inset:0;background:rgba(20,20,20,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);opacity:0;transition:opacity .4s ease}
+.tm-kpil{position:absolute;left:16px;top:22px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;letter-spacing:-.05em;color:var(--rule);transform:translateY(-60px);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.tm-kpi{position:absolute;right:16px;top:17px;display:flex;flex-direction:column;align-items:flex-end;text-align:right;opacity:0;transform:translateY(90px);transition:opacity .4s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.tm-kpi b{font-size:80px;line-height:1.1;font-weight:500;letter-spacing:-.07em}
+.tm-kpi span{max-width:200px;margin-top:-6px;font-size:16px;line-height:1.3;letter-spacing:-.04em}
+.tm-line{position:absolute;right:20px;top:150px;bottom:80px;width:1px;background:rgba(255,255,255,.35);opacity:0;transition:opacity .4s ease}
+.tm-who{position:absolute;left:16px;right:16px;bottom:24px;transform:translateY(76px);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.tm-name{font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em}
+.tm-role{margin-top:6px;font-size:16px;letter-spacing:-.04em;opacity:.8}
+.tm-soc{display:flex;gap:16px;margin-top:14px}
+.tm-soc a{display:flex;color:#fff}
+.tm-soc svg{width:16px;height:16px}
+.tm-bars{position:absolute;right:20px;bottom:24px;display:flex;align-items:flex-end;gap:2px;opacity:0;transition:opacity .4s ease}
+.tm-bars i{width:4px;background:rgba(255,255,255,.7);border-radius:1px}
+.tm-bars i:nth-child(1){height:6px}.tm-bars i:nth-child(2){height:10px}.tm-bars i:nth-child(3){height:16px}
+.tm-card:focus-within .tm-veil,.tm-card:focus-within .tm-kpi,.tm-card:focus-within .tm-line,.tm-card:focus-within .tm-bars{opacity:1}
+.tm-card:focus-within .tm-kpi,.tm-card:focus-within .tm-kpil,.tm-card:focus-within .tm-who{transform:none}
+.tm-card:focus-within .tm-tilt{transform:none}
+@media(hover:hover){
+  .tm-card:hover .tm-veil,.tm-card:hover .tm-kpi,.tm-card:hover .tm-line,.tm-card:hover .tm-bars{opacity:1}
+  .tm-card:hover .tm-kpi,.tm-card:hover .tm-kpil,.tm-card:hover .tm-who{transform:none}
+  .tm-card:hover .tm-img{transform:scale(1.1)}
+  .tm-card:hover .tm-tilt{transform:none}
+}
+/* without hover, the card shows its full label (role and links) */
+@media(hover:none){.tm-who{transform:none}.tm-kpil{display:none}}
+.tm-lead{display:grid;gap:32px;margin-top:88px}
+.tm-h{font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em;color:#fff;max-width:540px}
+.tm-h .accent{display:block}
+.team .hww-ticks{max-width:694px}
+.tm-p{font-size:18.08px;line-height:1.4;letter-spacing:-.04em;color:var(--rule);max-width:336px}
+.tm-disc{border-left:1px solid rgba(255,255,255,.18);padding-left:32px}
+.tm-h2{font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em;color:var(--rule)}
+.tm-s{margin-top:16px;max-width:280px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--rule)}
+.tm-cta{margin-top:38px;gap:16px;font-size:18.08px;letter-spacing:-.04em;color:#fff}
+.tm-cta .grow-btn{width:44px;height:44px;border-radius:8px}
+@media(min-width:810px){.tm-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1024px){.tm-lead{grid-template-columns:minmax(0,1fr) 336px 368px;column-gap:32px}}
+@media(min-width:1200px){
+  .team{padding-top:141px;padding-bottom:176px}
+  .team .hww-head{padding-bottom:0}
+  .tm-row{grid-template-columns:repeat(4,315px);gap:31px;justify-content:center;margin-top:88px}
+  .tm-tilt{transform:rotateY(25deg)}
+  .tm-lead{grid-template-columns:minmax(0,528px) 336px 368px;column-gap:40px;margin-top:88px;padding-left:40px}
+}
+@media(max-width:809px){.tm-lead{grid-template-columns:1fr}.tm-disc{border-left:0;padding-left:0}.tm-kpi b{font-size:56px}}
+/* entrances (reference): the cards rise 120px one after another as the row
+   comes up; the leadership row grows in from 1.3x */
+html.js-motion .tm-card{transform:translateY(120px)}
+html.js-motion .tm-pop{opacity:.001}
+@media(prefers-reduced-motion:reduce){.tm-tilt,.tm-img,.tm-kpi,.tm-kpil,.tm-who,.tm-veil{transition:none}}
+
 /* ═══════════════════════════════════════════════════ footer ════════════ */
 .foot-in{border-bottom:0}
 .foot-lower{background:var(--mist)}
@@ -1622,13 +1692,32 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ PARTNERSHIP ══════════ -->
 
 <!-- ═══════════════════════════════════════════════ TEAM ═════════════════ -->
-<section class="section" aria-label="Team">
+<section class="section dark team" aria-label="Team">
+  <div class="team-bg" aria-hidden="true"></div>
   <div class="shell">
-    <div class="grid rule-b" style="padding-bottom:40px;row-gap:32px">
-      <div style="grid-column:1/8"><span class="t-mono-sm muted rv-tag">● The team</span><h2 class="t-h2 mt3 rv-h" style="max-width:13ch">Light in the room, serious on the work</h2></div>
-      <p class="t-lead rv-lead deep" style="grid-column:9/13;align-self:end"><span class="accent">——&nbsp;</span>Sharp strategy and bold ideas without the boardroom stiffness. Professional where it counts, human where it matters.</p>
+    <div class="grid hww-head team-head" style="row-gap:40px">
+      <div class="hww-rail">
+        <span class="hww-cap"></span>
+        <span class="t-mono hww-kick rv-tag">The team</span>
+        <span class="hww-hatch"></span>
+      </div>
+      <div class="hww-main">
+        <div class="hww-top"><span class="hww-line"></span><span class="hww-mark">create<sup>&#174;</sup></span></div>
+        <h2 class="hww-title rise-words">No serious faces. Real serious work.</h2>
+        <p class="hww-sub team-sub">&mdash;&mdash;&nbsp; We bring sharp strategy and bold ideas, without the stiff boardroom vibe. Professional where it counts, human where it matters.</p>
+        <span class="hww-ticks"></span>
+      </div>
     </div>
-    <div class="mt5" id="team" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:40px 20px"></div>
+    <ul class="tm-row" id="team"></ul>
+    <div class="tm-lead">
+      <p class="tm-h tm-pop">Our leadership team involved from <span class="accent">first kickoff to final delivery.</span></p>
+      <p class="tm-p tm-pop">Every milestone checked, every detail reviewed, every client kept in the loop. That&rsquo;s how projects land sharp and on time.</p>
+      <div class="tm-disc tm-pop">
+        <p class="tm-h2">Discover team Create&#174;</p>
+        <p class="tm-s">Meet the people, culture, and energy that keep our work sharp and our days fun.</p>
+        <a href="#site-foot" class="grow-cta tm-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg></span>Follow us on LinkedIn</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1818,10 +1907,10 @@ var plans=[
 ];
 var pillars=[["Ongoing support","Fixes, updates and small improvements handled by the people who built the thing."],["Long-term partnership","Retained time each month, so the roadmap keeps moving without a new kickoff each quarter."],["Future-ready builds","Documented systems and clean code, so another team could pick it up tomorrow if needed."]];
 var team=[
- ["ivar-solheim","Ivar Solheim","Founder & CEO","97%","Projects delivered on time under his oversight."],
- ["priya-raghavan","Priya Raghavan","Head of Strategy","89%","Campaigns that hit or beat the agreed KPIs."],
- ["camille-okonkwo","Camille Okonkwo","Chief Creative Officer","120+","Brand identities launched across industries."],
- ["dan-whitfield","Dan Whitfield","Technical Director","3.4x","Faster site performance than the category average."]
+ ["ivar-solheim","Tobias Neumann","Founder & CEO","97%","Projects delivered on time under his oversight.",[["mail","mailto:tobias@create.com"],["x","https://x.com"],["in","https://linkedin.com"]]],
+ ["priya-raghavan","Amelia Cross","Head of Strategy","89%","Campaigns hit or exceeded client KPIs.",[["mail","mailto:amelia@create.co"],["x","https://x.com"],["ig","https://instagram.com"]]],
+ ["camille-okonkwo","Sofia Reyes","Chief Creative Officer","120+","Brand identities launched across industries.",[["mail","mailto:sofia@create.co"],["x","https://x.com"],["ig","https://instagram.com"],["in","https://linkedin.com"],["fb","https://facebook.com"]]],
+ ["dan-whitfield","Lucas Marino","Technical Director","3.4x","Faster site performance vs industry average.",[["mail","mailto:lucas@create.co"],["x","https://x.com"],["in","https://linkedin.com"],["th","https://threads.com"]]]
 ];
 var faqs=[
  ["What kind of projects does Create take on?","Brand identity, digital products and websites that need design clarity and technical polish in equal measure."],
@@ -1932,6 +2021,25 @@ document.getElementById("process").innerHTML=process.map(function(p){
 document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
  return '<li><span class="bcard-pill"><b class="num">'+s[0]+s[2]+'</b><span>'+esc(s[3])+'</span></span></li>';
 }).join("");
+/* team cards */
+(function(){
+ var ic={mail:'<path d="M2 4h12v8H2zM2 4l6 5 6-5"/>',x:'<path d="M3 3l10 10M13 3L3 13"/>',in:'<path d="M3 6v7M3 3.5v.1M6.5 13V6M6.5 9c0-2 1-3 3-3s3 1 3 3v4"/>',
+  ig:'<rect x="2.5" y="2.5" width="11" height="11" rx="3"/><circle cx="8" cy="8" r="2.6"/>',fb:'<path d="M9.5 14V8.5H12M9.5 8.5V6.2c0-1.2.7-2 2-2H12M7.5 8.5h2"/>',th:'<path d="M11 7.5C10.6 5 9.4 4 8 4 5.8 4 4.5 5.7 4.5 8s1.3 4 3.5 4c1.8 0 3-1 3-2.4 0-2-3-2.3-3.6-.8"/>'};
+ var names={mail:"Email",x:"X",in:"LinkedIn",ig:"Instagram",fb:"Facebook",th:"Threads"};
+ var el=document.getElementById("team");if(!el)return;
+ el.innerHTML=team.map(function(m){
+  return '<li class="tm-card"><div class="tm-tilt">'+
+  '<img class="tm-img" src="public/img/person-'+m[0]+'.svg" alt="Portrait of '+esc(m[1])+'" loading="lazy" decoding="async">'+
+  '<span class="tm-veil" aria-hidden="true"></span>'+
+  '<span class="tm-kpil">//KPI</span>'+
+  '<div class="tm-kpi"><b class="num">'+esc(m[3])+'</b><span>'+esc(m[4])+'</span></div>'+
+  '<span class="tm-line" aria-hidden="true"></span>'+
+  '<div class="tm-who"><p class="tm-name">'+esc(m[1])+'</p><p class="tm-role">'+esc(m[2])+'</p>'+
+  '<p class="tm-soc">'+m[5].map(function(l){return '<a href="'+l[1]+'" aria-label="'+esc(m[1])+' on '+names[l[0]]+'"'+(l[0]==="mail"?'':' target="_blank" rel="noopener"')+'><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">'+ic[l[0]]+'</svg></a>'}).join("")+'</p></div>'+
+  '<span class="tm-bars" aria-hidden="true"><i></i><i></i><i></i></span>'+
+  '</div></li>';
+ }).join("");
+})();
 /* titles that rise word by word (pricing card row, pricing head) */
 document.querySelectorAll(".rise-words").forEach(function(h){
  h.setAttribute("aria-label",h.textContent);
@@ -2313,6 +2421,14 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".ask"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px -10% 0px");
+ /* team: cards rise 120px, .12s apart, as the row comes up the screen; the
+    leadership row grows in from 1.3x */
+ once(document.querySelectorAll(".tm-row"),function(el){
+  M.animate(el.querySelectorAll(".tm-card"),{y:[120,0]},{duration:.9,delay:M.stagger(.12),ease:OUT});
+ },"0px 0px -50% 0px");
+ once(document.querySelectorAll(".tm-pop"),function(el){
+  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
+ },"0px 0px 100px 0px");
  var pl=document.querySelector(".pcard-logo");
  if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
  var rowN=0;
@@ -2366,7 +2482,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
  // How we work (heading included), the case row, why choose us, page 4 and
  // the footer scroll 1:1 on the reference, with their own one-time
  // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.wh,.wh-close,#site-foot";
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.team,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
