@@ -1703,7 +1703,7 @@ document.getElementById("perf").innerHTML=perf.map(function(s){
 (function(){
  var logos=[["public/img/hero-logos/obliqon.svg","Obliqon"],["public/img/hero-logos/numeriq.svg","Numeriq"],["public/img/hero-logos/aurelis.svg","aurelis"],
   ["public/img/brand-logos/logisync.svg","Logisync"],["public/img/brand-logos/lindholm.svg","Lindholm"]];
- var html=logos.concat(logos).map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" height="32" loading="lazy" decoding="async"></span>'}).join("");
+ var html=logos.concat(logos).map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" height="32" decoding="async"></span>'}).join("");
  document.getElementById("brandA").innerHTML=html;
  document.getElementById("brandB").innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
 })();
