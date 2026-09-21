@@ -652,25 +652,6 @@ html.js-motion .panel img.bg{will-change:transform}
 }
 @media(prefers-reduced-motion:reduce){.mq-brand .mq-track{animation:none}}
 
-/* Performance, second pass. The title box is 770px on the reference at 96px
-   (8.02em), which is what breaks it "The proof behind / our work"; set in em
-   so the break holds at every size. A hairline with a 20px accent tick sits
-   above the title and draws in with scroll; a layer of broad soft ribbons
-   (drawn for this site) drifts and turns with scroll behind the whole
-   section, statistics and client band included. */
-.perf .perf-h{max-width:8.05em!important}
-/* the rule sits 52px above the title without taking space, as on the reference */
-.perf .ph-main{position:relative}
-.perf-rule-top{position:absolute;left:0;right:0;top:-52px;height:1px;max-width:913px;background:rgba(255,255,255,.18);transform-origin:0 50%}
-/* each stat is as wide as its label (at least 166px), so its bar / rule /
-   index row ends under the label's end, as the reference's do */
-@media(min-width:1200px){.perf-stat{justify-self:start;width:max-content;min-width:166px}}
-.perf-rule-top span{position:absolute;left:0;top:-1px;width:20px;height:3px;background:var(--accent)}
-.perf-ribbons{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
-.perf-ribbons .rb{transform-box:fill-box;transform-origin:50% 50%}
-.perf>.shell,.perf>.mq-brand{position:relative;z-index:1}
-@media(prefers-reduced-motion:reduce){.perf-ribbons .rb{transform:none!important}}
-
 /* ═══════════════════════════════════════════════════ how we work ═══════ */
 #hww{background:#000;color:#fff;padding-top:clamp(44px,5.2vw,84px)}
 #hww .deep{color:#9a9a9a}
@@ -1251,23 +1232,12 @@ input::placeholder{color:var(--rule)}
 
 <!-- ═══════════════════════════════════════════════ PERFORMANCE ══════════ -->
 <section class="section dark perf" aria-label="Performance">
-  <svg class="perf-ribbons" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="rbA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#cfd6e0" stop-opacity=".2"/><stop offset=".6" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <linearGradient id="rbB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#b9c2cf" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-      <filter id="rbSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="6"/></filter>
-    </defs>
-    <g class="rb rb-1"><path d="M-200 820 C 200 520, 520 980, 900 700 S 1500 260, 1800 420" fill="none" stroke="url(#rbA)" stroke-width="150" stroke-linecap="round" filter="url(#rbSoft)"/></g>
-    <g class="rb rb-2"><path d="M-160 360 C 260 140, 640 560, 1000 380 S 1560 120, 1780 260" fill="none" stroke="url(#rbB)" stroke-width="90" stroke-linecap="round" filter="url(#rbSoft)"/></g>
-    <g class="rb rb-3"><path d="M-240 1080 C 240 900, 700 1220, 1100 980 S 1620 760, 1860 900" fill="none" stroke="url(#rbA)" stroke-width="70" stroke-linecap="round" opacity=".7" filter="url(#rbSoft)"/></g>
-  </svg>
   <div class="shell">
     <div class="ph perf-head">
       <div class="ph-rail"><span class="t-mono-sm rv-tag perf-kick"><span class="scramble" data-text="Performance">Performance</span></span></div>
       <div class="ph-main">
-        <div class="perf-rule-top" aria-hidden="true"><span></span></div>
-        <h2 class="t-h2 ph-title perf-h">The proof behind our work</h2>
-        <p class="t-body ph-sub perf-l"><span class="lead"></span>From first launches to long collaborations, we are trusted to deliver on time and at the quality we promised.</p>
+        <h2 class="t-h2 ph-title rv-h">The proof behind our work</h2>
+        <p class="t-body ph-sub rv-lead"><span class="lead"></span>From first launches to long collaborations, we are trusted to deliver on time and at the quality we promised.</p>
         <span class="ph-ticks"></span>
       </div>
     </div>
@@ -2121,47 +2091,6 @@ tick();setInterval(tick,1000);
  draw();
 })();
 
-/* Performance choreography, all read off one scroll position each frame so
-   it pauses, resumes and reverses with the scroll:
-   - the accent rule draws across (scaleX 0 -> 1) as the head rises into view
-   - the title rises 80px and clears in over the same stretch, the lead a
-     beat behind it
-   - the ribbons drift up and turn a few degrees across the whole section
-   - the client band rises 60px and clears in as it arrives
-   Reduced motion leaves everything in its resting state. */
-(function(){
- var sec=document.querySelector(".perf"); if(!sec)return;
- if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
- var rule=sec.querySelector(".perf-rule-top"), head=sec.querySelector(".perf-h"), lead=sec.querySelector(".perf-l"),
-     band=sec.querySelector(".mq-brand"), rbs=[].slice.call(sec.querySelectorAll(".perf-ribbons .rb")), raf=0;
- function clamp(v){return v<0?0:v>1?1:v}
- function ease(t){return 1-Math.pow(1-t,3)}
- // progress of an element rising from the bottom of the screen to `span` of the way up
- function rise(el,span,lag){var r=el.getBoundingClientRect(),vh=innerHeight;return ease(clamp((vh-r.top-(lag||0))/(vh*span)))}
- function draw(){
-  raf=0;
-  var r=sec.getBoundingClientRect(), vh=innerHeight;
-  if(r.bottom<-vh||r.top>vh*2)return;
-  var h=rise(rule,.5);
-  rule.style.transform="scaleX("+h.toFixed(3)+")";
-  var t=rise(head,.45);
-  head.style.transform="translateY("+(80*(1-t)).toFixed(1)+"px)"; head.style.opacity=t.toFixed(3);
-  var l=rise(lead,.45,60);
-  lead.style.transform="translateY("+(60*(1-l)).toFixed(1)+"px)"; lead.style.opacity=l.toFixed(3);
-  var b=rise(band,.35);
-  band.style.transform="translateY("+(60*(1-b)).toFixed(1)+"px)"; band.style.opacity=b.toFixed(3);
-  // whole-section progress, from the section's top at the bottom of the screen to its bottom at the top
-  var p=clamp((vh-r.top)/(r.height+vh));
-  rbs.forEach(function(g,i){
-   var dir=i%2?1:-1;
-   g.style.transform="translate("+(dir*(p-.5)*6).toFixed(2)+"%,"+((.5-p)*(18+i*6)).toFixed(2)+"%) rotate("+(dir*(p-.5)*8).toFixed(2)+"deg)";
-  });
- }
- addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(draw)},{passive:true});
- addEventListener("resize",draw);
- draw();
-})();
-
 /* scroll reveals */
 var io=new IntersectionObserver(function(es){
  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
@@ -2461,9 +2390,7 @@ document.querySelectorAll(".count").forEach(function(el){
 var hdr=document.getElementById("hdr"),last=window.scrollY;
 window.addEventListener("scroll",function(){
  var y=window.scrollY;
- // the reference keeps the header in view through the Performance section
- var pf=document.querySelector(".perf"), pr=pf&&pf.getBoundingClientRect(), inPerf=pr&&pr.top<innerHeight&&pr.bottom>0;
- hdr.classList.toggle("hide", y>260 && y>last && !document.body.classList.contains("menu") && !inPerf);
+ hdr.classList.toggle("hide", y>260 && y>last && !document.body.classList.contains("menu"));
  last=y;
 },{passive:true});
 
