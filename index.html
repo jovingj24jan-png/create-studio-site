@@ -394,40 +394,83 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
   object-fit:cover;background:var(--mist)}
 
 /* ═══════════════════════ why-choose-us benefit cards (nine.jpg) ════════ */
-.bcard-row{display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:20px;margin-top:48px}
-.bcard{display:flex;flex-direction:column;padding:30px;border-radius:12px;
-  background:#fff;border:1px solid var(--line)}
-.bcard-mid{background:#f2f2f2;border-color:transparent}
-.bcard-line{display:block;font-size:calc(var(--rfs)*2.3);font-weight:400;
-  letter-spacing:-.04em;line-height:1.34;color:var(--ink)}
+.bcard-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:48px}
+.bcard{display:flex;flex-direction:column;padding:24px;border-radius:12px;background:#fff}
+.bcard-mid{background:#f2f2f2}
+.bcard-line{display:block;font-size:32px;font-weight:500;letter-spacing:-.06em;line-height:1.1;color:var(--deep)}
+.bcard-line+.bcard-line{margin-top:4px}
 .bcard-line.accent{color:var(--accent)}
-/* halftone dot cluster, in place of a photo */
-.bcard-mark{flex:none;width:104px;height:104px;border-radius:50%;
+.bcard-kick{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
+.bcard-kick+.bcard-line{margin-top:12px}
+.bcard-quad{flex:none;display:grid;grid-template-columns:6px 6px;gap:6px}
+.bcard-quad i{width:6px;height:6px;border-radius:50%;background:var(--muted)}
+.bcard-rev{display:flex;align-items:center;gap:8px;margin-top:33px}
+.bcard-rev #stars{gap:2px}.bcard-rev svg{width:12px;height:12px}
+.bcard-rev p{font-size:18.08px;line-height:1.4;letter-spacing:-.04em;font-weight:500;color:var(--deep)}
+.bcard-rev strong{font-weight:500}
+.bcard-backed{margin-top:14px;max-width:290px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+/* halftone globe, in place of the reference's logo artwork */
+.bcard-mark{flex:none;width:148px;height:148px;margin-left:auto;border-radius:50%;
   background-image:radial-gradient(var(--rule) 1.5px,transparent 1.6px);
   background-size:9px 9px;
   -webkit-mask-image:radial-gradient(circle,#000 38%,transparent 72%);
   mask-image:radial-gradient(circle,#000 38%,transparent 72%)}
-.bcard-dots{display:flex;align-items:center;gap:28px;margin:auto 0;padding:34px 0}
-.bcard-dot{flex:none;width:22px;height:22px;border-radius:50%;background:var(--ink)}
+.bcard-dots{display:flex;align-items:center;gap:67px;margin:auto 0;padding:24px 24px}
+.bcard-dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--muted)}
 .bcard-halo{flex:none;width:104px;height:104px;border-radius:50%;background:#fff;
   box-shadow:0 10px 34px rgba(0,0,0,.10);display:flex;align-items:center;justify-content:center}
 .bcard-halo i{width:36px;height:36px;border-radius:50%;background:var(--accent)}
-.bcard-foot{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:26px}
-.bcard-hatch{flex:none;width:118px;height:15px;
+.bcard-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:26px;
+  font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#141414}
+.bcard-foot>span:last-child{white-space:nowrap}
+.bcard-hatch{flex:0 1 184px;min-width:40px;height:15px;
   background-image:repeating-linear-gradient(45deg,var(--rule) 0 1.5px,transparent 1.5px 6px)}
-.bcard-head{display:flex;align-items:flex-start;gap:20px}
-.bcard-head h3{flex:1;max-width:9ch;font-size:calc(var(--rfs)*2.3);font-weight:400;
-  letter-spacing:-.04em;line-height:1.16;color:var(--ink)}
-.bcard-pct{flex:none;padding-left:20px;border-left:1px solid var(--rule);color:var(--accent);
-  font-size:calc(var(--rfs)*2.1);font-weight:500;letter-spacing:-.04em}
-.bcard-panel{margin-top:26px;padding:22px 18px;border-radius:8px;
+.bcard-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.bcard-head h3{max-width:160px;font-size:32px;font-weight:500;letter-spacing:-.06em;line-height:1.1;color:var(--deep)}
+.bcard-pct{flex:none;color:var(--accent);font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em}
+.bcard-panel{margin-top:32px;padding:24px;border-radius:8px;
   background-image:radial-gradient(var(--rule) .7px,transparent .7px);background-size:7px 7px}
-.bcard-panel li+li{margin-top:10px}
-.bcard-pill{display:inline-flex;align-items:stretch;border-radius:7px;overflow:hidden;max-width:100%}
-.bcard-pill b{flex:none;background:var(--deep);color:#fff;font-weight:400;padding:8px 12px}
-.bcard-pill span{background:#fff;color:var(--deep);padding:8px 14px}
-@media(max-width:1023px){.bcard-row{grid-template-columns:1fr 1fr}.bcard-last{grid-column:1/-1}}
-@media(max-width:809px){.bcard-row{grid-template-columns:1fr}.bcard-last{grid-column:auto}}
+.bcard-panel li+li{margin-top:16px}
+.bcard-pill{display:inline-flex;align-items:stretch;height:32px;border-radius:8px;overflow:hidden;max-width:100%;
+  font-size:16px;line-height:24px;letter-spacing:-.05em;box-shadow:0 .79px .79px rgba(0,0,0,.04),0 2px 6px rgba(0,0,0,.04)}
+.bcard-pill b{flex:none;display:flex;align-items:center;background:var(--deep);color:#fff;font-weight:400;padding:0 8px}
+.bcard-pill span{display:flex;align-items:center;background:#fff;color:var(--deep);padding:0 12px 0 11px;white-space:nowrap}
+@media(max-width:1023px){.bcard-row{grid-template-columns:repeat(2,minmax(0,1fr))}.bcard-last{grid-column:1/-1}}
+@media(max-width:1199px){.bcard-dots{gap:24px;padding:24px 0}.bcard-mark{width:120px;height:120px}
+  .bcard-head h3{max-width:none}.bcard-pill{height:auto;min-height:32px}}
+@media(min-width:810px) and (max-width:1199px){.bcard-panel{padding:12px}.bcard-pill{font-size:13px}}
+@media(max-width:809px){.bcard-row{grid-template-columns:minmax(0,1fr)}.bcard-last{grid-column:auto}
+  .bcard-line,.bcard-head h3,.bcard-pct{font-size:28px}.bcard-pill{font-size:14px}}
+@media(min-width:810px){.bcard{min-height:520px}}
+/* Why choose us, measured on the reference at 1440: heading on the 328px
+   line (as How we work), the intro in 20.96px muted with its dashes as text,
+   a 700px tick strip, then the three 404 x 520 cards centred on a 1260px row
+   120px below it. */
+@media(min-width:1200px){
+  .why .sechead-grid{grid-template-columns:308px 1fr;gap:0}
+  .why .sechead-rail{grid-column:1}.why .sechead-main{grid-column:2}
+  .why .sechead-h{max-width:720px}
+  .why .sechead-lead{display:block;max-width:600px;margin-top:24px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em}
+  .why .sechead-rule{margin-bottom:69px}
+  .why .sechead-ticks{margin-left:308px;max-width:700px;height:20px;margin-top:68px}
+  .why .bcard-last .bcard-dots{margin:118px 0 0;padding:0 24px}
+  .why .bcard-row{max-width:1260px;margin:120px auto 0}
+  .why .bcard{height:520px}
+  /* the pricing cards follow on the same rhythm: "Simple Pricing" sits 48px
+     under the cards' bottom edge on the reference */
+  .sechead.why{padding-bottom:0}
+  .why+.pcards{padding-top:43px}
+}
+.why .sechead-lead::before{content:none}
+/* one-time entrances (reference): heading words rise 20px; the phrases type
+   in letter by letter; the stat rows grow in from their left edge; the
+   review line and the small line in the last card fade in */
+html.js-motion .why-h .w{opacity:.001;transform:translateY(20px)}
+html.js-motion .why-type .ch{opacity:.001;transform:translateX(20px)}
+html.js-motion #whyStats .bcard-pill{opacity:.001;transform:scale(.3);transform-origin:0 50%}
+html.js-motion .bcard-rev,html.js-motion .bcard-kick{opacity:.001}
+.why-h .w,.why-type .ch{display:inline-block}
+.why-type .ch{white-space:pre}
 
 /* ═══════════════════ section header: rail + ruled marker (page 17) ══════ */
 .sechead{background:#fafafa;padding:clamp(48px,6vw,104px) 0 clamp(40px,5vw,88px)}
@@ -1352,7 +1395,7 @@ input::placeholder{color:var(--rule)}
 </section>
 
 <!-- ═══════════════════════════════════════════════ WHY / STATS ══════════ -->
-<section class="section sechead" aria-label="Why choose us">
+<section class="section sechead why" aria-label="Why choose us">
   <div class="shell">
     <div class="sechead-grid">
       <div class="sechead-rail">
@@ -1362,58 +1405,45 @@ input::placeholder{color:var(--rule)}
       </div>
       <div class="sechead-main">
         <div class="sechead-rule" aria-hidden="true"></div>
-        <h2 class="sechead-h t-h2 rv-h">Designed to Make Your Life Easier</h2>
-        <p class="sechead-lead t-lead rv-lead">A clear process, short review cycles and a clean launch. Fewer steps means fewer places for a project to stall.</p>
+        <h2 class="sechead-h t-h2 why-h">Designed to Make Your Life Easier</h2>
+        <p class="sechead-lead why-lead">&mdash;&mdash;&nbsp; Clear process, quick reviews, and a clean launch at the end. We keep the steps simple so projects never get stuck.</p>
       </div>
     </div>
     <div class="sechead-ticks" aria-hidden="true"></div>
     <div class="bcard-row">
 
-      <article class="bcard rv">
-        <span class="mask"><span class="bcard-line">we listen.</span></span>
-        <span class="mask"><span class="bcard-line">we shape.</span></span>
-        <span class="mask"><span class="bcard-line accent">we build.</span></span>
-        <div class="bcard-dots" aria-hidden="true">
-          <span class="bcard-dot"></span><span class="bcard-dot"></span>
-          <span class="bcard-halo"><i></i></span>
-        </div>
-        <p class="bcard-foot t-small"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Ideas</span> that start with you</span></p>
+      <article class="bcard bcard-first">
+        <p class="bcard-line why-type">we listen.</p>
+        <p class="bcard-line why-type">we imagine.</p>
+        <p class="bcard-line why-type accent">we create.</p>
+        <p class="bcard-foot"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Ideas</span> that start with you</span></p>
       </article>
 
-      <article class="bcard bcard-mid rv">
+      <article class="bcard bcard-mid">
         <div class="bcard-head">
-          <h3>Client satisfaction rate</h3>
+          <h3>Client Satisfaction Rate</h3>
           <span class="bcard-pct num">99.9%</span>
         </div>
         <ul class="bcard-panel t-mono-sm" id="whyStats"></ul>
-        <div class="mt4 flex center g2">
+        <div class="bcard-rev">
           <span id="stars" class="flex g1"></span>
-          <p class="t-small"><strong style="font-weight:500">5 / 5</strong> <span class="muted">(98 reviews)</span></p>
+          <p><strong>5 / 5</strong> <span>(98 reviews)</span></p>
         </div>
-        <p class="t-small mt2 muted">Based on feedback from 120+ brands we have worked with.</p>
+        <p class="bcard-backed">Backed by feedback from 120+ brands we&rsquo;ve worked with.</p>
       </article>
 
-      <article class="bcard bcard-last rv">
-        <p class="t-small muted">No templates, nothing pre-made.</p>
-        <h3 class="bcard-line mt2">Every project starts fresh.</h3>
+      <article class="bcard bcard-last">
+        <p class="bcard-kick">No reheated or pre-made.</p>
+        <h3 class="bcard-line">Every project starts fresh.</h3>
         <div class="bcard-dots" aria-hidden="true">
-          <span class="bcard-dot" style="width:9px;height:9px;background:var(--rule)"></span>
-          <span class="bcard-dot" style="width:9px;height:9px;background:var(--rule)"></span>
+          <span class="bcard-dot"></span>
+          <span class="bcard-quad"><i></i><i></i><i></i><i></i></span>
           <span class="bcard-mark"></span>
         </div>
-        <p class="bcard-foot t-small"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Custom</span> work from day one</span></p>
+        <p class="bcard-foot"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Custom work</span> from day one.</span></p>
       </article>
 
     </div>
-  </section>
-
-<!-- ═══════════════════════════════════════════════ CUSTOM WORK ══════════ -->
-<section class="rule-t rule-b" style="padding:96px 0" aria-label="Statement">
-  <div class="shell" style="max-width:calc(2000px)">
-    <span class="mask mask-far"><span class="t-service">No templates,</span></span>
-    <span class="mask mask-far"><span class="t-service">no leftovers.</span></span>
-    <span class="mask"><span class="t-service muted">Built for you</span></span>
-    <span class="mask"><span class="t-service accent">from the first sketch.</span></span>
   </div>
 </section>
 
@@ -1663,7 +1693,7 @@ var process=[
  ["//04","r","Launch & Grow","Delivery is just the beginning. We measure, refine, and scale to ensure your project continues to perform."]
 ];
 var growIcons={d:'<path d="M4 12v4a1 1 0 0 0 1 1h2l1 5h3l-1-5"/><path d="M4 12l14-6v14L4 16z"/><path d="M21 10.5v3"/>',s:'<path d="M4 6l5 5"/><path d="M9 6l-5 5"/><path d="M12 18l8-9"/><path d="M14 9h6v6"/>',b:'<path d="M13 4l6 6-8 8-6 1 1-6z"/><path d="M4 21h9"/>',r:'<path d="M11 15 9 13c0-5 2.5-8.5 7.5-10 .5 5-1.5 8.5-6.5 12z"/><path d="M9 13 6 13.5 8 10l2 .5M11 15l-.5 3 3.5-2-.5-2"/><path d="M8.5 16.5c-1 .5-1.5 1.8-1.6 3.4 1.6-.1 2.9-.6 3.4-1.6"/>'};
-var whyStats=[[99.9,1,"%","Client satisfaction rate"],[12,0,"+","Industries served"],[24,0,"h","Average response time"],[96,0,"%","First draft approved"],[99,0,"%","Ship on-time"]];
+var whyStats=[[99.9,1,"%","Client Satisfaction Rate"],[12,0,"+","Industries served"],[24,0,"h","Average Response Time"],[96,0,"%","First Draft Approved"],[99,0,"%","Ship on-Time"]];
 var plans=[
  {tier:"Core",name:"Starter Plan",price:"$2,800",was:"$3,500",save:"SAVE 20%",time:"2–3 weeks",c:"Fast, focused and effective — enough to launch properly without carrying scope you do not need yet.",f:["Brand & identity starter kit","Website design (core pages)","Standard revisions","SEO setup essentials","Licensed stock imagery","Native source files","Final handoff files"],n:["Clear milestones from start to finish","You stay in the loop each week","Feedback built into the process"]},
  {tier:"Studio",name:"Advanced Plan",price:"$6,500",was:"$8,000",save:"SAVE 18%",time:"4–6 weeks",c:"A fuller package with room to move — deeper design coverage and the support to grow into it.",f:["Extended branding","Full website design","UX flows & product design","Unlimited revisions","Advanced SEO & content","Priority support response","Final handoff"],n:["Deeper design coverage for complex needs","Unlimited adjustments before launch","Faster responses when it matters"]},
@@ -1785,6 +1815,17 @@ document.getElementById("process").innerHTML=process.map(function(p){
 document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
  return '<li><span class="bcard-pill"><b class="num">'+s[0]+s[2]+'</b><span>'+esc(s[3])+'</span></span></li>';
 }).join("");
+/* why choose us: words of the heading and letters of the three phrases as
+   spans for their entrances; the phrase itself keeps its text for readers */
+(function(){
+ var h=document.querySelector(".why-h");
+ if(h){h.setAttribute("aria-label",h.textContent);
+  h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");}
+ document.querySelectorAll(".why-type").forEach(function(p){
+  var t=p.textContent;p.setAttribute("aria-label",t);
+  p.innerHTML=t.split("").map(function(c){return '<span class="ch" aria-hidden="true">'+esc(c)+'</span>'}).join("");
+ });
+})();
 document.getElementById("stars").innerHTML=Array(5).join(",").split(",").map(function(){
  return '<svg width="13" height="13" viewBox="0 0 13 13"><path d="M6.5.5l1.6 3.9 4.2.3-3.2 2.7 1 4.1-3.6-2.3-3.6 2.3 1-4.1L.7 4.7l4.2-.3z" fill="var(--accent)"/></svg>';
 }).join("");
@@ -2097,6 +2138,36 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".nl-h"),function(el){
   M.animate(el,{scale:[.81,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
+ /* Why choose us (reference, on its own clock once triggered, 1440x900):
+    heading words rise 20px as it enters; when the cards arrive the small
+    line in the last card fades in (~.9s in, .6s), and the three phrases type
+    in one after another from ~1.3s, a letter every 85ms with .22s between
+    phrases, each letter sliding 20px from the right; each stat row grows
+    from its left edge from .3x as soon as it comes on screen, rows arriving
+    together .2s apart; the review line fades in as it arrives. Timings
+    measured frame by frame against the reference. */
+ once(document.querySelectorAll(".why-h"),function(el){
+  M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.04),ease:OUT});
+ },"0px");
+ once(document.querySelectorAll(".bcard-last"),function(el){
+  M.animate(el.querySelector(".bcard-kick"),{opacity:[0,1]},{duration:.6,delay:.69});
+ },"0px");
+ once(document.querySelectorAll(".bcard-first"),function(el){
+  var t=1.1;
+  el.querySelectorAll(".why-type").forEach(function(p){
+   var chs=p.querySelectorAll(".ch");
+   M.animate(chs,{opacity:[0,1],x:[20,0]},{duration:.3,delay:M.stagger(.085,{startDelay:t}),ease:OUT});
+   t+=(chs.length-1)*.085+.22;
+  });
+ },"0px");
+ var rowN=0;
+ once(document.querySelectorAll("#whyStats .bcard-pill"),function(el){
+  var i=[].indexOf.call(document.querySelectorAll("#whyStats .bcard-pill"),el);
+  M.animate(el,{opacity:[0,1],scale:[.3,1]},{duration:.6,delay:.2*Math.max(0,i-rowN),ease:OUT});
+ },"0px");
+ once(document.querySelectorAll(".bcard-rev"),function(el){
+  M.animate(el,{opacity:[0,1]},{duration:.8,delay:.2});
+ },"0px");
  /* How we work (trigger points from the reference at 1440x900): the
     visual zooms as the band enters the screen; the text column + grid a
     beat later; the cards together once the grid is 60% of the way up; the
@@ -2137,10 +2208,10 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
    accordion contents, fixed overlays and plain inline text runs. */
 (function(){
  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
- // How we work (heading included), the case row, page 4 and the footer
- // scroll 1:1 on the reference, with their own one-time reveals, so they
- // stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.wh,.wh-close,#site-foot";
+ // How we work (heading included), the case row, why choose us, page 4 and
+ // the footer scroll 1:1 on the reference, with their own one-time
+ // reveals, so they stay out of this
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
