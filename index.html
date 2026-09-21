@@ -622,6 +622,36 @@ html.js-motion .panel img.bg{will-change:transform}
 .perf-bar{flex:none;width:52px;height:9px;background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.42) 0 1px,transparent 1px 4px)}
 .perf-line{flex:1 1 auto;min-width:12px;height:1px;background:rgba(255,255,255,.22)}
 
+/* The proof behind our work, measured on the reference at 1440: rail head
+   with the label at x40 and title/lead at x342; four stat columns on a 335px
+   pitch from x90, 80px numbers over 16px mono labels and a bar / rule / index
+   row; the brands line 20px mono centred 176px below; then the client band. */
+.perf-head{padding-bottom:0}
+.perf-kick{color:var(--muted)}
+.perf .ph-ticks{background-image:repeating-linear-gradient(to right,rgba(255,255,255,.28) 0 1px,transparent 1px 11px)}
+.perf-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:48px 20px;margin-top:64px}
+.perf-num{display:flex;align-items:flex-start;font-size:clamp(56px,8vw,80px);line-height:1;font-weight:500;letter-spacing:-.07em}
+.nf-d{display:inline-block;height:1em;overflow:hidden}
+.nf-reel{display:flex;flex-direction:column}
+.nf-reel>span{display:block;height:1em;line-height:1}
+.perf-lab{margin-top:20px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:#f2f2f2}
+.perf-meta{margin-top:16px}
+.perf-no{font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;color:#fff;opacity:.6}
+.perf-brands{margin-top:176px;text-align:center;font-family:"Fragment Mono",ui-monospace,monospace;font-size:20px;line-height:1.3;letter-spacing:-.05em;text-transform:uppercase;color:var(--muted)}
+.mq-brand{position:relative;z-index:1;margin-top:64px;padding-bottom:40px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mq-brand .mq-track{animation-duration:36s}
+.mq-brand-i{flex:none;padding:0 56px}
+.mq-brand-i img{display:block;height:32px;width:auto;opacity:.7}
+@media(min-width:1200px){
+  .perf .perf-head{grid-template-columns:302px 1fr;padding-left:20px}
+  .perf-head .ph-rail{padding-top:0;margin-top:-24px}
+  /* 4 x 315px columns with 20px gaps from x90: labels at 90 / 425 / 760 / 1095 */
+  .perf-stats{grid-template-columns:repeat(4,1fr);padding:0 10px 0 70px;margin-top:59px}
+  .perf-brands{margin-top:167px}
+  .mq-brand{padding-bottom:65px}
+}
+@media(prefers-reduced-motion:reduce){.mq-brand .mq-track{animation:none}}
+
 /* ═══════════════════════════════════════════════════ how we work ═══════ */
 #hww{background:#000;color:#fff;padding-top:clamp(44px,5.2vw,84px)}
 #hww .deep{color:#9a9a9a}
@@ -1203,27 +1233,21 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ PERFORMANCE ══════════ -->
 <section class="section dark perf" aria-label="Performance">
   <div class="shell">
-    <div class="grid" style="row-gap:32px">
-      <div style="grid-column:1/8">
-        <span class="t-mono-sm rv-tag" style="color:rgba(255,255,255,.65)">● <span class="scramble" data-text="Performance">Performance</span></span>
-        <h2 class="t-h2 mt3 rv-h" style="max-width:12ch">Numbers we are happy to show</h2>
+    <div class="ph perf-head">
+      <div class="ph-rail"><span class="t-mono-sm rv-tag perf-kick"><span class="scramble" data-text="Performance">Performance</span></span></div>
+      <div class="ph-main">
+        <h2 class="t-h2 ph-title rv-h">The proof behind our work</h2>
+        <p class="t-body ph-sub rv-lead"><span class="lead"></span>From first launches to long collaborations, we are trusted to deliver on time and at the quality we promised.</p>
+        <span class="ph-ticks"></span>
       </div>
-      <p class="t-lead rv-lead" style="grid-column:9/13;align-self:end;color:rgba(255,255,255,.6)"><span class="accent">——&nbsp;</span>From first launches to long collaborations, we are trusted to deliver on time and at the quality agreed.</p>
     </div>
-    <div class="perf-rule mt5" aria-hidden></div>
-    <dl class="mt6" id="perf" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px"></dl>
+    <dl id="perf" class="perf-stats"></dl>
+    <p class="perf-brands">Brands who are part of our success story</p>
   </div>
+  <div class="mq mq-brand" aria-label="Client logos"><div class="mq-track" id="brandA"></div><div class="mq-track" id="brandB" aria-hidden="true"></div></div>
 </section>
 
 <!-- ═══════════════════════════════════════════════ CLIENTS ══════════════ -->
-<section class="section" aria-label="Clients">
-  <div class="shell"><h2 class="t-h2 rv-h" style="text-align:center;max-width:18ch;margin:0 auto">Names that shaped the work you just scrolled</h2></div>
-  <div class="mt6">
-    <div class="rule-t rule-b" style="padding:24px 0"><div class="mq mq-logos" style="--dur:38s"><div class="mq-track" id="cl1"></div><div class="mq-track" id="cl1b" aria-hidden="true"></div></div></div>
-    <div class="rule-b" style="padding:24px 0"><div class="mq mq-logos" data-dir="right" style="--dur:48s"><div class="mq-track" id="cl2"></div><div class="mq-track" id="cl2b" aria-hidden="true"></div></div></div>
-  </div>
-</section>
-
 <!-- ═══════════════════════════════════════════════ SERVICES ═════════════ -->
 <section id="studio" class="section" aria-label="Services">
   <div class="shell">
@@ -1661,13 +1685,28 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
 }).join("");
 
 /* ───────────────────────────────────────────────── performance ──────── */
+/* Stats as digit reels, the way the reference renders them (NumberFlow): every
+   digit is its own column of 0-9 inside a one-digit window. They start on
+   "10", as the reference's do, and roll to their values with scroll (see the
+   scroll script below). */
+function reel(){var h='';for(var d=0;d<=10;d++)h+='<span>'+(d%10)+'</span>';return '<span class="nf-d"><span class="nf-reel">'+h+'</span></span>'}
 document.getElementById("perf").innerHTML=perf.map(function(s){
- return '<div class="rv-num">'+
- '<dd class="num accent" style="font-size:min(calc(var(--rfs)*6),12vw);font-weight:500;letter-spacing:-.06em;line-height:.9"><span class="count" data-to="'+s[1]+'" data-suffix="'+s[2]+'">0</span></dd>'+
- '<dt class="t-mono-sm mt3" style="color:rgba(255,255,255,.82)">'+esc(s[3])+'</dt>'+
- '<div class="perf-meta mt2"><span class="perf-bar"></span><span class="perf-line"></span>'+
- '<span class="t-mono-sm" style="color:rgba(255,255,255,.5)">'+s[0]+'</span></div></div>';
+ var digits=String(s[1]).split("");
+ return '<div class="perf-stat">'+
+ '<dd class="perf-num num accent" aria-label="'+s[1]+s[2]+'" data-to="'+s[1]+'">'+digits.map(reel).join("")+
+   (s[2]?'<span class="nf-sfx" aria-hidden="true">'+s[2]+'</span>':'')+'</dd>'+
+ '<dt class="perf-lab">'+esc(s[3])+'</dt>'+
+ '<div class="perf-meta"><span class="perf-bar"></span><span class="perf-line"></span>'+
+ '<span class="perf-no">'+s[0]+'</span></div></div>';
 }).join("");
+/* client band: the logo files supplied for this site, looped */
+(function(){
+ var logos=[["public/img/hero-logos/obliqon.svg","Obliqon"],["public/img/hero-logos/numeriq.svg","Numeriq"],["public/img/hero-logos/aurelis.svg","aurelis"],
+  ["public/img/brand-logos/logisync.svg","Logisync"],["public/img/brand-logos/lindholm.svg","Lindholm"]];
+ var html=logos.concat(logos).map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" height="32" loading="lazy" decoding="async"></span>'}).join("");
+ document.getElementById("brandA").innerHTML=html;
+ document.getElementById("brandB").innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
+})();
 
 /* ───────────────────────────────────────────────── client marquee ───── */
 function marks(){return clients.map(function(c){
@@ -2014,6 +2053,42 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".nl-h"),function(el){
   M.animate(el,{scale:[.81,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
+})();
+
+/* Number flow tied to scroll: as the stat row travels from the bottom of the
+   screen to 55% up it, every digit column rolls from the reference's starting
+   "10" to its own digit, the ones column taking an extra full turn so the
+   intermediate digits flick past as they do there. Read straight off
+   scrollY, so it stops, resumes and reverses with the scroll. Reduced motion
+   shows the final numbers. */
+(function(){
+ var nums=[].slice.call(document.querySelectorAll(".perf-num"));
+ if(!nums.length)return;
+ var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ var cols=nums.map(function(n){
+  var to=String(n.dataset.to).split("").map(Number), from=("10").split("").map(Number);
+  while(from.length<to.length)from.unshift(0);
+  return {el:n,reels:[].slice.call(n.querySelectorAll(".nf-reel")),to:to,from:from.slice(-to.length)};
+ });
+ function set(c,t){
+  c.reels.forEach(function(r,i){
+   var a=c.from[i], b=c.to[i], spins=(i===c.reels.length-1)?1:0;
+   if(b<a)b+=10;                       // always roll upward, like the reference's reels
+   var pos=a+(b-a+10*spins)*t;         // may run past 9; the reel repeats 0 at the end
+   r.style.transform="translateY("+(-(pos%10)).toFixed(3)+"em)";
+  });
+ }
+ var row=document.querySelector(".perf-stats"), raf=0;
+ function ease(t){return 1-Math.pow(1-t,3)}
+ function draw(){
+  raf=0;
+  var r=row.getBoundingClientRect(), vh=innerHeight;
+  var t=reduce?1:Math.min(1,Math.max(0,(vh-r.top)/(vh*.45)));
+  cols.forEach(function(c){set(c,ease(t))});
+ }
+ addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(draw)},{passive:true});
+ addEventListener("resize",draw);
+ draw();
 })();
 
 /* scroll reveals */
