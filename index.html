@@ -362,8 +362,12 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 /* ═══════════════════════════ partnership / pricing card row ════════════ */
 .pcards{background:#fafafa}
 .pcard-row{display:grid;grid-template-columns:1.15fr 1fr 1.2fr;gap:20px}
-.pcard{display:flex;flex-direction:column;padding:28px;border-radius:12px;
+.pcard{position:relative;overflow:hidden;display:flex;flex-direction:column;padding:28px;border-radius:12px;
   background:#fff;border:1px solid var(--line)}
+.pcard-mark{display:none}
+.pcard-logo{display:none}
+.pcard-avail{display:flex;align-items:center;gap:12px;font-size:20.96px;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
+.pcard-avail svg{width:24px;height:24px;flex:none;color:var(--rule)}
 .pcard-b,.pcard-c{background:#f2f2f2;border-color:transparent}
 .pcard-h{display:flex;align-items:center;gap:12px;color:#606163;
   font-size:calc(var(--rfs)*2.1);font-weight:500;letter-spacing:-.04em}
@@ -388,6 +392,36 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
   width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff}
 @media(max-width:1023px){.pcard-row{grid-template-columns:1fr 1fr}.pcard-c{grid-column:1/-1}}
 @media(max-width:809px){.pcard-row{grid-template-columns:1fr}.pcard-c{grid-column:auto}}
+/* Card row, measured on the reference at 1440: 404 / 260 / 404px cards on a
+   centred 1260px row, the rest of the row holding the vertical "create"
+   wordmark at 20%; 24px padding, 520px tall; the middle card carries a large
+   white C that fades in while the card is on screen. */
+@media(min-width:1200px){
+  .pcard-row{grid-template-columns:404px 260px 404px 1fr;gap:24px;max-width:1260px;margin:0 auto}
+  .pcard{height:520px;padding:24px;border:0}
+  .pcard-h{font-size:32px;line-height:1.1;letter-spacing:-.06em;color:var(--deep)}
+  .pcard-h svg{width:24px;height:24px}
+  .pcard-p{margin-top:16px;max-width:300px;font-size:16px;line-height:1.3;letter-spacing:-.04em}
+  .pcard-img{margin-top:24px;width:310px;height:180px;aspect-ratio:auto;border-radius:8px}
+  .pcard-img+.pcard-p{margin-top:auto;font-size:14.08px}
+  .pcard-cta{margin-top:26px;font-size:18.08px;letter-spacing:-.04em;gap:16px}
+  .pcard-arrow{width:44px;height:44px;border-radius:8px}
+  .pcard-lab{font-size:16px;line-height:1.3;letter-spacing:-.04em}
+  .pcard-t{margin-top:12px;max-width:none;font-size:32px;line-height:1.1;letter-spacing:-.06em;color:var(--deep)}
+  .pcard-b .pcard-t{max-width:200px}
+  .pcard-c .pcard-t{max-width:260px}
+  .pcard-logo{display:block;position:absolute;left:18px;top:199px;width:359px;height:164px;opacity:0;transition:opacity 1.2s ease}
+  .pcard-logo svg{width:100%;height:100%}
+  .pcard-logo.on{opacity:1}
+  .pcard-list{position:relative;gap:12px}
+  .pcard-list li{font-size:16px;letter-spacing:-.04em}
+  .pcard-panel{padding:24px;background:#fff}
+  .pcard-date{font-size:20.96px;font-weight:400;letter-spacing:-.04em}
+  .pcard-mark{display:flex;align-items:center;justify-content:center;font-size:104px;font-weight:600;letter-spacing:-.05em;
+    color:var(--muted);opacity:.2;writing-mode:vertical-rl;transform:rotate(180deg);align-self:start;margin-top:107px;line-height:1}
+  .pcard-mark sup{font-size:.3em}
+}
+@media(prefers-reduced-motion:reduce){.pcard-logo.on,.pcard-logo{transition:none}}
 
 /* footer video: fills the small pill that used to hold the chip image */
 .foot-vid{display:block;width:80px;height:40px;flex:none;border-radius:999px;
@@ -947,6 +981,7 @@ html.js-motion .grow-in,html.js-motion #process>.gcard,html.js-motion .fcase-in{
   .ask>h3{font-size:48px!important;line-height:1.1!important;letter-spacing:-.05em!important;white-space:nowrap;color:var(--muted)}
   .ask>p{font-size:21px;line-height:1.295;letter-spacing:-.04em;color:var(--muted)}
   .ask>div{margin-left:47px}
+  #pricing .ph-sub{max-width:600px}
 }
 .plan{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--mist);margin-bottom:12px}
 .plan.open{background:#fff}
@@ -961,6 +996,86 @@ html.js-motion .grow-in,html.js-motion #process>.gcard,html.js-motion .fcase-in{
 .plan.open .acc{grid-template-rows:1fr}
 .acc>div{overflow:hidden}
 .save{background:var(--accent);color:#fff;border-radius:999px;padding:2px 8px}
+/* ── plan rows, measured on the reference at 1440: full-width rows, 12px
+   radius, 32px padding, 8px apart; open white and 572px tall, closed #fafafa
+   and 117px; a hatched marker, tier over plan name (open: tier accent, name
+   grey; closed: the other way round), a 32px + that turns into a cross.
+   Hovering a closed row greys it, turns its tier and marker accent and slides
+   its one-line pitch in beside the +. The body: price column, a 380px
+   feature panel from x592, a 380px column with notes, the 56px "Get
+   started" button and the timeline from x1012, and the big pale index
+   behind. Each plan opens and closes on its own. */
+#plans{margin:0 calc(-1 * var(--gutter))}
+#plans .plan{position:relative;border:0;border-radius:12px;background:#fafafa;margin:0 0 8px;overflow:hidden;transition:background-color .35s var(--ease)}
+#plans .plan.open{background:#fff}
+#plans .plan-btn{display:flex;align-items:center;gap:16px;padding:29px 32px;min-height:117px;text-align:left}
+.plan-stripes{flex:none;width:16px;height:51px;background-image:repeating-linear-gradient(to bottom,var(--rule) 0 1px,transparent 1px 4px);transition:background-image .3s}
+.plan-titles{display:flex;flex-direction:column;flex:1}
+#plans .plan-tier{font-size:32px;line-height:1.1;letter-spacing:-.06em;font-weight:500;color:var(--deep);transition:color .3s}
+#plans .plan-name{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:var(--accent);transition:color .3s}
+#plans .plan.open .plan-tier{color:var(--accent)}
+#plans .plan.open .plan-name{color:var(--deep)}
+#plans .plan.open .plan-stripes{background-image:repeating-linear-gradient(to bottom,var(--accent) 0 1px,transparent 1px 4px)}
+.plan-tag{font-size:18.08px;letter-spacing:-.04em;color:var(--muted);white-space:nowrap;opacity:0;transform:translateX(24px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+#plans .plan-ico{width:32px;height:32px;flex:none;color:var(--deep);transition:transform .5s var(--ease),color .3s}
+#plans .plan-ico::before,#plans .plan-ico::after{content:none}
+#plans .plan.open .plan-ico{transform:rotate(45deg);color:var(--accent)}
+@media(hover:hover){
+  #plans .plan:not(.open):hover{background:#f2f2f2}
+  #plans .plan:not(.open):hover .plan-tier{color:var(--accent)}
+  #plans .plan:not(.open):hover .plan-stripes{background-image:repeating-linear-gradient(to bottom,var(--accent) 0 1px,transparent 1px 4px)}
+  #plans .plan:not(.open):hover .plan-tag{opacity:1;transform:none}
+}
+.plan-body{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:32px;padding:0 32px 40px}
+.plan-num{position:absolute;right:-10px;bottom:-120px;font-size:416px;line-height:1;font-weight:700;letter-spacing:-.09em;color:#f2f2f2;pointer-events:none;user-select:none;display:none}
+.plan-l,.plan-feat,.plan-r{position:relative}
+.plan-for{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
+.plan-price{display:flex;align-items:flex-start;gap:8px;margin-top:24px}
+.plan-amt{font-size:56px;line-height:1.1;font-weight:600;letter-spacing:-.05em;color:var(--deep)}
+.plan-per{margin-top:6px;font-size:16px;letter-spacing:-.04em;color:var(--muted)}
+.plan-was{display:flex;align-items:center;gap:12px;margin-top:14px}
+.plan-old{font-size:20.96px;letter-spacing:-.04em;color:var(--deep);opacity:.6}
+.plan-save{display:inline-flex;align-items:center;height:24px;padding:0 8px;border:1px solid var(--accent);border-radius:8px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;color:var(--accent)}
+.plan-art{width:140px;height:80px;margin-top:30px;border-radius:8px;overflow:hidden}
+.plan-art img,.plan-art svg{display:block;width:100%;height:100%;object-fit:cover}
+.plan-desc{margin-top:33px;max-width:346px;font-size:14.08px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.plan-ticks{display:block;margin-top:24px;height:14px;max-width:346px;background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 8px)}
+.plan-feat{padding:16px;border-radius:8px;background-image:radial-gradient(var(--line) .8px,transparent .8px);background-size:6px 6px;align-self:start}
+.plan-feat li{display:flex;align-items:center;gap:12px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
+.plan-feat li+li{margin-top:16px}
+.plan-feat svg{width:16px;height:16px;flex:none}
+.plan-r{display:flex;flex-direction:column}
+.plan-notes li{display:flex;gap:9px;font-size:14.08px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.plan-notes li+li{margin-top:12px}
+.plan-get{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;margin-top:32px;border-radius:12px;background:var(--accent);color:#fff;
+  font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;letter-spacing:-.05em;text-transform:uppercase;transition:background-color .3s}
+.plan-get:hover{background:#e8522f}
+.plan-time{display:flex;align-items:center;gap:8px;margin-top:32px;margin-left:8px;font-size:16px;letter-spacing:-.04em;color:var(--muted)}
+.plan-time svg{width:16px;height:16px;flex:none}
+.plan-time strong{font-weight:400;color:var(--deep)}
+@media(min-width:1200px){
+  #plans{margin:64px calc(-1 * var(--gutter)) 0}
+  #plans h3{line-height:0}
+  .plan-body{grid-template-columns:minmax(0,1fr) 380px 380px;column-gap:40px;padding:2px 32px 64px 64px;min-height:455px;box-sizing:border-box}
+  .plan-num{display:block;right:-9px;top:156px;bottom:auto}
+  #pricing .ask{align-items:start;margin-top:71px}
+  #pricing .ask-btn{margin-top:56px}
+  .plan-feat{margin-top:0}
+  .plan-r{padding-top:1px}
+  .plan-get{margin-top:auto}
+  .plan-time{margin-top:32px}
+}
+@media(max-width:809px){#plans .plan-btn{padding:22px}.plan-body{padding:0 22px 28px}.plan-tag{display:none}.plan-amt{font-size:44px}}
+.ask-av{width:60px;height:60px;border-radius:8px;object-fit:cover;object-position:50% 28%;flex:none}
+.ask-name{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
+.ask-role{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
+.ask-btn{display:inline-flex;height:44px;padding:0 16px;margin-top:40px;border-radius:8px}
+/* one-time entrances (reference): section titles rise word by word; each
+   plan row rises 100px and fades in as it arrives; the "Ask our expert"
+   block grows in from 1.3x */
+.rise-words .w{display:inline-block}
+html.js-motion .rise-words .w{opacity:.001;transform:translateY(20px)}
+html.js-motion #plans .plan,html.js-motion .ask{opacity:.001}
 
 /* ═══════════════════════════════════════════════════ faq ═══════════════ */
 .faq-q{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:24px;padding:24px 0;text-align:left;cursor:pointer;transition:color .3s}
@@ -1451,30 +1566,32 @@ input::placeholder{color:var(--rule)}
   <div class="shell">
     <div class="pcard-row">
 
-      <article class="pcard rv">
+      <article class="pcard">
         <p class="pcard-h"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12.4l2.6 2.6L16 9.6" stroke="#fafafa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Simple Pricing</p>
-        <p class="pcard-p">Plans that scale with the project and leave room to keep making things.</p>
+        <p class="pcard-p">Plans that scale with your project and give you room for unlimited creative opportunities.</p>
         <div class="pcard-img imgbox"><img src="wave.avif" alt="" decoding="async"></div>
         <p class="pcard-p">Pick a plan that grows with you and keeps creative costs predictable.</p>
         <a href="#pricing" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Explore plans</span></a>
       </article>
 
-      <article class="pcard pcard-b rv">
+      <article class="pcard pcard-b">
         <p class="pcard-lab">Built for the long run</p>
-        <h2 class="pcard-t">Still here after launch day</h2>
+        <h2 class="pcard-t rise-words">With You Beyond Launch</h2>
+        <div class="pcard-logo" aria-hidden="true"><svg viewBox="0 0 359 164" fill="none"><path d="M151.5 115.3A58 58 0 1 1 151.5 48.7" stroke="#fff" stroke-width="40" stroke-linecap="round"/></svg></div>
         <ul class="pcard-list" id="pillars"></ul>
       </article>
 
-      <article class="pcard pcard-c rv">
-        <p class="pcard-lab">A quick intro call, no strings attached.</p>
+      <article class="pcard pcard-c">
+        <p class="pcard-lab">Quick intro call, no strings attached.</p>
         <h2 class="pcard-t">Let&#39;s chat or just say hello.</h2>
         <div class="pcard-panel">
-          <p class="pcard-lab">Next availability</p>
+          <p class="pcard-avail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 7v5l3 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>Next Availability</p>
           <p class="pcard-date">from 14 September 2025</p>
           <a href="#site-foot" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Book now</span></a>
         </div>
       </article>
 
+      <span class="pcard-mark" aria-hidden="true">create<sup>&#174;</sup></span>
     </div>
   </div>
 </section>
@@ -1483,20 +1600,20 @@ input::placeholder{color:var(--rule)}
 <section class="section" id="pricing" aria-label="Pricing">
   <div class="shell">
     <div class="ph">
-      <div class="ph-rail"><span class="t-mono-sm muted rv-tag">● Pricing</span></div>
+      <div class="ph-rail"><span class="t-mono-sm muted rv-tag">Pricing</span></div>
       <div class="ph-main">
-        <h2 class="t-h2 ph-title rv-h" style="max-width:16ch">Three ways to start working together</h2>
-        <p class="t-body ph-sub rv-lead deep"><span class="lead"></span>Each plan sets out scope, features and cost up front, so you can decide with the whole picture in view.</p>
+        <h2 class="t-h2 ph-title rise-words" style="max-width:16ch">Plans built to fit your next project</h2>
+        <p class="t-body ph-sub deep">&mdash;&mdash;&nbsp; Designed around your specs, each plan gives you clarity on scope, features, and cost so you can move forward with confidence.</p>
         <span class="ph-ticks"></span>
       </div>
     </div>
     <div id="plans"></div>
     <div class="grid mt6 center ask" style="row-gap:32px">
-      <h3 class="t-h2 rv-h">Ask our expert</h3>
-      <p class="t-body deep" style="max-width:32ch">Schedule a quick call and we will walk you through the plans.</p>
-      <div style="border-left:1px solid var(--line);padding-left:24px">
-        <div class="flex center g2"><img src="maggie.avif" alt="" width="56" height="56" decoding="async" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:50% 28%;flex:none"><div><p class="t-body" style="font-weight:500">Nora Pemberton</p><p class="t-small muted">Project Operations Manager</p></div></div>
-        <a href="#site-foot" class="btn btn-accent mt3">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+      <h3 class="t-h2">Ask our expert</h3>
+      <p class="t-body deep" style="max-width:32ch">Schedule a quick call, and we&rsquo;ll walk you through our flexible plans.</p>
+      <div class="ask-who">
+        <div class="flex center g2"><img src="maggie.avif" alt="Maggie Winslow" width="60" height="60" decoding="async" class="ask-av"><div><p class="ask-name">Maggie Winslow</p><p class="ask-role">Project Operations Manager</p></div></div>
+        <a href="#site-foot" class="plan-get ask-btn">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
   </div>
@@ -1695,9 +1812,9 @@ var process=[
 var growIcons={d:'<path d="M4 12v4a1 1 0 0 0 1 1h2l1 5h3l-1-5"/><path d="M4 12l14-6v14L4 16z"/><path d="M21 10.5v3"/>',s:'<path d="M4 6l5 5"/><path d="M9 6l-5 5"/><path d="M12 18l8-9"/><path d="M14 9h6v6"/>',b:'<path d="M13 4l6 6-8 8-6 1 1-6z"/><path d="M4 21h9"/>',r:'<path d="M11 15 9 13c0-5 2.5-8.5 7.5-10 .5 5-1.5 8.5-6.5 12z"/><path d="M9 13 6 13.5 8 10l2 .5M11 15l-.5 3 3.5-2-.5-2"/><path d="M8.5 16.5c-1 .5-1.5 1.8-1.6 3.4 1.6-.1 2.9-.6 3.4-1.6"/>'};
 var whyStats=[[99.9,1,"%","Client Satisfaction Rate"],[12,0,"+","Industries served"],[24,0,"h","Average Response Time"],[96,0,"%","First Draft Approved"],[99,0,"%","Ship on-Time"]];
 var plans=[
- {tier:"Core",name:"Starter Plan",price:"$2,800",was:"$3,500",save:"SAVE 20%",time:"2–3 weeks",c:"Fast, focused and effective — enough to launch properly without carrying scope you do not need yet.",f:["Brand & identity starter kit","Website design (core pages)","Standard revisions","SEO setup essentials","Licensed stock imagery","Native source files","Final handoff files"],n:["Clear milestones from start to finish","You stay in the loop each week","Feedback built into the process"]},
- {tier:"Studio",name:"Advanced Plan",price:"$6,500",was:"$8,000",save:"SAVE 18%",time:"4–6 weeks",c:"A fuller package with room to move — deeper design coverage and the support to grow into it.",f:["Extended branding","Full website design","UX flows & product design","Unlimited revisions","Advanced SEO & content","Priority support response","Final handoff"],n:["Deeper design coverage for complex needs","Unlimited adjustments before launch","Faster responses when it matters"]},
- {tier:"Scale",name:"Growth Plan",price:"$12,000",was:"$15,000",save:"SAVE 20%",time:"6–8 weeks",c:"Strategy, design and dedicated support for programmes that have to scale and stay polished.",f:["End-to-end brand strategy","Large-scale website & CMS","Advanced UX & product design","Dedicated senior leads","Advanced micro-interactions","Optimisation & support","Enterprise-level handoff"],n:["Scalable solutions designed for growth","A dedicated lead across every stage","Long-term support beyond launch"]}
+ {tier:"Core",name:"Starter Plan",for:"For startups and first launches",price:"$2,800",was:"$3,500",save:"SAVE 20%",time:"2-3 weeks",tone:"red",c:"Simple, fast, and effective, so you can focus on growing your business.",f:["Brand & Identity starter kit","Website design (core pages)","Standard revisions","SEO setup essentials","Unlimited stock images","Native source files included","Final handoff files"],n:["Clear milestones from start to finish","We keep you in the loop","Feedback built into the process"]},
+ {tier:"Studio",name:"Advanced Plan",for:"For growing teams and serious builds",price:"$6,500",was:"$8,000",save:"SAVE 20%",time:"4-6 weeks",tone:"blue",c:"A complete package with flexibility, advanced design, and the support you need to grow faster.",f:["Extended Branding","Full website design","UX flows & product design","Unlimited revisions","Advanced SEO & content","Priority support response","Final handoff"],n:["Deeper design coverage for complex needs","Unlimited adjustments before launch","Faster responses when you need us most"]},
+ {tier:"Scale",name:"Growth Plan",for:"For established teams and long-term growth",price:"$12,000",was:"$15,000",save:"SAVE 20%",time:"6\u20138 weeks",tone:"mono",c:"Strategy, design, and dedicated support for complex projects that demand scalability and polish.",f:["End-to-end brand strategy","Large-scale website & CMS","Advanced UX & product design","Dedicated senior managers","Advanced micro-interactions","Optimization & support","Enterprise-level handoff"],n:["Scalable solutions designed for growth","Dedicated manager guiding every stage with integrations","Long-term support beyond launch"]}
 ];
 var pillars=[["Ongoing support","Fixes, updates and small improvements handled by the people who built the thing."],["Long-term partnership","Retained time each month, so the roadmap keeps moving without a new kickoff each quarter."],["Future-ready builds","Documented systems and clean code, so another team could pick it up tomorrow if needed."]];
 var team=[
@@ -1815,6 +1932,11 @@ document.getElementById("process").innerHTML=process.map(function(p){
 document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
  return '<li><span class="bcard-pill"><b class="num">'+s[0]+s[2]+'</b><span>'+esc(s[3])+'</span></span></li>';
 }).join("");
+/* titles that rise word by word (pricing card row, pricing head) */
+document.querySelectorAll(".rise-words").forEach(function(h){
+ h.setAttribute("aria-label",h.textContent);
+ h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");
+});
 /* why choose us: words of the heading and letters of the three phrases as
    spans for their entrances; the phrase itself keeps its text for readers */
 (function(){
@@ -1831,20 +1953,38 @@ document.getElementById("stars").innerHTML=Array(5).join(",").split(",").map(fun
 }).join("");
 
 /* ───────────────────────────────────────────────────── pricing ──────── */
+/* Plan art: Scale uses the supplied photo of the guideline stack; Core and
+   Studio get the same stack drawn in their colours (red, blue) until their
+   photos are supplied. */
+function planArt(p){
+ if(p.tone==="mono")return '<img src="wave.avif" alt="" decoding="async">';
+ var c=p.tone==="red"?["#ff6041","#ff8a6f"]:["#3563e9","#6f8ff2"];
+ return '<svg viewBox="0 0 140 80" aria-hidden="true"><rect width="140" height="80" fill="#eceef2"/>'+
+  '<g transform="translate(26 50) rotate(-28)"><rect x="18" y="-6" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/><rect x="9" y="-15" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/>'+
+  '<rect x="0" y="-24" width="96" height="30" rx="2" fill="'+c[0]+'"/><rect x="0" y="-24" width="30" height="30" rx="2" fill="'+c[1]+'" opacity=".55"/>'+
+  '<text x="36" y="-5" font-size="9" font-weight="700" fill="#fff" font-family="Figtree,Arial">'+esc(p.tier)+' Plan</text></g></svg>';
+}
+var PLUS='<svg class="plan-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1v30M1 16h30" stroke="currentColor" stroke-width="1.4"/></svg>';
+var CHK='<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.5" fill="#d5d7de"/><path d="M5 8.3l2 2 4-4.3" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var CLOCK='<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.5" fill="#d5d7de"/><path d="M8 4.5V8l2.2 1.4" stroke="#fff" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>';
 document.getElementById("plans").innerHTML=plans.map(function(p,i){
+ var id="plan-b-"+i;
  return '<article class="plan'+(i===0?" open":"")+'">'+
- '<h3><button class="plan-btn" aria-expanded="'+(i===0)+'">'+
- '<span class="flex center g3"><span class="ticks" style="width:24px;height:32px;flex:none"></span>'+
- '<span><span class="t-h4 plan-tier" style="display:block">'+esc(p.tier)+'</span><span class="t-mono-sm plan-name mt1" style="display:block">'+esc(p.name)+'</span></span></span>'+
- '<span class="plan-ico"></span></button></h3>'+
- '<div class="acc"><div><div class="grid plan-inner" style="padding:0 40px 40px;row-gap:32px">'+
-   '<div style="grid-column:1/5"><div class="flex wrap end g1"><span class="t-h3 num">'+p.price+'</span><span class="t-mono-sm muted" style="padding-bottom:4px">/project</span></div>'+
-   '<div class="flex center g2 mt1"><span class="t-small muted" style="text-decoration:line-through">was '+p.was+'</span><span class="t-mono-sm save">'+p.save+'</span></div>'+
-   '<p class="t-small mt4 deep" style="font-style:italic;max-width:34ch">'+esc(p.c)+'</p><span class="ticks mt4" style="display:block"></span></div>'+
-   '<ul style="grid-column:5/9">'+p.f.map(function(f){return '<li class="flex g2" style="padding:7px 0;align-items:flex-start"><svg class="plus" width="9" height="9" viewBox="0 0 11 11"><path d="M5.5 0V11M0 5.5H11" stroke="currentColor" stroke-width="1.2"/></svg><span class="t-small">'+esc(f)+'</span></li>'}).join("")+'</ul>'+
-   '<div style="grid-column:10/13"><a href="#site-foot" class="btn btn-accent btn-lg" style="width:100%">Get started '+A+'</a>'+
-   '<p class="t-small mt2 deep">Timeline <strong style="font-weight:500">'+p.time+'</strong></p>'+
-   '<ul class="mt3 plan-notes">'+p.n.map(function(n){return '<li class="t-small muted flex g1" style="padding:4px 0"><span class="accent">—</span>'+esc(n)+'</li>'}).join("")+'</ul></div>'+
+ '<h3><button class="plan-btn" aria-expanded="'+(i===0)+'" aria-controls="'+id+'">'+
+ '<span class="plan-stripes" aria-hidden="true"></span>'+
+ '<span class="plan-titles"><span class="plan-tier">'+esc(p.tier)+'</span><span class="plan-name">'+esc(p.name)+'</span></span>'+
+ '<span class="plan-tag">'+esc(p.for)+'</span>'+PLUS+'</button></h3>'+
+ '<div class="acc" id="'+id+'"><div><div class="plan-body">'+
+   '<span class="plan-num" aria-hidden="true">0'+(i+1)+'</span>'+
+   '<div class="plan-l"><p class="plan-for">'+esc(p.for)+'</p>'+
+   '<p class="plan-price"><span class="plan-amt num">'+p.price+'</span><span class="plan-per">/project</span></p>'+
+   '<p class="plan-was"><span class="plan-old">was '+p.was+'</span><span class="plan-save">'+p.save+'</span></p>'+
+   '<div class="plan-art">'+planArt(p)+'</div>'+
+   '<p class="plan-desc"><em>'+esc(p.c)+'</em></p><span class="plan-ticks" aria-hidden="true"></span></div>'+
+   '<ul class="plan-feat">'+p.f.map(function(f){return '<li>'+CHK+'<span>'+esc(f)+'</span></li>'}).join("")+'</ul>'+
+   '<div class="plan-r"><ul class="plan-notes">'+p.n.map(function(n){return '<li><span class="accent" aria-hidden="true">+</span><em>'+esc(n)+'</em></li>'}).join("")+'</ul>'+
+   '<a href="#site-foot" class="plan-get">Get started '+A+'</a>'+
+   '<p class="plan-time">'+CLOCK+'<span>Timeline</span><strong>'+p.time+'</strong></p></div>'+
  '</div></div></div></article>';
 }).join("");
 
@@ -2160,6 +2300,21 @@ tick();setInterval(tick,1000);
    t+=(chs.length-1)*.085+.22;
   });
  },"0px");
+ /* pricing (reference): titles rise word by word as they enter; each plan
+    row rises 100px and fades in; "Ask our expert" grows in from 1.3x; the
+    large C in the "Built for the long run" card fades in while the card is
+    on screen and back out when it leaves */
+ once(document.querySelectorAll(".rise-words"),function(el){
+  M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.04),ease:OUT});
+ },"0px");
+ once(document.querySelectorAll("#plans .plan"),function(el){
+  M.animate(el,{opacity:[0,1],y:[100,0]},{duration:.9,ease:OUT});
+ },"0px");
+ once(document.querySelectorAll(".ask"),function(el){
+  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
+ },"0px 0px -10% 0px");
+ var pl=document.querySelector(".pcard-logo");
+ if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
  var rowN=0;
  once(document.querySelectorAll("#whyStats .bcard-pill"),function(el){
   var i=[].indexOf.call(document.querySelectorAll("#whyStats .bcard-pill"),el);
@@ -2211,7 +2366,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
  // How we work (heading included), the case row, why choose us, page 4 and
  // the footer scroll 1:1 on the reference, with their own one-time
  // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.wh,.wh-close,#site-foot";
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
@@ -2506,11 +2661,11 @@ document.querySelectorAll(".menu a").forEach(function(a){
 });
 
 /* pricing accordion — one open at a time */
+/* plans open and close independently, as on the reference */
 document.querySelectorAll(".plan .plan-btn").forEach(function(b){
  b.addEventListener("click",function(){
-  var plan=b.closest(".plan"),was=plan.classList.contains("open");
-  document.querySelectorAll(".plan").forEach(function(p){p.classList.remove("open");p.querySelector(".plan-btn").setAttribute("aria-expanded",false)});
-  if(!was){plan.classList.add("open");b.setAttribute("aria-expanded",true)}
+  var plan=b.closest(".plan"),open=!plan.classList.contains("open");
+  plan.classList.toggle("open",open);b.setAttribute("aria-expanded",open);
  });
 });
 
