@@ -583,6 +583,7 @@ html.js-motion .panel img.bg{will-change:transform}
 .p3-logo b{font-weight:700;font-size:calc(var(--rfs)*1.55);letter-spacing:-.045em;line-height:1}
 .p3-logo i{font-family:"Fragment Mono",ui-monospace,monospace;font-style:normal;font-size:calc(var(--mono)*.62);line-height:1.15;letter-spacing:-.02em;padding-top:2px}
 .p3-logo-1{align-items:center;gap:8px}
+.p3-logo-img{display:block;height:32px;width:auto}
 .p3-logo-1 sup{font-size:.42em;font-weight:600;align-self:flex-start;margin-top:.25em}
 .p3-ticks{flex:0 1 36%;height:14px;background-image:repeating-linear-gradient(to right,rgba(255,255,255,.75) 0 1px,transparent 1px 11px)}
 .p3-mid{pointer-events:none;margin-top:-7vh}
@@ -1571,7 +1572,7 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 var projects=[
  {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
  {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
- {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
+ {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],logoImg:"public/img/aspen-logo.svg",logoAlt:"Logisync",title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
 var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
@@ -1641,7 +1642,9 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
  '<span class="veil"></span>'+
  (p.case?'<span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>':'')+
  '<div class="body shell">'+
-   '<div class="flex between center g3">'+(p.logo
+   '<div class="flex between center g3">'+(p.logoImg
+     ? '<img class="p3-logo-img" src="'+p.logoImg+'" alt="'+esc(p.logoAlt||p.logo[0])+'" width="177" height="44">'
+     : p.logo
      ? (p.logo.length>1
         ? '<span class="p3-logo"><b>'+esc(p.logo[0])+'</b><i>'+esc(p.logo[1])+'<br>'+esc(p.logo[2])+'</i></span>'
         : '<span class="p3-logo p3-logo-1"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden><rect x="1" y="6" width="6" height="5" rx="1.6" fill="currentColor"/><rect x="9.5" y="2.5" width="5.5" height="5" rx="1.6" fill="currentColor"/><path d="M6.6 8.4h3.6" stroke="currentColor" stroke-width="1.5"/></svg><b>'+esc(p.logo[0])+'</b><sup>&#174;</sup></span>')
