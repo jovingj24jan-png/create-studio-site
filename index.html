@@ -782,15 +782,15 @@ html.js-motion .panel img.bg{will-change:transform}
   .fcase-r{border-left:0;padding-left:0}}
 
 /* ═══════════════════════════════════════════════════ services ══════════ */
-#studio{padding-bottom:0}
+#studio{padding-bottom:0;background:#fff}
 .svc-stack{position:relative}
+/* Card surface as on the reference: white that fades in over the top 15%,
+   behind a 5px backdrop blur. Only that top strip lets the card underneath
+   show through (blurred) while the next one slides up; everything below it
+   is solid, so a pinned card never shows the previous service's content. */
 .svc{position:sticky;top:20px;padding:clamp(44px,5vw,72px) 0 clamp(48px,5.6vw,80px);
-  /* measured on the reference: blur(5px), no saturation, and a lighter tint so
-     the outgoing panel stays legible through the incoming one */
-  background:rgba(244,244,244,.55);
+  background:linear-gradient(rgba(255,255,255,0),#fff 15%);
   -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .svc{background:var(--paper)}}
 #hww{position:relative;z-index:2}
 /* Below desktop the reference still stacks the cards (sticky 20px on phones,
    0 on tablet) but lets the last one scroll on, with no hold. */
@@ -846,6 +846,13 @@ html.js-motion .panel img.bg{will-change:transform}
     letter-spacing:-.05em;text-transform:uppercase;width:565px;max-width:none!important;margin-left:30px;text-align:right}
   .svc{height:683px;box-sizing:border-box}
   .svc>.shell{padding-left:54px;padding-right:52px}
+  /* card body on the reference: image and first bullet level at 336, the
+     description 52px under the image and wrapping at 400px, the "+" at 844
+     with the item 18px after it */
+  #services .svc .grid.mt5{margin-top:60px}
+  #services .svc .grid p.t-body{margin-top:52px;max-width:400px!important}
+  #services .svc ul{margin-top:-9px;margin-left:-7px}
+  #services .svc ul li{gap:7px}
   /* On the reference the last card (Build) stays pinned for 400px of scroll
      before the stack releases, then 79px of space before "How we work".
      Padding would not do it: a sticky box cannot travel into its parent's
