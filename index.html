@@ -1189,8 +1189,13 @@ a.wc:hover .wc-title{color:var(--accent)}
 @media(min-width:1200px){.wc{height:600px}}
 
 /* closing block: a 900px panel over the light bubble artwork */
-.wh-close{position:relative;overflow:hidden;background:#ececec;padding:80px 20px}
-.wh-close-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;mix-blend-mode:multiply;pointer-events:none}
+/* the background stays pinned to the screen while the panel scrolls over it,
+   as the reference's background video does: a fixed layer clipped to the
+   section */
+.wh-close{position:relative;overflow:hidden;clip-path:inset(0);background:#ececec;padding:80px 20px}
+.wh-close-bg{position:fixed;left:0;top:0;width:100%;height:100vh;object-fit:cover;opacity:.3;mix-blend-mode:multiply;pointer-events:none}
+.whc-line{display:block;height:1px;background:rgba(255,255,255,.75)}
+.wh-words .w{display:inline-block}
 .wh-close-in{position:relative;display:flex;flex-direction:column;gap:20px;max-width:1440px;margin:0 auto}
 .wh-inspire{font-size:clamp(48px,11vw,112px);line-height:1;font-weight:500;letter-spacing:-.07em;color:var(--muted)}
 .wh-nine{font-size:48px;line-height:1.1;font-weight:500;letter-spacing:-.05em;color:var(--muted)}
@@ -1199,11 +1204,13 @@ a.wc:hover .wc-title{color:var(--accent)}
 .wh-stats{list-style:none}
 .wh-stats li{display:flex;align-items:center;gap:16px;font-size:21px;line-height:1.295;letter-spacing:-.04em;color:var(--deep)}
 .wh-stats li+li{margin-top:17px}
-.wh-sq{flex:none;width:12px;height:12px;background:var(--accent)}
+.wh-sq{position:relative;flex:none;width:12px;height:12px;background:var(--accent)}
+.wh-sq::before,.wh-sq::after{content:"";position:absolute;left:50%;top:50%;background:#fff;transform:translate(-50%,-50%)}
+.wh-sq::before{width:8px;height:1.4px}.wh-sq::after{width:1.4px;height:8px}
 .wh-q{max-width:290px;font-size:18.1px;line-height:1.4;font-style:italic;letter-spacing:-.04em;color:var(--deep)}
 .wh-who{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
 .wh-role{font-size:14.1px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.wh-years{font-size:61.1px;line-height:1;font-weight:700;letter-spacing:-.05em;color:#fff;opacity:.6}
+.wh-years{font-size:clamp(56px,6.5vw,93px);line-height:1;font-weight:700;letter-spacing:-.05em;color:#fff;opacity:.6}
 .wh-cta{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;height:56px;padding:0 16px;border-radius:12px;background:var(--accent);color:#fff;
   font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;letter-spacing:-.05em;text-transform:uppercase}
 .wh-cta .roll{display:inline-block;height:24px;overflow:hidden;line-height:24px}
@@ -1226,7 +1233,9 @@ a.wc:hover .wc-title{color:var(--accent)}
   .wh-q{left:66.53%;top:562px;width:20.14%}
   .wh-who{left:66.53%;top:673px}
   .wh-role{left:66.53%;top:697px}
-  .wh-years{left:40px;top:726px}
+  .wh-years{left:40px;top:712px}
+  .whc-line{left:20px;width:37.8%}
+  .whc-line-a{top:80px}.whc-line-b{top:690px}
   .wh-cta{left:51.11%;top:763px;min-width:225px}
 }
 
@@ -1271,6 +1280,7 @@ a.wc:hover .wc-title{color:var(--accent)}
    motion) none of this applies and everything simply shows */
 html.js-motion a.wc .wc-meta{opacity:0;transform:translateY(120px)}
 html.js-motion .wh-pop{opacity:0;transform:scale(1.3);transform-origin:0 50%}
+html.js-motion .wh-words .w{opacity:0;transform:translateY(20px)}
 html.js-motion .nl-h{transform:scale(.81);transform-origin:0 50%}
 .wcard h3{transition:color .3s}
 .wcard:hover h3{color:var(--accent)}
@@ -1877,17 +1887,19 @@ input::placeholder{color:var(--rule)}
   <img class="wh-close-bg" src="public/img/statement.svg" alt="" loading="lazy" decoding="async">
   <div class="wh-close-in">
     <h2 class="wh-inspire wh-pop">Let us <span class="accent">inspire</span><br>your next<br>project</h2>
-    <p class="wh-nine wh-pop">9 years</p>
-    <p class="wh-nine-p wh-pop">Of brand, product and web work, with the same small team at the table.</p>
+    <span class="whc-line whc-line-a" aria-hidden="true"></span>
+    <p class="wh-nine wh-pop wh-words">9 years</p>
+    <p class="wh-nine-p wh-pop wh-words">Building lasting partnerships, scaling brands, and shipping work that stands out.</p>
     <img class="wh-face wh-pop" src="public/img/person-camille-okonkwo.svg" alt="Tobias Neumann" loading="lazy" decoding="async">
     <ul class="wh-stats">
       <li class="wh-pop"><span class="wh-sq" aria-hidden="true"></span>120+ projects delivered</li>
       <li class="wh-pop"><span class="wh-sq" aria-hidden="true"></span>99% on-time launches</li>
       <li class="wh-pop"><span class="wh-sq" aria-hidden="true"></span>84% average boost in engagement</li>
     </ul>
-    <blockquote class="wh-q wh-pop">&ldquo;We keep the team small, the feedback honest, and every promise one we can keep.&rdquo;</blockquote>
+    <blockquote class="wh-q wh-pop">&quot;We listen first, stay transparent, and deliver what we promise.<br>Every project matters to us.&quot;</blockquote>
     <p class="wh-who wh-pop">Tobias Neumann</p>
     <p class="wh-role wh-pop">CEO of Create&#174;</p>
+    <span class="whc-line whc-line-b" aria-hidden="true"></span>
     <p class="wh-years wh-pop" aria-hidden="true">2016 — 2025</p>
     <a href="#site-foot" class="wh-cta wh-pop"><span class="roll"><span>Book an intro call</span><span aria-hidden="true">Book an intro call</span></span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></a>
   </div>
@@ -2180,8 +2192,9 @@ document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
   '</div></li>';
  }).join("");
 })();
-/* titles that rise word by word (pricing card row, pricing head) */
-document.querySelectorAll(".rise-words").forEach(function(h){
+/* titles that rise word by word (pricing card row, pricing head) and the
+   closing panel's "9 years" lines */
+document.querySelectorAll(".rise-words,.wh-words").forEach(function(h){
  h.setAttribute("aria-label",h.textContent);
  h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");
 });
@@ -2522,8 +2535,19 @@ tick();setInterval(tick,1000);
   M.animate(card.querySelector(".wc-meta"),{opacity:[0,1],y:[120,0]},{duration:1.2,ease:OUT});
  },"0px 0px -35% 0px");
  once(document.querySelectorAll(".wh-pop"),function(el){
-  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
+  /* the year line settles at 60%, as on the reference */
+  M.animate(el,{opacity:[0,el.classList.contains("wh-years")?.6:1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px -10% 0px");
+ /* closing panel: the words of "9 years" and the line under it rise 20px
+    and fade in while they are on screen, and drop back out when they leave
+    (in either direction), as on the reference */
+ document.querySelectorAll(".wh-words").forEach(function(el){
+  var ws=el.querySelectorAll(".w"),shown=false;
+  new IntersectionObserver(function(es){
+   var v=es[0].isIntersecting;if(v===shown)return;shown=v;
+   M.animate(ws,v?{opacity:1,y:0}:{opacity:0,y:20},{duration:v?.7:.4,delay:v?M.stagger(.03):0,ease:OUT});
+  },{rootMargin:"0px 0px -10% 0px"}).observe(el);
+ });
  once(document.querySelectorAll(".nl-h"),function(el){
   M.animate(el,{scale:[.81,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
