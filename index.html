@@ -1143,7 +1143,11 @@ html.js-motion .faq-pop{opacity:.001}
    mosaic of 12px-radius cards on a 548 / 548 / 264 grid with 20px gaps and
    600px rows; the closing block a 900px panel. Everything scrolls 1:1 there;
    motion is one-time reveals (script). Desktop values from 1200px up. */
-.wh{padding-top:clamp(56px,6vw,96px)}
+.wh{padding-top:clamp(56px,6vw,96px);background:#fafafa}
+.wh-hatch{display:block;width:74px;height:12px;margin-top:3px;opacity:.15;
+  background-image:repeating-linear-gradient(-45deg,var(--deep) 0 1.5px,transparent 1.5px 6px)}
+.wi-rule{position:absolute;top:32px;left:32px;right:32px;height:1px;background:rgba(217,217,217,.4)}
+.wi-rule::before{content:"";position:absolute;left:0;top:-1px;width:20px;height:3px;background:#d9d9d9}
 .wh-cap{display:block;position:relative;height:1px;max-width:74px;background:var(--rule);margin-bottom:51px}
 .wh-cap::before{content:"";position:absolute;left:0;top:-1px;width:20px;height:3px;background:var(--rule)}
 .wh-top{display:flex;align-items:center;gap:24px;margin-bottom:30px}
@@ -1186,7 +1190,7 @@ a.wc:hover .wc-title{color:var(--accent)}
   .wc-a5{grid-column:1/3}
   .wh-more-cell{grid-column:3}
 }
-@media(min-width:1200px){.wc{height:600px}}
+@media(min-width:1200px){.wc{height:600px}.wh-band{padding-top:64px}}
 
 /* closing block: a 900px panel over the light bubble artwork */
 /* the background stays pinned to the screen while the panel scrolls over it,
@@ -1908,11 +1912,11 @@ input::placeholder{color:var(--rule)}
 <section id="whispers" class="wh" aria-label="Whispers">
   <div class="shell">
     <div class="ph wh-head">
-      <div class="ph-rail"><span class="wh-cap"></span><span class="t-mono-sm muted rv-tag">● Whispers</span></div>
+      <div class="ph-rail"><span class="wh-cap"></span><span class="t-mono-sm muted rv-tag">Whispers</span><span class="wh-hatch" aria-hidden="true"></span></div>
       <div class="ph-main">
         <div class="wh-top"><span class="wh-line"></span><span class="wh-mark">create<sup>&#174;</sup></span></div>
-        <h2 class="t-h2 ph-title rv-h" style="max-width:15ch">Half-formed thoughts, written down</h2>
-        <p class="t-body ph-sub rv-lead deep"><span class="lead"></span>Launches, design explorations and team experiments — where ideas take shape before they become projects.</p>
+        <h2 class="t-h2 ph-title rise-words" style="max-width:15ch">What bubbles up needs to be shared</h2>
+        <p class="t-body ph-sub deep">&mdash;&mdash;&nbsp; From new launches to design explorations and team experiments, this is where ideas take shape and stories unfold.</p>
         <span class="ph-ticks"></span>
       </div>
     </div>
@@ -2098,11 +2102,11 @@ var faqs=[
  ["Can we start small and scale later?","Yes. Many clients begin with a focused project like a brand refresh or website revamp. As their needs grow, we expand into campaigns, strategy, and ongoing support. Flexibility is built into how we work."]
 ];
 var posts=[
- [1,"Jul 30, 2025","Rethinking Product Design with Intelligence","Lucas Marino","Technical Director"],
- [2,"Jul 25, 2025","Digital Identities Across Cultures","Owen Marsh","Marketing Lead"],
- [3,"Jul 20, 2025","Architecture in the Digital Age","Rowan Petit","Creative Lead"],
- [4,"Jul 15, 2025","The Future of E-Mobility Marketing","Theo Brandt","Head of Product"],
- [5,"Dec 7, 2025","How Automotive Brands Win Online","Nils Aaberg","UX Strategist"]
+ [1,"Jul 30, 2025","Rethinking Product Design with Intelligence","Lucas Marino","Technical Director","A SaaS product team approached us with an AI add-on. The challenge was to rethink AI not as a widget but as a foundation for smarter systems."],
+ [2,"Jul 25, 2025","Digital Identities Across Cultures","Edward Bright","Marketing Lead","Numeriq approached us to redefine their online presence. The challenge was balancing their street-level origins with their luxury aspirations."],
+ [3,"Jul 20, 2025","Architecture in the Digital Age","Mark Miller","Creative Lead","An architecture studio wanted its online presence to feel as ambitious as its buildings. The challenge was to move beyond static portfolios and reflect authority and vision."],
+ [4,"Jul 15, 2025","The Future of E-Mobility Marketing from Lindholm","Matthew Parker","Head of Product","Lindholm launched Aspen® 877, a new e-bike. The challenge was positioning it as both a lifestyle product and a piece of cutting-edge mobility tech."],
+ [5,"Dec 7, 2025","How Automotive Brands Win Online","Jordan Ellis","UX Strategist","An automotive brand asked us to build a digital showroom. The challenge was giving customers an online experience that could rival the thrill of being behind the wheel."]
 ];
 
 /* ───────────────────────────────────────────── hero headline ────────── */
@@ -2308,12 +2312,13 @@ function wcard(p,cls){
  return '<a class="wc '+cls+'" href="#whispers"><img src="public/img/whisper-'+p[0]+'.svg" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
  '<div class="wc-meta"><span class="wc-by"><span class="wc-name">'+esc(p[3])+'</span><span class="wc-role">'+esc(p[4])+'</span></span>'+
  '<span class="wc-date num">'+p[1]+'</span></div>'+
- '<h3 class="wc-title">'+esc(p[2])+'</h3></a>';
+ '<h3 class="wc-title">'+esc(p[2])+'</h3><p class="sr">'+esc(p[5])+'</p></a>';
 }
 document.getElementById("whisperGrid").innerHTML=
  '<div class="wc wc-intro"><img src="public/img/whisper-6.svg" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
- '<h3 class="wi-title">Whispers — Blog</h3><p class="wi-sub">Small notes, shared early.</p>'+
- '<p class="wi-p">Writing from the studio on craft, strategy and the work behind the work.</p>'+
+ '<span class="wi-rule" aria-hidden="true"></span><h3 class="wi-title rise-words" aria-label="Whispers - Blog">'+"Whispers - Blog".split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+w+'</span>'}).join(" ")+'</h3>'+
+ '<p class="wi-sub">From small sparks to big ideas.</p>'+
+ '<p class="wi-p">Articles, notes on creativity, strategy and making things work.</p>'+
  '<ul class="wi-feats"><li>Studio projects and case studies</li><li>Notes on design and process</li><li>Ideas, insights, and inspiration</li></ul></div>'+
  wcard(posts[0],"wc-a1")+wcard(posts[1],"wc-a2")+wcard(posts[2],"wc-a3")+wcard(posts[3],"wc-a4")+wcard(posts[4],"wc-a5")+
  '<div class="wh-more-cell"><a href="#whispers" class="wh-more"><span class="wh-more-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span>More Whispers<sup class="num">7</sup></a></div>';
