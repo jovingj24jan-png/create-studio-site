@@ -959,7 +959,7 @@ a.wc:hover .wc-title{color:var(--accent)}
 
 /* closing block: a 900px panel over the light bubble artwork */
 .wh-close{position:relative;overflow:hidden;background:#ececec;padding:80px 20px}
-.wh-close-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;mix-blend-mode:multiply;pointer-events:none}
+.wh-close-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(1.12);pointer-events:none}
 .wh-close-in{position:relative;display:flex;flex-direction:column;gap:20px;max-width:1440px;margin:0 auto}
 .wh-inspire{font-size:clamp(48px,11vw,112px);line-height:1;font-weight:500;letter-spacing:-.07em;color:var(--muted)}
 .wh-nine{font-size:48px;line-height:1.1;font-weight:500;letter-spacing:-.05em;color:var(--muted)}
@@ -1261,7 +1261,7 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
 </main>
 
 <section class="wh-close" aria-label="Studio at a glance">
-  <img class="wh-close-bg" src="public/img/statement.svg" alt="" loading="lazy" decoding="async">
+  <video class="wh-close-bg" data-src="germ.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   <div class="wh-close-in">
     <h2 class="wh-inspire wh-pop">Let us <span class="accent">inspire</span><br>your next<br>project</h2>
     <p class="wh-nine wh-pop">9 years</p>
@@ -1408,6 +1408,19 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
  /* closing panel and newsletter, as on the homepage */
  once(document.querySelectorAll(".wh-pop"),function(el){M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT})},"0px 0px -10% 0px");
  once(document.querySelectorAll(".nl-h"),function(el){M.animate(el,{scale:[.81,1]},{duration:1,ease:OUT})},"0px 0px -10% 0px");
+})();
+/* closing CTA: the reference's background footage loads as the section
+   nears, plays muted on loop, and holds its first frame for reduced motion */
+(function(){
+ var v=document.querySelector("video.wh-close-bg");if(!v)return;
+ var mq=window.matchMedia("(prefers-reduced-motion: reduce)");
+ function sync(){if(!v.getAttribute("src"))return;if(mq.matches){v.pause();v.currentTime=0}else v.play().catch(function(){})}
+ function load(){if(v.getAttribute("src"))return;v.src=v.dataset.src;v.preload="auto";sync()}
+ if("IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();load()}},{rootMargin:"800px 0px"});
+  io.observe(v.parentElement);
+ }else load();
+ if(mq.addEventListener)mq.addEventListener("change",sync);else if(mq.addListener)mq.addListener(sync);
 })();
 </script>
 </body>
