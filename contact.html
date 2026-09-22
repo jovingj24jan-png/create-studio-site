@@ -7,7 +7,6 @@
      loaded near the end of the body, so without this the browser could not
      start downloading it until the parser had read most of the page. -->
 <link rel="preload" href="js/motion.min.js" as="script">
-<link rel="preload" href="hero.jpg" as="image" fetchpriority="high">
 <script>/* Entrance poses are armed only when motion is allowed, so reduced-motion and
    no-JS visitors get the finished page.
    The page used to disarm itself on a fixed 3s clock. Over a real connection
@@ -20,8 +19,8 @@
  window.__disarm=function(){if(!r.classList.contains("motion-ready"))r.classList.remove("js-motion")};
  setTimeout(window.__disarm,10000);
 })(document.documentElement)</script>
-<title>Create® — Design Studio</title>
-<meta name="description" content="Brands and products built to carry weight. An independent studio for brand, product and web.">
+<title>Contact — Create® Design Studio</title>
+<meta name="description" content="Let's talk. Tell us about your next project and the team behind it.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
 /* ═══════════════════════════════ fonts (inlined so file:// works) ═══════ */
@@ -362,12 +361,8 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 /* ═══════════════════════════ partnership / pricing card row ════════════ */
 .pcards{background:#fafafa}
 .pcard-row{display:grid;grid-template-columns:1.15fr 1fr 1.2fr;gap:20px}
-.pcard{position:relative;overflow:hidden;display:flex;flex-direction:column;padding:28px;border-radius:12px;
+.pcard{display:flex;flex-direction:column;padding:28px;border-radius:12px;
   background:#fff;border:1px solid var(--line)}
-.pcard-mark{display:none}
-.pcard-logo{display:none}
-.pcard-avail{display:flex;align-items:center;gap:12px;font-size:20.96px;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
-.pcard-avail svg{width:24px;height:24px;flex:none;color:var(--rule)}
 .pcard-b,.pcard-c{background:#f2f2f2;border-color:transparent}
 .pcard-h{display:flex;align-items:center;gap:12px;color:#606163;
   font-size:calc(var(--rfs)*2.1);font-weight:500;letter-spacing:-.04em}
@@ -382,10 +377,7 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 .pcard-list li{display:flex;align-items:center;gap:12px;color:var(--deep);
   font-size:calc(var(--rfs)*1.25)}
 .pcard-list svg{width:20px;height:20px;flex:none;color:var(--rule)}
-.pcard-panel{position:relative;margin-top:auto;padding:22px;border-radius:12px;background:#fafafa}
-.pcard-c{min-height:520px}
-.pcard-c .pcard-lab,.pcard-c .pcard-t{position:relative;z-index:1}
-.pcard-mascot{position:absolute;right:3px;top:47px;width:220px;height:335px;object-fit:cover;object-position:50% 0;pointer-events:none}
+.pcard-panel{margin-top:auto;padding:22px;border-radius:12px;background:#fafafa}
 .pcard-date{margin-top:8px;font-size:calc(var(--rfs)*1.9);font-weight:500;letter-spacing:-.04em}
 .pcard-cta{display:inline-flex;align-items:center;gap:16px;margin-top:22px;
   font-size:calc(var(--rfs)*1.3)}
@@ -395,119 +387,46 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
   width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff}
 @media(max-width:1023px){.pcard-row{grid-template-columns:1fr 1fr}.pcard-c{grid-column:1/-1}}
 @media(max-width:809px){.pcard-row{grid-template-columns:1fr}.pcard-c{grid-column:auto}}
-/* Card row, measured on the reference at 1440: 404 / 260 / 404px cards on a
-   centred 1260px row, the rest of the row holding the vertical "create"
-   wordmark at 20%; 24px padding, 520px tall; the middle card carries a large
-   white C that fades in while the card is on screen. */
-@media(min-width:1200px){
-  .pcard-row{grid-template-columns:404px 260px 404px 1fr;gap:24px;max-width:1260px;margin:0 auto}
-  .pcard{height:520px;padding:24px;border:0}
-  .pcard-h{font-size:32px;line-height:1.1;letter-spacing:-.06em;color:var(--deep)}
-  .pcard-h svg{width:24px;height:24px}
-  .pcard-p{margin-top:16px;max-width:300px;font-size:16px;line-height:1.3;letter-spacing:-.04em}
-  .pcard-img{margin-top:24px;width:310px;height:180px;aspect-ratio:auto;border-radius:8px}
-  .pcard-img+.pcard-p{margin-top:auto;font-size:14.08px}
-  .pcard-cta{margin-top:26px;font-size:18.08px;letter-spacing:-.04em;gap:16px}
-  .pcard-arrow{width:44px;height:44px;border-radius:8px}
-  .pcard-lab{font-size:16px;line-height:1.3;letter-spacing:-.04em}
-  .pcard-t{margin-top:12px;max-width:none;font-size:32px;line-height:1.1;letter-spacing:-.06em;color:var(--deep)}
-  .pcard-b .pcard-t{max-width:200px}
-  .pcard-c .pcard-t{max-width:249px}
-  .pcard-logo{display:block;position:absolute;left:18px;top:199px;width:359px;height:164px;opacity:0;transition:opacity 1.2s ease}
-  .pcard-logo svg{width:100%;height:100%}
-  .pcard-logo.on{opacity:1}
-  .pcard-list{position:relative;gap:12px}
-  .pcard-list li{font-size:16px;letter-spacing:-.04em}
-  .pcard-panel{padding:24px;background:#fff}
-  .pcard-date{font-size:20.96px;font-weight:400;letter-spacing:-.04em}
-  .pcard-mark{display:flex;align-items:center;justify-content:center;font-size:104px;font-weight:600;letter-spacing:-.05em;
-    color:var(--muted);opacity:.2;writing-mode:vertical-rl;transform:rotate(180deg);align-self:start;margin-top:107px;line-height:1}
-  .pcard-mark sup{font-size:.3em}
-}
-@media(prefers-reduced-motion:reduce){.pcard-logo.on,.pcard-logo{transition:none}}
 
 /* footer video: fills the small pill that used to hold the chip image */
 .foot-vid{display:block;width:80px;height:40px;flex:none;border-radius:999px;
   object-fit:cover;background:var(--mist)}
 
 /* ═══════════════════════ why-choose-us benefit cards (nine.jpg) ════════ */
-.bcard-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:48px}
-.bcard{display:flex;flex-direction:column;padding:24px;border-radius:12px;background:#fff}
-.bcard-mid{background:#f2f2f2}
-.bcard-line{display:block;font-size:32px;font-weight:500;letter-spacing:-.06em;line-height:1.1;color:var(--deep)}
-.bcard-line+.bcard-line{margin-top:4px}
+.bcard-row{display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:20px;margin-top:48px}
+.bcard{display:flex;flex-direction:column;padding:30px;border-radius:12px;
+  background:#fff;border:1px solid var(--line)}
+.bcard-mid{background:#f2f2f2;border-color:transparent}
+.bcard-line{display:block;font-size:calc(var(--rfs)*2.3);font-weight:400;
+  letter-spacing:-.04em;line-height:1.34;color:var(--ink)}
 .bcard-line.accent{color:var(--accent)}
-.bcard-kick{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
-.bcard-kick+.bcard-line{margin-top:12px}
-.bcard-quad{flex:none;display:grid;grid-template-columns:6px 6px;gap:6px}
-.bcard-quad i{width:6px;height:6px;border-radius:50%;background:var(--muted)}
-.bcard-rev{display:flex;align-items:center;gap:8px;margin-top:33px}
-.bcard-rev #stars{gap:2px}.bcard-rev svg{width:12px;height:12px}
-.bcard-rev p{font-size:18.08px;line-height:1.4;letter-spacing:-.04em;font-weight:500;color:var(--deep)}
-.bcard-rev strong{font-weight:500}
-.bcard-backed{margin-top:14px;max-width:290px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-/* halftone globe, in place of the reference's logo artwork */
-.bcard-mark{flex:none;width:148px;height:148px;margin-left:auto;border-radius:50%;
+/* halftone dot cluster, in place of a photo */
+.bcard-mark{flex:none;width:104px;height:104px;border-radius:50%;
   background-image:radial-gradient(var(--rule) 1.5px,transparent 1.6px);
   background-size:9px 9px;
   -webkit-mask-image:radial-gradient(circle,#000 38%,transparent 72%);
   mask-image:radial-gradient(circle,#000 38%,transparent 72%)}
-.bcard-dots{display:flex;align-items:center;gap:67px;margin:auto 0;padding:24px 24px}
-.bcard-dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.bcard-dots{display:flex;align-items:center;gap:28px;margin:auto 0;padding:34px 0}
+.bcard-dot{flex:none;width:22px;height:22px;border-radius:50%;background:var(--ink)}
 .bcard-halo{flex:none;width:104px;height:104px;border-radius:50%;background:#fff;
   box-shadow:0 10px 34px rgba(0,0,0,.10);display:flex;align-items:center;justify-content:center}
 .bcard-halo i{width:36px;height:36px;border-radius:50%;background:var(--accent)}
-.bcard-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:26px;
-  font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#141414}
-.bcard-foot>span:last-child{white-space:nowrap}
-.bcard-hatch{flex:0 1 184px;min-width:40px;height:15px;
+.bcard-foot{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:26px}
+.bcard-hatch{flex:none;width:118px;height:15px;
   background-image:repeating-linear-gradient(45deg,var(--rule) 0 1.5px,transparent 1.5px 6px)}
-.bcard-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
-.bcard-head h3{max-width:160px;font-size:32px;font-weight:500;letter-spacing:-.06em;line-height:1.1;color:var(--deep)}
-.bcard-pct{flex:none;color:var(--accent);font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em}
-.bcard-panel{margin-top:32px;padding:24px;border-radius:8px;
+.bcard-head{display:flex;align-items:flex-start;gap:20px}
+.bcard-head h3{flex:1;max-width:9ch;font-size:calc(var(--rfs)*2.3);font-weight:400;
+  letter-spacing:-.04em;line-height:1.16;color:var(--ink)}
+.bcard-pct{flex:none;padding-left:20px;border-left:1px solid var(--rule);color:var(--accent);
+  font-size:calc(var(--rfs)*2.1);font-weight:500;letter-spacing:-.04em}
+.bcard-panel{margin-top:26px;padding:22px 18px;border-radius:8px;
   background-image:radial-gradient(var(--rule) .7px,transparent .7px);background-size:7px 7px}
-.bcard-panel li+li{margin-top:16px}
-.bcard-pill{display:inline-flex;align-items:stretch;height:32px;border-radius:8px;overflow:hidden;max-width:100%;
-  font-size:16px;line-height:24px;letter-spacing:-.05em;box-shadow:0 .79px .79px rgba(0,0,0,.04),0 2px 6px rgba(0,0,0,.04)}
-.bcard-pill b{flex:none;display:flex;align-items:center;background:var(--deep);color:#fff;font-weight:400;padding:0 8px}
-.bcard-pill span{display:flex;align-items:center;background:#fff;color:var(--deep);padding:0 12px 0 11px;white-space:nowrap}
-@media(max-width:1023px){.bcard-row{grid-template-columns:repeat(2,minmax(0,1fr))}.bcard-last{grid-column:1/-1}}
-@media(max-width:1199px){.bcard-dots{gap:24px;padding:24px 0}.bcard-mark{width:120px;height:120px}
-  .bcard-head h3{max-width:none}.bcard-pill{height:auto;min-height:32px}}
-@media(min-width:810px) and (max-width:1199px){.bcard-panel{padding:12px}.bcard-pill{font-size:13px}}
-@media(max-width:809px){.bcard-row{grid-template-columns:minmax(0,1fr)}.bcard-last{grid-column:auto}
-  .bcard-line,.bcard-head h3,.bcard-pct{font-size:28px}.bcard-pill{font-size:14px}}
-@media(min-width:810px){.bcard{min-height:520px}}
-/* Why choose us, measured on the reference at 1440: heading on the 328px
-   line (as How we work), the intro in 20.96px muted with its dashes as text,
-   a 700px tick strip, then the three 404 x 520 cards centred on a 1260px row
-   120px below it. */
-@media(min-width:1200px){
-  .why .sechead-grid{grid-template-columns:308px 1fr;gap:0}
-  .why .sechead-rail{grid-column:1}.why .sechead-main{grid-column:2}
-  .why .sechead-h{max-width:720px}
-  .why .sechead-lead{display:block;max-width:600px;margin-top:24px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em}
-  .why .sechead-rule{margin-bottom:69px}
-  .why .sechead-ticks{margin-left:308px;max-width:700px;height:20px;margin-top:68px}
-  .why .bcard-last .bcard-dots{margin:118px 0 0;padding:0 24px}
-  .why .bcard-row{max-width:1260px;margin:120px auto 0}
-  .why .bcard{height:520px}
-  /* the pricing cards follow on the same rhythm: "Simple Pricing" sits 48px
-     under the cards' bottom edge on the reference */
-  .sechead.why{padding-bottom:0}
-  .why+.pcards{padding-top:43px}
-}
-.why .sechead-lead::before{content:none}
-/* one-time entrances (reference): heading words rise 20px; the phrases type
-   in letter by letter; the stat rows grow in from their left edge; the
-   review line and the small line in the last card fade in */
-html.js-motion .why-h .w{opacity:.001;transform:translateY(20px)}
-html.js-motion .why-type .ch{opacity:.001;transform:translateX(20px)}
-html.js-motion #whyStats .bcard-pill{opacity:.001;transform:scale(.3);transform-origin:0 50%}
-html.js-motion .bcard-rev,html.js-motion .bcard-kick{opacity:.001}
-.why-h .w,.why-type .ch{display:inline-block}
-.why-type .ch{white-space:pre}
+.bcard-panel li+li{margin-top:10px}
+.bcard-pill{display:inline-flex;align-items:stretch;border-radius:7px;overflow:hidden;max-width:100%}
+.bcard-pill b{flex:none;background:var(--deep);color:#fff;font-weight:400;padding:8px 12px}
+.bcard-pill span{background:#fff;color:var(--deep);padding:8px 14px}
+@media(max-width:1023px){.bcard-row{grid-template-columns:1fr 1fr}.bcard-last{grid-column:1/-1}}
+@media(max-width:809px){.bcard-row{grid-template-columns:1fr}.bcard-last{grid-column:auto}}
 
 /* ═══════════════════ section header: rail + ruled marker (page 17) ══════ */
 .sechead{background:#fafafa;padding:clamp(48px,6vw,104px) 0 clamp(40px,5vw,88px)}
@@ -690,12 +609,11 @@ html.js-motion .panel img.bg{will-change:transform}
 .dark .t-h2{color:var(--muted)}
 .dark .hair{background:rgba(255,255,255,.16)}
 .perf{position:relative;overflow:hidden}
-/* supplied background image, keeping the slow drift the gradient had */
-.perf::before{content:"";position:absolute;inset:-6% -4%;pointer-events:none;
-  /* a 35% dark tint keeps the labels readable over the brightest streaks */
-  background:linear-gradient(rgba(5,6,9,.35),rgba(5,6,9,.35)),#050609 url(public/img/perf-bg.png) center/cover no-repeat;
+.perf::before{content:"";position:absolute;inset:-20% -10%;pointer-events:none;
+  background:radial-gradient(60% 40% at 22% 28%,rgba(150,165,185,.13),transparent 70%),
+             radial-gradient(50% 38% at 78% 66%,rgba(120,140,165,.10),transparent 72%),
+             conic-gradient(from 210deg at 60% 45%,transparent 0deg,rgba(140,155,175,.07) 90deg,transparent 190deg);
   animation:perfSheen 26s ease-in-out infinite alternate}
-@media(prefers-reduced-motion:reduce){.perf::before{animation:none}}
 @keyframes perfSheen{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-3%,2%,0) scale(1.08)}}
 .perf>*{position:relative;z-index:1}
 .perf-rule{height:12px;max-width:48%;background-image:repeating-linear-gradient(to right,rgba(255,255,255,.42) 0 1px,transparent 1px 11px)}
@@ -713,6 +631,8 @@ html.js-motion .panel img.bg{will-change:transform}
 .perf-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:48px 20px;margin-top:64px}
 .perf-num{display:flex;align-items:flex-start;font-size:clamp(56px,8vw,80px);line-height:1;font-weight:500;letter-spacing:-.07em}
 .nf-d{display:inline-block;height:1em;overflow:hidden}
+.nf-reel{display:flex;flex-direction:column}
+.nf-reel>span{display:block;height:1em;line-height:1}
 .perf-lab{margin-top:20px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:#f2f2f2}
 .perf-meta{margin-top:16px}
 .perf-no{font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;color:#fff;opacity:.6}
@@ -765,17 +685,15 @@ html.js-motion .panel img.bg{will-change:transform}
 
 /* ═══════════════════════════════════════════════════ grow panel ════════ */
 #hww{padding-bottom:0}
-.grow{position:relative;overflow:hidden;margin-top:clamp(56px,7vw,120px);background:#000}
-.grow::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.8;
-  background:url(process-glow.jpg) 50% 72%/cover no-repeat}
-@media(min-width:1024px){.grow::before{background-position:50% 62%;background-size:auto 260%}}
-/* on the reference the same photo runs on under the case row at half the
-   brightness; at 1200+ the panel is ~673px tall, so its 260% frame is
-   ~1750px and continues here */
-@media(min-width:1200px){
-  html #fcase{background:#000}
-  html #fcase::before{opacity:.4;background:url(process-glow.jpg) 50% -1341px/auto 1750px no-repeat}
-}
+.grow{position:relative;overflow:hidden;margin-top:clamp(56px,7vw,120px);background:#080a10}
+.grow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+   radial-gradient(88% 78% at 4% 92%,#19bcc4 0%,rgba(25,188,196,0) 60%),
+   radial-gradient(66% 72% at 42% 100%,#e2456c 0%,rgba(226,69,108,0) 64%),
+   radial-gradient(60% 70% at -4% 44%,#1d5f96 0%,rgba(29,95,150,0) 66%),
+   radial-gradient(58% 78% at 76% 102%,#c93564 0%,rgba(201,53,100,0) 60%),
+   radial-gradient(58% 105% at 96% 12%,rgba(6,6,10,.92) 0%,rgba(6,6,10,0) 70%),
+   linear-gradient(158deg,#0a111f 0%,#0d1526 32%,#140a16 100%)}
 .grow-in{position:relative;z-index:1;display:grid;grid-template-columns:1fr 40%;
   gap:clamp(40px,6vw,96px);align-items:center;padding-top:clamp(56px,7vw,120px);
   padding-bottom:clamp(56px,7vw,120px)}
@@ -801,12 +719,6 @@ html.js-motion .panel img.bg{will-change:transform}
 .gcard-c{margin-top:clamp(14px,1.2vw,20px);font-size:calc(var(--rfs)*1.18);letter-spacing:-.02em;
   line-height:1.5;color:#a7a9b0}
 @media(max-width:1023px){.grow-in{grid-template-columns:1fr}.grow-h{max-width:none}}
-/* The band, its text, the four stage cards and the case row are driven by
-   one scroll timeline (script: "How we work timeline"); these are only the
-   hooks it writes to. */
-.grow::before{transform-origin:50% 50%;transform:scale(var(--gz,1))}
-.grow-track{display:flow-root}                  /* keeps the band's top margin inside the track */
-.grow-run{height:0}
 @media(max-width:639px){.grow-r{grid-template-columns:1fr}}
 
 /* ═══════════════════════════════════════════════════ featured case ═════ */
@@ -845,25 +757,21 @@ html.js-motion .panel img.bg{will-change:transform}
   .hww-title{font-size:96px;line-height:1;letter-spacing:-.06em;color:var(--muted);max-width:770px}
   .hww-sub{margin-top:24px;font-size:21px;line-height:1.295;letter-spacing:-.04em;color:var(--muted);max-width:600px}
   .grow-in{padding-left:40px}
-  .grow-in>div:first-child{position:relative;top:-10px}
   .grow-h{max-width:544px;font-size:56px;line-height:1.1;font-weight:600;letter-spacing:-.05em;color:var(--rule)}
   .grow-p{margin-top:39px;max-width:420px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--rule)}
   .grow-cta{margin-top:52px;gap:16px;font-size:18.1px;letter-spacing:-.04em}
   .grow-btn{width:44px;height:44px;border-radius:8px}
-  .grow-r{width:538px;justify-self:end;margin-right:35px;gap:24px;grid-auto-rows:1fr}
-  .gcard{padding:24px}
-  .gcard-no{font-size:12px;line-height:1.3;letter-spacing:-.05em}
-  .gcard-top{align-items:center}
-  .gcard-rule{margin:18px 0}
+  .grow-r{width:548px;justify-self:end;margin-right:18px;gap:20px}
+  .gcard{padding:26px}
   .gcard-h{font-size:20px;line-height:1.4;letter-spacing:-.04em}
   .gcard-c{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-  .fcase-in{grid-template-columns:328px 350px 1fr;column-gap:67px;padding-left:100px}
+  .fcase-in{grid-template-columns:328px 350px 1fr;column-gap:72px;padding-left:100px}
   /* vertical rhythm: 113px from the tick rule to the band; the card grid
      starts 50px into it with 64px below, the heading block centred beside it */
   .hww-head{padding-bottom:0}
   .grow{margin-top:113px}
-  .grow-in{align-items:center;padding-top:59px;padding-bottom:57px}
-  #fcase{padding-bottom:208px}
+  .grow-in{align-items:center;padding-top:80px;padding-bottom:73px}
+  #fcase{padding-bottom:181px}
   .fcase-p{font-size:18.1px;line-height:1.4;letter-spacing:-.04em}
   .fcase-r{padding-left:50px}
   .fcase-h{max-width:408px;font-size:32px;line-height:1.1;letter-spacing:-.06em}
@@ -874,42 +782,18 @@ html.js-motion .panel img.bg{will-change:transform}
   .fcase-r{border-left:0;padding-left:0}}
 
 /* ═══════════════════════════════════════════════════ services ══════════ */
-#studio{padding-bottom:0;background:#fff}
+#studio{padding-bottom:0}
 .svc-stack{position:relative}
-/* Card surface as on the reference: white that fades in over the top 15%,
-   behind a 5px backdrop blur. Only that top strip lets the card underneath
-   show through (blurred) while the next one slides up; everything below it
-   is solid, so a pinned card never shows the previous service's content. */
 .svc{position:sticky;top:20px;padding:clamp(44px,5vw,72px) 0 clamp(48px,5.6vw,80px);
-  background:linear-gradient(rgba(255,255,255,0),#fff 15%);
+  /* measured on the reference: blur(5px), no saturation, and a lighter tint so
+     the outgoing panel stays legible through the incoming one */
+  background:rgba(244,244,244,.55);
   -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .svc{background:var(--paper)}}
 #hww{position:relative;z-index:2}
-/* Below desktop the reference still stacks the cards (sticky 20px on phones,
-   0 on tablet) but lets the last one scroll on, with no hold. */
-@media(max-width:1199px){.svc:last-child{position:relative}}
-@media(min-width:810px) and (max-width:1199px){.svc{top:0}}
-/* Card type below desktop, measured on the reference: title 48px on tablet
-   and 30.4px on phones, index 30.4px, copy and list 16px with the list on a
-   37px pitch. Keeps each phone card within one screen, so nothing is covered
-   before it can be read. */
-@media(max-width:1199px){
-  #services .svc .t-service{font-size:48px;line-height:1.1}
-  #services .svc .svc-idx{font-size:30.4px;line-height:1.1}
-  #services .svc .grid p.t-body,#services .svc ul li .t-body{font-size:16px;line-height:1.3}
-  #services .svc ul li{padding:8.1px 0}
-}
-@media(min-width:810px) and (max-width:1199px){
-  #services .svc{padding-top:76px}
-  #services .svc .grid.mt5{margin-top:64px}
-}
-@media(max-width:809px){
-  #services .svc{padding-top:52px}
-  #services .svc .t-service{font-size:30.4px}
-  #services .svc h3.mt5{margin-top:40px}
-  #services .svc .grid.mt5{margin-top:33px;row-gap:0!important}
-  #services .svc .grid p.t-body{line-height:1.4}
-  #services .svc .grid>ul{margin-top:17px}
-}
+@media(max-width:809px){.svc{position:static;padding:clamp(56px,6vw,96px) 0 0;
+  background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media(prefers-reduced-motion:reduce){.svc{position:static;padding:clamp(56px,6vw,96px) 0 0;
   background:none;-webkit-backdrop-filter:none;backdrop-filter:none}}
 .svc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
@@ -938,19 +822,9 @@ html.js-motion .panel img.bg{will-change:transform}
     letter-spacing:-.05em;text-transform:uppercase;width:565px;max-width:none!important;margin-left:30px;text-align:right}
   .svc{height:683px;box-sizing:border-box}
   .svc>.shell{padding-left:54px;padding-right:52px}
-  /* card body on the reference: image and first bullet level at 336, the
-     description 52px under the image and wrapping at 400px, the "+" at 844
-     with the item 18px after it */
-  #services .svc .grid.mt5{margin-top:60px}
-  #services .svc .grid p.t-body{margin-top:52px;max-width:400px!important}
-  #services .svc ul{margin-top:-9px;margin-left:-7px}
-  #services .svc ul li{gap:7px}
-  /* On the reference the last card (Build) stays pinned for 400px of scroll
-     before the stack releases, then 79px of space before "How we work".
-     Padding would not do it: a sticky box cannot travel into its parent's
-     padding, so the hold has to be in-flow content. */
-  .svc-stack{padding-bottom:79px}
-  .svc-stack::after{content:"";display:block;height:400px}
+  /* the last card holds for 479px more before "How we work" slides over it:
+     BUILD to HOW WE WORK is 1231px on the reference */
+  .svc-stack{padding-bottom:479px}
 }
 
 /* ═══════════════════════════════════════════════════ pricing ═══════════ */
@@ -981,7 +855,6 @@ html.js-motion .panel img.bg{will-change:transform}
   .ask>h3{font-size:48px!important;line-height:1.1!important;letter-spacing:-.05em!important;white-space:nowrap;color:var(--muted)}
   .ask>p{font-size:21px;line-height:1.295;letter-spacing:-.04em;color:var(--muted)}
   .ask>div{margin-left:47px}
-  #pricing .ph-sub{max-width:600px}
 }
 .plan{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--mist);margin-bottom:12px}
 .plan.open{background:#fff}
@@ -996,131 +869,27 @@ html.js-motion .panel img.bg{will-change:transform}
 .plan.open .acc{grid-template-rows:1fr}
 .acc>div{overflow:hidden}
 .save{background:var(--accent);color:#fff;border-radius:999px;padding:2px 8px}
-/* ── plan rows, measured on the reference at 1440: full-width rows, 12px
-   radius, 32px padding, 8px apart; open white and 572px tall, closed #fafafa
-   and 117px; a hatched marker, tier over plan name (open: tier accent, name
-   grey; closed: the other way round), a 32px + that turns into a cross.
-   Hovering a closed row greys it, turns its tier and marker accent and slides
-   its one-line pitch in beside the +. The body: price column, a 380px
-   feature panel from x592, a 380px column with notes, the 56px "Get
-   started" button and the timeline from x1012, and the big pale index
-   behind. Each plan opens and closes on its own. */
-#plans{margin:0 calc(-1 * var(--gutter))}
-#plans .plan{position:relative;border:0;border-radius:12px;background:#fafafa;margin:0 0 8px;overflow:hidden;transition:background-color .35s var(--ease)}
-#plans .plan.open{background:#fff}
-#plans .plan-btn{display:flex;align-items:center;gap:16px;padding:29px 32px;min-height:117px;text-align:left}
-.plan-stripes{flex:none;width:16px;height:51px;background-image:repeating-linear-gradient(to bottom,var(--rule) 0 1px,transparent 1px 4px);transition:background-image .3s}
-.plan-titles{display:flex;flex-direction:column;flex:1}
-#plans .plan-tier{font-size:32px;line-height:1.1;letter-spacing:-.06em;font-weight:500;color:var(--deep);transition:color .3s}
-#plans .plan-name{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:var(--accent);transition:color .3s}
-#plans .plan.open .plan-tier{color:var(--accent)}
-#plans .plan.open .plan-name{color:var(--deep)}
-#plans .plan.open .plan-stripes{background-image:repeating-linear-gradient(to bottom,var(--accent) 0 1px,transparent 1px 4px)}
-.plan-tag{font-size:18.08px;letter-spacing:-.04em;color:var(--muted);white-space:nowrap;opacity:0;transform:translateX(24px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
-#plans .plan-ico{width:32px;height:32px;flex:none;color:var(--deep);transition:transform .5s var(--ease),color .3s}
-#plans .plan-ico::before,#plans .plan-ico::after{content:none}
-#plans .plan.open .plan-ico{transform:rotate(45deg);color:var(--accent)}
-@media(hover:hover){
-  #plans .plan:not(.open):hover{background:#f2f2f2}
-  #plans .plan:not(.open):hover .plan-tier{color:var(--accent)}
-  #plans .plan:not(.open):hover .plan-stripes{background-image:repeating-linear-gradient(to bottom,var(--accent) 0 1px,transparent 1px 4px)}
-  #plans .plan:not(.open):hover .plan-tag{opacity:1;transform:none}
-}
-.plan-body{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:32px;padding:0 32px 40px}
-.plan-num{position:absolute;right:-10px;bottom:-120px;font-size:416px;line-height:1;font-weight:700;letter-spacing:-.09em;color:#f2f2f2;pointer-events:none;user-select:none;display:none}
-.plan-l,.plan-feat,.plan-r{position:relative}
-.plan-for{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
-.plan-price{display:flex;align-items:flex-start;gap:8px;margin-top:24px}
-.plan-amt{font-size:56px;line-height:1.1;font-weight:600;letter-spacing:-.05em;color:var(--deep)}
-.plan-per{margin-top:6px;font-size:16px;letter-spacing:-.04em;color:var(--muted)}
-.plan-was{display:flex;align-items:center;gap:12px;margin-top:14px}
-.plan-old{font-size:20.96px;letter-spacing:-.04em;color:var(--deep);opacity:.6}
-.plan-save{display:inline-flex;align-items:center;height:24px;padding:0 8px;border:1px solid var(--accent);border-radius:8px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;color:var(--accent)}
-.plan-art{width:140px;height:80px;margin-top:30px;border-radius:8px;overflow:hidden}
-.plan-art img,.plan-art svg{display:block;width:100%;height:100%;object-fit:cover}
-.plan-desc{margin-top:33px;max-width:346px;font-size:14.08px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.plan-ticks{display:block;margin-top:24px;height:14px;max-width:346px;background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 8px)}
-.plan-feat{padding:16px;border-radius:8px;background-image:radial-gradient(var(--line) .8px,transparent .8px);background-size:6px 6px;align-self:start}
-.plan-feat li{display:flex;align-items:center;gap:12px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
-.plan-feat li+li{margin-top:16px}
-.plan-feat svg{width:16px;height:16px;flex:none}
-.plan-r{display:flex;flex-direction:column}
-.plan-notes li{display:flex;gap:9px;font-size:14.08px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.plan-notes li+li{margin-top:12px}
-.plan-get{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;margin-top:32px;border-radius:12px;background:var(--accent);color:#fff;
-  font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;letter-spacing:-.05em;text-transform:uppercase;transition:background-color .3s}
-.plan-get:hover{background:#e8522f}
-.plan-time{display:flex;align-items:center;gap:8px;margin-top:32px;margin-left:8px;font-size:16px;letter-spacing:-.04em;color:var(--muted)}
-.plan-time svg{width:16px;height:16px;flex:none}
-.plan-time strong{font-weight:400;color:var(--deep)}
-@media(min-width:1200px){
-  #plans{margin:64px calc(-1 * var(--gutter)) 0}
-  #plans h3{line-height:0}
-  .plan-body{grid-template-columns:minmax(0,1fr) 380px 380px;column-gap:40px;padding:2px 32px 64px 64px;min-height:455px;box-sizing:border-box}
-  .plan-num{display:block;right:-9px;top:156px;bottom:auto}
-  #pricing .ask{align-items:start;margin-top:71px}
-  #pricing .ask-btn{margin-top:56px}
-  .plan-feat{margin-top:0}
-  .plan-r{padding-top:1px}
-  .plan-get{margin-top:auto}
-  .plan-time{margin-top:32px}
-}
-@media(max-width:809px){#plans .plan-btn{padding:22px}.plan-body{padding:0 22px 28px}.plan-tag{display:none}.plan-amt{font-size:44px}}
-.ask-av{width:60px;height:60px;border-radius:8px;object-fit:cover;object-position:50% 28%;flex:none}
-.ask-name{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
-.ask-role{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
-.ask-btn{display:inline-flex;height:44px;padding:0 16px;margin-top:40px;border-radius:8px}
-/* one-time entrances (reference): section titles rise word by word; each
-   plan row rises 100px and fades in as it arrives; the "Ask our expert"
-   block grows in from 1.3x */
-.rise-words .w{display:inline-block}
-html.js-motion .rise-words .w{opacity:.001;transform:translateY(20px)}
-html.js-motion #plans .plan,html.js-motion .ask{opacity:.001}
 
 /* ═══════════════════════════════════════════════════ faq ═══════════════ */
 .faq-q{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:24px;padding:24px 0;text-align:left;cursor:pointer;transition:color .3s}
-/* FAQ, measured on the reference at 1440: a #fafafa section, 160px above
-   and 200px below; the left column holds the label and a ruled line, the
-   three-line 96px title, the dashed lead, a tick strip, then the "book a
-   chat" block with the 60px portrait and the orange 161 x 56 button. The
-   right column is a 587px list of rows 12px apart: 22.4px question and a
-   28px orange + (half turn when open), the 18px answer under it; the open
-   row turns into a white 12px-radius card. One answer open at a time, the
-   first open to begin with; the answer opens by height. */
-.faq-sec{background:#fafafa}
-.faq-grid{display:grid;grid-template-columns:1fr;gap:48px}
-.faq-kick{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.4;letter-spacing:-.04em;text-transform:uppercase;color:var(--deep)}
-.faq-rule{display:block;height:1px;margin-top:4px;max-width:546px;background:linear-gradient(to right,var(--accent) 0 20px,var(--rule) 20px)}
-.faq-h{margin-top:38px;max-width:430px;font-size:clamp(56px,7vw,96px);line-height:1;font-weight:500;letter-spacing:-.06em;color:var(--muted)}
-.faq-lead{margin-top:24px;max-width:547px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.faq-ticks{display:block;margin-top:48px;height:20px;max-width:546px;background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 11px)}
-.faq-book{margin-top:56px}
-.faq-book-p{max-width:380px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.faq-who{display:flex;align-items:center;gap:16px;margin-top:47px;max-width:555px}
-.faq-av{width:60px;height:60px;border-radius:8px;object-fit:cover;flex:none}
-.faq-who>div{flex:1;min-width:0}
-.faq-name{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
-.faq-role{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
-.faq-btn{flex:none;width:161px;margin-top:0}
-.faq-list{list-style:none}
-.faq{border-radius:12px;transition:background-color .35s var(--ease)}
-.faq+.faq{margin-top:12px}
-.faq.open{background:#fff}
-.faq h3{line-height:0}
-.faq-q{display:flex;width:100%;align-items:center;justify-content:space-between;gap:24px;padding:18px;text-align:left;cursor:pointer}
-.faq-t{font-size:22.4px;line-height:1.3;letter-spacing:-.04em;font-weight:400;color:var(--deep)}
-.faq-ico{flex:none;width:28px;height:28px;color:var(--accent);transition:transform .5s var(--ease)}
-.faq.open .faq-ico{transform:rotate(180deg)}
-.faq-a{max-width:509px;padding:0 18px 18px;font-size:18px;line-height:1.2;letter-spacing:-.04em;color:var(--muted)}
-.faq .acc{transition:grid-template-rows .5s var(--ease)}
-.faq.open .acc{grid-template-rows:1fr}
+/* FAQ, measured on the reference at 1440: heading, lead and contact card in a
+   narrow left column; the questions in a 575px column from x845, set 22.4px
+   regular on a 77px row pitch. */
+.faq-left{grid-column:1/13}
+.faq-list{grid-column:1/13}
+.faq-lead{margin-top:24px}
+.faq-card{margin-top:40px}
 @media(min-width:1200px){
-  .faq-sec{padding:160px 0 228px}
-  .faq-grid{grid-template-columns:minmax(0,566px) 587px;justify-content:space-between;gap:0}
-  .faq-left{padding:33px 0 0 20px}
+  .faq-grid{grid-template-columns:300px 1fr;gap:0}
+  .faq-left{grid-column:1}
+  .faq-list{grid-column:2;padding-left:486px}
+  .faq-q{padding:21px 0}
+  .faq-h{font-size:96px!important;line-height:1!important;letter-spacing:-.06em!important;color:var(--muted)}
+  .faq-lead{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+  .faq-q .t-h4{font-size:22.4px!important;line-height:1.3!important;letter-spacing:-.04em!important;font-weight:400!important}
 }
-@media(max-width:809px){.faq-who{flex-wrap:wrap}.faq-btn{margin-left:76px}.faq-t{font-size:19px}}
-html.js-motion .faq-pop{opacity:.001}
+.faq-q:hover{color:var(--accent)}
+.faq.open .plan-ico{transform:rotate(135deg)}
 
 /* ═══════════════════════════════════════════════ whisper cards ═════════ */
 .wcard{position:relative;display:block;width:100%;border-radius:16px;overflow:hidden;background:var(--ink);aspect-ratio:4/3}
@@ -1143,11 +912,7 @@ html.js-motion .faq-pop{opacity:.001}
    mosaic of 12px-radius cards on a 548 / 548 / 264 grid with 20px gaps and
    600px rows; the closing block a 900px panel. Everything scrolls 1:1 there;
    motion is one-time reveals (script). Desktop values from 1200px up. */
-.wh{padding-top:clamp(56px,6vw,96px);background:#fafafa}
-.wh-hatch{display:block;width:74px;height:12px;margin-top:3px;opacity:.15;
-  background-image:repeating-linear-gradient(-45deg,var(--deep) 0 1.5px,transparent 1.5px 6px)}
-.wi-rule{position:absolute;top:32px;left:32px;right:32px;height:1px;background:rgba(217,217,217,.4)}
-.wi-rule::before{content:"";position:absolute;left:0;top:-1px;width:20px;height:3px;background:#d9d9d9}
+.wh{padding-top:clamp(56px,6vw,96px)}
 .wh-cap{display:block;position:relative;height:1px;max-width:74px;background:var(--rule);margin-bottom:51px}
 .wh-cap::before{content:"";position:absolute;left:0;top:-1px;width:20px;height:3px;background:var(--rule)}
 .wh-top{display:flex;align-items:center;gap:24px;margin-bottom:30px}
@@ -1158,10 +923,10 @@ html.js-motion .faq-pop{opacity:.001}
 .wh-band{background:#fafafa;padding:40px 0 160px}
 .wh-grid{display:grid;grid-template-columns:1fr;gap:20px}
 .wc{position:relative;display:block;height:clamp(420px,56vw,600px);border-radius:12px;overflow:hidden;background:var(--ink);color:#fff}
-.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:transform 1.2s var(--ease)}
-.wc-intro>img{filter:brightness(.6) grayscale(1)}
+.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
 a.wc:hover>img{transform:scale(1.04)}
-.wc-veil{position:absolute;inset:0}
+.wc-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.62),rgba(5,6,9,.18) 45%,rgba(5,6,9,.28))}
+.wc-intro .wc-veil{background:rgba(5,6,9,.72)}
 .wc-meta{position:absolute;left:32px;right:32px;top:32px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .wc-by{display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.5);padding-left:16px}
 .wc-name{font-size:18.1px;line-height:1.4;letter-spacing:-.04em;color:#fafafa}
@@ -1190,7 +955,7 @@ a.wc:hover .wc-title{color:var(--accent)}
   .wc-a5{grid-column:1/3}
   .wh-more-cell{grid-column:3}
 }
-@media(min-width:1200px){.wc{height:600px}.wh-band{padding-top:64px}}
+@media(min-width:1200px){.wc{height:600px}}
 
 /* closing block: a 900px panel over the light bubble artwork */
 /* the background stays pinned to the screen while the panel scrolls over it,
@@ -1333,136 +1098,6 @@ html.js-motion .nl-h .w,html.js-motion .nl-lw .w{opacity:0;transform:translateY(
 .kpi{position:absolute;inset:auto 0 0;padding:16px;background:rgba(5,6,9,.86);color:#fff;transform:translateY(100%);transition:transform .5s var(--ease)}
 .member:hover .kpi{transform:none}
 
-/* Team, measured on the reference at 1440: a dark section (#141414 under a
-   dark photographic wash) with the How-we-work style head; four 315 x 639
-   portrait cards tilted back 25deg in perspective; hovering (or focusing) a
-   card turns it to face you, blurs and darkens the portrait under a 50%
-   veil and brings in the KPI (80px), its line, the role and the social
-   links; then a three-column row about the leadership team. */
-.team{position:relative;overflow:hidden;background:#141414;color:#fff}
-.team-bg{position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(70% 45% at 78% 8%,rgba(255,255,255,.10),rgba(255,255,255,0) 70%),
-   radial-gradient(60% 50% at 10% 55%,rgba(255,255,255,.05),rgba(255,255,255,0) 70%),
-   linear-gradient(180deg,#1b1b1b 0%,#141414 55%,#0d0d0d 100%)}
-.team>.shell{position:relative}
-.team-sub{max-width:600px}
-.tm-row{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:64px}
-.tm-card{perspective:1000px}
-.tm-tilt{position:relative;overflow:hidden;aspect-ratio:315/639;border-radius:8px;background:#222;
-  transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-veil{position:absolute;inset:0;background:rgba(20,20,20,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);opacity:0;transition:opacity .4s ease}
-.tm-kpil{position:absolute;left:16px;top:22px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;letter-spacing:-.05em;color:var(--rule);transform:translateY(-60px);transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.tm-kpi{position:absolute;right:16px;top:17px;display:flex;flex-direction:column;align-items:flex-end;text-align:right;opacity:0;transform:translateY(90px);transition:opacity .4s ease,transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-kpi b{font-size:80px;line-height:1.1;font-weight:500;letter-spacing:-.07em}
-.tm-kpi span{max-width:200px;margin-top:-6px;font-size:16px;line-height:1.3;letter-spacing:-.04em}
-.tm-line{position:absolute;right:20px;top:150px;bottom:80px;width:1px;background:rgba(255,255,255,.35);opacity:0;transition:opacity .4s ease}
-.tm-who{position:absolute;left:16px;right:16px;bottom:24px;transform:translateY(76px);transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-name{font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em}
-.tm-role{margin-top:6px;font-size:16px;letter-spacing:-.04em;opacity:.8}
-.tm-soc{display:flex;gap:16px;margin-top:14px}
-.tm-soc a{display:flex;color:#fff}
-.tm-soc svg{width:16px;height:16px}
-.tm-bars{position:absolute;right:20px;bottom:24px;display:flex;align-items:flex-end;gap:2px;opacity:0;transition:opacity .4s ease}
-.tm-bars i{width:4px;background:rgba(255,255,255,.7);border-radius:1px}
-.tm-bars i:nth-child(1){height:6px}.tm-bars i:nth-child(2){height:10px}.tm-bars i:nth-child(3){height:16px}
-.tm-card:focus-within .tm-veil,.tm-card:focus-within .tm-kpi,.tm-card:focus-within .tm-line,.tm-card:focus-within .tm-bars{opacity:1}
-.tm-card:focus-within .tm-kpi,.tm-card:focus-within .tm-kpil,.tm-card:focus-within .tm-who{transform:none}
-.tm-card:focus-within .tm-tilt{transform:none}
-@media(hover:hover){
-  .tm-card:hover .tm-veil,.tm-card:hover .tm-kpi,.tm-card:hover .tm-line,.tm-card:hover .tm-bars{opacity:1}
-  .tm-card:hover .tm-kpi,.tm-card:hover .tm-kpil,.tm-card:hover .tm-who{transform:none}
-  .tm-card:hover .tm-img{transform:scale(1.1)}
-  .tm-card:hover .tm-tilt{transform:none}
-}
-/* without hover, the card shows its full label (role and links) */
-@media(hover:none){.tm-who{transform:none}.tm-kpil{display:none}}
-.tm-lead{display:grid;gap:32px;margin-top:88px}
-.tm-h{font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em;color:#fff;max-width:540px}
-.tm-h .accent{display:block}
-.team .hww-ticks{max-width:694px}
-.tm-p{font-size:18.08px;line-height:1.4;letter-spacing:-.04em;color:var(--rule);max-width:336px}
-.tm-disc{border-left:1px solid rgba(255,255,255,.18);padding-left:32px}
-.tm-h2{font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em;color:var(--rule)}
-.tm-s{margin-top:16px;max-width:280px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--rule)}
-.tm-cta{margin-top:38px;gap:16px;font-size:18.08px;letter-spacing:-.04em;color:#fff}
-.tm-cta .grow-btn{width:44px;height:44px;border-radius:8px}
-@media(min-width:810px){.tm-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(min-width:1024px){.tm-lead{grid-template-columns:minmax(0,1fr) 336px 368px;column-gap:32px}}
-@media(min-width:1200px){
-  .team{padding-top:141px;padding-bottom:176px}
-  .team .hww-head{padding-bottom:0}
-  .tm-row{grid-template-columns:repeat(4,315px);gap:31px;justify-content:center;margin-top:88px}
-  .tm-tilt{transform:rotateY(25deg)}
-  .tm-lead{grid-template-columns:minmax(0,528px) 336px 368px;column-gap:40px;margin-top:88px;padding-left:40px}
-}
-@media(max-width:809px){.tm-lead{grid-template-columns:1fr}.tm-disc{border-left:0;padding-left:0}.tm-kpi b{font-size:56px}}
-/* entrances (reference): the cards rise 120px one after another as the row
-   comes up; the leadership row grows in from 1.3x */
-html.js-motion .tm-card{transform:translateY(120px)}
-html.js-motion .tm-pop{opacity:.001}
-@media(prefers-reduced-motion:reduce){.tm-tilt,.tm-img,.tm-kpi,.tm-kpil,.tm-who,.tm-veil{transition:none}}
-
-/* Testimonials, measured on the reference at 1440 (it sits between the FAQ
-   and Whispers): two 676 x 580 cards side by side, 12px radius, 40px
-   padding: the intro card in #f2f2f2 (48px title, rating, orange "Write a
-   review"), the Spotlight card in #5c6063 with the 112px pale word, a
-   180 x 244 portrait and the quote; under them the row of client cards
-   (500 x 350, 24px apart), scrolled sideways by the visitor. The title
-   rises word by word and the rating fades in; nothing else moves. */
-.tst{background:#fafafa;padding:clamp(56px,7vw,120px) 0}
-.tst-top{display:grid;grid-template-columns:1fr;gap:32px}
-.tst-card{position:relative;overflow:hidden;border-radius:12px;padding:32px}
-.tst-intro{display:flex;flex-direction:column;background:#f2f2f2}
-.tst-rule{display:block;height:1px;margin-bottom:39px;background:linear-gradient(to right,var(--deep) 0 20px,var(--rule) 20px)}
-.tst-kick{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:var(--deep)}
-.tst-h{margin-top:24px;max-width:430px;font-size:48px;line-height:1.1;font-weight:500;letter-spacing:-.05em;color:#141414}
-.tst-lead{margin-top:24px;max-width:441px;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
-.tst-rev{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 40px;margin-top:auto;padding-top:48px}
-.tst-stars{display:flex;gap:2px;margin:0 0 6px 8px}
-.tst-stars svg{width:14px;height:14px}
-.tst-rev p{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
-.tst-rev>div>p{padding-left:8px}
-.tst-rev strong{font-weight:600}
-.tst-backed{max-width:250px}
-.tst-btn{align-self:flex-start;width:188px;margin-top:40px}
-.tst-spot{background:var(--deep);color:#fff;display:grid;grid-template-columns:180px 1fr;column-gap:40px;align-content:end;min-height:420px}
-.tst-spot-w{position:absolute;left:40px;top:44px;font-size:112px;line-height:1.2;font-weight:600;letter-spacing:-.06em;color:#f2f2f2;pointer-events:none}
-.tst-spot-img{position:relative;grid-row:1/4;width:180px;height:244px;border-radius:12px;object-fit:cover}
-.tst-spot-q{position:relative;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:#fff}
-.tst-spot-n{position:relative;align-self:end;margin-top:24px;font-size:20.96px;letter-spacing:-.04em}
-.tst-spot-r{position:relative;font-size:16px;letter-spacing:-.04em;color:var(--rule)}
-.tst-chip{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:8px;background:var(--rule);color:var(--deep);
-  font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;white-space:nowrap}
-.tst-spot-c{position:absolute;right:40px;bottom:40px}
-.tst-row{list-style:none;display:flex;gap:24px;margin-top:40px;padding-bottom:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
-.tst-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-.tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:12px;background:#fff;scroll-snap-align:start}
-.tst-date{font-size:12px;line-height:1.2;letter-spacing:-.06em;color:var(--muted)}
-.tst-mark{position:absolute;right:28px;top:40px;width:120px;height:90px;color:#f2f2f2}
-.tst-q{position:relative;margin-top:17px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.tst-by{display:flex;align-items:center;gap:24px;margin-top:auto;padding-top:24px}
-.tst-by img{width:60px;height:60px;border-radius:8px;object-fit:cover;flex:none}
-.tst-by>div{flex:1;min-width:0}
-.tst-n{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
-.tst-r{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
-@media(min-width:1024px){.tst-top{grid-template-columns:1fr 1fr}}
-@media(max-width:1199px){.tst-spot{align-content:start;row-gap:0}.tst-spot-w{position:relative;left:auto;top:auto;grid-column:1/-1;margin:-8px 0 24px;font-size:clamp(64px,11vw,112px);line-height:1}
-  .tst-spot-img{grid-row:2/5}.tst-spot-c{position:static;grid-column:2;justify-self:start;margin-top:12px}}
-@media(max-width:809px){.tst-h{font-size:36px}.tst-spot{grid-template-columns:1fr;row-gap:16px}.tst-spot-img{grid-row:auto}.tst-spot-c{grid-column:auto}.tst-spot-n{margin-top:8px}}
-@media(min-width:1200px){
-  .tst{padding:0 0 230px}
-  .tst-rule{margin-bottom:26px}
-  .tst-spot-n{margin-top:63px}
-  .tst-spot-c{bottom:46px;right:39px}
-  .tst-spot-w{font-size:160px;line-height:1;top:54px;left:36px}
-  .tst-top{grid-template-columns:minmax(0,676px) minmax(0,676px);gap:32px;justify-content:center}
-  .tst-card{height:580px;padding:40px}
-  .tst-spot{grid-template-rows:auto auto 1fr;align-content:start;padding-top:289px}
-  .tst-row{margin:150px -20px 0;padding-left:20px;padding-right:20px;scroll-padding-left:20px}
-}
-html.js-motion .tst-rev{opacity:.001}
-
 /* ═══════════════════════════════════════════════════ footer ════════════ */
 .foot-in{border-bottom:0}
 .foot-lower{background:var(--mist)}
@@ -1487,20 +1122,86 @@ input::placeholder{color:var(--rule)}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
 }
 </style>
+<style>
+/* ═══════════════════ Contact page, measured on the reference's /contact ═══
+   Two halves under the 60px header, each a screen tall (less the header) and
+   laid out from the bottom with 40px padding: the particle-wave panel with
+   "Thinking about / your next move?" on the left; "Let's talk!" at the top
+   and the form at the foot on the right. Stacked below 810px. Headings scale
+   with their column, as the reference's fit-to-width text does. */
+/* this page has no hero entrance, so the header is simply there */
+html.js-motion .hdr-logo,html.js-motion .hdr .nav,html.js-motion .hdr-right>a,html.js-motion .hx-fade6{opacity:1;transform:none}
+body{background:#f2f2f2}
+.ct{display:grid;grid-template-columns:1fr;padding-top:var(--nav-h);background:#fff}
+.ct-l{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:424px;padding:60px 20px 30px;overflow:hidden;background:#070707;color:#fff}
+.ct-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* fit-to-width type, as the reference's: the longer title line fills the
+   column, "Let's talk!" all but fills its own (sizes scale with the column) */
+.ct-h{position:relative;font-size:calc(14.56vw - 5.8px);line-height:1.23;font-weight:600;letter-spacing:-.05em}
+.ct-h span{display:block}
+.ct-s{position:relative;max-width:335px;font-size:22.4px;line-height:1.2;letter-spacing:-.04em;color:#d9d9d9}
+.ct-r{display:flex;flex-direction:column;padding:40px 20px}
+.ct-t{font-size:calc(25.95vw - 10.4px);line-height:1.05;font-weight:600;letter-spacing:-.06em;color:#141414}
+.ct-p{margin-top:24px;font-size:19.2px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.ct-form{position:relative;margin-top:26px;padding-top:4px}
+.cf{position:relative;display:block;border-bottom:1px solid #f0f0f0;transition:border-color .3s var(--ease)}
+.cf+.cf{margin-top:16px}
+.cf input,.cf textarea{display:block;width:100%;height:52px;padding:0 8px;border:0;border-radius:0;background:transparent;font:inherit;font-size:18.08px;font-weight:500;line-height:1.1;letter-spacing:-.04em;color:var(--deep);outline:none}
+.cf input{width:calc(100% - 16px);margin:0 8px;padding:0}
+.cf textarea{height:150px;padding:20px 8px 0;resize:none}
+.cf input::placeholder,.cf textarea::placeholder{color:var(--deep);opacity:1;transition:color .3s var(--ease)}
+/* the mono label steps in over the field while it is hovered or in use, and
+   the underline turns orange */
+.cf-l{position:absolute;left:8px;top:-17px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;line-height:1.3;letter-spacing:-.04em;text-transform:uppercase;color:var(--muted);
+  opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease);pointer-events:none}
+.cf-ta .cf-l{top:-22px}
+.cf:hover,.cf:focus-within{border-bottom-color:var(--accent)}
+.cf:hover .cf-l,.cf:focus-within .cf-l{opacity:1;transform:translateY(13px)}
+.cf:hover ::placeholder,.cf:focus-within ::placeholder{color:transparent}
+.cf [aria-invalid="true"]{color:var(--accent)}
+.ct-send{display:flex;align-items:center;gap:48px;margin-top:24px}
+/* the send button stays at half strength until every field is filled */
+.ct-btn{flex:none;display:inline-flex;align-items:center;gap:8px;height:56px;padding:0 16px;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;
+  font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;letter-spacing:-.05em;text-transform:uppercase;opacity:.5;transition:opacity .3s var(--ease)}
+.ct-form.ok .ct-btn{opacity:1}
+.ct-btn .roll{display:inline-block;height:24px;overflow:hidden;line-height:24px}
+.ct-btn .roll>span{display:block;transition:transform .45s var(--ease)}
+.ct-btn .roll>span+span{color:#141414}
+.ct-btn:hover .roll>span{transform:translateY(-100%)}
+.ct-btn svg{transition:transform .45s var(--ease)}
+.ct-btn:hover svg{transform:translateX(4px)}
+.ct-terms{flex:1;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
+.ct-terms a{color:var(--accent)}
+.ct-msg{position:absolute;left:0;right:0;top:100%;margin-top:8px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
+.ct-msg.err{color:var(--accent)}
+@media(min-width:810px){
+  .ct{grid-template-columns:1fr 1fr}
+  .ct-l,.ct-r{min-height:calc(100svh - var(--nav-h));padding:40px}
+  .ct-l{justify-content:flex-end}
+  .ct-h{font-size:calc(7.28vw - 11.6px)}
+  .ct-s{margin-top:24px;max-width:none;font-size:clamp(19.2px,1.46vw,20.96px);font-weight:500}
+  .ct-r{justify-content:space-between}
+  .ct-t{font-size:calc(12.97vw - 20.8px)}
+  .ct-p{font-size:clamp(19.2px,1.46vw,20.96px)}
+  .ct-form{width:100%;max-width:560px}
+}
+/* entrance: the left title and the right heading rise 100px and fade in, the
+   right heading block travelling 150px with them, once the page shows */
+html.js-motion .ct-h,html.js-motion .ct-t{opacity:0;transform:translateY(100px)}
+html.js-motion .ct-head{transform:translateY(150px)}
+</style>
 </head>
 <body>
-
-<!-- ═══════════════════════════════════════════════ HEADER ═══════════════ -->
 <header class="hdr" id="hdr">
   <div class="shell hdr-in">
-    <a href="#top" class="logo hdr-logo" data-d="500" aria-label="Create — home">create<sup>®</sup></a>
+    <a href="index.html" class="logo hdr-logo" data-d="500" aria-label="Create — home">create<sup>®</sup></a>
     <nav class="nav t-mono" aria-label="Primary">
       <a href="work.html"><span class="roll"><span>WORK</span><span aria-hidden="true">WORK</span></span><sup class="badge num">5</sup></a>
-      <a href="#studio"><span class="roll"><span>STUDIO</span><span aria-hidden="true">STUDIO</span></span></a>
-      <a href="#whispers"><span class="roll"><span>WHISPERS</span><span aria-hidden="true">WHISPERS</span></span><sup class="badge num">7</sup></a>
+      <a href="index.html#studio"><span class="roll"><span>STUDIO</span><span aria-hidden="true">STUDIO</span></span></a>
+      <a href="index.html#whispers"><span class="roll"><span>WHISPERS</span><span aria-hidden="true">WHISPERS</span></span><sup class="badge num">7</sup></a>
     </nav>
     <div class="hdr-right">
-      <a class="t-mono" href="contact.html"><span class="roll"><span>CONTACT</span><span aria-hidden="true">CONTACT</span></span></a>
+      <a class="t-mono" href="contact.html" aria-current="page"><span class="roll"><span>CONTACT</span><span aria-hidden="true">CONTACT</span></span></a>
       <button class="burger hx-fade6" data-d="1200" id="burger" aria-label="Open menu" aria-expanded="false"><i></i></button>
     </div>
   </div>
@@ -1508,10 +1209,10 @@ input::placeholder{color:var(--rule)}
 
 <div class="menu" id="menu" aria-hidden="true">
   <nav class="shell">
-    <a class="mi t-h3" href="#top">HOME <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">01</span></a>
+    <a class="mi t-h3" href="index.html">HOME <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">01</span></a>
     <a class="mi t-h3" href="work.html">WORK <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">02</span></a>
-    <a class="mi t-h3" href="#studio">STUDIO <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">03</span></a>
-    <a class="mi t-h3" href="#whispers">WHISPERS <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">04</span></a>
+    <a class="mi t-h3" href="index.html#studio">STUDIO <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">03</span></a>
+    <a class="mi t-h3" href="index.html#whispers">WHISPERS <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">04</span></a>
   </nav>
   <div class="shell" style="color:#fff">
     <div class="flex wrap g3 t-mono" style="color:rgba(255,255,255,.6)"><span>X</span><span>Li</span><span>IG</span><span>FB</span><span>WA</span></div>
@@ -1519,414 +1220,30 @@ input::placeholder{color:var(--rule)}
   </div>
 </div>
 
-<main id="top">
-
-<!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
-<div class="scene">
-<section class="hero" aria-label="Introduction">
-  <div class="hero-bg"><img src="hero.jpg" alt="" fetchpriority="high"></div>
-  <div class="hero-in">
-
-    <!-- 00.01 -->
-    <div class="shell">
-      <div class="grid" style="align-items:start;row-gap:24px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
-        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:550px" id="heroH1"></h1>
-        <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
-          <p class="t-mono mt1 hx-lift split-lines" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
-          <div class="hero-logos mt1 hx-lift" data-d="1000"><div class="logo-track"><div class="logo-set"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" width="140" height="44"></div><div class="logo-set" aria-hidden="true"><img src="public/img/hero-logos/obliqon.svg" alt="" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="" width="140" height="44"></div></div></div>
-        </div>
+<main id="top" class="ct">
+  <section class="ct-l" aria-label="Get in touch">
+    <img class="ct-bg" src="public/img/contact-wave.jpg" alt="" decoding="async">
+    <h1 class="ct-h"><span>Thinking about</span><span>your next move?</span></h1>
+    <p class="ct-s">Let&rsquo;s discuss how Create&#174; can help make it real.</p>
+  </section>
+  <section class="ct-r" aria-labelledby="ctTalk">
+    <div class="ct-head">
+      <h2 class="ct-t" id="ctTalk">Let's talk!</h2>
+      <p class="ct-p">We'd love to hear from you and your team.</p>
+    </div>
+    <form class="ct-form" id="ctForm" novalidate>
+      <label class="cf"><span class="cf-l">Your name</span><input type="text" name="name" placeholder="Your name" autocomplete="name" required></label>
+      <label class="cf"><span class="cf-l">Company</span><input type="text" name="company" placeholder="Company" autocomplete="organization" required></label>
+      <label class="cf"><span class="cf-l">Email</span><input type="email" name="email" placeholder="Email" autocomplete="email" required></label>
+      <label class="cf cf-ta"><span class="cf-l">Your message</span><textarea name="message" placeholder="Your message" required></textarea></label>
+      <div class="ct-send">
+        <button type="submit" class="ct-btn"><span class="roll"><span>Submit</span><span aria-hidden="true">Submit</span></span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></button>
+        <p class="ct-terms">By submitting, you agree to our <a href="#site-foot">Terms &amp; Service.</a></p>
       </div>
-    </div>
-
-    <!-- 00.02 -->
-    <div class="shell hero-row2">
-      <div class="grid" style="align-items:start;row-gap:16px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.02°</div></div>
-        <div class="hero-mark hx-row" data-d="0">
-          <div class="hero-mark-clip">
-            <p class="t-wordmark hero-mark-text"><span class="accent">Create</span><span style="color:#f2f2f2">\Studio</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 00.03 -->
-    <div class="shell">
-      <div class="grid" style="align-items:start;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.03°</div></div>
-
-        <div class="hero-info hx-row" data-d="0">
-          <div style="max-width:356px">
-            <p class="t-mono hx-fade" data-d="700">A design studio trusted by startups and leading brands.</p>
-            <p class="t-mono hx-fade" data-d="700">We create stories people remember.</p>
-          </div>
-          <div class="hx-time mt3" data-d="600">
-            <span class="hair" style="width:32px;background:rgba(255,255,255,.4);margin-bottom:12px;display:block"></span>
-            <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
-            <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">UTC−8 Los Angeles</p>
-          </div>
-          <div class="flex wrap g1" style="gap:12px;margin-top:28px;margin-left:-8px">
-            <a href="work.html" class="btn btn-accent"><span class="lmask" data-d="1000"><span>See work</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-            <a href="#site-foot" class="btn btn-light"><span class="lmask" data-d="1200"><span>Let's chat</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-          </div>
-
-        <div class="hero-card hx-row" data-d="0">
-          <div class="reel-head t-mono-sm"><span>Showreel</span><span class="hair"></span><span>\\2026</span></div>
-          <a class="reel" id="reel" href="#work" aria-label="Watch showreel 2025">
-            <video data-src="public/video/showreel.mp4" poster="showreel.jpg"
-                   muted loop playsinline preload="none" aria-hidden="true"></video>
-            <span class="reel-cta">
-              <span class="reel-cta-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></span>
-              <span class="reel-cta-label">Showreel 2025</span>
-            </span>
-          </a>
-          <p class="reel-note t-mono-sm"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5 11.9 7.1 17.5 7.4 13.2 11 14.6 16.5 10 13.4 5.4 16.5 6.8 11 2.5 7.4 8.1 7.1Z"/></svg><span>Best digital campaign, Signal Awards</span></p>
-        </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 00.04 + showreel -->
-    <div class="shell">
-      <div class="grid" style="align-items:start;row-gap:32px">
-        <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.04°</div></div>
-
-        <div class="hero-info hx-row" data-d="0">
-        </div>
-
-      </div>
-    </div>
-
-    <p class="t-wordmark hero-create" aria-hidden="true">let's create</p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ STORY (page 2) ═══════ -->
-<section class="story-section" id="story-section" aria-label="Studio statement">
-  <div class="story-sticky">
-    <div class="story-water" aria-hidden="true">
-      <video class="story-water-a" src="public/video/story.mp4" poster="water.jpg"
-             muted loop autoplay playsinline preload="auto"></video>
-      <video class="story-water-b" src="public/video/story.mp4" poster="water.jpg"
-             muted loop autoplay playsinline preload="auto"></video>
-      <span class="story-drip story-drip-1"></span>
-      <span class="story-drip story-drip-2"></span>
-      <span class="story-drip story-drip-3"></span>
-      <span class="story-drip story-drip-4"></span>
-      <span class="story-drip story-drip-5"></span>
-      <span class="story-drip story-drip-6"></span>
-    </div>
-    <div class="story-bubbles" aria-hidden="true">
-      <span class="story-bubble story-bubble-1"></span>
-      <span class="story-bubble story-bubble-2"></span>
-      <span class="story-bubble story-bubble-3"></span>
-      <span class="story-bubble story-bubble-4"></span>
-      <span class="story-bubble story-bubble-5"></span>
-      <span class="story-bubble story-bubble-6"></span>
-    </div>
-    <div class="story-text">
-      <div class="story-line">we listen</div>
-      <div class="story-line">we imagine</div>
-      <div class="story-line story-line-accent">we create</div>
-      <div class="story-line">beautiful things</div>
-    </div>
-  </div>
-</section>
-</div>
-
-<!-- ═══════════════════════════════════════════════ SELECTED WORK ════════ -->
-<section id="work" aria-label="Selected work">
-  <div id="panels"></div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ PERFORMANCE ══════════ -->
-<section class="section dark perf" aria-label="Performance">
-  <div class="shell">
-    <div class="ph perf-head">
-      <div class="ph-rail"><span class="t-mono-sm rv-tag perf-kick"><span class="scramble" data-text="Performance">Performance</span></span></div>
-      <div class="ph-main">
-        <h2 class="t-h2 ph-title rv-h">The proof behind our work</h2>
-        <p class="t-body ph-sub rv-lead"><span class="lead"></span>From first launches to long collaborations, we are trusted to deliver on time and at the quality we promised.</p>
-        <span class="ph-ticks"></span>
-      </div>
-    </div>
-    <dl id="perf" class="perf-stats"></dl>
-    <p class="perf-brands">Brands who are part of our success story</p>
-  </div>
-  <div class="mq mq-brand" aria-label="Client logos"><div class="mq-track" id="brandA"></div><div class="mq-track" id="brandB" aria-hidden="true"></div></div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ CLIENTS ══════════════ -->
-<!-- ═══════════════════════════════════════════════ SERVICES ═════════════ -->
-<section id="studio" class="section" aria-label="Services">
-  <div class="shell">
-    <h2 class="t-sectionword rv-h">services</h2>
-    <p class="t-lead mt3 rv-lead deep" style="max-width:36ch">What we do best, and what your next project needs most.</p>
-  </div>
-  <div id="services" class="svc-stack"></div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ PROCESS ══════════════ -->
-<section class="section dark" id="hww" aria-label="How we work">
-  <div class="shell">
-    <div class="grid hww-head" style="row-gap:40px">
-      <div class="hww-rail">
-        <span class="hww-cap"></span>
-        <span class="t-mono hww-kick rv-tag">How we work</span>
-        <span class="hww-hatch"></span>
-      </div>
-      <div class="hww-main">
-        <div class="hww-top"><span class="hww-line"></span><span class="hww-mark">create<sup>&#174;</sup></span></div>
-        <h2 class="hww-title">The process behind our success</h2>
-        <p class="hww-sub"><span class="lead"></span>We work with clarity, precision. Every step designed to move your project forward with confidence.</p>
-        <span class="hww-ticks"></span>
-      </div>
-    </div>
-  </div>
-  <div class="grow-track">
-  <div class="grow">
-    <div class="shell grow-in">
-      <div>
-        <h3 class="grow-h">Services built on process, precision, and people.</h3>
-        <p class="grow-p">We combine strategy, design, content, and technology, giving you a single partner for every stage of your brand&rsquo;s growth.</p>
-        <a href="#site-foot" class="grow-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg></span>Chat with our Operations Manager</a>
-      </div>
-      <ol class="grow-r" id="process"></ol>
-    </div>
-  </div>
-  <div class="grow-run" aria-hidden="true"></div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ FEATURED CASE ════════ -->
-<section class="section dark" id="fcase" aria-label="Case study">
-  <div class="shell fcase-in">
-    <a href="#work" class="fcard">
-      <img src="whitewheel.avif" alt="Blackwell Motors">
-      <span class="fcard-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="#fff"><path d="M0 2.6h5.2V0H0zM6.5 6.5h6.5V3.9H6.5zM2.6 13h5.2v-2.6H2.6z"/></svg>Blackwell</span>
-      <span class="fcard-t">Blackwell Motors</span>
-    </a>
-    <p class="fcase-p">Step inside one of our featured projects. From first brief to launch, follow the process that shows what makes Create&#174; different.</p>
-    <div class="fcase-r">
-      <h2 class="fcase-h">Our process in motion</h2>
-      <p class="fcase-s">Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
-      <a href="#work" class="grow-cta fcase-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg></span>Explore Case Studies</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ WHY / STATS ══════════ -->
-<section class="section sechead why" aria-label="Why choose us">
-  <div class="shell">
-    <div class="sechead-grid">
-      <div class="sechead-rail">
-        <span class="hair"></span>
-        <span class="sechead-tag t-mono-sm rv-tag">Why choose us</span>
-        <span class="sechead-hatch" aria-hidden="true"></span>
-      </div>
-      <div class="sechead-main">
-        <div class="sechead-rule" aria-hidden="true"></div>
-        <h2 class="sechead-h t-h2 why-h">Designed to Make Your Life Easier</h2>
-        <p class="sechead-lead why-lead">&mdash;&mdash;&nbsp; Clear process, quick reviews, and a clean launch at the end. We keep the steps simple so projects never get stuck.</p>
-      </div>
-    </div>
-    <div class="sechead-ticks" aria-hidden="true"></div>
-    <div class="bcard-row">
-
-      <article class="bcard bcard-first">
-        <p class="bcard-line why-type">we listen.</p>
-        <p class="bcard-line why-type">we imagine.</p>
-        <p class="bcard-line why-type accent">we create.</p>
-        <p class="bcard-foot"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Ideas</span> that start with you</span></p>
-      </article>
-
-      <article class="bcard bcard-mid">
-        <div class="bcard-head">
-          <h3>Client Satisfaction Rate</h3>
-          <span class="bcard-pct num">99.9%</span>
-        </div>
-        <ul class="bcard-panel t-mono-sm" id="whyStats"></ul>
-        <div class="bcard-rev">
-          <span id="stars" class="flex g1"></span>
-          <p><strong>5 / 5</strong> <span>(98 reviews)</span></p>
-        </div>
-        <p class="bcard-backed">Backed by feedback from 120+ brands we&rsquo;ve worked with.</p>
-      </article>
-
-      <article class="bcard bcard-last">
-        <p class="bcard-kick">No reheated or pre-made.</p>
-        <h3 class="bcard-line">Every project starts fresh.</h3>
-        <div class="bcard-dots" aria-hidden="true">
-          <span class="bcard-dot"></span>
-          <span class="bcard-quad"><i></i><i></i><i></i><i></i></span>
-          <span class="bcard-mark"></span>
-        </div>
-        <p class="bcard-foot"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Custom work</span> from day one.</span></p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section class="section pcards" aria-label="Long-term partnership">
-  <div class="shell">
-    <div class="pcard-row">
-
-      <article class="pcard">
-        <p class="pcard-h"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12.4l2.6 2.6L16 9.6" stroke="#fafafa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Simple Pricing</p>
-        <p class="pcard-p">Plans that scale with your project and give you room for unlimited creative opportunities.</p>
-        <div class="pcard-img imgbox"><img src="pricing-core.jpg" alt="" decoding="async"></div>
-        <p class="pcard-p">Pick a plan that grows with you and keeps creative costs predictable.</p>
-        <a href="#pricing" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Explore plans</span></a>
-      </article>
-
-      <article class="pcard pcard-b">
-        <p class="pcard-lab">Built for the long run</p>
-        <h2 class="pcard-t rise-words">With You Beyond Launch</h2>
-        <div class="pcard-logo" aria-hidden="true"><svg viewBox="0 0 359 164" fill="none"><path d="M151.5 115.3A58 58 0 1 1 151.5 48.7" stroke="#fff" stroke-width="40" stroke-linecap="round"/></svg></div>
-        <ul class="pcard-list" id="pillars"></ul>
-      </article>
-
-      <article class="pcard pcard-c">
-        <p class="pcard-lab">Quick intro call, no strings attached.</p>
-        <h2 class="pcard-t">Let&#39;s chat or just say hello.</h2>
-        <img class="pcard-mascot" src="pricing-mascot.png" alt="" loading="lazy" decoding="async">
-        <div class="pcard-panel">
-          <p class="pcard-avail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 7v5l3 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>Next Availability</p>
-          <p class="pcard-date">from 14 September 2025</p>
-          <a href="#site-foot" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Book now</span></a>
-        </div>
-      </article>
-
-      <span class="pcard-mark" aria-hidden="true">create<sup>&#174;</sup></span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ PRICING ══════════════ -->
-<section class="section" id="pricing" aria-label="Pricing">
-  <div class="shell">
-    <div class="ph">
-      <div class="ph-rail"><span class="t-mono-sm muted rv-tag">Pricing</span></div>
-      <div class="ph-main">
-        <h2 class="t-h2 ph-title rise-words" style="max-width:16ch">Plans built to fit your next project</h2>
-        <p class="t-body ph-sub deep">&mdash;&mdash;&nbsp; Designed around your specs, each plan gives you clarity on scope, features, and cost so you can move forward with confidence.</p>
-        <span class="ph-ticks"></span>
-      </div>
-    </div>
-    <div id="plans"></div>
-    <div class="grid mt6 center ask" style="row-gap:32px">
-      <h3 class="t-h2">Ask our expert</h3>
-      <p class="t-body deep" style="max-width:32ch">Schedule a quick call, and we&rsquo;ll walk you through our flexible plans.</p>
-      <div class="ask-who">
-        <div class="flex center g2"><img src="maggie.avif" alt="Maggie Winslow" width="60" height="60" decoding="async" class="ask-av"><div><p class="ask-name">Maggie Winslow</p><p class="ask-role">Project Operations Manager</p></div></div>
-        <a href="#site-foot" class="plan-get ask-btn">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ PARTNERSHIP ══════════ -->
-
-<!-- ═══════════════════════════════════════════════ TEAM ═════════════════ -->
-<section class="section dark team" aria-label="Team">
-  <div class="team-bg" aria-hidden="true"></div>
-  <div class="shell">
-    <div class="grid hww-head team-head" style="row-gap:40px">
-      <div class="hww-rail">
-        <span class="hww-cap"></span>
-        <span class="t-mono hww-kick rv-tag">The team</span>
-        <span class="hww-hatch"></span>
-      </div>
-      <div class="hww-main">
-        <div class="hww-top"><span class="hww-line"></span><span class="hww-mark">create<sup>&#174;</sup></span></div>
-        <h2 class="hww-title rise-words">No serious faces. Real serious work.</h2>
-        <p class="hww-sub team-sub">&mdash;&mdash;&nbsp; We bring sharp strategy and bold ideas, without the stiff boardroom vibe. Professional where it counts, human where it matters.</p>
-        <span class="hww-ticks"></span>
-      </div>
-    </div>
-    <ul class="tm-row" id="team"></ul>
-    <div class="tm-lead">
-      <p class="tm-h tm-pop">Our leadership team involved from <span class="accent">first kickoff to final delivery.</span></p>
-      <p class="tm-p tm-pop">Every milestone checked, every detail reviewed, every client kept in the loop. That&rsquo;s how projects land sharp and on time.</p>
-      <div class="tm-disc tm-pop">
-        <p class="tm-h2">Discover team Create&#174;</p>
-        <p class="tm-s">Meet the people, culture, and energy that keep our work sharp and our days fun.</p>
-        <a href="#site-foot" class="grow-cta tm-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h14M12 5l6 6-6 6"/></svg></span>Follow us on LinkedIn</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ FAQ ══════════════════ -->
-<section class="section faq-sec" aria-label="FAQ">
-  <div class="shell">
-    <div class="faq-grid">
-      <div class="faq-left">
-        <p class="faq-kick">FAQ</p>
-        <span class="faq-rule" aria-hidden="true"></span>
-        <h2 class="faq-h rise-words faq-pop">Clearing doubts and concerns</h2>
-        <p class="faq-lead faq-pop">&mdash;&mdash;&nbsp; Explore the most common questions about working with Create, all in one place.</p>
-        <span class="faq-ticks" aria-hidden="true"></span>
-        <div class="faq-book faq-pop">
-          <p class="faq-book-p">Book a quick chat and we&rsquo;ll walk you through how we do things.</p>
-          <div class="faq-who">
-            <img class="faq-av" src="lynn-bergmann.avif" alt="Lynn Bergmann" width="60" height="60" decoding="async">
-            <div><p class="faq-name">Lynn Bergmann</p><p class="faq-role">Project Manager</p></div>
-            <a href="#site-foot" class="plan-get faq-btn">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-          </div>
-        </div>
-      </div>
-      <ul class="faq-list" id="faqs"></ul>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ WHISPERS ═════════════ -->
-<!-- ═══════════════════════════════════════════════ TESTIMONIALS ═══════ -->
-<section class="tst" aria-label="What our clients say">
-  <div class="shell">
-    <div class="tst-top">
-      <div class="tst-card tst-intro">
-        <span class="tst-rule" aria-hidden="true"></span>
-        <p class="tst-kick">What our clients say</p>
-        <h2 class="tst-h rise-words">Partnerships that last, results that stick.</h2>
-        <p class="tst-lead">From kickoff to launch, brands trust us to stay close, adapt fast, and deliver without any drama.</p>
-        <div class="tst-rev">
-          <div><span class="tst-stars" aria-hidden="true"></span><p><strong>5 / 5</strong> (98 reviews)</p></div>
-          <p class="tst-backed">Backed by feedback from <strong>120+</strong> brands we&rsquo;ve worked with.</p>
-        </div>
-        <a href="#site-foot" class="plan-get tst-btn">Write a review <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-      </div>
-      <div class="tst-card tst-spot">
-        <p class="tst-spot-w" aria-hidden="true">Spotlight</p>
-        <img class="tst-spot-img" src="DfIAtAPezhFLPAtLZ6n6L3kXCY.jpg" alt="Samuel Laronde" loading="lazy" decoding="async">
-        <blockquote class="tst-spot-q">&ldquo;They didn&rsquo;t just hit the brief, they raised it. The project felt collaborative from start to finish, with clear updates, quick turns, and a final product that carried our brand further than we imagined.&rdquo;</blockquote>
-        <p class="tst-spot-n">Samuel Laronde</p>
-        <p class="tst-spot-r">Marketing Lead</p>
-        <span class="tst-chip tst-spot-c">Lindholm</span>
-      </div>
-    </div>
-    <ul class="tst-row" id="tstRow" tabindex="0" aria-label="Client testimonials"></ul>
-  </div>
-</section>
-
-<section id="whispers" class="wh" aria-label="Whispers">
-  <div class="shell">
-    <div class="ph wh-head">
-      <div class="ph-rail"><span class="wh-cap"></span><span class="t-mono-sm muted rv-tag">Whispers</span><span class="wh-hatch" aria-hidden="true"></span></div>
-      <div class="ph-main">
-        <div class="wh-top"><span class="wh-line"></span><span class="wh-mark">create<sup>&#174;</sup></span></div>
-        <h2 class="t-h2 ph-title rise-words" style="max-width:15ch">What bubbles up needs to be shared</h2>
-        <p class="t-body ph-sub deep">&mdash;&mdash;&nbsp; From new launches to design explorations and team experiments, this is where ideas take shape and stories unfold.</p>
-        <span class="ph-ticks"></span>
-      </div>
-    </div>
-  </div>
-  <div class="wh-band"><div class="shell"><div class="wh-grid" id="whisperGrid"></div></div></div>
-</section>
+      <p class="ct-msg" id="ctMsg" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
 
 <section class="wh-close" aria-label="Studio at a glance">
   <video class="wh-close-bg" data-src="germ.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
@@ -1950,9 +1267,6 @@ input::placeholder{color:var(--rule)}
   </div>
 </section>
 
-</main>
-
-<!-- ═══════════════════════════════════════════════ FOOTER ═══════════════ -->
 <footer id="site-foot">
   <div class="shell foot-up" style="padding:60px 0 80px">
     <div class="grid foot-grid" style="row-gap:40px">
@@ -1968,8 +1282,8 @@ input::placeholder{color:var(--rule)}
         </form>
       </div>
       <ul style="display:grid;gap:12px;align-content:start" class="t-mono deep foot-nav"><li class="foot-lab t-mono-sm" aria-hidden="true">Navigate</li>
-        <li><a href="#top" class="froll"><span class="froll-in"><span>HOME</span><span aria-hidden="true">HOME</span></span></a></li><li><a href="work.html" class="froll"><span class="froll-in"><span>WORK</span><span aria-hidden="true">WORK</span></span></a></li>
-        <li><a href="#studio" class="froll"><span class="froll-in"><span>STUDIO</span><span aria-hidden="true">STUDIO</span></span></a></li><li><a href="#whispers" class="froll"><span class="froll-in"><span>WHISPERS</span><span aria-hidden="true">WHISPERS</span></span></a></li>
+        <li><a href="index.html" class="froll"><span class="froll-in"><span>HOME</span><span aria-hidden="true">HOME</span></span></a></li><li><a href="work.html" class="froll"><span class="froll-in"><span>WORK</span><span aria-hidden="true">WORK</span></span></a></li>
+        <li><a href="index.html#studio" class="froll"><span class="froll-in"><span>STUDIO</span><span aria-hidden="true">STUDIO</span></span></a></li><li><a href="index.html#whispers" class="froll"><span class="froll-in"><span>WHISPERS</span><span aria-hidden="true">WHISPERS</span></span></a></li>
         <li><a href="contact.html" class="froll"><span class="froll-in"><span>CONTACT</span><span aria-hidden="true">CONTACT</span></span></a></li>
         <li class="foot-soc-l" id="socLab">Follow us on socials</li>
       </ul>
@@ -2015,570 +1329,66 @@ input::placeholder{color:var(--rule)}
     </div>
   </div>
 </footer>
-
 <script src="js/motion.min.js" onerror="window.__disarm&&window.__disarm()"></script>
 <script>
 (function(){
-"use strict";
-/* ─────────────────────────────────────────────────────────────────────────
-   ASSET MANIFEST — every image slot on this page, with the crop the layout
-   expects. To use your own (or properly licensed) photography, drop a file in
-   at the path shown and keep the ratio; no CSS or markup changes are needed,
-   since each slot already uses object-fit:cover with a centred origin.
-
-   SLOT                         FILE                              RATIO / SIZE
-   hero backdrop                public/img/hero.svg               fill, cover
-   showreel card                public/img/showreel.svg           680 / 400
-   project panel x3             public/img/project-<slug>.svg     fill 100svh
-   featured case                public/img/project-harrowgate-wide.svg  21 / 9
-   service thumb x6             public/img/service-<name>.svg     290 x 160
-   studio / why                 public/img/studio-b.svg           4 / 3
-   availability card            public/img/studio-c.svg           16 / 10
-   closing CTA                  public/img/cta.svg                16 / 10
-   team portrait x4             public/img/person-<slug>.svg      4 / 5
-   inline avatar x3             public/img/person-<slug>.svg      1 / 1 circle
-   whispers lead                public/img/whisper-1.svg          16 / 9
-   whispers grid x4             public/img/whisper-<n>.svg        4 / 3
-   client logo x10              public/img/client-<name>.svg      h 40px, auto
-   footer pill (video)          footer_video.mp4                  80 x 40 pill, H.264
-
-   showreel video               public/video/showreel.mp4         400 x 226, H.264
-   The card plays it muted on loop, with the svg above as the poster frame.
-   ───────────────────────────────────────────────────────────────────────── */
-var A='<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg>';
-var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")};
-
-/* ───────────────────────────────────────────────────── data ─────────── */
-var projects=[
- {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
- {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
- {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],logoImg:"public/img/aspen-logo.svg",logoAlt:"Lindholm",title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
-];
-var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
-var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
-var services=[
- {no:"01",k:"Foundation",t:"Brand Identity",img:"identity",file:"identity.jpg",c:"The foundation of every project — how your brand looks, feels, and communicates.",p:["Positioning and messaging frameworks","Visual identity systems","Brand guidelines for consistent use","Digital-first brand systems","Branded assets across campaigns and touchpoints"]},
- {no:"02",k:"Growth",t:"Strategy",img:"strategy",file:"market.jpg",round:1,c:"Clear direction backed by insight and planning to move from idea to execution.",p:["Market and audience research","Product and campaign strategy","User journey mapping","Roadmaps and rollout planning","Workshops and alignment sessions"]},
- {no:"03",k:"Creative",t:"Design & Innovation",img:"design",file:"innovation.jpg",round:1,c:"From first concepts to polished products that people want to use and share.",p:["UX and UI design","Prototyping and user testing","Digital product and service design","Iteration and validation","Launch planning and support"]},
- {no:"04",k:"Smart AI",t:"AI Systems",img:"ai",file:"face.jpg",round:1,c:"Practical applications of AI to unlock smarter products and workflows.",p:["Define AI vision and roadmap","Intelligent experience design","Prototyping and proof-of-concepts","Integration into platforms and workflows","Team enablement and training"]},
- {no:"05",k:"Discoverable",t:"SEO",img:"seo",file:"peak.jpg",round:1,c:"Structure, content and speed working together so the right people find the work.",p:["Technical site audit","Keyword research and content strategy","On-page and metadata optimisation","Link-building and authority growth","Performance tracking and reporting"]},
- {no:"06",k:"Build",t:"Development",img:"development",file:"board.png",round:1,c:"Turning ideas and designs into scalable, functional, and reliable digital products.",p:["Web and app development","CMS integration and setup","E-commerce builds and optimisation","Custom feature development","Ongoing technical support"]}
-];
-var process=[
- ["//01","d","Discovery","We start by listening. Goals, challenges, and vision are mapped out clearly, setting the foundation for everything that follows."],
- ["//02","s","Strategy","With insights in place, we define the roadmap. Positioning, priorities, and the best way to align design and execution."],
- ["//03","b","Design & Build","Ideas take shape. From visuals to digital experiences, we design and develop with sharp attention to detail."],
- ["//04","r","Launch & Grow","Delivery is just the beginning. We measure, refine, and scale to ensure your project continues to perform."]
-];
-var growIcons={d:'<path d="M4 12v4a1 1 0 0 0 1 1h2l1 5h3l-1-5"/><path d="M4 12l14-6v14L4 16z"/><path d="M21 10.5v3"/>',s:'<path d="M4 6l5 5"/><path d="M9 6l-5 5"/><path d="M12 18l8-9"/><path d="M14 9h6v6"/>',b:'<path d="M13 4l6 6-8 8-6 1 1-6z"/><path d="M4 21h9"/>',r:'<path d="M11 15 9 13c0-5 2.5-8.5 7.5-10 .5 5-1.5 8.5-6.5 12z"/><path d="M9 13 6 13.5 8 10l2 .5M11 15l-.5 3 3.5-2-.5-2"/><path d="M8.5 16.5c-1 .5-1.5 1.8-1.6 3.4 1.6-.1 2.9-.6 3.4-1.6"/>'};
-var whyStats=[[99.9,1,"%","Client Satisfaction Rate"],[12,0,"+","Industries served"],[24,0,"h","Average Response Time"],[96,0,"%","First Draft Approved"],[99,0,"%","Ship on-Time"]];
-var plans=[
- {tier:"Core",name:"Starter Plan",for:"For startups and first launches",price:"$2,800",was:"$3,500",save:"SAVE 20%",time:"2-3 weeks",tone:"red",c:"Simple, fast, and effective, so you can focus on growing your business.",f:["Brand & Identity starter kit","Website design (core pages)","Standard revisions","SEO setup essentials","Unlimited stock images","Native source files included","Final handoff files"],n:["Clear milestones from start to finish","We keep you in the loop","Feedback built into the process"]},
- {tier:"Studio",name:"Advanced Plan",for:"For growing teams and serious builds",price:"$6,500",was:"$8,000",save:"SAVE 20%",time:"4-6 weeks",tone:"blue",c:"A complete package with flexibility, advanced design, and the support you need to grow faster.",f:["Extended Branding","Full website design","UX flows & product design","Unlimited revisions","Advanced SEO & content","Priority support response","Final handoff"],n:["Deeper design coverage for complex needs","Unlimited adjustments before launch","Faster responses when you need us most"]},
- {tier:"Scale",name:"Growth Plan",for:"For established teams and long-term growth",price:"$12,000",was:"$15,000",save:"SAVE 20%",time:"6\u20138 weeks",tone:"mono",c:"Strategy, design, and dedicated support for complex projects that demand scalability and polish.",f:["End-to-end brand strategy","Large-scale website & CMS","Advanced UX & product design","Dedicated senior managers","Advanced micro-interactions","Optimization & support","Enterprise-level handoff"],n:["Scalable solutions designed for growth","Dedicated manager guiding every stage with integrations","Long-term support beyond launch"]}
-];
-var pillars=[["Ongoing support","Fixes, updates and small improvements handled by the people who built the thing."],["Long-term partnership","Retained time each month, so the roadmap keeps moving without a new kickoff each quarter."],["Future-ready builds","Documented systems and clean code, so another team could pick it up tomorrow if needed."]];
-var testimonials=[
- ["DfIAtAPezhFLPAtLZ6n6L3kXCY.jpg","Samuel Laronde","Marketing Lead","Lindholm","They didn’t just hit the brief, they raised it. The project felt collaborative from start to finish, with clear updates, quick turns, and a final product that carried our brand further than we imagined."],
- ["IAWOBaQOTPVXsed9HvO13W8xZH0.jpeg","Matthew Parker","Head of Product","Monolith","From kickoff to launch, the process was fast-moving but never chaotic. Create kept everyone in the loop, solved issues before they became problems, and shipped exactly when they said they would."],
- ["Jz5dZlyFuiZmVpfeEBffzrkO8.jpg","Maya Chen","Brand Manager","Vornberg","They didn’t just design a website, they built a framework we can grow with. Every decision was backed with clarity, and the final product looks polished while staying practical for our team."],
- ["j06TB87Yx9dCAi0Bh7zDzc3zl8.jpeg","Mark Miller","Creative Lead","Wendrich","They don’t just deliver a project and walk away. The team stayed close, fixed details on the fly, and made sure launch was smooth."],
- ["public/img/person-rea-lindqvist.svg","Jordan Ellis","Creative Director","Blackwell","Working with Create felt effortless. They understood our vision from day one and kept us aligned through clear milestones. The end result was a site that actually elevated our brand voice, not just dressed it up."],
- ["public/img/person-nora-pemberton.svg","Rachel Morgan","Head of Design","Aurelis","Every meeting felt productive, every deadline was hit, and the end result nailed our brand better than we could describe."],
- ["YjXV900OAOWaHl6RCwUHNogRko.jpg","Edward Bright","Marketing Lead","Madison Square","Create took our messy brief and turned it into a site we’re proud to show. Fast, sharp, and no overthinking."],
- ["public/img/person-priya-raghavan.svg","Margaret Brooks","UX Lead","Morisson","Create has a rare balance of speed and detail. They made complex flows simple, turned feedback into quick iterations, and delivered a product that’s both user-friendly and brand-right."]
-];
-var team=[
- ["tobias-neumann.avif","Tobias Neumann","Founder & CEO","97%","Projects delivered on time under his oversight.",[["mail","mailto:tobias@create.com"],["x","https://x.com"],["in","https://linkedin.com"]]],
- ["kRj0YuKJIE6hToAeq15afb9pH4.jpeg","Amelia Cross","Head of Strategy","89%","Campaigns hit or exceeded client KPIs.",[["mail","mailto:amelia@create.co"],["x","https://x.com"],["ig","https://instagram.com"]]],
- ["khgZBntViz424uxS4wjdwEmEk.jpeg","Sofia Reyes","Chief Creative Officer","120+","Brand identities launched across industries.",[["mail","mailto:sofia@create.co"],["x","https://x.com"],["ig","https://instagram.com"],["in","https://linkedin.com"],["fb","https://facebook.com"]]],
- ["4GI3J65Rp3grUuMh8lDptPl1pvw.jpg","Lucas Marino","Technical Director","3.4x","Faster site performance vs industry average.",[["mail","mailto:lucas@create.co"],["x","https://x.com"],["in","https://linkedin.com"],["th","https://threads.com"]]]
-];
-var faqs=[
- ["What kind of projects does Create take on?","We focus on brand identity, digital products, and websites that need both design clarity and technical polish."],
- ["How do you approach new projects?","We start by understanding your goals and constraints, then outline clear milestones so you know exactly what’s coming next."],
- ["What’s a realistic project timeline?","Most branding or smaller websites are ready in 2–4 weeks. Larger sites and platforms run 6–12 weeks, depending on scope."],
- ["Who actually does the work?","Every project is led by senior designers and developers. No handoffs to juniors figuring things out on the fly."],
- ["How do we communicate during the process?","We keep things simple: one main contact, weekly updates, and quick replies when you need us."],
- ["What happens after launch?","We can stay involved — fixing issues, rolling out updates, or handling ongoing support if that’s part of your plan."],
- ["Do you work with startups as well as big companies?","Yes. We’ve helped founders launch their first product and supported global teams scaling into new markets."],
- ["How do you measure success for a project?","We don’t stop at launch. Success is measured by how your audience responds — engagement, conversions, and long-term growth. We track performance and share insights so you see real outcomes, not just a polished design."],
- ["Can we start small and scale later?","Yes. Many clients begin with a focused project like a brand refresh or website revamp. As their needs grow, we expand into campaigns, strategy, and ongoing support. Flexibility is built into how we work."]
-];
-var posts=[
- ["rethinking-product-design.png","Jul 30, 2025","Rethinking Product Design with Intelligence","Lucas Marino","Technical Director","A SaaS product team approached us with an AI add-on. The challenge was to rethink AI not as a widget but as a foundation for smarter systems."],
- ["service-strategy.png","Jul 25, 2025","Digital Identities Across Cultures","Edward Bright","Marketing Lead","Numeriq approached us to redefine their online presence. The challenge was balancing their street-level origins with their luxury aspirations."],
- ["public/img/whisper-3.svg","Jul 20, 2025","Architecture in the Digital Age","Mark Miller","Creative Lead","An architecture studio wanted its online presence to feel as ambitious as its buildings. The challenge was to move beyond static portfolios and reflect authority and vision."],
- ["e-mobility.jpeg","Jul 15, 2025","The Future of E-Mobility Marketing from Lindholm","Matthew Parker","Head of Product","Lindholm launched Aspen® 877, a new e-bike. The challenge was positioning it as both a lifestyle product and a piece of cutting-edge mobility tech."],
- ["automotive.jpg","Dec 7, 2025","How Automotive Brands Win Online","Jordan Ellis","UX Strategist","An automotive brand asked us to build a digital showroom. The challenge was giving customers an online experience that could rival the thrill of being behind the wheel."]
-];
-
-/* ───────────────────────────────────────────── hero headline ────────── */
-var h1=document.getElementById("heroH1");
-var heroLines=["Digital experiences that","connect, scale and perform."];
-var wordCount=heroLines.join(" ").split(" ").length, wordAt=0;
-h1.innerHTML=heroLines.map(function(line){
- return line.split(" ").map(function(w){
-  var i=wordAt++;
-  var t=i===wordCount-1?esc(w.replace(/\.$/,""))+'<span class="accent">.</span>':esc(w);
-  return '<span class="word" data-d="'+(200+i*40)+'"><span>'+t+'&nbsp;</span></span>';
- }).join("");
-}).join("<br>");
-
-/* ───────────────────────────────────────────── project panels ───────── */
-document.getElementById("panels").innerHTML=projects.map(function(p,i){
- return '<article class="panel'+(p.bright?" bright":"")+'" style="z-index:'+(i+1)+'"><a href="'+(p.case||"#work")+'"'+
- (p.case?' data-case':'')+' aria-label="'+esc(p.title)+(p.case?" — view case study":"")+'">'+
- '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'"'+
-   (p.pos?' style="object-position:'+p.pos+'"':'')+' alt="">'+
- '<span class="veil"></span>'+
- (p.case?'<span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>':'')+
- '<div class="body shell">'+
-   '<div class="flex between center g3">'+(p.logoImg
-     ? '<img class="p3-logo-img" src="'+p.logoImg+'" alt="'+esc(p.logoAlt||p.logo[0])+'" width="177" height="44">'
-     : p.logo
-     ? (p.logo.length>1
-        ? '<span class="p3-logo"><b>'+esc(p.logo[0])+'</b><i>'+esc(p.logo[1])+'<br>'+esc(p.logo[2])+'</i></span>'
-        : '<span class="p3-logo p3-logo-1"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden><rect x="1" y="6" width="6" height="5" rx="1.6" fill="currentColor"/><rect x="9.5" y="2.5" width="5.5" height="5" rx="1.6" fill="currentColor"/><path d="M6.6 8.4h3.6" stroke="currentColor" stroke-width="1.5"/></svg><b>'+esc(p.logo[0])+'</b><sup>&#174;</sup></span>')
-     : '<img class="mark" src="public/img/client-'+p.client+'.svg" alt="'+esc(p.client)+'">')+
-     (p.ticks?'<span class="p3-ticks" aria-hidden></span>':'')+'</div>'+
-   '<div class="p3-mid" style="text-align:center"><span class="mask"><span class="t-project">'+esc(p.title)+'</span></span>'+
-   (p.noSub?'':'<p class="t-mono mt2" style="color:rgba(255,255,255,.9)">'+esc(p.sub)+'</p>')+
-   (p.case?'<span class="btn btn-light btn-sm cta mt3">View case '+A+'</span>':'')+'</div>'+
-   '<div class="flex between end g3">'+
-     '<ul class="stack t-mono-sm">'+p.stack.map(function(s){return "<li>"+esc(s)+"</li>"}).join("")+'</ul>'+
-     '<p class="t-mono-sm" style="color:rgba(255,255,255,.85);flex:none">YR/ <span class="num">'+p.year+'</span></p>'+
-   '</div>'+
- '</div></a></article>';
-}).join("");
-
-/* ───────────────────────────────────────────────── performance ──────── */
-/* Stats are static figures: no count-up and no scroll-linked number flow. */
-document.getElementById("perf").innerHTML=perf.map(function(s){
- var digits=String(s[1]).split("");
- return '<div class="perf-stat">'+
- '<dd class="perf-num num accent" aria-label="'+s[1]+s[2]+'">'+digits.map(function(d){return '<span class="nf-d">'+d+'</span>'}).join("")+
-   (s[2]?'<span class="nf-sfx" aria-hidden="true">'+s[2]+'</span>':'')+'</dd>'+
- '<dt class="perf-lab">'+esc(s[3])+'</dt>'+
- '<div class="perf-meta"><span class="perf-bar"></span><span class="perf-line"></span>'+
- '<span class="perf-no">'+s[0]+'</span></div></div>';
-}).join("");
-/* client band: the logo files supplied for this site, looped */
-(function(){
- var logos=[["public/img/hero-logos/obliqon.svg","Obliqon"],["public/img/hero-logos/numeriq.svg","Numeriq"],["public/img/hero-logos/aurelis.svg","aurelis"],
-  ["public/img/brand-logos/logisync.svg","Logisync"],["public/img/brand-logos/lindholm.svg","Lindholm"]];
- var html=logos.concat(logos).map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" height="32" decoding="async"></span>'}).join("");
- document.getElementById("brandA").innerHTML=html;
- document.getElementById("brandB").innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
-})();
-
-/* ───────────────────────────────────────────────── client marquee ───── */
-function marks(){return clients.map(function(c){
- return '<span style="padding:0 48px;flex:none;color:var(--muted)"><img src="public/img/client-'+c+'.svg" alt="'+c+'" style="height:40px;width:auto;opacity:.55;transition:opacity .3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.55"></span>';
-}).join("")}
-Array.prototype.forEach.call(document.querySelectorAll(".mq-logos .mq-track"),function(t){t.innerHTML=marks()});
-
-/* ───────────────────────────────────────────────────── services ─────── */
-document.getElementById("services").innerHTML=services.map(function(s){
- return '<article class="svc"><div class="shell"><div class="svc-head"><span class="t-mono-sm deep">'+esc(s.k)+'</span>'+
- '<span style="flex:1"></span>'+
- '<span class="t-h5 num svc-idx">/'+s.no+'</span></div>'+
- '<div class="svc-rule"><span class="base"></span><span class="tick"></span></div>'+
- '<h3 class="mt5"><span class="mask"><span class="t-service">'+esc(s.t)+'</span></span></h3>'+
- '<div class="grid mt5" style="row-gap:32px">'+
-   '<div style="grid-column:1/5"><div class="svc-thumb imgbox'+(s.round?" svc-round":"")+'"><img src="'+(s.file||("public/img/service-"+s.img+".svg"))+'" alt=""></div>'+
-   '<p class="t-body mt3 deep" style="max-width:34ch">'+esc(s.c)+'</p></div>'+
-   '<ul style="grid-column:8/13">'+s.p.map(function(p){
-     return '<li class="flex g2" style="align-items:flex-start"><svg class="plus" width="11" height="11" viewBox="0 0 11 11"><path d="M5.5 0V11M0 5.5H11" stroke="currentColor" stroke-width="1.2"/></svg><span class="t-body">'+esc(p)+'</span></li>'
-   }).join("")+'<li class="ticks mt3"></li></ul>'+
- '</div></div></article>';
-}).join("");
-
-/* ───────────────────────────────────────────────────── process ──────── */
-document.getElementById("process").innerHTML=process.map(function(p){
- return '<li class="gcard"><div class="gcard-top"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+growIcons[p[1]]+'</svg><span class="gcard-no">'+p[0]+'</span></div>'+
- '<div class="gcard-rule"></div><h4 class="gcard-h">'+esc(p[2])+'</h4>'+
- '<p class="gcard-c">'+esc(p[3])+'</p></li>';
-}).join("");
-
-/* ───────────────────────────────────────────────────── why stats ────── */
-document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
- return '<li><span class="bcard-pill"><b class="num">'+s[0]+s[2]+'</b><span>'+esc(s[3])+'</span></span></li>';
-}).join("");
-/* testimonials: the stars and the row of client cards */
-(function(){
- var st=document.querySelector(".tst-stars");
- if(st)st.innerHTML=Array(6).join("x").split("").map(function(){return '<svg viewBox="0 0 13 13"><path d="M6.5.5l1.6 3.9 4.2.3-3.2 2.7 1 4.1-3.6-2.3-3.6 2.3 1-4.1L.7 4.7l4.2-.3z" fill="var(--accent)"/></svg>'}).join("");
- var row=document.getElementById("tstRow");if(!row)return;
- row.innerHTML=testimonials.map(function(t){
-  return '<li class="tst-t"><p class="tst-date">September 2025</p>'+
-  '<svg class="tst-mark" viewBox="0 0 120 90" aria-hidden="true"><path d="M0 90V52C0 22 16 5 44 0l5 12C33 18 26 30 26 44h22v46zm70 0V52c0-30 16-47 44-52l5 12c-16 6-23 18-23 32h22v46z" fill="currentColor"/></svg>'+
-  '<blockquote class="tst-q">&ldquo;'+esc(t[4])+'&rdquo;</blockquote>'+
-  '<div class="tst-by"><img src="'+t[0]+'" alt="" width="60" height="60" decoding="async"><div><p class="tst-n">'+esc(t[1])+'</p><p class="tst-r">'+esc(t[2])+'</p></div><span class="tst-chip">'+esc(t[3])+'</span></div></li>';
- }).join("");
-})();
-/* team cards */
-(function(){
- var ic={mail:'<path d="M2 4h12v8H2zM2 4l6 5 6-5"/>',x:'<path d="M3 3l10 10M13 3L3 13"/>',in:'<path d="M3 6v7M3 3.5v.1M6.5 13V6M6.5 9c0-2 1-3 3-3s3 1 3 3v4"/>',
-  ig:'<rect x="2.5" y="2.5" width="11" height="11" rx="3"/><circle cx="8" cy="8" r="2.6"/>',fb:'<path d="M9.5 14V8.5H12M9.5 8.5V6.2c0-1.2.7-2 2-2H12M7.5 8.5h2"/>',th:'<path d="M11 7.5C10.6 5 9.4 4 8 4 5.8 4 4.5 5.7 4.5 8s1.3 4 3.5 4c1.8 0 3-1 3-2.4 0-2-3-2.3-3.6-.8"/>'};
- var names={mail:"Email",x:"X",in:"LinkedIn",ig:"Instagram",fb:"Facebook",th:"Threads"};
- var el=document.getElementById("team");if(!el)return;
- el.innerHTML=team.map(function(m){
-  return '<li class="tm-card"><div class="tm-tilt">'+
-  '<img class="tm-img" src="'+m[0]+'" alt="Portrait of '+esc(m[1])+'" loading="lazy" decoding="async">'+
-  '<span class="tm-veil" aria-hidden="true"></span>'+
-  '<span class="tm-kpil">//KPI</span>'+
-  '<div class="tm-kpi"><b class="num">'+esc(m[3])+'</b><span>'+esc(m[4])+'</span></div>'+
-  '<span class="tm-line" aria-hidden="true"></span>'+
-  '<div class="tm-who"><p class="tm-name">'+esc(m[1])+'</p><p class="tm-role">'+esc(m[2])+'</p>'+
-  '<p class="tm-soc">'+m[5].map(function(l){return '<a href="'+l[1]+'" aria-label="'+esc(m[1])+' on '+names[l[0]]+'"'+(l[0]==="mail"?'':' target="_blank" rel="noopener"')+'><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">'+ic[l[0]]+'</svg></a>'}).join("")+'</p></div>'+
-  '<span class="tm-bars" aria-hidden="true"><i></i><i></i><i></i></span>'+
-  '</div></li>';
- }).join("");
-})();
-/* titles that rise word by word (pricing card row, pricing head) and the
-   closing panel's "9 years" lines */
-document.querySelectorAll(".rise-words,.wh-words,.nl-h,.nl-lw").forEach(function(h){
- h.setAttribute("aria-label",h.textContent);
- h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");
-});
-/* why choose us: words of the heading and letters of the three phrases as
-   spans for their entrances; the phrase itself keeps its text for readers */
-(function(){
- var h=document.querySelector(".why-h");
- if(h){h.setAttribute("aria-label",h.textContent);
-  h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");}
- document.querySelectorAll(".why-type").forEach(function(p){
-  var t=p.textContent;p.setAttribute("aria-label",t);
-  p.innerHTML=t.split("").map(function(c){return '<span class="ch" aria-hidden="true">'+esc(c)+'</span>'}).join("");
- });
-})();
-document.getElementById("stars").innerHTML=Array(5).join(",").split(",").map(function(){
- return '<svg width="13" height="13" viewBox="0 0 13 13"><path d="M6.5.5l1.6 3.9 4.2.3-3.2 2.7 1 4.1-3.6-2.3-3.6 2.3 1-4.1L.7 4.7l4.2-.3z" fill="var(--accent)"/></svg>';
-}).join("");
-
-/* ───────────────────────────────────────────────────── pricing ──────── */
-/* Plan art: Core and Scale use the supplied photos of the guideline stack;
-   Studio gets the same stack drawn in blue until its photo is supplied. */
-function planArt(p){
- if(p.tone==="mono")return '<img src="wave.avif" alt="" decoding="async">';
- if(p.tier==="Core")return '<img src="pricing-core.jpg" alt="" decoding="async">';
- var c=p.tone==="red"?["#ff6041","#ff8a6f"]:["#3563e9","#6f8ff2"];
- return '<svg viewBox="0 0 140 80" aria-hidden="true"><rect width="140" height="80" fill="#eceef2"/>'+
-  '<g transform="translate(26 50) rotate(-28)"><rect x="18" y="-6" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/><rect x="9" y="-15" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/>'+
-  '<rect x="0" y="-24" width="96" height="30" rx="2" fill="'+c[0]+'"/><rect x="0" y="-24" width="30" height="30" rx="2" fill="'+c[1]+'" opacity=".55"/>'+
-  '<text x="36" y="-5" font-size="9" font-weight="700" fill="#fff" font-family="Figtree,Arial">'+esc(p.tier)+' Plan</text></g></svg>';
-}
-var PLUS='<svg class="plan-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1v30M1 16h30" stroke="currentColor" stroke-width="1.4"/></svg>';
-var CHK='<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.5" fill="#d5d7de"/><path d="M5 8.3l2 2 4-4.3" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-var CLOCK='<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.5" fill="#d5d7de"/><path d="M8 4.5V8l2.2 1.4" stroke="#fff" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>';
-document.getElementById("plans").innerHTML=plans.map(function(p,i){
- var id="plan-b-"+i;
- return '<article class="plan'+(i===0?" open":"")+'">'+
- '<h3><button class="plan-btn" aria-expanded="'+(i===0)+'" aria-controls="'+id+'">'+
- '<span class="plan-stripes" aria-hidden="true"></span>'+
- '<span class="plan-titles"><span class="plan-tier">'+esc(p.tier)+'</span><span class="plan-name">'+esc(p.name)+'</span></span>'+
- '<span class="plan-tag">'+esc(p.for)+'</span>'+PLUS+'</button></h3>'+
- '<div class="acc" id="'+id+'"><div><div class="plan-body">'+
-   '<span class="plan-num" aria-hidden="true">0'+(i+1)+'</span>'+
-   '<div class="plan-l"><p class="plan-for">'+esc(p.for)+'</p>'+
-   '<p class="plan-price"><span class="plan-amt num">'+p.price+'</span><span class="plan-per">/project</span></p>'+
-   '<p class="plan-was"><span class="plan-old">was '+p.was+'</span><span class="plan-save">'+p.save+'</span></p>'+
-   '<div class="plan-art">'+planArt(p)+'</div>'+
-   '<p class="plan-desc"><em>'+esc(p.c)+'</em></p><span class="plan-ticks" aria-hidden="true"></span></div>'+
-   '<ul class="plan-feat">'+p.f.map(function(f){return '<li>'+CHK+'<span>'+esc(f)+'</span></li>'}).join("")+'</ul>'+
-   '<div class="plan-r"><ul class="plan-notes">'+p.n.map(function(n){return '<li><span class="accent" aria-hidden="true">+</span><em>'+esc(n)+'</em></li>'}).join("")+'</ul>'+
-   '<a href="#site-foot" class="plan-get">Get started '+A+'</a>'+
-   '<p class="plan-time">'+CLOCK+'<span>Timeline</span><strong>'+p.time+'</strong></p></div>'+
- '</div></div></div></article>';
-}).join("");
-
-/* ───────────────────────────────────────────────────── pillars ──────── */
-document.getElementById("pillars").innerHTML=pillars.map(function(x){
- return '<li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12.4l2.6 2.6L16 9.6" stroke="#fafafa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+esc(x[0])+'</li>';
-}).join("");
-
-/* ───────────────────────────────────────────────────── faq ──────────── */
-document.getElementById("faqs").innerHTML=faqs.map(function(f,i){
- var id="faq-a-"+i;
- return '<li class="faq'+(i===0?" open":"")+'"><h3><button class="faq-q" aria-expanded="'+(i===0)+'" aria-controls="'+id+'">'+
- '<span class="faq-t">'+esc(f[0])+'</span>'+
- '<svg class="faq-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3v22M3 14h22" stroke="currentColor" stroke-width="1.5"/></svg></button></h3>'+
- '<div class="acc" id="'+id+'"><div><p class="faq-a">'+esc(f[1])+'</p></div></div></li>';
-}).join("");
-
-/* ───────────────────────────────────────────────────── whispers ────── */
-/* Whispers mosaic, laid out as the reference's: the intro card and the first
-   article share a row (548 + 832px at 1440), the second runs full width, the
-   third and fourth share a row, the fifth takes two columns beside the More
-   Whispers call to action. */
-function wcard(p,cls){
- return '<a class="wc '+cls+'" href="#whispers"><img src="'+p[0]+'" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
- '<div class="wc-meta"><span class="wc-by"><span class="wc-name">'+esc(p[3])+'</span><span class="wc-role">'+esc(p[4])+'</span></span>'+
- '<span class="wc-date num">'+p[1]+'</span></div>'+
- '<h3 class="wc-title">'+esc(p[2])+'</h3><p class="sr">'+esc(p[5])+'</p></a>';
-}
-document.getElementById("whisperGrid").innerHTML=
- '<div class="wc wc-intro"><img src="teaser-thumb.avif" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
- '<span class="wi-rule" aria-hidden="true"></span><h3 class="wi-title rise-words" aria-label="Whispers - Blog">'+"Whispers - Blog".split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+w+'</span>'}).join(" ")+'</h3>'+
- '<p class="wi-sub">From small sparks to big ideas.</p>'+
- '<p class="wi-p">Articles, notes on creativity, strategy and making things work.</p>'+
- '<ul class="wi-feats"><li>Studio projects and case studies</li><li>Notes on design and process</li><li>Ideas, insights, and inspiration</li></ul></div>'+
- wcard(posts[0],"wc-a1")+wcard(posts[1],"wc-a2")+wcard(posts[2],"wc-a3")+wcard(posts[3],"wc-a4")+wcard(posts[4],"wc-a5")+
- '<div class="wh-more-cell"><a href="#whispers" class="wh-more"><span class="wh-more-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span>More Whispers<sup class="num">7</sup></a></div>';
-
-/* ═══════════════════════════════════════════════ behaviour ═══════════ */
-
-/* clock */
-function tick(){
- try{
-  var f=new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:"2-digit",second:"2-digit",hour12:true,timeZone:"America/Los_Angeles"});
-  var t=f.format(new Date());
-  var a=document.getElementById("clock"),b=document.getElementById("clock2");
-  if(a)a.textContent=t; if(b)b.textContent=t;
- }catch(e){}
-}
-tick();setInterval(tick,1000);
-
-/* hero entrance (page 1), driven by Motion. Travel and timing are measured
-   off the reference: rows and markers slide at t=0 while the backdrop settles
-   from 1.3, the header drops in at ~0.45s, then the headline, clock, stat and
-   button labels land on their own delays. Easing comes from the CSS tokens,
-   so the curves stay in one place. Driven off DOM-ready rather than
-   window.load: the hero backdrop is a large jpg and gating the entrance on it
-   left the fold blank. */
-(function(){
  var root=document.documentElement, M=window.Motion;
- if(!root.classList.contains("js-motion"))return;
- if(!M){root.classList.remove("js-motion");return}
- root.classList.add("motion-ready");
+ if(M&&root.classList.contains("js-motion"))root.classList.add("motion-ready");
 
- var css=getComputedStyle(root);
- // cubic-bezier() tokens become arrays; sampled linear() springs become a
- // piecewise-linear easing function
- function ease(name){
-  var v=css.getPropertyValue(name).trim(), n=(v.match(/-?\d*\.?\d+/g)||[]).map(Number);
-  if(v.indexOf("cubic-bezier")===0&&n.length===4)return n;
-  if(v.indexOf("linear")===0&&n.length>1){
-   var k=n.length-1;
-   return function(t){var x=t*k,i=Math.floor(x);return i>=k?n[k]:n[i]+(n[i+1]-n[i])*(x-i)};
-  }
-  return "easeOut";
- }
- function go(sel,keyframes,opts){
-  var els=document.querySelectorAll(sel);
-  if(els.length)M.animate(els,keyframes,opts);
- }
+ /* clock in the menu */
+ function tick(){try{var t=new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:"2-digit",second:"2-digit",hour12:true,timeZone:"America/Los_Angeles"}).format(new Date());
+  var a=document.getElementById("clock"),b=document.getElementById("clock2");if(a)a.textContent=t;if(b)b.textContent=t}catch(e){}}
+ tick();setInterval(tick,1000);
 
- /* Scramble-in, in the shape of GSAP's ScrambleText: random characters cycle
-    in place, then lock to the real text from the left once revealDelay has
-    passed. Written longhand because the site ships no third-party animation
-    library and has to run with no network. Spaces never scramble, so the word
-    shape holds still while the letters resolve. */
- function scrambleText(el,o){
-  o=o||{};
-  var text=el.textContent,
-      chars=o.chars||"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      dur=(o.duration||1)*1000,
-      revealAt=(o.revealDelay||0)*1000,
-      reroll=30/(o.speed||1),
-      t0=performance.now(), lastRoll=0, noise=[];
-  (function frame(now){
-   var t=now-t0,
-       p=Math.min(1,Math.max(0,(t-revealAt)/Math.max(1,dur-revealAt))),
-       locked=Math.floor(p*text.length),
-       roll=(now-lastRoll)>=reroll;
-   if(roll)lastRoll=now;
-   var out="";
-   for(var i=0;i<text.length;i++){
-    var c=text.charAt(i);
-    if(i<locked||c===" "){out+=c;continue}
-    if(roll||noise[i]===undefined)noise[i]=chars.charAt(Math.random()*chars.length|0);
-    out+=noise[i];
-   }
-   el.textContent=out;
-   if(t<dur)requestAnimationFrame(frame); else el.textContent=text;
-  })(t0);
- }
+ /* header hides on the way down */
+ var hdr=document.getElementById("hdr"),last=scrollY;
+ addEventListener("scroll",function(){var y=scrollY;hdr.classList.toggle("hide",y>260&&y>last&&!document.body.classList.contains("menu"));last=y},{passive:true});
 
- /* Responsive line split, in the shape of SplitText's autoSplit: the caption is
-    broken into the lines it actually wraps to at the current width, measured
-    from where each word lands, and re-split whenever the width changes where
-    those breaks fall. Words stay plain text inside the spans, so a screen
-    reader still reads one sentence. */
- function splitLines(el){
-  var text=el.getAttribute("data-text");
-  if(text==null){text=el.textContent.replace(/\s+/g," ").trim();el.setAttribute("data-text",text)}
-  el.innerHTML=text.split(" ").map(function(w){return '<span class="sl-w">'+esc(w)+'</span>'}).join(" ");
-  var lines=[],top=null;
-  Array.prototype.forEach.call(el.querySelectorAll(".sl-w"),function(w){
-   if(top===null||Math.abs(w.offsetTop-top)>2){lines.push([]);top=w.offsetTop}
-   lines[lines.length-1].push(w.textContent);
-  });
-  el.innerHTML=lines.map(function(l){
-   return '<span class="sl-line"><span class="sl-in">'+esc(l.join(" "))+'</span></span>';
-  }).join("");
- }
- var splitEls=document.querySelectorAll(".hero .split-lines");
- Array.prototype.forEach.call(splitEls,splitLines);
- var lastW=window.innerWidth, splitWait;
- window.addEventListener("resize",function(){
-  clearTimeout(splitWait);
-  splitWait=setTimeout(function(){
-   if(window.innerWidth===lastW)return;
-   lastW=window.innerWidth;
-   Array.prototype.forEach.call(splitEls,splitLines);     // re-split, at rest
-   Array.prototype.forEach.call(document.querySelectorAll(".hero .sl-in"),function(n){n.style.transform="none"});
-  },150);
+ /* mobile menu */
+ var burger=document.getElementById("burger");
+ if(burger){burger.addEventListener("click",function(){var open=document.body.classList.toggle("menu");burger.setAttribute("aria-expanded",open);
+  document.getElementById("menu").setAttribute("aria-hidden",!open);document.body.style.overflow=open?"hidden":"";
+  document.querySelectorAll(".menu .mi").forEach(function(a,i){a.style.transitionDelay=(open?160+i*70:0)+"ms"})});
+  document.querySelectorAll(".menu a").forEach(function(a){a.addEventListener("click",function(){document.body.classList.remove("menu");document.body.style.overflow="";burger.setAttribute("aria-expanded",false)})})}
+
+ /* newsletter (prototype only) */
+ var nl=document.getElementById("nl");
+ if(nl)nl.addEventListener("submit",function(e){e.preventDefault();var v=document.getElementById("email").value.trim(),m=document.getElementById("nlMsg");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){m.textContent="Enter a valid email address.";m.style.color="var(--accent)";return}
+  m.textContent="Thanks — prototype only, nothing was sent.";m.style.color="var(--deep)";this.reset()});
+
+ /* words of the closing panel's lines and the footer heading, as spans */
+ document.querySelectorAll(".wh-words,.nl-h,.nl-lw").forEach(function(h){
+  h.setAttribute("aria-label",h.textContent);
+  h.innerHTML=h.textContent.split(" ").map(function(w){var e=document.createElement("span");e.className="w";e.setAttribute("aria-hidden","true");e.textContent=w;return e.outerHTML}).join(" ");
  });
 
- /* The entrance, measured frame by frame on the reference
-    (createstudio.framer.media, 1440x900, two loads agreeing to ~0.1s) and
-    timed from the moment its photo starts to show. One composition in two
-    beats: the photo swells in with the frame around it, then settles back as
-    the type rises into it.
-      0      photo  opacity in over .8s, up 40px, scale 1.44 -> 1.11
-      .29    nav bar down 48px, 1s          .39  clock up 40px, .45s
-      .79    10+, caption and logos up 80px, .9s; button labels up 70px, .52s
-      2.4    photo scale 1.11 -> 1, 1.2s (a gentler, cubic ease-out)
-      2.63   // 00.0x labels up 80px, .95s   2.86 Create\Studio up 80px
-             inside its mask, .9s            3.05 headline up 20px, .6s
-      3.68   showreel card up 66px, .85s
-    Everything but the headline runs on the reference's steep ease-out (half
-    the travel in the first tenth); the photo swell starts gently and the
-    headline, which arrives word by word there, eases in and out. */
- function countUp(el){
-  var to=parseFloat(el.dataset.to)||0,dur=parseFloat(el.dataset.dur)||600,sfx=el.dataset.suffix||"",t0=performance.now();
-  (function step(t){var p=Math.min(1,(t-t0)/dur);el.textContent=Math.round(to*(1-Math.pow(1-p,4)))+sfx;if(p<1)requestAnimationFrame(step)})(t0);
- }
- var OUT=[.16,1,.3,1], SWELL=[.4,0,.2,1];
- function photoIn(){
-  go(".hero-bg img",{opacity:[.001,1],y:[40,0]},{duration:.8,ease:SWELL});
-  go(".hero-bg img",{scale:[1.44,1.11,1.11,1]},{duration:3.6,times:[0,.222,.667,1],ease:[SWELL,"linear",[.33,1,.68,1]]});
- }
- function play(photoLate){
-  if(!photoLate)photoIn();
-
-  go(".hdr-logo,.hdr .nav,.hdr-right>a",{opacity:[.001,1],y:[-48,0]},{duration:1,delay:.29,ease:OUT});
-  go(".hx-fade6",{opacity:[.001,1]},{duration:1,delay:.29,ease:OUT});
-
-  go(".hx-time",{opacity:[.001,1],y:[40,0]},{duration:.45,delay:.39,ease:OUT});
-  go(".hx-time .hair",{opacity:[1,.7]},{duration:.45,delay:.39,ease:OUT});
-  // the studio lines decode in place beside the clock
-  go(".hx-fade",{opacity:[.001,1]},{duration:.4,delay:.39,ease:OUT});
-  document.querySelectorAll(".hero .hx-fade").forEach(function(el){
-   setTimeout(function(){scrambleText(el,{duration:1,revealDelay:.25,speed:.35});},390);
+ /* contact form (prototype only): the send button wakes once every field is
+    filled, as on the reference; nothing leaves the page */
+ var cf=document.getElementById("ctForm");
+ if(cf){
+  var fields=[].slice.call(cf.querySelectorAll("input,textarea")),msg=document.getElementById("ctMsg");
+  var valid=function(f){var v=f.value.trim();return v!==""&&(f.type!=="email"||/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))};
+  var check=function(){cf.classList.toggle("ok",fields.every(valid))};
+  fields.forEach(function(f){f.addEventListener("input",function(){f.removeAttribute("aria-invalid");if(msg.classList.contains("err"))msg.textContent="";check()})});check();
+  cf.addEventListener("submit",function(e){
+   e.preventDefault();
+   var bad=fields.filter(function(f){return !valid(f)});
+   fields.forEach(function(f){if(bad.indexOf(f)>=0)f.setAttribute("aria-invalid","true");else f.removeAttribute("aria-invalid")});
+   if(bad.length){msg.textContent=bad[0].type==="email"&&bad[0].value.trim()?"Enter a valid email address.":"Please fill in every field.";msg.className="ct-msg err";bad[0].focus();return}
+   msg.textContent="Thanks — prototype only, nothing was sent.";msg.className="ct-msg";cf.reset();check();
   });
-
-  go(".hx-pop,.hx-lift",{opacity:[.001,1],y:[80,0]},{duration:.9,delay:.79,ease:OUT});
-  document.querySelectorAll(".hero .count").forEach(function(el){setTimeout(function(){countUp(el)},790)});
-  go(".hero .btn",{opacity:[.001,1]},{duration:.3,delay:.79,ease:OUT});
-  document.querySelectorAll(".hero .lmask").forEach(function(m){
-   M.animate(m.firstElementChild,{y:[70,0]},{duration:.52,delay:.79,ease:OUT});
-  });
-
-  go(".hx-mark",{opacity:[.001,1],y:[80,0]},{duration:.95,delay:2.63,ease:OUT});
-  go(".hero-mark-text",{opacity:[.001,1],y:[80,0]},{duration:.9,delay:2.86,ease:OUT});
-  go("#heroH1",{opacity:[.001,1],y:[20,0]},{duration:.6,delay:3.05,ease:[.45,0,.55,1]});
-  go(".hero-card",{opacity:[.001,1],y:[66,0]},{duration:.85,delay:3.68,ease:OUT});
  }
- // The whole composition starts from the photo, so wait until it is decoded:
- // starting earlier played the type over an empty black hero while the 1.8MB
- // photo was still painting in, strip by strip, seconds later. If the photo is
- // very slow the type goes ahead after 4s, and the photo, kept invisible while it
- // downloads, swells in by itself the moment it is ready.
- function arm(){
-  var img=document.querySelector(".hero-bg img"), done=false, late=false;
-  function ready(){
-   if(!done){done=true;requestAnimationFrame(function(){requestAnimationFrame(function(){play(false)})});return}
-   if(late){late=false;requestAnimationFrame(photoIn)}
-  }
-  function timeout(){if(done)return;done=true;late=true;play(true)}
-  if(img&&!(img.complete&&img.naturalWidth)&&img.decode){
-   img.decode().then(ready,ready);
-   setTimeout(timeout,4000);
-  }else ready();
- }
- if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",arm);
- else arm();
 
- // Scroll-away, measured on the reference (createstudio.framer.media) at
- // 1440 and 390 wide by sampling every element's position against scrollY.
- // The hero is not pinned and nothing fades or scales: the photo scrolls with
- // the page (1.0x) and each block moves at its own constant rate, linear in
- // scrollY, rising out of a mask at the slot it started in, so it leaves
- // from its top edge down (the wordmark's top, then the showreel head, then
- // the first line of the studio copy...). Rates, as screen speed / page speed:
- //   side labels 0.9 (they drop out through the bottom of their masks)
- //   buttons 1.2, studio copy 1.3, headline and clock 1.4, showreel 1.5,
- //   10+ corner 1.6, its logos and the wordmark 1.7, "let's create" 1.8
- // The offset is read straight off scrollY every frame, with no smoothing, so
- // it stops the instant scrolling stops and reverses exactly on the way up.
- // Only `translate` and `clip-path` are touched, which the load entrance
- // never animates, and at scrollY 0 both are cleared.
- var hero=document.querySelector(".hero");
- if(!hero)return;
- function q(sel){return [].slice.call(hero.querySelectorAll(sel))}
- var info=hero.querySelector(".hero-info");
- var layers=[];
- function add(els,k,mask){els.forEach(function(el){if(el)layers.push({el:el,k:k,mask:mask})})}
- add(q(".rail"),-.1,true);
- add([hero.querySelector(".hero-h1")],.4,true);
- add([hero.querySelector(".hero-stat")],.6,true);
- add([hero.querySelector(".hero-logos")],.1,false);          // on top of the corner's .6
- add([hero.querySelector(".hero-mark-text")],.7,false);      // already inside its own mask
- add(info?[info.children[0]]:[],.3,true);                    // the two lines of studio copy
- add([hero.querySelector(".hx-time")],.4,true);
- add(info?q(".hero-info>.flex"):[],.2,true);                 // See work / Let's chat
- add([hero.querySelector(".hero-card")],.5,true);
- var create=hero.querySelector(".hero-create"), raf=0, drawn=-1;
-
- function draw(){
-  raf=0;
-  // past twice the hero's height it is long gone, so hold the final state
-  var y=Math.min(Math.max(0,scrollY),hero.offsetHeight*2);
-  if(y===drawn)return;
-  drawn=y;
-  layers.forEach(function(l){
-   var d=l.k*y;                                                 // how far it has moved up past its slot
-   l.el.style.translate=d?"0 "+(-d).toFixed(1)+"px":"";
-   // the mask stays where the block started: clip what has risen above it
-   // (or, moving slower than the page, what has sunk below it)
-   l.el.style.clipPath=l.mask&&d?(d>0?"inset("+d.toFixed(1)+"px -100vw -100vh -100vw)":"inset(-100vh -100vw "+(-d).toFixed(1)+"px -100vw)"):"";
-  });
-  if(create)create.style.translate="-50% "+(-.8*y).toFixed(1)+"px";
- }
- addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(draw)},{passive:true});
- addEventListener("resize",function(){drawn=-1;draw()});
- draw();
-})();
-
-/* The showreel footage waits for the hero photo, so the two are not
-   splitting the connection while the page is still black. */
-(function(){
- var v=document.querySelector(".reel video[data-src]"), img=document.querySelector(".hero-bg img");
- if(!v)return;
- function load(){if(!v.dataset.src)return;v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";
-  var t=v.play();if(t&&t.catch)t.catch(function(){})}
- if(!img||(img.complete&&img.naturalWidth))load();
- else{img.addEventListener("load",load);img.addEventListener("error",load);setTimeout(load,20000)}
-})();
-
-/* Page 4 reveals, as measured on the reference: each article's author block
-   rises 120px while fading in (1.2s); each closing-block item fades in from
-   1.3x scale (0.9s); the newsletter heading grows from 0.81x (1s). All run
-   once, on entering the viewport, on the reference's steep ease-out. */
-(function(){
- var M=window.Motion;
- if(!M||!document.documentElement.classList.contains("js-motion"))return;
+ if(!M||!root.classList.contains("js-motion"))return;
  var OUT=[.16,1,.3,1];
- function once(els,run,margin){
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target)}})},{rootMargin:margin});
-  Array.prototype.forEach.call(els,function(el){io.observe(el)});
- }
- once(document.querySelectorAll("a.wc"),function(card){
-  M.animate(card.querySelector(".wc-meta"),{opacity:[0,1],y:[120,0]},{duration:1.2,ease:OUT});
- },"0px 0px -35% 0px");
+ function once(els,run,margin){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target)}})},{rootMargin:margin});
+  [].forEach.call(els,function(el){io.observe(el)})}
+ /* hero entrance, once the page shows */
+ M.animate(".ct-h",{opacity:[0,1],y:[100,0]},{duration:1,delay:.2,ease:OUT});
+ M.animate(".ct-head",{y:[150,0]},{duration:1,delay:.2,ease:OUT});
+ M.animate(".ct-t",{opacity:[0,1],y:[100,0]},{duration:1,delay:.2,ease:OUT});
+ /* closing panel and footer, as on the homepage */
  once(document.querySelectorAll(".wh-pop"),function(el){
   /* the year line settles at 60%, as on the reference */
   M.animate(el,{opacity:[0,el.classList.contains("wh-years")?.6:1],scale:[1.3,1]},{duration:.9,ease:OUT});
@@ -2602,496 +1412,6 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".foot-lower .foot-grid"),function(el){
   M.animate(el,{scale:[.8,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
- /* Why choose us (reference, on its own clock once triggered, 1440x900):
-    heading words rise 20px as it enters; when the cards arrive the small
-    line in the last card fades in (~.9s in, .6s), and the three phrases type
-    in one after another from ~1.3s, a letter every 85ms with .22s between
-    phrases, each letter sliding 20px from the right; each stat row grows
-    from its left edge from .3x as soon as it comes on screen, rows arriving
-    together .2s apart; the review line fades in as it arrives. Timings
-    measured frame by frame against the reference. */
- once(document.querySelectorAll(".why-h"),function(el){
-  M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.04),ease:OUT});
- },"0px");
- once(document.querySelectorAll(".bcard-last"),function(el){
-  M.animate(el.querySelector(".bcard-kick"),{opacity:[0,1]},{duration:.6,delay:.69});
- },"0px");
- once(document.querySelectorAll(".bcard-first"),function(el){
-  var t=1.1;
-  el.querySelectorAll(".why-type").forEach(function(p){
-   var chs=p.querySelectorAll(".ch");
-   M.animate(chs,{opacity:[0,1],x:[20,0]},{duration:.3,delay:M.stagger(.085,{startDelay:t}),ease:OUT});
-   t+=(chs.length-1)*.085+.22;
-  });
- },"0px");
- /* pricing (reference): titles rise word by word as they enter; each plan
-    row rises 100px and fades in; "Ask our expert" grows in from 1.3x; the
-    large C in the "Built for the long run" card fades in while the card is
-    on screen and back out when it leaves */
- once(document.querySelectorAll(".rise-words"),function(el){
-  M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.04),ease:OUT});
- },"0px");
- once(document.querySelectorAll("#plans .plan"),function(el){
-  M.animate(el,{opacity:[0,1],y:[100,0]},{duration:.9,ease:OUT});
- },"0px");
- once(document.querySelectorAll(".ask"),function(el){
-  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
- },"0px 0px -10% 0px");
- /* team: cards rise 120px, .12s apart, as the row comes up the screen; the
-    leadership row grows in from 1.3x */
- once(document.querySelectorAll(".tm-row"),function(el){
-  M.animate(el.querySelectorAll(".tm-card"),{y:[120,0]},{duration:.9,delay:M.stagger(.12),ease:OUT});
- },"0px 0px -50% 0px");
- once(document.querySelectorAll(".tm-pop"),function(el){
-  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
- },"0px 0px 100px 0px");
- /* FAQ (reference): the title, the lead and the booking block each grow in
-    from 1.3x and fade in as they arrive (the title's words also rise) */
- once(document.querySelectorAll(".faq-pop"),function(el){
-  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
- },"0px 0px -10% 0px");
- /* testimonials: the rating block fades in as it arrives */
- once(document.querySelectorAll(".tst-rev"),function(el){
-  M.animate(el,{opacity:[0,1]},{duration:.8,ease:OUT});
- },"0px 0px -10% 0px");
- var pl=document.querySelector(".pcard-logo");
- if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
- var rowN=0;
- once(document.querySelectorAll("#whyStats .bcard-pill"),function(el){
-  var i=[].indexOf.call(document.querySelectorAll("#whyStats .bcard-pill"),el);
-  M.animate(el,{opacity:[0,1],scale:[.3,1]},{duration:.6,delay:.2*Math.max(0,i-rowN),ease:OUT});
- },"0px");
- once(document.querySelectorAll(".bcard-rev"),function(el){
-  M.animate(el,{opacity:[0,1]},{duration:.8,delay:.2});
- },"0px");
-})();
-
-/* scroll reveals */
-var io=new IntersectionObserver(function(es){
- es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
-},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
-document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc,.wcard,.panel")
- .forEach(function(el){io.observe(el)});
-
-/* Scroll-driven parallax on every piece of content (text, headings, links,
-   list items, buttons, icons, images, video, form fields), tied to the
-   scroll bar, no pinning. Each one rises from 60px below and fades in over the
-   lower half of the screen, then keeps drifting up (up to 36px) as it
-   climbs, so it moves at its own pace against the page; scrolling back
-   plays it in reverse. Things near the very end of the page, which can
-   never reach mid-screen, finish at the furthest point they can reach.
-   Uses the translate property, so it stacks with any reveal transform.
-   Something inside a cropping box (an image in its frame, a line in its
-   mask) moves the box, so no gap opens inside it; nested matches move with
-   their outermost one. Tall blocks count as arrived once their top part is
-   in, not their centre. Skipped: the hero and header (own entrance),
-   anything inside a sticky area (it would freeze mid-fade), closed
-   accordion contents, fixed overlays and plain inline text runs. */
-(function(){
- if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
- // How we work (heading included), the case row, why choose us, page 4 and
- // the footer scroll 1:1 on the reference, with their own one-time
- // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot";
- var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
- var stop="body,main,footer,section,.shell,.grid";
- function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
- function box(el){                                                  // climb out of any cropping box
-  var t=el;
-  while(t.parentElement&&!t.parentElement.matches(stop)&&/hidden|clip/.test(getComputedStyle(t.parentElement).overflow+getComputedStyle(t.parentElement).overflowY))t=t.parentElement;
-  return t;
- }
- var els=[];
- kinds.split(",").forEach(function(k){
-  document.querySelectorAll("main "+k+",footer "+k).forEach(function(el){
-   if(el.closest(skip)||fixed(el))return;
-   var t=box(el);
-   if(t.closest(skip)||els.indexOf(t)>=0)return;
-   if(getComputedStyle(t).display==="inline"&&!/^(IMG|SVG|VIDEO|INPUT|SELECT|TEXTAREA)$/i.test(t.tagName))return;
-   els.push(t);
-  });
- });
- els=els.filter(function(el){return !els.some(function(o){return o!==el&&o.contains(el)})});
- var items=els.map(function(el){return {el:el,y:0,mid:0,rest:.1}}), vh=innerHeight, raf=0;
- function measure(){
-  vh=innerHeight;
-  var maxY=document.documentElement.scrollHeight-vh;
-  items.forEach(function(it){
-   var r=it.el.getBoundingClientRect();
-   it.mid=r.top+scrollY-it.y+Math.min(r.height/2,vh*.25);          // page position, minus our own offset
-   it.rest=Math.max(.1,(it.mid-maxY)/vh-.5);                        // mid-screen, or as close as the page end allows
-  });
- }
- function draw(){
-  raf=0;
-  items.forEach(function(it){
-   var d=(it.mid-scrollY)/vh-.5;                                   // +.5 at the bottom edge, -.5 at the top
-   if(d>.9||d<-.9)return;
-   var t=it.rest>=.45?1:Math.min(1,Math.max(0,(.5-d)/(.5-it.rest)));
-   var y=(1-t)*60+Math.max(-36,Math.min(0,(d-it.rest)*60));
-   it.y=y;
-   it.el.style.translate="0 "+y.toFixed(1)+"px";
-   it.el.style.opacity=t<1?Math.max(.001,t).toFixed(3):"";
-  });
- }
- function ask(){if(!raf)raf=requestAnimationFrame(draw)}
- function remeasure(){measure();draw()}
- remeasure();
- addEventListener("scroll",ask,{passive:true});
- addEventListener("resize",remeasure);
- addEventListener("load",remeasure);
- // accordions and late images change the page height under us
- if(window.ResizeObserver)new ResizeObserver(function(){requestAnimationFrame(remeasure)}).observe(document.body);
-})();
-
-/* the benefit cards read as one thought, so their lines keep a stagger */
-document.querySelectorAll(".bcard").forEach(function(card){
- card.querySelectorAll(".mask").forEach(function(el,i){
-  el.querySelector("span").style.transitionDelay=(i*110)+"ms";
- });
-});
-
-/* Section headings lift their words out of the block that is already
-   rising: same 20px, 40ms apart, on top of the heading's own 0.3s delay. */
-document.querySelectorAll(".rv-h").forEach(function(head){
- var walker=document.createTreeWalker(head,NodeFilter.SHOW_TEXT),nodes=[],node,i=0;
- while((node=walker.nextNode()))nodes.push(node);
- nodes.forEach(function(text){
-  if(!text.nodeValue.trim())return;
-  var frag=document.createDocumentFragment();
-  text.nodeValue.split(/(\s+)/).forEach(function(part){
-   if(!part)return;
-   if(!part.trim()){frag.appendChild(document.createTextNode(part));return}
-   var w=document.createElement("span");
-   w.className="w";
-   w.textContent=part;
-   w.style.transitionDelay=(300+i*40)+"ms";
-   i++;
-   frag.appendChild(w);
-  });
-  text.parentNode.replaceChild(frag,text);
- });
-});
-
-/* counters */
-var cio=new IntersectionObserver(function(es){
- es.forEach(function(e){
-  if(!e.isIntersecting)return; cio.unobserve(e.target);
-  var el=e.target,to=parseFloat(el.dataset.to)||0,dec=parseInt(el.dataset.dec||"0",10),sfx=el.dataset.suffix||"";
-  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=to.toFixed(dec)+sfx;return}
-  var dur=parseFloat(el.dataset.dur)||1900, wait=parseFloat(el.dataset.delay)||0;
-  setTimeout(function(){
-   var t0=performance.now();
-   (function step(t){
-    var p=Math.min(1,(t-t0)/dur),v=to*(1-Math.pow(1-p,4));
-    el.textContent=v.toFixed(dec)+sfx;
-    if(p<1)requestAnimationFrame(step);
-   })(t0);
-  },wait);
- });
-},{threshold:.4});
-document.querySelectorAll(".count").forEach(function(el){
- // the hero's counter is part of the entrance timeline when that runs
- if(el.closest(".hero")&&document.documentElement.classList.contains("motion-ready"))return;
- cio.observe(el);
-});
-
-/* story section (page 2), measured on the reference at 1440x900 and
-   1920x1080. It is built there as four full-screen layers stacked one stage
-   height apart in a 4.3-stage track; each holds one phrase in its own row and
-   sticks when it reaches the top. So each phrase rides up from below with its
-   layer while shrinking into its row, and once it has landed it settles back
-   while the next one arrives. Nothing fades; all four end on screen together.
-   With s = scroll into the section and V = the stage height, per phrase:
-     arrive  s (i-1)V..iV   rises from V below, scale 3 / 4 / 4 / 2 -> 1
-     settle  listen   V..2V      scale 1 -> .8, down .26 of a row (50 of 192px)
-             imagine  2V..3V     scale 1 -> .8, up .16 of a row (30px)
-             create   3V..3.3V   scale 1 -> .8, up .52 of a row (100px)
-     leave   past 3.3V the stage lets go; "beautiful things" also drifts up
-             .186px per px and grows .065 per stage as it goes
-   All linear in scroll, scaled about each row's centre, read straight off
-   scrollY each frame: it stops when scrolling stops and reverses exactly. */
-(function(){
- var section=document.getElementById("story-section");
- var lines=section?section.querySelectorAll(".story-line"):[];
- var M=window.Motion;
- // without js-motion (reduced motion, or no library) the phrases stay stacked
- if(!section||lines.length!==4||!M||!document.documentElement.classList.contains("js-motion"))return;
- var stage=section.querySelector(".story-sticky");
-
- var FROM=[3,4,4,2];                                          // arrival scale
- var SETTLE=[[1,2,.2604],[2,3,-.15625],[3,3.3,-.5208]];      // [from V, to V, move in rows]
- function clamp(v){return v<0?0:v>1?1:v}
- var raf=0;
- function draw(){
-  raf=0;
-  var V=stage.offsetHeight||innerHeight, s=-section.getBoundingClientRect().top;
-  if(s<-V*1.2||s>section.offsetHeight+V)return;              // nowhere near: leave it
-  for(var i=0;i<4;i++){
-   var line=lines[i], R=line.offsetHeight;
-   var arrive=clamp((s-(i-1)*V)/V);
-   var sc=FROM[i]+(1-FROM[i])*arrive;
-   var y=i?Math.max(0,i*V-s):0;                              // its layer still rising
-   if(i<3){
-    var st=SETTLE[i], t=clamp((s-st[0]*V)/((st[1]-st[0])*V));
-    sc*=1-.2*t; y+=st[2]*R*t;
-   }else{
-    var out=Math.max(0,s-3.3*V);
-    y-=.186*out; sc*=1+.065*out/V;
-   }
-   line.style.transform="translate3d(0,"+y.toFixed(2)+"px,0) scale("+sc.toFixed(4)+")";
-  }
- }
- function ask(){if(!raf)raf=requestAnimationFrame(draw)}
- addEventListener("scroll",ask,{passive:true});
- addEventListener("resize",ask);
- draw();
-
- var track={target:section,offset:["start start","end end"]};
- // unchanged water drift across the pinned stretch
- var water=section.querySelector(".story-water");
- if(water)M.scroll(function(p){
-  water.style.transform="translate3d(0,"+((0.5-p)*300).toFixed(2)+"px,0)";
- },track);
-})();
-
-/* page 2 footage: decode only while the section is on screen */
-(function(){
- var clips=document.querySelectorAll(".story-water video");
- if(!clips.length)return;
- var section=document.getElementById("story-section");
- if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-  clips.forEach(function(v){v.autoplay=false;v.removeAttribute("autoplay");v.pause()});
-  return;
- }
- /* the back layer is the same clip mirrored, so hold it half a loop behind:
-    in sync the two copies read as one symmetrical frame, not as depth */
- var back=clips[1];
- if(back)back.addEventListener("loadedmetadata",function(){
-  if(back.duration)back.currentTime=back.duration/2;
- },{once:true});
- new IntersectionObserver(function(es){
-  es.forEach(function(e){
-   clips.forEach(function(v){
-    if(e.isIntersecting){var t=v.play();if(t&&t.catch)t.catch(function(){})}
-    else v.pause();
-   });
-  });
- },{rootMargin:"10% 0px"}).observe(section);
-})();
-
-/* mono labels scramble into place when scrolled to */
-(function(){
- var els=document.querySelectorAll(".scramble");
- if(!els.length)return;
- if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
- var CH="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/!<>";
- var io=new IntersectionObserver(function(es){
-  es.forEach(function(e){
-   if(!e.isIntersecting)return; io.unobserve(e.target);
-   var el=e.target, txt=el.dataset.text||el.textContent, i=0;
-   var id=setInterval(function(){
-    el.textContent=txt.split("").map(function(c,k){
-     if(c===" ")return c;
-     return k<i?c:CH[Math.floor(Math.random()*CH.length)];
-    }).join("");
-    i+=0.5;
-    if(i>=txt.length){clearInterval(id);el.textContent=txt;}
-   },38);
-  });
- },{threshold:.6});
- els.forEach(function(el){io.observe(el)});
-})();
-
-/* Project panels, as measured on the reference. Each image zooms 1.5 -> 1
-   while its block rises from the bottom of the screen to the top -- linear
-   in scroll, read straight off scrollY, so it stops and reverses with the
-   scroll. The CTA disc belongs to the panel the pointer is over: it is
-   positioned inside that panel and eases after the pointer (it keeps
-   tracking while the page scrolls under a still pointer). */
-(function(){
- var panels=[].slice.call(document.querySelectorAll(".panel"));
- if(!panels.length)return;
- var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
- var imgs=panels.map(function(p){return p.querySelector("img.bg")}), raf=0;
- function zoom(){
-  raf=0;
-  panels.forEach(function(p,i){
-   var r=p.getBoundingClientRect(), H=r.height||innerHeight, img=imgs[i];
-   if(!img||r.bottom<-H||r.top>innerHeight+H)return;
-   var t=Math.min(1,Math.max(0,r.top/H));
-   img.style.transform=t?"scale("+(1+.5*t).toFixed(4)+")":"";
-  });
- }
- if(!reduce){
-  addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(zoom)},{passive:true});
-  addEventListener("resize",zoom); zoom();
- }
-
- var fine=window.matchMedia("(hover:hover) and (pointer:fine)");
- if(!fine.matches)return;
- var active=null, px=0, py=0, cx=0, cy=0, follow=0;
- function aim(){
-  if(!active)return;
-  var r=active.getBoundingClientRect();
-  return [px-r.left,py-r.top];
- }
- function step(){
-  follow=0;
-  if(!active)return;
-  var t=aim(), k=reduce?1:.2;
-  cx+=(t[0]-cx)*k; cy+=(t[1]-cy)*k;
-  active.cta.style.translate=cx.toFixed(1)+"px "+cy.toFixed(1)+"px";
-  if(Math.abs(t[0]-cx)>.5||Math.abs(t[1]-cy)>.5)follow=requestAnimationFrame(step);
- }
- function kick(){if(!follow)follow=requestAnimationFrame(step)}
- panels.forEach(function(p){
-  var a=p.querySelector("a[data-case]"), cta=a&&a.querySelector(".p3-cta");
-  if(!cta)return;
-  a.cta=cta;
-  a.addEventListener("pointerenter",function(e){
-   px=e.clientX;py=e.clientY;
-   if(active&&active!==a)active.classList.remove("hovered");
-   active=a;var t=aim();cx=t[0];cy=t[1];
-   cta.style.translate=cx+"px "+cy+"px";
-   a.classList.add("hovered");
-  });
-  a.addEventListener("pointermove",function(e){px=e.clientX;py=e.clientY;kick()});
-  a.addEventListener("pointerleave",function(){a.classList.remove("hovered");if(active===a)active=null});
- });
- addEventListener("scroll",kick,{passive:true});
-})();
-
-/* header hide on scroll-down */
-var hdr=document.getElementById("hdr"),last=window.scrollY;
-window.addEventListener("scroll",function(){
- var y=window.scrollY;
- hdr.classList.toggle("hide", y>260 && y>last && !document.body.classList.contains("menu"));
- last=y;
-},{passive:true});
-
-/* mobile menu */
-var burger=document.getElementById("burger");
-burger.addEventListener("click",function(){
- var open=document.body.classList.toggle("menu");
- burger.setAttribute("aria-expanded",open);
- document.getElementById("menu").setAttribute("aria-hidden",!open);
- document.body.style.overflow=open?"hidden":"";
- document.querySelectorAll(".menu .mi").forEach(function(a,i){a.style.transitionDelay=(open?160+i*70:0)+"ms"});
-});
-document.querySelectorAll(".menu a").forEach(function(a){
- a.addEventListener("click",function(){
-  document.body.classList.remove("menu");document.body.style.overflow="";
-  burger.setAttribute("aria-expanded",false);
- });
-});
-
-/* pricing accordion — one open at a time */
-/* plans open and close independently, as on the reference */
-document.querySelectorAll(".plan .plan-btn").forEach(function(b){
- b.addEventListener("click",function(){
-  var plan=b.closest(".plan"),open=!plan.classList.contains("open");
-  plan.classList.toggle("open",open);b.setAttribute("aria-expanded",open);
- });
-});
-
-/* faq accordion */
-document.querySelectorAll(".faq .faq-q").forEach(function(b){
- b.addEventListener("click",function(){
-  var li=b.closest(".faq"),was=li.classList.contains("open");
-  document.querySelectorAll(".faq").forEach(function(f){f.classList.remove("open");f.querySelector(".faq-q").setAttribute("aria-expanded",false)});
-  if(!was){li.classList.add("open");b.setAttribute("aria-expanded",true)}
- });
-});
-
-/* newsletter */
-document.getElementById("nl").addEventListener("submit",function(e){
- e.preventDefault();
- var v=document.getElementById("email").value.trim(),m=document.getElementById("nlMsg");
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){m.textContent="Enter a valid email address.";m.style.color="var(--accent)";return}
- m.textContent="Thanks — prototype only, nothing was sent.";m.style.color="var(--deep)";
- this.reset();
-});
-
-/* How we work timeline: the single source of truth for the band, its text
-   column, the four stage cards and the case row. Every value is a pure
-   function of the scroll position (no timers, no one-shot triggers), so
-   scrolling back retraces exactly the same states. On desktop the band pins
-   while the stages light up in order, 01 to 04; it releases only when the
-   fourth is lit, and the case row enters after it. Below 1024px the cards
-   stack, so each lights up as it reaches the lower part of the screen. */
-(function(){
- var track=document.querySelector(".grow-track");if(!track)return;
- var grow=track.querySelector(".grow"),run=track.querySelector(".grow-run"),col=grow.querySelector(".grow-in"),
-     list=document.getElementById("process"),cards=list.children,fsec=document.getElementById("fcase"),frow=fsec.querySelector(".fcase-in");
- var still=matchMedia("(prefers-reduced-motion: reduce)"),wide=matchMedia("(min-width:1024px)");
- var vh=innerHeight,pinned=false,pinTop=0,bottom=0,stage=0,lead=0,raf=0,HDR=60,DIM=.28;
- function clamp(v){return v<0?0:v>1?1:v}
- function out(t){return 1-(1-t)*(1-t)}
- function clear(){
-  grow.style.removeProperty("--gz");col.style.opacity=col.style.transform="";frow.style.opacity=frow.style.transform="";
-  Array.prototype.forEach.call(cards,function(c){c.style.opacity=c.style.transform=""});
- }
- function layout(){
-  vh=innerHeight;pinned=wide.matches&&!still.matches;
-  lead=parseFloat(getComputedStyle(grow).marginTop)||0;             // the band's resting offset in its track
-  if(pinned){
-   var h=grow.offsetHeight;
-   pinTop=h+HDR<=vh?Math.max(HDR,Math.round((vh-h)/2)):vh-h;           // centred under the header, or bottom-aligned if taller
-   stage=Math.round(vh*.45);                                              // scroll given to each stage
-   bottom=pinTop+h;                                                       // where the band's lower edge rests while pinned
-   grow.style.position="sticky";grow.style.top=pinTop+"px";run.style.height=Math.round(stage*4.4)+"px"; // 04 holds briefly before release
-  }else{grow.style.position=grow.style.top="";run.style.height="0px";bottom=Math.round(vh*.85)}
-  if(still.matches)clear();else frame();
- }
- function frame(){
-  raf=0;if(still.matches)return;
-  var g=grow.getBoundingClientRect(),t=track.getBoundingClientRect();
-  // entry: the band rising from the bottom of the screen to its resting place
-  var rest=pinned?pinTop:vh*.3,e=clamp((vh-g.top)/Math.max(1,vh-rest));
-  grow.style.setProperty("--gz",(1.11-.11*out(e)).toFixed(4));
-  col.style.opacity=out(clamp(e*1.4)).toFixed(3);
-  col.style.transform="translateY("+(60*(1-out(e))).toFixed(1)+"px)";
-  // stage progress P, 0 to 4: pinned, how far the band has travelled down
-  // its track; stacked, how much of the card list has passed 85% of the
-  // screen (layout positions, which the cards' own styles never move)
-  var P=pinned?clamp((g.top-t.top-lead)/(stage*4))*4
-              :clamp((vh*.85-g.top-list.offsetTop)/Math.max(1,list.offsetHeight))*4;
-  Array.prototype.forEach.call(cards,function(c,i){
-   var a=out(clamp(P-i));
-   c.style.opacity=(DIM+(1-DIM)*a).toFixed(3);
-   c.style.transform=pinned?"translateY("+(14*(1-a)).toFixed(1)+"px)":"";
-  });
-  // the case row: only once the band has released and its section moves up
-  // past where the band's lower edge rested (85% of the screen when stacked,
-  // the line the last card lights up at)
-  var f=out(clamp((bottom-fsec.getBoundingClientRect().top)/(vh*.4)));
-  frow.style.opacity=f.toFixed(3);
-  frow.style.transform="scale("+(1.3-.3*f).toFixed(4)+")";
- }
- // scroll events arrive once per rendered frame, so the frame is computed
- // right there; resizes and late layout changes go through one rAF
- function tick(){if(!raf)raf=requestAnimationFrame(frame)}
- addEventListener("scroll",frame,{passive:true});
- addEventListener("resize",layout);
- addEventListener("load",layout);
- [still,wide].forEach(function(m){if(m.addEventListener)m.addEventListener("change",layout);else if(m.addListener)m.addListener(layout)});
- if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
- layout();
-})();
-/* showreel: hold on the poster frame when the viewer asks for reduced motion */
-(function(){
- var vids=document.querySelectorAll(".reel video,.foot-vid"); if(!vids.length)return;
- var mq=window.matchMedia("(prefers-reduced-motion: reduce)");
- function apply(){
-  Array.prototype.forEach.call(vids,function(v){
-   if(mq.matches){v.removeAttribute("autoplay");v.pause();v.currentTime=0;}
-   else v.play().catch(function(){});
-  });
- }
- apply();
- if(mq.addEventListener)mq.addEventListener("change",apply);else if(mq.addListener)mq.addListener(apply);
-})();
 })();
 /* closing CTA: the reference's background footage loads as the section
    nears, plays muted on loop, and holds its first frame for reduced motion */
