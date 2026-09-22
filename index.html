@@ -801,17 +801,12 @@ html.js-motion .panel img.bg{will-change:transform}
 .gcard-c{margin-top:clamp(14px,1.2vw,20px);font-size:calc(var(--rfs)*1.18);letter-spacing:-.02em;
   line-height:1.5;color:#a7a9b0}
 @media(max-width:1023px){.grow-in{grid-template-columns:1fr}.grow-h{max-width:none}}
-/* One-time entrances measured on the reference (each plays once when it
-   comes into view, on its own clock, not scrubbed by scroll): the visual
-   settles from 1.11x (.8s); the text column and card grid rise 60px and fade
-   in together; the four cards then rise 20px and fade in as one; the case row
-   below grows in from 1.3x. All on an ease-out quad, .6s after a .2s beat
-   (.1s for the visual), as the reference's start a moment after triggering.
-   Start poses only when motion is allowed. */
-.grow::before{transform-origin:50% 50%;transition:transform .8s cubic-bezier(.5,1,.89,1) .1s}
-html.js-motion .grow::before{transform:scale(1.11)}
-html.js-motion .grow.bg-in::before{transform:none}
-html.js-motion .grow-in,html.js-motion #process>.gcard,html.js-motion .fcase-in{opacity:.001}
+/* The band, its text, the four stage cards and the case row are driven by
+   one scroll timeline (script: "How we work timeline"); these are only the
+   hooks it writes to. */
+.grow::before{transform-origin:50% 50%;transform:scale(var(--gz,1))}
+.grow-track{display:flow-root}                  /* keeps the band's top margin inside the track */
+.grow-run{height:0}
 @media(max-width:639px){.grow-r{grid-template-columns:1fr}}
 
 /* ═══════════════════════════════════════════════════ featured case ═════ */
@@ -1690,6 +1685,7 @@ input::placeholder{color:var(--rule)}
       </div>
     </div>
   </div>
+  <div class="grow-track">
   <div class="grow">
     <div class="shell grow-in">
       <div>
@@ -1699,6 +1695,8 @@ input::placeholder{color:var(--rule)}
       </div>
       <ol class="grow-r" id="process"></ol>
     </div>
+  </div>
+  <div class="grow-run" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -2666,21 +2664,6 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".bcard-rev"),function(el){
   M.animate(el,{opacity:[0,1]},{duration:.8,delay:.2});
  },"0px");
- /* How we work (trigger points from the reference at 1440x900): the
-    visual zooms as the band enters the screen; the text column + grid a
-    beat later; the cards together once the grid is 60% of the way up; the
-    case row just before it arrives. */
- var QUAD=[.5,1,.89,1];
- once(document.querySelectorAll(".grow"),function(el){el.classList.add("bg-in")},"0px");
- once(document.querySelectorAll(".grow-in"),function(el){
-  M.animate(el,{opacity:[0,1],y:[60,0]},{duration:.6,delay:.2,ease:QUAD});
- },"0px 0px -60px 0px");
- once(document.querySelectorAll("#process"),function(el){
-  M.animate(el.querySelectorAll(".gcard"),{opacity:[0,1],y:[20,0]},{duration:.6,delay:.2,ease:QUAD});
- },"0px 0px -40% 0px");
- once(document.querySelectorAll(".fcase-in"),function(el){
-  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.6,delay:.2,ease:QUAD});
- },"0px 0px 190px 0px");
 })();
 
 /* scroll reveals */
@@ -3030,6 +3013,72 @@ document.getElementById("nl").addEventListener("submit",function(e){
  this.reset();
 });
 
+/* How we work timeline: the single source of truth for the band, its text
+   column, the four stage cards and the case row. Every value is a pure
+   function of the scroll position (no timers, no one-shot triggers), so
+   scrolling back retraces exactly the same states. On desktop the band pins
+   while the stages light up in order, 01 to 04; it releases only when the
+   fourth is lit, and the case row enters after it. Below 1024px the cards
+   stack, so each lights up as it reaches the lower part of the screen. */
+(function(){
+ var track=document.querySelector(".grow-track");if(!track)return;
+ var grow=track.querySelector(".grow"),run=track.querySelector(".grow-run"),col=grow.querySelector(".grow-in"),
+     list=document.getElementById("process"),cards=list.children,fsec=document.getElementById("fcase"),frow=fsec.querySelector(".fcase-in");
+ var still=matchMedia("(prefers-reduced-motion: reduce)"),wide=matchMedia("(min-width:1024px)");
+ var vh=innerHeight,pinned=false,pinTop=0,bottom=0,stage=0,lead=0,raf=0,HDR=60,DIM=.28;
+ function clamp(v){return v<0?0:v>1?1:v}
+ function out(t){return 1-(1-t)*(1-t)}
+ function clear(){
+  grow.style.removeProperty("--gz");col.style.opacity=col.style.transform="";frow.style.opacity=frow.style.transform="";
+  Array.prototype.forEach.call(cards,function(c){c.style.opacity=c.style.transform=""});
+ }
+ function layout(){
+  vh=innerHeight;pinned=wide.matches&&!still.matches;
+  lead=parseFloat(getComputedStyle(grow).marginTop)||0;             // the band's resting offset in its track
+  if(pinned){
+   var h=grow.offsetHeight;
+   pinTop=h+HDR<=vh?Math.max(HDR,Math.round((vh-h)/2)):vh-h;           // centred under the header, or bottom-aligned if taller
+   stage=Math.round(vh*.45);                                              // scroll given to each stage
+   bottom=pinTop+h;                                                       // where the band's lower edge rests while pinned
+   grow.style.position="sticky";grow.style.top=pinTop+"px";run.style.height=Math.round(stage*4.4)+"px"; // 04 holds briefly before release
+  }else{grow.style.position=grow.style.top="";run.style.height="0px";bottom=Math.round(vh*.85)}
+  if(still.matches)clear();else frame();
+ }
+ function frame(){
+  raf=0;if(still.matches)return;
+  var g=grow.getBoundingClientRect(),t=track.getBoundingClientRect();
+  // entry: the band rising from the bottom of the screen to its resting place
+  var rest=pinned?pinTop:vh*.3,e=clamp((vh-g.top)/Math.max(1,vh-rest));
+  grow.style.setProperty("--gz",(1.11-.11*out(e)).toFixed(4));
+  col.style.opacity=out(clamp(e*1.4)).toFixed(3);
+  col.style.transform="translateY("+(60*(1-out(e))).toFixed(1)+"px)";
+  // stage progress P, 0 to 4: pinned, how far the band has travelled down
+  // its track; stacked, how much of the card list has passed 85% of the
+  // screen (layout positions, which the cards' own styles never move)
+  var P=pinned?clamp((g.top-t.top-lead)/(stage*4))*4
+              :clamp((vh*.85-g.top-list.offsetTop)/Math.max(1,list.offsetHeight))*4;
+  Array.prototype.forEach.call(cards,function(c,i){
+   var a=out(clamp(P-i));
+   c.style.opacity=(DIM+(1-DIM)*a).toFixed(3);
+   c.style.transform=pinned?"translateY("+(14*(1-a)).toFixed(1)+"px)":"";
+  });
+  // the case row: only once the band has released and its section moves up
+  // past where the band's lower edge rested (85% of the screen when stacked,
+  // the line the last card lights up at)
+  var f=out(clamp((bottom-fsec.getBoundingClientRect().top)/(vh*.4)));
+  frow.style.opacity=f.toFixed(3);
+  frow.style.transform="scale("+(1.3-.3*f).toFixed(4)+")";
+ }
+ // scroll events arrive once per rendered frame, so the frame is computed
+ // right there; resizes and late layout changes go through one rAF
+ function tick(){if(!raf)raf=requestAnimationFrame(frame)}
+ addEventListener("scroll",frame,{passive:true});
+ addEventListener("resize",layout);
+ addEventListener("load",layout);
+ [still,wide].forEach(function(m){if(m.addEventListener)m.addEventListener("change",layout);else if(m.addListener)m.addListener(layout)});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
+ layout();
+})();
 /* showreel: hold on the poster frame when the viewer asks for reduced motion */
 (function(){
  var vids=document.querySelectorAll(".reel video,.foot-vid"); if(!vids.length)return;
