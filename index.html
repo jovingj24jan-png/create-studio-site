@@ -1328,6 +1328,66 @@ html.js-motion .tm-card{transform:translateY(120px)}
 html.js-motion .tm-pop{opacity:.001}
 @media(prefers-reduced-motion:reduce){.tm-tilt,.tm-img,.tm-kpi,.tm-kpil,.tm-who,.tm-veil{transition:none}}
 
+/* Testimonials, measured on the reference at 1440 (it sits between the FAQ
+   and Whispers): two 676 x 580 cards side by side, 12px radius, 40px
+   padding: the intro card in #f2f2f2 (48px title, rating, orange "Write a
+   review"), the Spotlight card in #5c6063 with the 112px pale word, a
+   180 x 244 portrait and the quote; under them the row of client cards
+   (500 x 350, 24px apart), scrolled sideways by the visitor. The title
+   rises word by word and the rating fades in; nothing else moves. */
+.tst{background:#fafafa;padding:clamp(56px,7vw,120px) 0}
+.tst-top{display:grid;grid-template-columns:1fr;gap:32px}
+.tst-card{position:relative;overflow:hidden;border-radius:12px;padding:32px}
+.tst-intro{display:flex;flex-direction:column;background:#f2f2f2}
+.tst-rule{display:block;height:1px;margin-bottom:39px;background:linear-gradient(to right,var(--deep) 0 20px,var(--rule) 20px)}
+.tst-kick{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:var(--deep)}
+.tst-h{margin-top:24px;max-width:430px;font-size:48px;line-height:1.1;font-weight:500;letter-spacing:-.05em;color:#141414}
+.tst-lead{margin-top:24px;max-width:441px;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
+.tst-rev{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 40px;margin-top:auto;padding-top:48px}
+.tst-stars{display:flex;gap:2px;margin:0 0 6px 8px}
+.tst-stars svg{width:14px;height:14px}
+.tst-rev p{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
+.tst-rev>div>p{padding-left:8px}
+.tst-rev strong{font-weight:600}
+.tst-backed{max-width:250px}
+.tst-btn{align-self:flex-start;width:188px;margin-top:40px}
+.tst-spot{background:var(--deep);color:#fff;display:grid;grid-template-columns:180px 1fr;column-gap:40px;align-content:end;min-height:420px}
+.tst-spot-w{position:absolute;left:40px;top:44px;font-size:112px;line-height:1.2;font-weight:600;letter-spacing:-.06em;color:#f2f2f2;pointer-events:none}
+.tst-spot-img{position:relative;grid-row:1/4;width:180px;height:244px;border-radius:12px;object-fit:cover}
+.tst-spot-q{position:relative;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:#fff}
+.tst-spot-n{position:relative;align-self:end;margin-top:24px;font-size:20.96px;letter-spacing:-.04em}
+.tst-spot-r{position:relative;font-size:16px;letter-spacing:-.04em;color:var(--rule)}
+.tst-chip{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:8px;background:var(--rule);color:var(--deep);
+  font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;white-space:nowrap}
+.tst-spot-c{position:absolute;right:40px;bottom:40px}
+.tst-row{list-style:none;display:flex;gap:24px;margin-top:40px;padding-bottom:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
+.tst-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:12px;background:#fff;scroll-snap-align:start}
+.tst-date{font-size:12px;line-height:1.2;letter-spacing:-.06em;color:var(--muted)}
+.tst-mark{position:absolute;right:28px;top:40px;width:120px;height:90px;color:#f2f2f2}
+.tst-q{position:relative;margin-top:17px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.tst-by{display:flex;align-items:center;gap:24px;margin-top:auto;padding-top:24px}
+.tst-by img{width:60px;height:60px;border-radius:8px;object-fit:cover;flex:none}
+.tst-by>div{flex:1;min-width:0}
+.tst-n{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
+.tst-r{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
+@media(min-width:1024px){.tst-top{grid-template-columns:1fr 1fr}}
+@media(max-width:1199px){.tst-spot{align-content:start;row-gap:0}.tst-spot-w{position:relative;left:auto;top:auto;grid-column:1/-1;margin:-8px 0 24px;font-size:clamp(64px,11vw,112px);line-height:1}
+  .tst-spot-img{grid-row:2/5}.tst-spot-c{position:static;grid-column:2;justify-self:start;margin-top:12px}}
+@media(max-width:809px){.tst-h{font-size:36px}.tst-spot{grid-template-columns:1fr;row-gap:16px}.tst-spot-img{grid-row:auto}.tst-spot-c{grid-column:auto}.tst-spot-n{margin-top:8px}}
+@media(min-width:1200px){
+  .tst{padding:0 0 230px}
+  .tst-rule{margin-bottom:26px}
+  .tst-spot-n{margin-top:63px}
+  .tst-spot-c{bottom:46px;right:39px}
+  .tst-spot-w{font-size:160px;line-height:1;top:54px;left:36px}
+  .tst-top{grid-template-columns:minmax(0,676px) minmax(0,676px);gap:32px;justify-content:center}
+  .tst-card{height:580px;padding:40px}
+  .tst-spot{grid-template-rows:auto auto 1fr;align-content:start;padding-top:289px}
+  .tst-row{margin:150px -20px 0;padding-left:20px;padding-right:20px;scroll-padding-left:20px}
+}
+html.js-motion .tst-rev{opacity:.001}
+
 /* ═══════════════════════════════════════════════════ footer ════════════ */
 .foot-in{border-bottom:0}
 .foot-lower{background:var(--mist)}
@@ -1742,6 +1802,34 @@ input::placeholder{color:var(--rule)}
 </section>
 
 <!-- ═══════════════════════════════════════════════ WHISPERS ═════════════ -->
+<!-- ═══════════════════════════════════════════════ TESTIMONIALS ═══════ -->
+<section class="tst" aria-label="What our clients say">
+  <div class="shell">
+    <div class="tst-top">
+      <div class="tst-card tst-intro">
+        <span class="tst-rule" aria-hidden="true"></span>
+        <p class="tst-kick">What our clients say</p>
+        <h2 class="tst-h rise-words">Partnerships that last, results that stick.</h2>
+        <p class="tst-lead">From kickoff to launch, brands trust us to stay close, adapt fast, and deliver without any drama.</p>
+        <div class="tst-rev">
+          <div><span class="tst-stars" aria-hidden="true"></span><p><strong>5 / 5</strong> (98 reviews)</p></div>
+          <p class="tst-backed">Backed by feedback from <strong>120+</strong> brands we&rsquo;ve worked with.</p>
+        </div>
+        <a href="#site-foot" class="plan-get tst-btn">Write a review <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+      </div>
+      <div class="tst-card tst-spot">
+        <p class="tst-spot-w" aria-hidden="true">Spotlight</p>
+        <img class="tst-spot-img" src="public/img/person-tomas-kovac.svg" alt="Samuel Laronde" loading="lazy" decoding="async">
+        <blockquote class="tst-spot-q">&ldquo;They didn&rsquo;t just hit the brief, they raised it. The project felt collaborative from start to finish, with clear updates, quick turns, and a final product that carried our brand further than we imagined.&rdquo;</blockquote>
+        <p class="tst-spot-n">Samuel Laronde</p>
+        <p class="tst-spot-r">Marketing Lead</p>
+        <span class="tst-chip tst-spot-c">Lindholm</span>
+      </div>
+    </div>
+    <ul class="tst-row" id="tstRow" tabindex="0" aria-label="Client testimonials"></ul>
+  </div>
+</section>
+
 <section id="whispers" class="wh" aria-label="Whispers">
   <div class="shell">
     <div class="ph wh-head">
@@ -1906,6 +1994,16 @@ var plans=[
  {tier:"Scale",name:"Growth Plan",for:"For established teams and long-term growth",price:"$12,000",was:"$15,000",save:"SAVE 20%",time:"6\u20138 weeks",tone:"mono",c:"Strategy, design, and dedicated support for complex projects that demand scalability and polish.",f:["End-to-end brand strategy","Large-scale website & CMS","Advanced UX & product design","Dedicated senior managers","Advanced micro-interactions","Optimization & support","Enterprise-level handoff"],n:["Scalable solutions designed for growth","Dedicated manager guiding every stage with integrations","Long-term support beyond launch"]}
 ];
 var pillars=[["Ongoing support","Fixes, updates and small improvements handled by the people who built the thing."],["Long-term partnership","Retained time each month, so the roadmap keeps moving without a new kickoff each quarter."],["Future-ready builds","Documented systems and clean code, so another team could pick it up tomorrow if needed."]];
+var testimonials=[
+ ["tomas-kovac","Samuel Laronde","Marketing Lead","Lindholm","They didn’t just hit the brief, they raised it. The project felt collaborative from start to finish, with clear updates, quick turns, and a final product that carried our brand further than we imagined."],
+ ["jonas-ferreira","Matthew Parker","Head of Product","Monolith","From kickoff to launch, the process was fast-moving but never chaotic. Create kept everyone in the loop, solved issues before they became problems, and shipped exactly when they said they would."],
+ ["yara-haddad","Maya Chen","Brand Manager","Vornberg","They didn’t just design a website, they built a framework we can grow with. Every decision was backed with clarity, and the final product looks polished while staying practical for our team."],
+ ["esme-duarte","Mark Miller","Creative Lead","Wendrich","They don’t just deliver a project and walk away. The team stayed close, fixed details on the fly, and made sure launch was smooth."],
+ ["rea-lindqvist","Jordan Ellis","Creative Director","Blackwell","Working with Create felt effortless. They understood our vision from day one and kept us aligned through clear milestones. The end result was a site that actually elevated our brand voice, not just dressed it up."],
+ ["nora-pemberton","Rachel Morgan","Head of Design","Aurelis","Every meeting felt productive, every deadline was hit, and the end result nailed our brand better than we could describe."],
+ ["dan-whitfield","Edward Bright","Marketing Lead","Madison Square","Create took our messy brief and turned it into a site we’re proud to show. Fast, sharp, and no overthinking."],
+ ["priya-raghavan","Margaret Brooks","UX Lead","Morisson","Create has a rare balance of speed and detail. They made complex flows simple, turned feedback into quick iterations, and delivered a product that’s both user-friendly and brand-right."]
+];
 var team=[
  ["ivar-solheim","Tobias Neumann","Founder & CEO","97%","Projects delivered on time under his oversight.",[["mail","mailto:tobias@create.com"],["x","https://x.com"],["in","https://linkedin.com"]]],
  ["priya-raghavan","Amelia Cross","Head of Strategy","89%","Campaigns hit or exceeded client KPIs.",[["mail","mailto:amelia@create.co"],["x","https://x.com"],["ig","https://instagram.com"]]],
@@ -2021,6 +2119,18 @@ document.getElementById("process").innerHTML=process.map(function(p){
 document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
  return '<li><span class="bcard-pill"><b class="num">'+s[0]+s[2]+'</b><span>'+esc(s[3])+'</span></span></li>';
 }).join("");
+/* testimonials: the stars and the row of client cards */
+(function(){
+ var st=document.querySelector(".tst-stars");
+ if(st)st.innerHTML=Array(6).join("x").split("").map(function(){return '<svg viewBox="0 0 13 13"><path d="M6.5.5l1.6 3.9 4.2.3-3.2 2.7 1 4.1-3.6-2.3-3.6 2.3 1-4.1L.7 4.7l4.2-.3z" fill="var(--accent)"/></svg>'}).join("");
+ var row=document.getElementById("tstRow");if(!row)return;
+ row.innerHTML=testimonials.map(function(t){
+  return '<li class="tst-t"><p class="tst-date">September 2025</p>'+
+  '<svg class="tst-mark" viewBox="0 0 120 90" aria-hidden="true"><path d="M0 90V52C0 22 16 5 44 0l5 12C33 18 26 30 26 44h22v46zm70 0V52c0-30 16-47 44-52l5 12c-16 6-23 18-23 32h22v46z" fill="currentColor"/></svg>'+
+  '<blockquote class="tst-q">&ldquo;'+esc(t[4])+'&rdquo;</blockquote>'+
+  '<div class="tst-by"><img src="public/img/person-'+t[0]+'.svg" alt="" width="60" height="60" decoding="async"><div><p class="tst-n">'+esc(t[1])+'</p><p class="tst-r">'+esc(t[2])+'</p></div><span class="tst-chip">'+esc(t[3])+'</span></div></li>';
+ }).join("");
+})();
 /* team cards */
 (function(){
  var ic={mail:'<path d="M2 4h12v8H2zM2 4l6 5 6-5"/>',x:'<path d="M3 3l10 10M13 3L3 13"/>',in:'<path d="M3 6v7M3 3.5v.1M6.5 13V6M6.5 9c0-2 1-3 3-3s3 1 3 3v4"/>',
@@ -2429,6 +2539,10 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".tm-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px 100px 0px");
+ /* testimonials: the rating block fades in as it arrives */
+ once(document.querySelectorAll(".tst-rev"),function(el){
+  M.animate(el,{opacity:[0,1]},{duration:.8,ease:OUT});
+ },"0px 0px -10% 0px");
  var pl=document.querySelector(".pcard-logo");
  if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
  var rowN=0;
@@ -2482,7 +2596,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
  // How we work (heading included), the case row, why choose us, page 4 and
  // the footer scroll 1:1 on the reference, with their own one-time
  // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.team,.wh,.wh-close,#site-foot";
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.team,.tst,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
