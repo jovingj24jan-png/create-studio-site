@@ -1079,24 +1079,48 @@ html.js-motion #plans .plan,html.js-motion .ask{opacity:.001}
 
 /* ═══════════════════════════════════════════════════ faq ═══════════════ */
 .faq-q{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:24px;padding:24px 0;text-align:left;cursor:pointer;transition:color .3s}
-/* FAQ, measured on the reference at 1440: heading, lead and contact card in a
-   narrow left column; the questions in a 575px column from x845, set 22.4px
-   regular on a 77px row pitch. */
-.faq-left{grid-column:1/13}
-.faq-list{grid-column:1/13}
-.faq-lead{margin-top:24px}
-.faq-card{margin-top:40px}
+/* FAQ, measured on the reference at 1440: a #fafafa section, 160px above
+   and 200px below; the left column holds the label and a ruled line, the
+   three-line 96px title, the dashed lead, a tick strip, then the "book a
+   chat" block with the 60px portrait and the orange 161 x 56 button. The
+   right column is a 587px list of rows 12px apart: 22.4px question and a
+   28px orange + (half turn when open), the 18px answer under it; the open
+   row turns into a white 12px-radius card. One answer open at a time, the
+   first open to begin with; the answer opens by height. */
+.faq-sec{background:#fafafa}
+.faq-grid{display:grid;grid-template-columns:1fr;gap:48px}
+.faq-kick{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.4;letter-spacing:-.04em;text-transform:uppercase;color:var(--deep)}
+.faq-rule{display:block;height:1px;margin-top:4px;max-width:546px;background:linear-gradient(to right,var(--accent) 0 20px,var(--rule) 20px)}
+.faq-h{margin-top:38px;max-width:430px;font-size:clamp(56px,7vw,96px);line-height:1;font-weight:500;letter-spacing:-.06em;color:var(--muted)}
+.faq-lead{margin-top:24px;max-width:547px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.faq-ticks{display:block;margin-top:48px;height:20px;max-width:546px;background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 11px)}
+.faq-book{margin-top:56px}
+.faq-book-p{max-width:380px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.faq-who{display:flex;align-items:center;gap:16px;margin-top:47px;max-width:555px}
+.faq-av{width:60px;height:60px;border-radius:8px;object-fit:cover;flex:none}
+.faq-who>div{flex:1;min-width:0}
+.faq-name{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
+.faq-role{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
+.faq-btn{flex:none;width:161px;margin-top:0}
+.faq-list{list-style:none}
+.faq{border-radius:12px;transition:background-color .35s var(--ease)}
+.faq+.faq{margin-top:12px}
+.faq.open{background:#fff}
+.faq h3{line-height:0}
+.faq-q{display:flex;width:100%;align-items:center;justify-content:space-between;gap:24px;padding:18px;text-align:left;cursor:pointer}
+.faq-t{font-size:22.4px;line-height:1.3;letter-spacing:-.04em;font-weight:400;color:var(--deep)}
+.faq-ico{flex:none;width:28px;height:28px;color:var(--accent);transition:transform .5s var(--ease)}
+.faq.open .faq-ico{transform:rotate(180deg)}
+.faq-a{max-width:509px;padding:0 18px 18px;font-size:18px;line-height:1.2;letter-spacing:-.04em;color:var(--muted)}
+.faq .acc{transition:grid-template-rows .5s var(--ease)}
+.faq.open .acc{grid-template-rows:1fr}
 @media(min-width:1200px){
-  .faq-grid{grid-template-columns:300px 1fr;gap:0}
-  .faq-left{grid-column:1}
-  .faq-list{grid-column:2;padding-left:486px}
-  .faq-q{padding:21px 0}
-  .faq-h{font-size:96px!important;line-height:1!important;letter-spacing:-.06em!important;color:var(--muted)}
-  .faq-lead{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-  .faq-q .t-h4{font-size:22.4px!important;line-height:1.3!important;letter-spacing:-.04em!important;font-weight:400!important}
+  .faq-sec{padding:160px 0 228px}
+  .faq-grid{grid-template-columns:minmax(0,566px) 587px;justify-content:space-between;gap:0}
+  .faq-left{padding:33px 0 0 20px}
 }
-.faq-q:hover{color:var(--accent)}
-.faq.open .plan-ico{transform:rotate(135deg)}
+@media(max-width:809px){.faq-who{flex-wrap:wrap}.faq-btn{margin-left:76px}.faq-t{font-size:19px}}
+html.js-motion .faq-pop{opacity:.001}
 
 /* ═══════════════════════════════════════════════ whisper cards ═════════ */
 .wcard{position:relative;display:block;width:100%;border-radius:16px;overflow:hidden;background:var(--ink);aspect-ratio:4/3}
@@ -1784,16 +1808,20 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ FAQ ══════════════════ -->
 <section class="section faq-sec" aria-label="FAQ">
   <div class="shell">
-    <div class="grid faq-grid" style="row-gap:40px">
+    <div class="faq-grid">
       <div class="faq-left">
-        <span class="t-mono-sm muted rv-tag">● FAQ</span>
-        <h2 class="t-h2 mt3 rv-h faq-h" style="max-width:12ch">Questions worth answering early</h2>
-        <p class="t-lead rv-lead deep faq-lead"><span class="accent">——&nbsp;</span>The questions we get asked most often about working together, answered in one place.</p>
-        <div class="rv faq-card" style="background:var(--mist);padding:32px">
-          <p class="t-h4" style="max-width:18ch">Still have questions?</p>
-          <p class="t-small mt2 deep">Book a short chat and we will walk you through how we work, with no pitch attached.</p>
-          <div class="flex center g2 mt4"><img src="public/img/person-esme-duarte.svg" alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover"><div><p class="t-small" style="font-weight:500">Esme Duarte</p><p class="t-mono-sm muted">Project manager</p></div></div>
-          <a href="#site-foot" class="btn btn-dark mt4" style="width:100%">Ask a question</a>
+        <p class="faq-kick">FAQ</p>
+        <span class="faq-rule" aria-hidden="true"></span>
+        <h2 class="faq-h rise-words faq-pop">Clearing doubts and concerns</h2>
+        <p class="faq-lead faq-pop">&mdash;&mdash;&nbsp; Explore the most common questions about working with Create, all in one place.</p>
+        <span class="faq-ticks" aria-hidden="true"></span>
+        <div class="faq-book faq-pop">
+          <p class="faq-book-p">Book a quick chat and we&rsquo;ll walk you through how we do things.</p>
+          <div class="faq-who">
+            <img class="faq-av" src="public/img/person-esme-duarte.svg" alt="Lynn Bergmann" width="60" height="60" decoding="async">
+            <div><p class="faq-name">Lynn Bergmann</p><p class="faq-role">Project Manager</p></div>
+            <a href="#site-foot" class="plan-get faq-btn">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+          </div>
         </div>
       </div>
       <ul class="faq-list" id="faqs"></ul>
@@ -2011,13 +2039,15 @@ var team=[
  ["dan-whitfield","Lucas Marino","Technical Director","3.4x","Faster site performance vs industry average.",[["mail","mailto:lucas@create.co"],["x","https://x.com"],["in","https://linkedin.com"],["th","https://threads.com"]]]
 ];
 var faqs=[
- ["What kind of projects does Create take on?","Brand identity, digital products and websites that need design clarity and technical polish in equal measure."],
- ["How do you approach new projects?","We start with your goals and constraints, then set out milestones so you always know what is coming next and when."],
- ["What is a realistic project timeline?","Branding and smaller sites usually run two to four weeks. Larger sites and platforms run six to twelve, depending on scope."],
- ["Who actually does the work?","Senior designers and engineers lead every project. Nothing gets handed to a junior to figure out mid-flight."],
- ["How do we communicate during the process?","One main contact, a weekly written update, and quick replies in between. No status theatre."],
- ["What happens after launch?","We can stay on for fixes, updates and ongoing support, or hand over cleanly with documentation."],
- ["Can we start small and scale later?","Yes. Plenty of clients begin with a brand refresh and expand into campaigns, strategy and ongoing support as they grow."]
+ ["What kind of projects does Create take on?","We focus on brand identity, digital products, and websites that need both design clarity and technical polish."],
+ ["How do you approach new projects?","We start by understanding your goals and constraints, then outline clear milestones so you know exactly what’s coming next."],
+ ["What’s a realistic project timeline?","Most branding or smaller websites are ready in 2–4 weeks. Larger sites and platforms run 6–12 weeks, depending on scope."],
+ ["Who actually does the work?","Every project is led by senior designers and developers. No handoffs to juniors figuring things out on the fly."],
+ ["How do we communicate during the process?","We keep things simple: one main contact, weekly updates, and quick replies when you need us."],
+ ["What happens after launch?","We can stay involved — fixing issues, rolling out updates, or handling ongoing support if that’s part of your plan."],
+ ["Do you work with startups as well as big companies?","Yes. We’ve helped founders launch their first product and supported global teams scaling into new markets."],
+ ["How do you measure success for a project?","We don’t stop at launch. Success is measured by how your audience responds — engagement, conversions, and long-term growth. We track performance and share insights so you see real outcomes, not just a polished design."],
+ ["Can we start small and scale later?","Yes. Many clients begin with a focused project like a brand refresh or website revamp. As their needs grow, we expand into campaigns, strategy, and ongoing support. Flexibility is built into how we work."]
 ];
 var posts=[
  [1,"Jul 30, 2025","Rethinking Product Design with Intelligence","Lucas Marino","Technical Director"],
@@ -2213,11 +2243,12 @@ document.getElementById("pillars").innerHTML=pillars.map(function(x){
 
 /* ───────────────────────────────────────────────────── faq ──────────── */
 document.getElementById("faqs").innerHTML=faqs.map(function(f,i){
- return '<li class="faq rule-t'+(i===0?" open":"")+'"><h3><button class="faq-q" aria-expanded="'+(i===0)+'">'+
- '<span class="flex g3" style="align-items:baseline"><span class="t-mono-sm muted num" style="flex:none">'+(i<9?"0":"")+(i+1)+'</span><span class="t-h4">'+esc(f[0])+'</span></span>'+
- '<span class="plan-ico" style="margin-top:8px"></span></button></h3>'+
- '<div class="acc"><div><p class="t-body deep" style="max-width:58ch;padding:0 0 28px 56px">'+esc(f[1])+'</p></div></div></li>';
-}).join("")+'<li class="rule-t"></li>';
+ var id="faq-a-"+i;
+ return '<li class="faq'+(i===0?" open":"")+'"><h3><button class="faq-q" aria-expanded="'+(i===0)+'" aria-controls="'+id+'">'+
+ '<span class="faq-t">'+esc(f[0])+'</span>'+
+ '<svg class="faq-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 3v22M3 14h22" stroke="currentColor" stroke-width="1.5"/></svg></button></h3>'+
+ '<div class="acc" id="'+id+'"><div><p class="faq-a">'+esc(f[1])+'</p></div></div></li>';
+}).join("");
 
 /* ───────────────────────────────────────────────────── whispers ────── */
 /* Whispers mosaic, laid out as the reference's: the intro card and the first
@@ -2539,6 +2570,11 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".tm-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px 100px 0px");
+ /* FAQ (reference): the title, the lead and the booking block each grow in
+    from 1.3x and fade in as they arrive (the title's words also rise) */
+ once(document.querySelectorAll(".faq-pop"),function(el){
+  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
+ },"0px 0px -10% 0px");
  /* testimonials: the rating block fades in as it arrives */
  once(document.querySelectorAll(".tst-rev"),function(el){
   M.animate(el,{opacity:[0,1]},{duration:.8,ease:OUT});
@@ -2596,7 +2632,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.svc
  // How we work (heading included), the case row, why choose us, page 4 and
  // the footer scroll 1:1 on the reference, with their own one-time
  // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.team,.tst,.wh,.wh-close,#site-foot";
+ var skip=".hero,.hdr,.story-section,.panel,.svc,.acc,#hww,#fcase,.why,.pcards,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
