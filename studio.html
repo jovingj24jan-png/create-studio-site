@@ -1138,6 +1138,9 @@ body{background:#f2f2f2}
 html.js-motion .rise-words .w{opacity:.001;transform:translateY(20px)}
 
 /* hero */
+/* the studio's team block drops the rail, mark and tick strip the homepage
+   section carries; the reference shows the heading and lead alone */
+.team .hww-rail,.team .hww-top,.team .hww-ticks{display:none}
 .sd-hero{display:grid;grid-template-columns:1fr}
 .sd-hero-l{position:relative;display:flex;align-items:flex-end;min-height:440px;padding:40px 20px;overflow:hidden;background:#070707}
 .sd-hero-l>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5)}
@@ -1190,6 +1193,7 @@ html.js-motion .rise-words .w{opacity:.001;transform:translateY(20px)}
 .sd-logos{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 24px;margin-top:clamp(48px,6vw,96px);
   place-items:center}
 .sd-logos img{height:32px;width:auto;max-width:100%;opacity:.85}
+.sd-logo-txt{font-size:24px;font-weight:700;letter-spacing:-.05em;color:var(--deep);opacity:.85}
 .sd-next{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;max-width:1440px;margin:clamp(56px,7vw,110px) auto 0;text-align:left}
 .sd-next-h{font-size:clamp(32px,3.33vw,48px);line-height:1.1;font-weight:500;letter-spacing:-.05em;color:var(--muted)}
 .sd-next-p{max-width:409px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
@@ -1274,6 +1278,20 @@ a.sd-case:hover .sd-case-t{color:var(--accent)}
 }
 @media(min-width:1200px){
   .sd-say{padding-left:112px;padding-right:112px}
+  /* the reference's vertical rhythm from the clients band down */
+  .sd-band{height:900px}
+  .sd-cl{padding-top:280px;padding-bottom:240px}
+  .sd-logos{margin-top:180px}
+  .sd-next{margin-top:190px}
+  .sd-ach{padding-top:190px;padding-bottom:190px}
+  .sd-aw{padding-top:180px;padding-bottom:180px}
+  .sd-say{padding-top:90px;padding-bottom:90px}
+  .sd-cs{padding-bottom:60px}
+  /* the reference's team header: a 56px heading with the lead beside it */
+  .team .hww-head{display:block;padding-left:92px}
+  .team .hww-main{display:grid;grid-template-columns:682px minmax(0,420px);column-gap:64px;align-items:start}
+  .team .hww-title{font-size:56px;line-height:1.1;letter-spacing:-.05em;color:#fff;max-width:682px}
+  .team .hww-sub{margin-top:0;font-size:20.96px;line-height:1.3;color:#fafafa;max-width:420px}
   .sd-how-in{padding:0 40px}
   .sd-steps{margin-top:8px}
   .sd-aw-in,.sd-ach-in{padding:0 40px}
@@ -1281,6 +1299,7 @@ a.sd-case:hover .sd-case-t{color:var(--accent)}
 }
 /* start poses for the one-time entrances */
 html.js-motion .sd-pop{opacity:.001}
+html.js-motion .sd-case{transform:translateY(150px)}
 
 /* Team, measured on the reference at 1440: a dark section (#141414 under a
    dark photographic wash) with the How-we-work style head; four 315 x 639
@@ -1295,37 +1314,33 @@ html.js-motion .sd-pop{opacity:.001}
    linear-gradient(180deg,#1b1b1b 0%,#141414 55%,#0d0d0d 100%)}
 .team>.shell{position:relative}
 .team-sub{max-width:600px}
-.tm-row{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:64px}
-.tm-card{perspective:1000px}
-.tm-tilt{position:relative;overflow:hidden;aspect-ratio:315/639;border-radius:8px;background:#222;
-  transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-veil{position:absolute;inset:0;background:rgba(20,20,20,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);opacity:0;transition:opacity .4s ease}
-.tm-kpil{position:absolute;left:16px;top:22px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;letter-spacing:-.05em;color:var(--rule);transform:translateY(-60px);transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.tm-kpi{position:absolute;right:16px;top:17px;display:flex;flex-direction:column;align-items:flex-end;text-align:right;opacity:0;transform:translateY(90px);transition:opacity .4s ease,transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-kpi b{font-size:80px;line-height:1.1;font-weight:500;letter-spacing:-.07em}
-.tm-kpi span{max-width:200px;margin-top:-6px;font-size:16px;line-height:1.3;letter-spacing:-.04em}
-.tm-line{position:absolute;right:20px;top:150px;bottom:80px;width:1px;background:rgba(255,255,255,.35);opacity:0;transition:opacity .4s ease}
-.tm-who{position:absolute;left:16px;right:16px;bottom:24px;transform:translateY(76px);transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.tm-name{font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em}
-.tm-role{margin-top:6px;font-size:16px;letter-spacing:-.04em;opacity:.8}
-.tm-soc{display:flex;gap:16px;margin-top:14px}
-.tm-soc a{display:flex;color:#fff}
-.tm-soc svg{width:16px;height:16px}
-.tm-bars{position:absolute;right:20px;bottom:24px;display:flex;align-items:flex-end;gap:2px;opacity:0;transition:opacity .4s ease}
-.tm-bars i{width:4px;background:rgba(255,255,255,.7);border-radius:1px}
-.tm-bars i:nth-child(1){height:6px}.tm-bars i:nth-child(2){height:10px}.tm-bars i:nth-child(3){height:16px}
-.tm-card:focus-within .tm-veil,.tm-card:focus-within .tm-kpi,.tm-card:focus-within .tm-line,.tm-card:focus-within .tm-bars{opacity:1}
-.tm-card:focus-within .tm-kpi,.tm-card:focus-within .tm-kpil,.tm-card:focus-within .tm-who{transform:none}
-.tm-card:focus-within .tm-tilt{transform:none}
-@media(hover:hover){
-  .tm-card:hover .tm-veil,.tm-card:hover .tm-kpi,.tm-card:hover .tm-line,.tm-card:hover .tm-bars{opacity:1}
-  .tm-card:hover .tm-kpi,.tm-card:hover .tm-kpil,.tm-card:hover .tm-who{transform:none}
-  .tm-card:hover .tm-img{transform:scale(1.1)}
-  .tm-card:hover .tm-tilt{transform:none}
-}
-/* without hover, the card shows its full label (role and links) */
-@media(hover:none){.tm-who{transform:none}.tm-kpil{display:none}}
+/* Team cards, measured on the reference's /studio at 1440: flat 250 x 398
+   greyscale portraits on a 320px pitch (70px apart), "//KPI" at the top
+   corner and the name across the foot of the picture, the role and the
+   social row under the card. Each card fades in with the scroll. */
+.tm-row{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 20px;margin-top:64px}
+.sd-tm-ph{position:relative;aspect-ratio:250/398;border-radius:12px;overflow:hidden;background:#222}
+.sd-tm-ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:transform .6s var(--ease)}
+.sd-tm:hover .sd-tm-ph img{transform:scale(1.05)}
+.sd-tm-kpi{position:absolute;left:16px;top:16px;font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;line-height:1.3;letter-spacing:-.05em;color:var(--rule)}
+.sd-tm-name{font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:#fff}
+/* the role and the links ride inside the card, as on the reference: the
+   name alone shows until the card is hovered or focused */
+.sd-tm-meta{position:absolute;left:16px;right:16px;bottom:16px}
+.sd-tm-name{position:static;transform:translateY(34px);transition:transform .45s var(--ease)}
+.sd-tm-role{margin-top:6px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#fff;opacity:0;transition:opacity .45s var(--ease)}
+.sd-tm-soc{display:flex;gap:16px;margin-top:14px;opacity:0;transition:opacity .45s var(--ease)}
+.sd-tm-soc a{display:flex;color:#fff}
+.sd-tm-soc svg{width:16px;height:16px}
+.sd-tm-ph::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .45s var(--ease);
+  background:linear-gradient(180deg,rgba(10,10,10,0) 45%,rgba(10,10,10,.72))}
+.sd-tm:hover .sd-tm-name,.sd-tm:focus-within .sd-tm-name{transform:none}
+.sd-tm:hover .sd-tm-role,.sd-tm:focus-within .sd-tm-role,
+.sd-tm:hover .sd-tm-soc,.sd-tm:focus-within .sd-tm-soc,
+.sd-tm:hover .sd-tm-ph::after,.sd-tm:focus-within .sd-tm-ph::after{opacity:1}
+/* without hover the card shows the whole label */
+@media(hover:none){.sd-tm-name{transform:none}.sd-tm-role,.sd-tm-soc,.sd-tm-ph::after{opacity:1}}
+@media(min-width:810px){.tm-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:40px 70px}}
 .tm-lead{display:grid;gap:32px;margin-top:88px}
 .tm-h{font-size:32px;line-height:1.1;font-weight:500;letter-spacing:-.06em;color:#fff;max-width:540px}
 .tm-h .accent{display:block}
@@ -1341,18 +1356,16 @@ html.js-motion .sd-pop{opacity:.001}
 @media(min-width:1200px){
   .team{padding-top:141px;padding-bottom:176px}
   .team .hww-head{padding-bottom:0}
-  .tm-row{grid-template-columns:repeat(4,315px);gap:31px;justify-content:center;margin-top:88px}
-  .tm-tilt{transform:rotateY(25deg)}
+  .tm-row{grid-template-columns:repeat(4,250px);gap:40px 70px;justify-content:center;margin-top:88px}
+  .sd-tm-meta{left:16px;right:16px;bottom:16px}
   .tm-lead{grid-template-columns:minmax(0,528px) 336px 368px;column-gap:40px;margin-top:88px;padding-left:40px}
 }
 @media(max-width:809px){.tm-lead{grid-template-columns:1fr}.tm-disc{border-left:0;padding-left:0}.tm-kpi b{font-size:56px}}
 /* entrances (reference): the cards rise 120px one after another as the row
    comes up; the leadership row grows in from 1.3x */
-html.js-motion .tm-card{transform:translateY(120px)}
+html.js-motion .sd-tm{opacity:.001}
 html.js-motion .tm-pop{opacity:.001}
-@media(prefers-reduced-motion:reduce){.tm-tilt,.tm-img,.tm-kpi,.tm-kpil,.tm-who,.tm-veil{transition:none}}
-/* the studio page shows the cards at the reference's flatter proportions */
-html .team .tm-tilt{aspect-ratio:250/398}
+@media(prefers-reduced-motion:reduce){.sd-tm-ph img{transition:none}}
 
 </style>
 </head>
@@ -1467,7 +1480,7 @@ html .team .tm-tilt{aspect-ratio:250/398}
     <div class="sd-cl-in">
       <h2 class="sd-cl-h rise-words">Clients &amp; Partners</h2>
       <p class="sd-cl-p">Brands who trusted us to help shape their next chapter.</p>
-      <ul class="sd-logos"><li><img src="public/img/client-atelier.svg" alt="Atelier" loading="lazy" decoding="async"></li><li><img src="public/img/client-halden.svg" alt="Halden" loading="lazy" decoding="async"></li><li><img src="public/img/client-harrowgate.svg" alt="Harrowgate" loading="lazy" decoding="async"></li><li><img src="public/img/client-kestrel.svg" alt="Kestrel" loading="lazy" decoding="async"></li><li><img src="public/img/client-ostara.svg" alt="Ostara" loading="lazy" decoding="async"></li><li><img src="public/img/client-plinth.svg" alt="Plinth" loading="lazy" decoding="async"></li><li><img src="public/img/client-solvanne.svg" alt="Solvanne" loading="lazy" decoding="async"></li><li><img src="public/img/client-sundermark.svg" alt="Sundermark" loading="lazy" decoding="async"></li><li><img src="public/img/client-vantar.svg" alt="Vantar" loading="lazy" decoding="async"></li></ul>
+      <ul class="sd-logos"><li><img src="public/img/hero-logos/aurelis.svg" alt="Aurelis" loading="lazy" decoding="async"></li><li><img src="public/img/brand-logos/lindholm.svg" alt="Lindholm" loading="lazy" decoding="async"></li><li><span class="sd-logo-txt">Blackwell</span></li><li><span class="sd-logo-txt">Wendrich</span></li><li><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" loading="lazy" decoding="async"></li><li><img src="public/img/brand-logos/logisync.svg" alt="Logisync" loading="lazy" decoding="async"></li><li><span class="sd-logo-txt">Monolith</span></li><li><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" loading="lazy" decoding="async"></li><li><span class="sd-logo-txt">Vornberg</span></li></ul>
     </div>
     <div class="sd-next">
       <h3 class="sd-next-h rise-words">Be our next partner</h3>
@@ -1486,7 +1499,7 @@ html .team .tm-tilt{aspect-ratio:250/398}
         <p class="sd-ach-p">Our work has grown from independent projects to large-scale collaborations, earning recognition for clarity, precision, and performance. We keep our process lean, our goals measurable, and our results visible.</p>
         <a href="index.html#top" class="grow-cta sd-cta"><span class="grow-btn"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h12M12 6l5 5-5 5"/></svg></span><span>Watch Showreel 2025</span></a>
       </div>
-      <ul class="sd-stats"><li class="sd-stat sd-pop"><b class="num">48%</b><span>New Clients Onboarded</span><i class="num" aria-hidden="true">//001</i></li><li class="sd-stat sd-pop"><b class="num">120%</b><span>Projects Delivered</span><i class="num" aria-hidden="true">//002</i></li><li class="sd-stat sd-pop"><b class="num">87%</b><span>Repeat Collaborations</span><i class="num" aria-hidden="true">//003</i></li></ul>
+      <ul class="sd-stats"><li class="sd-stat sd-pop"><b class="num" data-from="20" data-to="48">20%</b><span>New Clients Onboarded</span><i class="num" aria-hidden="true">//001</i></li><li class="sd-stat sd-pop"><b class="num" data-from="100" data-to="120">100%</b><span>Projects Delivered</span><i class="num" aria-hidden="true">//002</i></li><li class="sd-stat sd-pop"><b class="num" data-from="40" data-to="87">40%</b><span>Repeat Collaborations</span><i class="num" aria-hidden="true">//003</i></li></ul>
     </div>
   </section>
 
@@ -1509,7 +1522,7 @@ html .team .tm-tilt{aspect-ratio:250/398}
   <section class="sd-cs" aria-label="Case studies">
     <div class="sd-cs-in">
       <h2 class="sd-cs-h rise-words">case studies</h2>
-      <ul class="sd-cs-row"><li><a class="sd-case sd-pop" href="work/aurelis-beach.html"><img src="1000076318.png" alt="Aurelis Beach Resort" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aurelis</span><h3 class="sd-case-t">Aurelis Beach Resort</h3><p class="sd-case-s">Hospitality branding and website</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Build a premium resort identity and digital platform.</p></span></a></li><li><a class="sd-case sd-pop" href="work/blackwell-motors.html"><img src="whitewheel.avif" alt="Blackwell Motors" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Blackwell</span><h3 class="sd-case-t">Blackwell Motors</h3><p class="sd-case-s">Automotive digital transformation</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Rebrand and launch Blackwell&rsquo;s first EV line.</p></span></a></li><li><a class="sd-case sd-pop" href="work/aspen877.html"><img src="bicycle.avif" alt="Aspen® 877" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aspen</span><h3 class="sd-case-t">Aspen&#174; 877</h3><p class="sd-case-s">E-Mobility brand launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Launch Aspen&#174; 877 with identity, website, and campaign.</p></span></a></li><li><div class="sd-case sd-pop"><img src="0a29VUpo9l1Bjl8Xetw3ozovKQs.jpg" alt="Monolith Architecture" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Monolith</span><h3 class="sd-case-t">Monolith Architecture</h3><p class="sd-case-s">Architecture studio rebrand and digital platform</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Redefine the brand and digital presence.</p></span></div></li><li><div class="sd-case sd-pop"><img src="public/img/whisper-1.svg" alt="Numeriq Fashion" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Numeriq</span><h3 class="sd-case-t">Numeriq Fashion</h3><p class="sd-case-s">Fashion brand and campaign launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">A label system and a campaign built to travel.</p></span></div></li></ul>
+      <ul class="sd-cs-row"><li><a class="sd-case" href="work/aurelis-beach.html"><img src="1000076318.png" alt="Aurelis Beach Resort" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aurelis</span><h3 class="sd-case-t">Aurelis Beach Resort</h3><p class="sd-case-s">Hospitality branding and website</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Build a premium resort identity and digital platform.</p></span></a></li><li><a class="sd-case" href="work/blackwell-motors.html"><img src="whitewheel.avif" alt="Blackwell Motors" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Blackwell</span><h3 class="sd-case-t">Blackwell Motors</h3><p class="sd-case-s">Automotive digital transformation</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Rebrand and launch Blackwell&rsquo;s first EV line.</p></span></a></li><li><a class="sd-case" href="work/aspen877.html"><img src="bicycle.avif" alt="Aspen® 877" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aspen</span><h3 class="sd-case-t">Aspen&#174; 877</h3><p class="sd-case-s">E-Mobility brand launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Launch Aspen&#174; 877 with identity, website, and campaign.</p></span></a></li><li><div class="sd-case"><img src="0a29VUpo9l1Bjl8Xetw3ozovKQs.jpg" alt="Monolith Architecture" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Monolith</span><h3 class="sd-case-t">Monolith Architecture</h3><p class="sd-case-s">Architecture studio rebrand and digital platform</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Redefine the brand and digital presence.</p></span></div></li><li><div class="sd-case"><img src="public/img/whisper-1.svg" alt="Numeriq Fashion" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Numeriq</span><h3 class="sd-case-t">Numeriq Fashion</h3><p class="sd-case-s">Fashion brand and campaign launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">A label system and a campaign built to travel.</p></span></div></li></ul>
     </div>
   </section>
 </main>
@@ -1637,23 +1650,21 @@ var team=[
  ["hq6inRzpOxpC9cXbuJkkv7SpnM.jpeg","Magnus Bjørnsen","Design Director","60+","Design systems shipped and maintained.",[["mail","mailto:magnus@create.co"],["in","https://linkedin.com"],["ig","https://instagram.com"]]]
 ];
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-/* team cards */
+/* team cards, as on the reference's /studio: portrait, name across its foot,
+   role and socials beneath */
 (function(){
  var ic={mail:'<path d="M2 4h12v8H2zM2 4l6 5 6-5"/>',x:'<path d="M3 3l10 10M13 3L3 13"/>',in:'<path d="M3 6v7M3 3.5v.1M6.5 13V6M6.5 9c0-2 1-3 3-3s3 1 3 3v4"/>',
-  ig:'<rect x="2.5" y="2.5" width="11" height="11" rx="3"/><circle cx="8" cy="8" r="2.6"/>',fb:'<path d="M9.5 14V8.5H12M9.5 8.5V6.2c0-1.2.7-2 2-2H12M7.5 8.5h2"/>',th:'<path d="M11 7.5C10.6 5 9.4 4 8 4 5.8 4 4.5 5.7 4.5 8s1.3 4 3.5 4c1.8 0 3-1 3-2.4 0-2-3-2.3-3.6-.8"/>'};
- var names={mail:"Email",x:"X",in:"LinkedIn",ig:"Instagram",fb:"Facebook",th:"Threads"};
+  ig:'<rect x="2.5" y="2.5" width="11" height="11" rx="3"/><circle cx="8" cy="8" r="2.6"/>',th:'<path d="M11 7.5C10.6 5 9.4 4 8 4 5.8 4 4.5 5.7 4.5 8s1.3 4 3.5 4c1.8 0 3-1 3-2.4 0-1.6-1.3-2.1-2.4-2.1-1 0-1.8.4-1.8 1.2 0 .6.5 1 1.1 1"/>'};
+ var names={mail:"Email",x:"X",in:"LinkedIn",ig:"Instagram",th:"Threads"};
  var el=document.getElementById("team");if(!el)return;
  el.innerHTML=team.map(function(m){
-  return '<li class="tm-card"><div class="tm-tilt">'+
-  '<img class="tm-img" src="'+m[0]+'" alt="Portrait of '+esc(m[1])+'" loading="lazy" decoding="async">'+
-  '<span class="tm-veil" aria-hidden="true"></span>'+
-  '<span class="tm-kpil">//KPI</span>'+
-  '<div class="tm-kpi"><b class="num">'+esc(m[3])+'</b><span>'+esc(m[4])+'</span></div>'+
-  '<span class="tm-line" aria-hidden="true"></span>'+
-  '<div class="tm-who"><p class="tm-name">'+esc(m[1])+'</p><p class="tm-role">'+esc(m[2])+'</p>'+
-  '<p class="tm-soc">'+m[5].map(function(l){return '<a href="'+l[1]+'" aria-label="'+esc(m[1])+' on '+names[l[0]]+'"'+(l[0]==="mail"?'':' target="_blank" rel="noopener"')+'><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">'+ic[l[0]]+'</svg></a>'}).join("")+'</p></div>'+
-  '<span class="tm-bars" aria-hidden="true"><i></i><i></i><i></i></span>'+
-  '</div></li>';
+  return '<li class="sd-tm">'+
+  '<div class="sd-tm-ph"><img src="'+m[0]+'" alt="Portrait of '+esc(m[1])+'" loading="lazy" decoding="async">'+
+  '<span class="sd-tm-kpi" aria-hidden="true">//KPI</span>'+
+  '<div class="sd-tm-meta"><p class="sd-tm-name">'+esc(m[1])+'</p>'+
+  '<p class="sd-tm-role">'+esc(m[2])+'</p>'+
+  '<p class="sd-tm-soc">'+m[5].map(function(l){return '<a href="'+l[1]+'" aria-label="'+esc(m[1])+' on '+names[l[0]]+'"'+(l[0]==="mail"?'':' target="_blank" rel="noopener"')+'><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">'+ic[l[0]]+'</svg></a>'}).join("")+'</p></div></div>'+
+  '</li>';
  }).join("");
 })();
 /* headings that rise word by word, and the statement's own words */
@@ -1675,6 +1686,13 @@ document.querySelectorAll(".rise-words,.sd-say-p").forEach(function(h){
  addEventListener("scroll",frame,{passive:true});addEventListener("resize",tick);frame();
 })();
 
+ /* without motion the figures simply show where they land */
+ (function(){
+  var live=window.Motion&&root.classList.contains("js-motion")&&!matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(live)return;
+  document.querySelectorAll("[data-to]").forEach(function(el){el.textContent=el.dataset.to+"%"});
+ })();
+
  /* words of the closing panel's lines and the footer heading, as spans */
  document.querySelectorAll(".wh-words,.nl-h,.nl-lw").forEach(function(h){
   h.setAttribute("aria-label",h.textContent);
@@ -1686,7 +1704,6 @@ document.querySelectorAll(".rise-words,.sd-say-p").forEach(function(h){
  function once(els,run,margin){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target)}})},{rootMargin:margin});
   [].forEach.call(els,function(el){io.observe(el)})}
  /* hero entrance, once the page shows */
- M.animate(".sd-claim span",{opacity:[0,1],y:[60,0]},{duration:1,delay:M.stagger(.08,{startDelay:.2}),ease:OUT});
  M.animate(".sd-title",{opacity:[0,1],y:[100,0]},{duration:1,delay:.2,ease:OUT});
  M.animate(".sd-lead",{opacity:[0,1],y:[60,0]},{duration:1,delay:.35,ease:OUT});
  /* headings rise word by word as they arrive; the team cards, the stat
@@ -1694,15 +1711,53 @@ document.querySelectorAll(".rise-words,.sd-say-p").forEach(function(h){
  once(document.querySelectorAll(".rise-words"),function(el){
   M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.04),ease:OUT});
  },"0px");
- once(document.querySelectorAll(".tm-row"),function(el){
-  M.animate(el.querySelectorAll(".tm-card"),{y:[120,0]},{duration:.9,delay:M.stagger(.12),ease:OUT});
- },"0px 0px -50% 0px");
+ /* team cards: each fades in as it comes up the screen and fades back out
+    on the way up, a pure function of where the card is */
+ (function(){
+  var cards=[].slice.call(document.querySelectorAll(".sd-tm")),raf=0;
+  if(!cards.length)return;
+  function frame(){
+   raf=0;var vh=innerHeight;
+   cards.forEach(function(c){
+    var r=c.getBoundingClientRect();
+    var a=Math.max(0,Math.min(1,(vh*.92-r.top)/(vh*.28)));
+    c.style.opacity=(a*a*(3-2*a)).toFixed(3);
+   });
+  }
+  function tick(){if(!raf)raf=requestAnimationFrame(frame)}
+  addEventListener("scroll",frame,{passive:true});addEventListener("resize",tick);frame();
+ })();
  once(document.querySelectorAll(".tm-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px 100px 0px");
  once(document.querySelectorAll(".sd-pop"),function(el){
   M.animate(el,{opacity:[0,1],y:[60,0]},{duration:.8,ease:OUT});
  },"0px 0px -10% 0px");
+ /* achievements: each figure counts from the reference's opening value to
+    the one it lands on, the first time the column arrives */
+ once(document.querySelectorAll("[data-to]"),function(el){
+  var from=+el.dataset.from,to=+el.dataset.to,t0=0;
+  requestAnimationFrame(function step(t){
+   if(!t0)t0=t;
+   var k=Math.min(1,(t-t0)/1200),e=1-Math.pow(1-k,3);
+   el.textContent=Math.round(from+(to-from)*e)+"%";
+   if(k<1)requestAnimationFrame(step);
+  });
+ },"0px 0px -15% 0px");
+ /* case cards ride up 150px with the scroll, as the reference's do */
+ (function(){
+  var cards=[].slice.call(document.querySelectorAll(".sd-case")),raf=0;
+  if(!cards.length)return;
+  function frame(){
+   raf=0;var vh=innerHeight;
+   cards.forEach(function(c){
+    var r=c.getBoundingClientRect(),k=Math.max(0,Math.min(1,(vh-r.top)/(vh*.55))),e=1-Math.pow(1-k,3);
+    c.style.transform="translateY("+(150*(1-e)).toFixed(1)+"px)";
+   });
+  }
+  function tick(){if(!raf)raf=requestAnimationFrame(frame)}
+  addEventListener("scroll",frame,{passive:true});addEventListener("resize",tick);frame();
+ })();
  /* closing panel and footer, as on the homepage */
  once(document.querySelectorAll(".wh-pop"),function(el){
   /* the year line settles at 60%, as on the reference */
