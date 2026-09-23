@@ -1240,8 +1240,9 @@ html.js-motion .rise-words .w{opacity:.001;transform:translateY(20px)}
 .sd-cs-h{font-size:clamp(64px,11.1vw,160px);line-height:1.2;font-weight:600;letter-spacing:-.06em;color:var(--muted)}
 .sd-cs-row{list-style:none;display:grid;grid-template-columns:1fr;gap:40px;margin-top:clamp(40px,5vw,80px)}
 .sd-case{position:relative;display:block;aspect-ratio:682/600;border-radius:12px;overflow:hidden;color:#fff;background:var(--ink)}
-.sd-case>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;transition:transform 1.2s var(--ease)}
+.sd-case>img,.sd-case>.sd-case-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;transition:transform 1.2s var(--ease)}
 a.sd-case:hover>img{transform:scale(1.04)}
+.sd-case>.sd-case-v{background:var(--ink)}
 .sd-case-in{position:relative;display:flex;flex-direction:column;align-items:center;height:100%;padding:40px 24px;text-align:center}
 .sd-case-b{font-size:20px;font-weight:700;letter-spacing:-.05em;opacity:.9}
 .sd-case-t{margin-top:24px;font-size:clamp(28px,3.33vw,48px);line-height:1.1;font-weight:500;letter-spacing:-.05em;transition:color .3s}
@@ -1531,7 +1532,7 @@ html.js-motion .tm-pop{opacity:.001}
   <section class="sd-cs" aria-label="Case studies">
     <div class="sd-cs-in">
       <h2 class="sd-cs-h rise-words">case studies</h2>
-      <ul class="sd-cs-row"><li><a class="sd-case" href="work/aurelis-beach.html"><img src="1000076318.png" alt="Aurelis Beach Resort" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aurelis</span><h3 class="sd-case-t">Aurelis Beach Resort</h3><p class="sd-case-s">Hospitality branding and website</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Build a premium resort identity and digital platform.</p></span></a></li><li><a class="sd-case" href="work/blackwell-motors.html"><img src="whitewheel.avif" alt="Blackwell Motors" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Blackwell</span><h3 class="sd-case-t">Blackwell Motors</h3><p class="sd-case-s">Automotive digital transformation</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Rebrand and launch Blackwell&rsquo;s first EV line.</p></span></a></li><li><a class="sd-case" href="work/aspen877.html"><img src="bicycle.avif" alt="Aspen® 877" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aspen</span><h3 class="sd-case-t">Aspen&#174; 877</h3><p class="sd-case-s">E-Mobility brand launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Launch Aspen&#174; 877 with identity, website, and campaign.</p></span></a></li><li><div class="sd-case"><img src="0a29VUpo9l1Bjl8Xetw3ozovKQs.jpg" alt="Monolith Architecture" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Monolith</span><h3 class="sd-case-t">Monolith Architecture</h3><p class="sd-case-s">Architecture studio rebrand and digital platform</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Redefine the brand and digital presence.</p></span></div></li><li><div class="sd-case"><img src="public/img/whisper-1.svg" alt="Numeriq Fashion" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Numeriq</span><h3 class="sd-case-t">Numeriq Fashion</h3><p class="sd-case-s">Fashion brand and campaign launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">A label system and a campaign built to travel.</p></span></div></li></ul>
+      <ul class="sd-cs-row"><li><a class="sd-case" href="work/aurelis-beach.html"><img src="1000076318.png" alt="Aurelis Beach Resort" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aurelis</span><h3 class="sd-case-t">Aurelis Beach Resort</h3><p class="sd-case-s">Hospitality branding and website</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Build a premium resort identity and digital platform.</p></span></a></li><li><a class="sd-case" href="work/blackwell-motors.html"><img src="whitewheel.avif" alt="Blackwell Motors" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Blackwell</span><h3 class="sd-case-t">Blackwell Motors</h3><p class="sd-case-s">Automotive digital transformation</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Rebrand and launch Blackwell&rsquo;s first EV line.</p></span></a></li><li><a class="sd-case" href="work/aspen877.html"><img src="bicycle.avif" alt="Aspen® 877" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Aspen</span><h3 class="sd-case-t">Aspen&#174; 877</h3><p class="sd-case-s">E-Mobility brand launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Launch Aspen&#174; 877 with identity, website, and campaign.</p></span></a></li><li><div class="sd-case"><img src="0a29VUpo9l1Bjl8Xetw3ozovKQs.jpg" alt="Monolith Architecture" loading="lazy" decoding="async"><span class="sd-case-in"><span class="sd-case-b">Monolith</span><h3 class="sd-case-t">Monolith Architecture</h3><p class="sd-case-s">Architecture studio rebrand and digital platform</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">Redefine the brand and digital presence.</p></span></div></li><li><div class="sd-case"><video class="sd-case-v" data-src="public/img/ref/case-numeriq.mp4" muted loop playsinline preload="none" aria-hidden="true"></video><span class="sd-case-in"><span class="sd-case-b">Numeriq</span><h3 class="sd-case-t">Numeriq Fashion</h3><p class="sd-case-s">Fashion brand and campaign launch</p><span class="sd-case-r" aria-hidden="true"></span><p class="sd-case-d">A label system and a campaign built to travel.</p></span></div></li></ul>
     </div>
   </section>
 </main>
@@ -1794,6 +1795,14 @@ document.querySelectorAll(".rise-words,.sd-say-p").forEach(function(h){
 })();
 /* closing CTA: the reference's background footage loads as the section
    nears, plays muted on loop, and holds its first frame for reduced motion */
+(function(){
+ var v=document.querySelector(".sd-case-v");
+ if(v&&"IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();v.src=v.dataset.src;v.preload="auto";
+   if(!matchMedia("(prefers-reduced-motion: reduce)").matches)v.play().catch(function(){})}},{rootMargin:"600px 0px"});
+  io.observe(v);
+ }
+})();
 (function(){
  var v=document.querySelector(".sd-band video");
  if(v&&"IntersectionObserver" in window){
