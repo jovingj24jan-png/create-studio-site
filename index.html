@@ -2083,10 +2083,10 @@ var testimonials=[
  ["IAWOBaQOTPVXsed9HvO13W8xZH0.jpeg","Matthew Parker","Head of Product","Monolith","From kickoff to launch, the process was fast-moving but never chaotic. Create kept everyone in the loop, solved issues before they became problems, and shipped exactly when they said they would."],
  ["Jz5dZlyFuiZmVpfeEBffzrkO8.jpg","Maya Chen","Brand Manager","Vornberg","They didn’t just design a website, they built a framework we can grow with. Every decision was backed with clarity, and the final product looks polished while staying practical for our team."],
  ["j06TB87Yx9dCAi0Bh7zDzc3zl8.jpeg","Mark Miller","Creative Lead","Wendrich","They don’t just deliver a project and walk away. The team stayed close, fixed details on the fly, and made sure launch was smooth."],
- ["public/img/person-rea-lindqvist.svg","Jordan Ellis","Creative Director","Blackwell","Working with Create felt effortless. They understood our vision from day one and kept us aligned through clear milestones. The end result was a site that actually elevated our brand voice, not just dressed it up."],
- ["public/img/person-nora-pemberton.svg","Rachel Morgan","Head of Design","Aurelis","Every meeting felt productive, every deadline was hit, and the end result nailed our brand better than we could describe."],
+ ["public/img/ref/avatar-jordan.jpeg","Jordan Ellis","Creative Director","Blackwell","Working with Create felt effortless. They understood our vision from day one and kept us aligned through clear milestones. The end result was a site that actually elevated our brand voice, not just dressed it up."],
+ ["public/img/ref/avatar-rachel.jpeg","Rachel Morgan","Head of Design","Aurelis","Every meeting felt productive, every deadline was hit, and the end result nailed our brand better than we could describe."],
  ["YjXV900OAOWaHl6RCwUHNogRko.jpg","Edward Bright","Marketing Lead","Madison Square","Create took our messy brief and turned it into a site we’re proud to show. Fast, sharp, and no overthinking."],
- ["public/img/person-priya-raghavan.svg","Margaret Brooks","UX Lead","Morisson","Create has a rare balance of speed and detail. They made complex flows simple, turned feedback into quick iterations, and delivered a product that’s both user-friendly and brand-right."]
+ ["public/img/ref/avatar-margaret.jpeg","Margaret Brooks","UX Lead","Morisson","Create has a rare balance of speed and detail. They made complex flows simple, turned feedback into quick iterations, and delivered a product that’s both user-friendly and brand-right."]
 ];
 var team=[
  ["tobias-neumann.avif","Tobias Neumann","Founder & CEO","97%","Projects delivered on time under his oversight.",[["mail","mailto:tobias@create.com"],["x","https://x.com"],["in","https://linkedin.com"]]],
@@ -2108,7 +2108,7 @@ var faqs=[
 var posts=[
  ["rethinking-product-design.png","Jul 30, 2025","Rethinking Product Design with Intelligence","Lucas Marino","Technical Director","A SaaS product team approached us with an AI add-on. The challenge was to rethink AI not as a widget but as a foundation for smarter systems."],
  ["service-strategy.png","Jul 25, 2025","Digital Identities Across Cultures","Edward Bright","Marketing Lead","Numeriq approached us to redefine their online presence. The challenge was balancing their street-level origins with their luxury aspirations."],
- ["public/img/whisper-3.svg","Jul 20, 2025","Architecture in the Digital Age","Mark Miller","Creative Lead","An architecture studio wanted its online presence to feel as ambitious as its buildings. The challenge was to move beyond static portfolios and reflect authority and vision."],
+ ["public/img/ref/whisper-architecture.jpg","Jul 20, 2025","Architecture in the Digital Age","Mark Miller","Creative Lead","An architecture studio wanted its online presence to feel as ambitious as its buildings. The challenge was to move beyond static portfolios and reflect authority and vision."],
  ["e-mobility.jpeg","Jul 15, 2025","The Future of E-Mobility Marketing from Lindholm","Matthew Parker","Head of Product","Lindholm launched Aspen® 877, a new e-bike. The challenge was positioning it as both a lifestyle product and a piece of cutting-edge mobility tech."],
  ["automotive.jpg","Dec 7, 2025","How Automotive Brands Win Online","Jordan Ellis","UX Strategist","An automotive brand asked us to build a digital showroom. The challenge was giving customers an online experience that could rival the thrill of being behind the wheel."]
 ];
@@ -2258,11 +2258,11 @@ document.getElementById("stars").innerHTML=Array(5).join(",").split(",").map(fun
 }).join("");
 
 /* ───────────────────────────────────────────────────── pricing ──────── */
-/* Plan art: Core and Scale use the supplied photos of the guideline stack;
-   Studio gets the same stack drawn in blue until its photo is supplied. */
+/* Plan art: each plan shows its own photo of the guideline stack. */
 function planArt(p){
  if(p.tone==="mono")return '<img src="wave.avif" alt="" decoding="async">';
  if(p.tier==="Core")return '<img src="pricing-core.jpg" alt="" decoding="async">';
+ if(p.tier==="Studio")return '<img src="public/img/ref/plan-studio.jpg" alt="" decoding="async">';
  var c=p.tone==="red"?["#ff6041","#ff8a6f"]:["#3563e9","#6f8ff2"];
  return '<svg viewBox="0 0 140 80" aria-hidden="true"><rect width="140" height="80" fill="#eceef2"/>'+
   '<g transform="translate(26 50) rotate(-28)"><rect x="18" y="-6" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/><rect x="9" y="-15" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/>'+
