@@ -1162,7 +1162,7 @@ body{background:#f2f2f2}
 .wk-bar{display:block;height:10px;background:#f2f2f2;border-radius:2px}
 .wk-desc{margin-top:18px;padding-left:12px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
 .wk-media{position:relative;min-height:320px;background:var(--ink);overflow:hidden}
-.wk-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wk-media img,.wk-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .wk-date{position:absolute;right:24px;bottom:0;display:grid;gap:6px;padding:14px 16px 10px;background:#fafafa;border-radius:12px 12px 0 0;
   font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;line-height:1.3;letter-spacing:-.05em;text-transform:uppercase}
 .wk-date-l{color:var(--muted)}
@@ -1216,8 +1216,8 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
     <h1 class="wk-title">selected work</h1>
     <div class="wk-intro">
       <div>
-        <p class="wk-lead">Alongside every result, the process that got us there.</p>
-        <p class="wk-p">Each project starts from a clear problem and ends with results we can point to.</p>
+        <p class="wk-lead">Alongside the result, you&rsquo;ll see the process behind our project.</p>
+        <p class="wk-p">Each project began with a challenge and delivered measurable results. Discover how we turn complex problems into clear solutions.</p>
       </div>
       <form class="wk-filter" role="search" onsubmit="return false">
         <label class="wk-field"><span class="sr">Search by project name</span>
@@ -1233,75 +1233,63 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
   <section class="wk-list" id="wkList" aria-label="Projects">
     <a class="wk-row" href="work/aurelis-beach.html" data-name="aurelis beach resort" data-cats="Brand &amp; Identity|Responsive Web Design|UI/UX Design">
       <div class="wk-card">
-        <img class="wk-logo" src="public/img/hero-logos/aurelis.svg" alt="aurelis" height="24">
+        <img class="wk-logo" src="public/img/ref/logo-1.svg" alt="aurelis" height="24">
         <h2 class="wk-t">Aurelis Beach Resort</h2>
         <p class="wk-sub">Hospitality branding and website</p>
-        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">A resort identity and booking site built around slow travel.</p></div>
+        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Build a premium resort identity and digital platform.</p></div>
       </div>
       <div class="wk-media"><img src="1000076318.png" alt="" loading="lazy" decoding="async">
         <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">August 21, 2025</span></div>
       </div>
-      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>
+      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </a>
     <a class="wk-row" href="work/blackwell-motors.html" data-name="blackwell motors" data-cats="Strategy|Development|Digital Campaigns">
       <div class="wk-card">
-        <span class="wk-logo wk-logo-txt"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true"><rect x="1" y="6" width="6" height="5" rx="1.6" fill="currentColor"/><rect x="9.5" y="2.5" width="5.5" height="5" rx="1.6" fill="currentColor"/><path d="M6.6 8.4h3.6" stroke="currentColor" stroke-width="1.5"/></svg>Blackwell</span>
+        <img class="wk-logo" src="public/img/ref/logo-blackwell.svg" alt="Blackwell" height="24">
         <h2 class="wk-t">Blackwell Motors</h2>
         <p class="wk-sub">Automotive digital transformation</p>
-        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">A digital launch system for a first electric vehicle line.</p></div>
+        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Rebrand and launch Blackwell&rsquo;s first EV line.</p></div>
       </div>
       <div class="wk-media"><img src="whitewheel.avif" alt="" loading="lazy" decoding="async">
         <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">June 25, 2025</span></div>
       </div>
-      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>
+      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </a>
     <a class="wk-row" href="work/aspen877.html" data-name="aspen® 877" data-cats="Brand &amp; Identity|Digital Campaigns|Animation &amp; Motion">
       <div class="wk-card">
-        <img class="wk-logo" src="public/img/brand-logos/lindholm.svg" alt="Lindholm" height="24">
-        <h2 class="wk-t">Aspen® 877</h2>
+        <img class="wk-logo" src="public/img/ref/logo-2.svg" alt="Lindholm" height="24">
+        <h2 class="wk-t">Aspen&#174; 877</h2>
         <p class="wk-sub">E-Mobility brand launch</p>
-        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Identity, website and campaign for a new commuter e-bike.</p></div>
+        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Launch Aspen&#174; 877 with identity, website, and campaign.</p></div>
       </div>
       <div class="wk-media"><img src="bicycle.avif" alt="" loading="lazy" decoding="async">
         <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">June 19, 2025</span></div>
       </div>
-      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>
+      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </a>
-    <div class="wk-row" data-name="obliqon studio" data-cats="Brand &amp; Identity|Responsive Web Design|Content">
+    <div class="wk-row" data-name="monolith architecture" data-cats="Brand &amp; Identity|Responsive Web Design|Content">
       <div class="wk-card">
-        <img class="wk-logo" src="public/img/hero-logos/obliqon.svg" alt="Obliqon" height="24">
-        <h2 class="wk-t">Obliqon Studio</h2>
-        <p class="wk-sub">Architecture practice rebrand and site</p>
-        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">A quieter identity and a portfolio site that lets the buildings lead.</p></div>
+        <img class="wk-logo" src="public/img/ref/logo-7.svg" alt="Monolith" height="24">
+        <h2 class="wk-t">Monolith Architecture</h2>
+        <p class="wk-sub">Architecture studio rebrand and digital platform</p>
+        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Redefine the brand and digital presence.</p></div>
       </div>
-      <div class="wk-media"><img src="public/img/whisper-3.svg" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">May 12, 2025</span></div>
+      <div class="wk-media"><img src="0a29VUpo9l1Bjl8Xetw3ozovKQs.jpg" alt="" loading="lazy" decoding="async">
+        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">September 6, 2024</span></div>
       </div>
-      
+      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </div>
     <div class="wk-row" data-name="numeriq fashion" data-cats="Brand &amp; Identity|Social Media Marketing|E-commerce">
       <div class="wk-card">
-        <img class="wk-logo" src="public/img/hero-logos/numeriq.svg" alt="Numeriq" height="24">
+        <img class="wk-logo" src="public/img/ref/logo-8.svg" alt="Numeriq" height="24">
         <h2 class="wk-t">Numeriq Fashion</h2>
-        <p class="wk-sub">Label identity and seasonal campaign</p>
-        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">A label system and a campaign built to travel across social and store.</p></div>
+        <p class="wk-sub">Fashion brand and campaign launch</p>
+        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Design and launch Numeriq&rsquo;s brand and e-commerce hub.</p></div>
       </div>
-      <div class="wk-media"><img src="public/img/whisper-1.svg" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">April 3, 2025</span></div>
+      <div class="wk-media"><video class="wk-vid" data-src="numeriq.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">October 1, 2025</span></div>
       </div>
-      
-    </div>
-    <div class="wk-row" data-name="logisync platform" data-cats="Product Design|UI/UX Design|AI Systems">
-      <div class="wk-card">
-        <img class="wk-logo" src="public/img/brand-logos/logisync.svg" alt="Logisync" height="24">
-        <h2 class="wk-t">Logisync Platform</h2>
-        <p class="wk-sub">Logistics product design</p>
-        <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">A dispatch dashboard that turns live freight data into clear next steps.</p></div>
-      </div>
-      <div class="wk-media"><img src="public/img/whisper-6.svg" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">February 17, 2025</span></div>
-      </div>
-      
+      <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </div>
     <p class="wk-empty" id="wkEmpty" hidden>No projects match that search. <button type="button" id="wkReset">Clear filters</button></p>
   </section>
@@ -1439,6 +1427,16 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
   empty.hidden=shown>0}
  q.addEventListener("input",filter);c.addEventListener("change",filter);
  document.getElementById("wkReset").addEventListener("click",function(){q.value="";c.value="";filter();q.focus()});
+
+ /* the Numeriq row plays its clip, as the reference's does: it loads as the
+    row nears and holds a still frame for reduced motion */
+ (function(){
+  var v=document.querySelector(".wk-vid");if(!v||!("IntersectionObserver" in window))return;
+  var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();
+   v.src=v.dataset.src;v.preload="auto";
+   if(!matchMedia("(prefers-reduced-motion: reduce)").matches)v.play().catch(function(){});}},{rootMargin:"600px 0px"});
+  io.observe(v);
+ })();
 
  /* the case-study disc belongs to the row under the pointer and trails it */
  var fine=matchMedia("(hover:hover) and (pointer:fine)").matches, reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
