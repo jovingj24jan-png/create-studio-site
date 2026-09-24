@@ -1175,7 +1175,8 @@ a.wk-row:hover .wk-t{color:var(--accent)}
 @media(min-width:810px){
   .wk-row{grid-template-columns:702fr 698fr;height:600px}
   .wk-card{padding:60px;border-radius:12px 0 0 12px}
-  .wk-media{border-radius:0 12px 12px 0}
+  /* the reference sweeps the media panel's lower outer corner */
+  .wk-media{border-radius:0 12px 300px 0}
 }
 @media(min-width:1200px){.wk-date{right:130px;width:269px;grid-template-columns:auto}}
 /* reveal start pose: rows wait 150px low and clear until they enter */
