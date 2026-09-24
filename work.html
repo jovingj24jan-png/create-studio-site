@@ -1170,13 +1170,16 @@ body{background:#f2f2f2}
 a.wk-row:hover .wk-t{color:var(--accent)}
 .wk-row.hovered .p3-cta{opacity:1;scale:1}
 .wk-row[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.wk-media{transition:none}}
 .wk-empty{padding:80px 0;text-align:center;font-size:21px;letter-spacing:-.04em;color:var(--muted)}
 .wk-empty button{margin-left:8px;color:var(--accent);text-decoration:underline;cursor:pointer}
 @media(min-width:810px){
   .wk-row{grid-template-columns:702fr 698fr;height:600px}
   .wk-card{padding:60px;border-radius:12px 0 0 12px}
-  /* the reference sweeps the media panel's lower outer corner */
-  .wk-media{border-radius:0 12px 300px 0}
+  /* the picture panel's lower outer corner sweeps open while the row is
+     under the pointer (or focused) and eases back when it leaves */
+  .wk-media{border-radius:0 12px 12px 0;transition:border-radius .6s var(--ease)}
+  .wk-row:hover .wk-media,.wk-row:focus-within .wk-media{border-radius:0 12px 300px 0}
 }
 @media(min-width:1200px){.wk-date{right:130px;width:269px;grid-template-columns:auto}}
 /* reveal start pose: rows wait 150px low and clear until they enter */
