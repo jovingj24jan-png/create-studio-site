@@ -1162,15 +1162,22 @@ body{background:#f2f2f2}
 .wk-bar{display:block;height:10px;background:#f2f2f2;border-radius:2px}
 .wk-desc{margin-top:18px;padding-left:12px;font-size:16px;line-height:1.3;letter-spacing:-.04em;color:var(--deep)}
 .wk-media{position:relative;min-height:320px;background:var(--ink);overflow:hidden}
-.wk-media img,.wk-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.wk-date{position:absolute;right:24px;bottom:0;display:grid;gap:6px;padding:14px 16px 10px;background:#fafafa;border-radius:12px 12px 0 0;
-  font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;line-height:1.3;letter-spacing:-.05em;text-transform:uppercase}
+.wk-media img,.wk-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .6s var(--ease)}
+/* the reference pushes the picture to 1.2 while the corner is open */
+.wk-row:hover .wk-media img,.wk-row:hover .wk-media video,
+.wk-row:focus-within .wk-media img,.wk-row:focus-within .wk-media video{transform:scale(1.2)}
+.wk-date{position:absolute;right:310px;bottom:28px;z-index:-1;display:grid;gap:5px;text-align:right;
+  font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;line-height:1.3;letter-spacing:-.05em;
+  text-transform:uppercase;transition:right .6s var(--ease),bottom .6s var(--ease)}
 .wk-date-l{color:var(--muted)}
-.wk-date-v{color:var(--accent);text-align:right}
-a.wk-row:hover .wk-t{color:var(--accent)}
+.wk-date-v{color:var(--accent)}
+/* the reference keeps the release date behind the picture and brings it out
+   into the corner the sweep opens, never showing it at rest */
+.wk-row:hover .wk-date,.wk-row:focus-within .wk-date{right:10px;bottom:6px;z-index:2}
 .wk-row.hovered .p3-cta{opacity:1;scale:1}
 .wk-row[hidden]{display:none}
-@media(prefers-reduced-motion:reduce){.wk-media{transition:none}}
+@media(prefers-reduced-motion:reduce){.wk-media,.wk-date,.wk-media img,.wk-media video{transition:none}}
 .wk-empty{padding:80px 0;text-align:center;font-size:21px;letter-spacing:-.04em;color:var(--muted)}
 .wk-empty button{margin-left:8px;color:var(--accent);text-decoration:underline;cursor:pointer}
 @media(min-width:810px){
@@ -1181,7 +1188,6 @@ a.wk-row:hover .wk-t{color:var(--accent)}
   .wk-media{border-radius:0 12px 12px 0;transition:border-radius .6s var(--ease)}
   .wk-row:hover .wk-media,.wk-row:focus-within .wk-media{border-radius:0 12px 300px 0}
 }
-@media(min-width:1200px){.wk-date{right:130px;width:269px;grid-template-columns:auto}}
 /* reveal start pose: rows wait 150px low and clear until they enter */
 html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
 </style>
@@ -1243,8 +1249,8 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
         <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Build a premium resort identity and digital platform.</p></div>
       </div>
       <div class="wk-media"><img src="1000076318.png" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">August 21, 2025</span></div>
       </div>
+      <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">August 21, 2025</span></div>
       <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </a>
     <a class="wk-row" href="work/blackwell-motors.html" data-name="blackwell motors" data-cats="Strategy|Development|Digital Campaigns">
@@ -1255,8 +1261,8 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
         <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Rebrand and launch Blackwell&rsquo;s first EV line.</p></div>
       </div>
       <div class="wk-media"><img src="whitewheel.avif" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">June 25, 2025</span></div>
       </div>
+      <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">June 25, 2025</span></div>
       <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </a>
     <a class="wk-row" href="work/aspen877.html" data-name="aspen® 877" data-cats="Brand &amp; Identity|Digital Campaigns|Animation &amp; Motion">
@@ -1267,8 +1273,8 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
         <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Launch Aspen&#174; 877 with identity, website, and campaign.</p></div>
       </div>
       <div class="wk-media"><img src="bicycle.avif" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">June 19, 2025</span></div>
       </div>
+      <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">June 19, 2025</span></div>
       <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </a>
     <div class="wk-row" data-name="monolith architecture" data-cats="Brand &amp; Identity|Responsive Web Design|Content">
@@ -1279,8 +1285,8 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
         <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Redefine the brand and digital presence.</p></div>
       </div>
       <div class="wk-media"><img src="0a29VUpo9l1Bjl8Xetw3ozovKQs.jpg" alt="" loading="lazy" decoding="async">
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">September 6, 2024</span></div>
       </div>
+      <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">September 6, 2024</span></div>
       <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </div>
     <div class="wk-row" data-name="numeriq fashion" data-cats="Brand &amp; Identity|Social Media Marketing|E-commerce">
@@ -1291,8 +1297,8 @@ html.js-motion .wk-row{opacity:0;transform:translateY(150px)}
         <div class="wk-foot"><span class="wk-bar" aria-hidden="true"></span><p class="wk-desc">Design and launch Numeriq&rsquo;s brand and e-commerce hub.</p></div>
       </div>
       <div class="wk-media"><video class="wk-vid" data-src="numeriq.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
-        <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">October 1, 2025</span></div>
       </div>
+      <div class="wk-date"><span class="wk-date-l">Release date</span><span class="wk-date-v">October 1, 2025</span></div>
       <span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case</span>
     </div>
     <p class="wk-empty" id="wkEmpty" hidden>No projects match that search. <button type="button" id="wkReset">Clear filters</button></p>
