@@ -1150,9 +1150,9 @@ body{background:#f2f2f2}
 .wp-empty{margin-top:40px;font-size:21px;letter-spacing:-.04em;color:var(--muted)}
 .wp-mark{margin:0;font-size:clamp(24px,2.3vw,32px);line-height:1.2;font-weight:400;letter-spacing:-.05em;color:var(--deep)}
 .wc{position:relative;display:block;height:clamp(420px,56vw,600px);border-radius:12px;overflow:hidden;background:var(--ink);color:#fff}
-.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.3) blur(2px);transition:transform .6s var(--ease)}
-.wc-intro>img{filter:brightness(.3) blur(2px) grayscale(1)}
-a.wc:hover>img,a.wc:focus-visible>img{transform:scale(1.1)}
+.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:transform .6s var(--ease),filter .6s var(--ease)}
+.wc-intro>img{filter:brightness(.6) grayscale(1)}
+a.wc:hover>img,a.wc:focus-visible>img{transform:scale(1.1);filter:brightness(.3) blur(2px)}
 .wc-veil{position:absolute;inset:0}
 .wc-meta{position:absolute;left:32px;right:32px;top:32px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .wc-by{display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.5);padding-left:16px}

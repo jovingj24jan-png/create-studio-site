@@ -1081,7 +1081,6 @@ a.wc:hover .wc-title{color:var(--accent)}
 @media(prefers-reduced-motion:reduce){.froll-in{transition:none}}
 /* start poses for the one-time reveals; without script (or with reduced
    motion) none of this applies and everything simply shows */
-html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
 html.js-motion .wh-pop{opacity:0;transform:scale(1.3);transform-origin:0 50%}
 html.js-motion .wh-words .w{opacity:0;transform:translateY(20px)}
 html.js-motion .foot-up .foot-grid{transform:scale(.9);transform-origin:50% 0}
@@ -1123,66 +1122,138 @@ input::placeholder{color:var(--rule)}
 }
 </style>
 <style>
-/* ═══════════════════ Whisper article, from the reference's article pages ═
-   Title beside a 652 x 740 picture, the byline under it, the opening line
-   at 80px across the width, a full-bleed picture, then the piece itself in
-   a 725px column with the summary alongside; previous/next, and three more
-   whispers. Desktop values measured at 1440. */
-.ar{background:#fafafa;padding:120px 20px 80px}
-.ar-in{max-width:1440px;margin:0 auto}
-.ar-hero{display:grid;grid-template-columns:1fr;gap:32px;align-items:end}
-.ar-title{font-size:clamp(40px,5.55vw,80px);line-height:1.1;font-weight:500;letter-spacing:-.05em;color:var(--muted)}
-.ar-ph{border-radius:12px;overflow:hidden;background:var(--ink);aspect-ratio:652/740}
-.ar-ph img{width:100%;height:100%;object-fit:cover}
-.ar-by{display:flex;align-items:center;gap:16px;margin-top:56px}
-.ar-av{width:60px;height:60px;border-radius:8px;object-fit:cover;flex:none}
-.ar-name{font-size:18.08px;line-height:1.4;letter-spacing:-.04em;color:var(--deep)}
-.ar-role{font-size:14.08px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
-.ar-date{margin-left:auto;font-size:14.08px;letter-spacing:-.04em;color:var(--muted)}
-.ar-lede{margin-top:64px;font-size:clamp(28px,5.55vw,80px);line-height:1.1;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
-.ar-wide{margin:64px -20px 0;overflow:hidden}
-.ar-wide img{width:100%;height:auto;display:block}
-.ar-body{display:grid;grid-template-columns:1fr;gap:40px;margin-top:64px}
-.ar-aside{font-size:clamp(20px,1.67vw,24px);line-height:1.2;font-weight:500;letter-spacing:-.05em;color:var(--muted)}
-.ar-copy{max-width:725px;font-size:18.08px;line-height:1.4;letter-spacing:-.04em;color:var(--deep)}
-.ar-copy p+p,.ar-copy ul+p{margin-top:20px}
-.ar-h{margin-top:48px;font-size:clamp(24px,2.3vw,32px);line-height:1.1;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
-.ar-h+p{margin-top:20px}
-.ar-list{list-style:none;margin-top:16px;display:grid;gap:8px}
-.ar-list li{position:relative;padding-left:23px}
-.ar-list li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
-.ar-list strong{font-weight:500;color:var(--ink)}
-.ar-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;margin-top:80px;padding-top:32px;border-top:1px solid var(--line)}
-.ar-nav a{display:grid;gap:6px;max-width:420px;color:var(--deep)}
-.ar-nav .k{font-family:"Fragment Mono",ui-monospace,monospace;font-size:13px;letter-spacing:-.05em;text-transform:uppercase;color:var(--muted)}
-.ar-nav .t{font-size:20.96px;line-height:1.3;letter-spacing:-.04em;transition:color .3s}
-.ar-nav a:hover .t{color:var(--accent)}
-.ar-nav .next{text-align:right;justify-items:end}
-.ar-more{margin-top:96px}
-@media(min-width:810px){
-  .ar-hero{grid-template-columns:600px minmax(0,652px);justify-content:space-between;gap:80px}
-  .ar-body{grid-template-columns:576px minmax(0,725px);justify-content:space-between;gap:80px}
-  .ar-wide{margin:64px calc(50% - 50vw) 0;width:100vw}
+/* ═══════════════ Whisper article, from the reference's /whispers/<slug> ═══
+   The head pins for its own screen while the piece scrolls up over it. The
+   copy sits in a 600 + 725 grid beside the summary, and the page closes on
+   "more whispers". Desktop values measured at 1440, tablet at 1024, phone
+   at 390. */
+html.js-motion .hdr-logo,html.js-motion .hdr .nav,html.js-motion .hdr-right>a,html.js-motion .hx-fade6{opacity:1;transform:none}
+body{background:#f2f2f2}
+/* the reference keeps the bar in view on these pages */
+.hdr.hide{transform:none}
+
+/* ── head ─────────────────────────────────────────────────────────────── */
+.ar-hero{position:relative;height:880px;padding-top:80px;background:#fafafa;overflow:hidden}
+.ar-in{position:relative;display:block;height:800px;color:#fff}
+.ar-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7)}
+.ar-head{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;padding:60px 20px 180px}
+.ar-rule{position:relative;display:block;flex:none;height:3px}
+.ar-rule::before{content:"";position:absolute;left:0;top:0;width:20px;height:3px;background:var(--accent)}
+.ar-rule::after{content:"";position:absolute;left:20px;right:0;top:0;height:1px;background:var(--rule)}
+.ar-date{margin:32px 0 0;font-size:16px;line-height:1.4;letter-spacing:-.05em;color:#fff}
+.ar-title{margin:auto 0 0;font-size:40px;line-height:1.1;font-weight:500;letter-spacing:-.07em;color:#fff}
+.ar-by{display:flex;align-items:center;gap:16px;margin-top:36px}
+.ar-av{flex:none;width:60px;height:60px;border-radius:8px;object-fit:cover}
+.ar-name{display:block;font-size:19.2px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:#fff}
+.ar-role{display:block;font-size:14.08px;line-height:1.3;letter-spacing:-.04em;color:#ebebeb}
+.ar-tk{display:none;flex:0 1 280px;height:40px;margin-left:auto;
+  background:repeating-linear-gradient(to right,rgba(0,0,0,.5) 0 1px,transparent 1px 16px)}
+.wd{display:inline-block;white-space:nowrap}
+.ch{display:inline-block}
+@media(min-width:810px) and (max-width:1199px){.ar-hero{height:859px;padding-top:60px}.ar-in{height:799px}}
+@media(min-width:1200px){
+  /* the head pins; every later block carries its own background and rides
+     over it, which is how the reference makes the transition */
+  .ar-hero{position:sticky;top:0;z-index:1;height:1020px;padding:0}
+  .ar-in{display:flex;justify-content:space-between;align-items:flex-start;height:100%;padding:120px 0 160px 20px;color:inherit}
+  .ar-img{position:static;flex:none;width:calc(50% - 60px);height:740px;filter:none}
+  .ar-head{width:calc(50% - 60px);padding:0}
+  .ar-date{font-size:18.08px;letter-spacing:-.04em;color:var(--muted)}
+  .ar-title{font-size:80px;color:var(--deep)}
+  .ar-by{margin-top:60px}
+  .ar-name{font-size:18.08px;line-height:1.4;font-weight:400;letter-spacing:-.04em;color:var(--deep)}
+  .ar-role{color:var(--muted)}
+  .ar-tk{display:block}
 }
-.wc{position:relative;display:block;height:clamp(420px,56vw,600px);border-radius:12px;overflow:hidden;background:var(--ink);color:#fff}
-.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:transform 1.2s var(--ease)}
-.wc-intro>img{filter:brightness(.6) grayscale(1)}
-a.wc:hover>img{transform:scale(1.04)}
-.wc-veil{position:absolute;inset:0}
-.wc-meta{position:absolute;left:32px;right:32px;top:32px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.wc-by{display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.5);padding-left:16px}
-.wc-name{font-size:18.1px;line-height:1.4;letter-spacing:-.04em;color:#fafafa}
-.wc-role{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#f2f2f2;opacity:.8}
-.wc-date{flex:none;font-size:14.1px;line-height:1.3;letter-spacing:-.04em;color:#fafafa}
-.wc-title{position:absolute;left:32px;right:32px;top:110px;max-width:350px;font-size:32px;line-height:1.2;font-weight:400;letter-spacing:-.05em;transition:color .3s}
-a.wc:hover .wc-title{color:var(--accent)}
-/* the featured piece runs the full width and is taller */
-.wp-feat{height:clamp(420px,50vw,720px)}
-.wp-feat .wc-title{max-width:350px}
-.wc-sum{position:absolute;left:32px;right:32px;bottom:32px;max-width:400px;font-size:20.96px;line-height:1.2;letter-spacing:-.04em;color:#fafafa}
-@media(min-width:810px){.wp-grid{grid-template-columns:1fr 1fr}.wp-feat{grid-column:1/-1}}
-/* start pose: each card's meta rides up as the card arrives */
-html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
+
+/* ── lede, full-bleed plate, body ─────────────────────────────────────── */
+.ar-lede{position:relative;z-index:2;background:#fff;padding:80px 20px}
+.ar-lede p{margin:0;font-size:40px;line-height:1.1;font-weight:500;letter-spacing:-.07em;color:var(--muted)}
+.ar-wide{position:relative;z-index:2;background:#fff}
+.ar-wide img{display:block;width:100%;height:360px;object-fit:cover}
+.ar-art{position:relative;z-index:2;background:#fff;padding:180px 20px 80px}
+.ar-lines{position:absolute;left:0;right:0;top:0;height:100px;opacity:.145;pointer-events:none;
+  background:repeating-linear-gradient(to right,#000 0 1px,transparent 1px 13px)}
+.ar-cols{display:grid;gap:40px}
+.ar-sum{margin:0;border-left:1px solid var(--rule);padding-left:24px;
+  font-size:22.4px;line-height:1.2;letter-spacing:-.06em;color:var(--muted)}
+.ar-pn{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:40px}
+.ar-pn-l{font-size:16px;line-height:1.4;letter-spacing:-.05em;color:var(--muted)}
+.ar-pn-b{display:flex;gap:12px}
+.ar-pn-b a{display:grid;place-items:center;width:44px;height:44px;color:var(--accent)}
+.ar-pn-b svg{display:block;width:20px;height:20px;transition:transform .45s var(--ease)}
+.ar-pn-b a:first-child:hover svg{transform:translateX(-4px)}
+.ar-pn-b a:last-child:hover svg{transform:translateX(4px)}
+.ar-copy>:first-child{margin-top:0}
+.ar-copy h3{margin:40px 0 0;font-size:22.4px;line-height:1.2;font-weight:400;letter-spacing:-.06em;color:#141414}
+.ar-copy p{margin:20px 0 0;font-size:16px;line-height:1.4;letter-spacing:-.05em;color:var(--deep)}
+.ar-copy ul{margin:21px 0 0;padding:0 0 0 21px;list-style:none}
+.ar-copy li{position:relative;font-size:16px;line-height:1.4;letter-spacing:-.05em;color:var(--deep)}
+.ar-copy li::before{content:"\00B7";position:absolute;left:-13px;color:var(--deep)}
+@media(min-width:810px){
+  .ar-lede p{font-size:64px}
+  .ar-wide img{height:540px}
+  .ar-art{padding-top:250px}
+  .ar-lines{height:150px}
+  /* the summary sits top left, the prev/next row at the foot of that
+     column, and the copy runs the full height of the second column */
+  .ar-cols{grid-template-columns:37% 1fr;grid-template-rows:auto 1fr;gap:60px}
+  .ar-aside{grid-column:1;grid-row:1}
+  .ar-copy{grid-column:2;grid-row:1/span 2}
+  .ar-pn{grid-column:1;grid-row:2;align-self:end;margin:0}
+  .ar-copy h3{font-size:25.6px}
+}
+@media(min-width:1200px){
+  .ar-lede p{font-size:80px}
+  .ar-wide img{height:900px}
+  .ar-art{padding-top:460px}
+  .ar-lines{height:300px}
+  .ar-cols{grid-template-columns:1fr 1fr}
+  .ar-sum{font-size:28.96px}
+  .ar-pn-l{font-size:18.08px;letter-spacing:-.04em}
+  .ar-copy h3{font-size:28.96px}
+  .ar-copy p,.ar-copy li{font-size:18.08px;letter-spacing:-.04em}
+  .ar-copy ul{padding-left:23px}
+}
+@media(min-width:1400px){.ar-cols{grid-template-columns:600px 1fr}}
+
+/* ── more whispers ────────────────────────────────────────────────────── */
+.ar-more{position:relative;z-index:3;background:#fff;padding:116px 0 0}
+.ar-more .ar-lines{left:20px;right:20px;height:100px;opacity:.086}
+.ar-more-t{margin:0 20px;font-size:clamp(48px,20vw,160px);line-height:1.2;font-weight:600;
+  letter-spacing:-.06em;color:#d9d9d9;white-space:nowrap}
+.ar-more-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:21px;padding:0 10px}
+.ar-more-grid .wc{height:500px}
+@media(min-width:810px){
+  .ar-more{padding-top:216px}
+  .ar-more .ar-lines{height:200px}
+  .ar-more-grid{grid-template-columns:1fr 1fr;padding:0}
+  .ar-more-grid .wc{height:450px}
+}
+@media(min-width:1200px){.ar-more-grid .wc{height:600px}}
+
+/* cards, as on the index: the art lifts and dims under the pointer */
+.wc>img{filter:brightness(.6);transition:transform .6s var(--ease),filter .6s var(--ease)}
+a.wc:hover>img,a.wc:focus-visible>img{transform:scale(1.1);filter:brightness(.3) blur(2px)}
+a.wc:hover .wc-title{color:inherit}
+@media(pointer:fine){a.wc,a.wc *{cursor:none}}
+@media(prefers-reduced-motion:reduce){.wc>img,.ar-pn-b svg{transition:none}}
+
+/* "read article": a 200px disc that stands in for the pointer over a card */
+.wr{position:fixed;top:0;left:0;z-index:130;display:none;place-items:center;
+    width:200px;height:200px;pointer-events:none;color:#fff}
+.wr.on{display:grid}
+.wr-disc{position:absolute;inset:0;border-radius:50%;background:var(--accent)}
+.wr-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px}
+.wr-in svg{display:block;width:52px;height:52px}
+.wr-label{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:24px;
+  letter-spacing:-.8px;text-transform:uppercase}
+
+/* the footer covers the pinned head */
+#site-foot{position:relative;z-index:3;background:#fafafa}
+
+/* start poses: the head's date and title arrive character by character */
+html.js-motion .ar-date .ch,html.js-motion .ar-title .ch{opacity:.001;transform:translateY(40px)}
 </style>
 </head>
 <body>
@@ -1201,6 +1272,85 @@ html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
   </div>
 </header>
 
+<main id="top">
+  <section class="ar-hero" aria-label="Rethinking Product Design with Intelligence">
+    <a class="ar-in" href="../whispers.html" aria-label="Back to whispers">
+      <div class="ar-head">
+        <span class="ar-rule" aria-hidden="true"></span>
+        <p class="ar-date">Wednesday, July 30, 2025</p>
+        <h1 class="ar-title">Rethinking Product Design with Intelligence</h1>
+        <div class="ar-by">
+          <img class="ar-av" src="../public/img/ref/art-ai-av.jpg" alt="Lucas Marino" decoding="async">
+          <span><span class="ar-name">Lucas Marino</span><span class="ar-role">Technical Director</span></span>
+          <span class="ar-tk" aria-hidden="true"></span>
+        </div>
+      </div>
+      <img class="ar-img" src="../public/img/ref/art-ai-hero.png" alt="" decoding="async">
+    </a>
+  </section>
+
+  <section class="ar-lede"><p>A SaaS product team approached us with an AI add-on. The challenge was to rethink AI not as a widget but as a foundation for smarter systems.</p></section>
+
+  <section class="ar-wide"><img src="../public/img/ref/art-ai-wide.jpeg" alt="" loading="lazy" decoding="async"></section>
+
+  <article class="ar-art">
+    <span class="ar-lines" aria-hidden="true"></span>
+    <div class="ar-cols">
+      <aside class="ar-aside">
+        <p class="ar-sum">A look at how AI can be integrated into products and workflows to create smarter, scalable, long-term solutions.</p>
+      </aside>
+      <div class="ar-copy">
+        <h3>The Digital Test Drive</h3>
+        <p>Car buyers no longer visit dealerships first—they visit websites. The moment they land on a brand’s page, they expect movement, sound, and emotion.</p>
+        <p>A modern automotive site should feel like a test drive. The light should shift, reflections should change, and motion should hint at power. Good design doesn’t just present a car—it brings it to life.</p>
+        <h3>What Makes Digital Automotive Experiences Work</h3>
+        <p>The most successful car brands use digital platforms to trigger curiosity and confidence.</p>
+        <p>They combine</p>
+        <ul>
+          <li>3D configurators that let users explore every detail</li>
+          <li>Smooth transitions that mimic motion and precision</li>
+          <li>Cinematic storytelling connecting performance with lifestyle</li>
+          <li>Sound and texture through subtle animation and video pacing</li>
+        </ul>
+        <p>These cues build trust before a single word about specs or horsepower appears.</p>
+        <h3>Emotion Over Engineering</h3>
+        <p>Numbers alone don’t sell cars anymore. Experience does. Buyers want to feel how the brand fits into their lives, not just how fast it accelerates.</p>
+        <p>Design choices—like shadow, contrast, and layout—should express the same intent as the car itself. A minimal electric model needs clean, silent motion. A performance brand deserves sharp transitions and tension in its typography.Digital design becomes a mirror of engineering philosophy.</p>
+        <h3>Turning Interaction Into Intention</h3>
+        <p>When visitors start playing with the site—zooming, rotating, customizing—they begin to imagine ownership.</p>
+        <p>That’s where conversion starts.</p>
+        <p>Key features that drive engagement:</p>
+        <ul>
+          <li>Instant visual feedback when changing color or trim</li>
+          <li>Personalized recommendations based on previous choices</li>
+          <li>Integrated dealer locators for one-click test-drive booking</li>
+          <li>Responsive design that keeps every interaction smooth on mobile</li>
+        </ul>
+        <p>Each action moves the visitor one step closer to making a real decision.</p>
+        <h3>From Showcase to Relationship</h3>
+        <p>We helped an automotive client move from static catalog pages to a fully interactive platform. Instead of listing models, we built a story around design philosophy and user control.</p>
+        <p>Cinematic videos replaced photo grids. Performance metrics became animations that react to scroll. The interface felt engineered—just like the product.</p>
+        <p>The results spoke clearly: more engagement, longer session times, and higher direct inquiries.</p>
+        <h3>The Road Ahead</h3>
+        <p>Automotive brands that treat their sites as living spaces—not showrooms—win trust faster. Because the modern customer doesn’t start with a brochure; they start with a feeling.</p>
+        <p>Every scroll, highlight, and reflection should say one thing:</p>
+        <p>This is what it feels like to drive it.</p>
+      </div>
+      <nav class="ar-pn" aria-label="Previous and next article">
+        <span class="ar-pn-l">Previous/Next Articles</span>
+        <span class="ar-pn-b"><a href="digital-identities-across-cultures.html" aria-label="Next article"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></a></span>
+      </nav>
+    </div>
+  </article>
+
+  <section class="ar-more" aria-label="More whispers">
+    <span class="ar-lines" aria-hidden="true"></span>
+    <h2 class="ar-more-t">more whispers</h2>
+    <div class="ar-more-grid"><a class="wc" href="architecture-in-the-digital-age.html"><img src="../public/img/ref/art-arch-hero.jpg" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Mark Miller</span><span class="wc-role">Creative Lead</span></span><span class="wc-date num">Jul 20, 2025</span></div><h2 class="wc-title">Architecture in the Digital Age</h2><p class="wc-sum">Why architecture firms must move beyond static galleries and build digital platforms that capture ambition and authority.</p></a><a class="wc" href="designing-trust-why-digital-brands-win-with-simplicity.html"><img src="../public/img/ref/art-trust-hero.jpg" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Jordan Ellis</span><span class="wc-role">UX Strategist</span></span><span class="wc-date num">Oct 8, 2025</span></div><h2 class="wc-title">Designing Trust: Why Digital Brands Win with Simplicity</h2><p class="wc-sum">In an age of information overload, clarity builds credibility. Here’s how brands can design digital experiences that earn trust through simplicity, structure, and restraint.</p></a><a class="wc" href="digital-identities-across-cultures.html"><img src="../public/img/ref/art-ident-hero.png" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Edward Bright</span><span class="wc-role">Marketing Lead</span></span><span class="wc-date num">Jul 25, 2025</span></div><h2 class="wc-title">Digital Identities Across Cultures</h2><p class="wc-sum">How fashion brands like Numeriq blend raw street energy with high-fashion polish in their online presence.</p></a><a class="wc" href="how-automotive-brands-win-online.html"><img src="../public/img/ref/art-auto-hero.jpg" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Jordan Ellis</span><span class="wc-role">UX Strategist</span></span><span class="wc-date num">Dec 7, 2025</span></div><h2 class="wc-title">How Automotive Brands Win Online</h2><p class="wc-sum">Exploring how carmakers use interactive tools, storytelling, and configurators to create digital experiences as compelling as test drives.</p></a><a class="wc" href="the-future-of-e-mobility-marketing-from-lindholm.html"><img src="../public/img/ref/art-emob-hero.jpeg" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Matthew Parker</span><span class="wc-role">Head of Product</span></span><span class="wc-date num">Jul 15, 2025</span></div><h2 class="wc-title">The Future of E-Mobility Marketing from Lindholm</h2><p class="wc-sum">What launching an e-bike brand teaches us about positioning, culture, and standing out in a crowded mobility market.</p></a><a class="wc" href="why-hospitality-brands-need-digital-experiences-that-feel-like-destinations.html"><img src="../public/img/ref/art-hosp-hero.png" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Samuel Laronde</span><span class="wc-role">Marketing Lead</span></span><span class="wc-date num">Oct 7, 2025</span></div><h2 class="wc-title">Why Hospitality Brands Need Digital Experiences That Feel Like Destinations</h2><p class="wc-sum">How resorts and hotels can design websites that mirror the exclusivity and atmosphere of their physical spaces.</p></a></div>
+  </section>
+</main>
+
+
 <div class="menu" id="menu" aria-hidden="true">
   <nav class="shell">
     <a class="mi t-h3" href="../index.html">HOME <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">01</span></a>
@@ -1214,89 +1364,8 @@ html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
   </div>
 </div>
 
-<main id="top" class="ar">
-  <div class="ar-in">
-    <div class="ar-hero">
-      <h1 class="ar-title">Rethinking Product Design with Intelligence</h1>
-      <div class="ar-ph"><img src="../rethinking-product-design.png" alt="" decoding="async"></div>
-    </div>
-    <div class="ar-by">
-      <img class="ar-av" src="../4GI3J65Rp3grUuMh8lDptPl1pvw.jpg" alt="Lucas Marino" width="60" height="60" decoding="async">
-      <div><p class="ar-name">Lucas Marino</p><p class="ar-role">Technical Director</p></div>
-      <time class="ar-date num" datetime="2025-07-30">Jul 30, 2025</time>
-    </div>
-    <p class="ar-lede">A SaaS product team approached us with an AI add-on. The challenge was to rethink AI not as a widget but as a foundation for smarter systems.</p>
-    <figure class="ar-wide"><img src="../public/img/ref/body-rethinking-product.jpeg" alt="" loading="lazy" decoding="async"></figure>
-    <div class="ar-body">
-      <p class="ar-aside">A look at how AI can be integrated into products and workflows to create smarter, scalable, long-term solutions.</p>
-      <div class="ar-copy"><h2 class="ar-h">The Digital Test Drive</h2>
-<p>Car buyers no longer visit dealerships first&mdash;they visit websites. The moment they land on a brand&rsquo;s page, they expect movement, sound, and emotion.</p>
-<p>A modern automotive site should feel like a test drive. The light should shift, reflections should change, and motion should hint at power. Good design doesn&rsquo;t just present a car&mdash;it brings it to life.</p>
-<h2 class="ar-h">What Makes Digital Automotive Experiences Work</h2>
-<p>The most successful car brands use digital platforms to trigger curiosity and confidence.</p>
-<p>They combine</p>
-<ul class="ar-list">
-<li><strong>3D configurators</strong> that let users explore every detail</li>
-<li><strong>Smooth transitions</strong> that mimic motion and precision</li>
-<li><strong>Cinematic storytelling</strong> connecting performance with lifestyle</li>
-<li><strong>Sound and texture</strong> through subtle animation and video pacing</li>
-</ul>
-<p>These cues build trust before a single word about specs or horsepower appears.</p>
-<h2 class="ar-h">Emotion Over Engineering</h2>
-<p>Numbers alone don&rsquo;t sell cars anymore. Experience does. Buyers want to feel how the brand fits into their lives, not just how fast it accelerates.</p>
-<p>Design choices&mdash;like shadow, contrast, and layout&mdash;should express the same intent as the car itself. A minimal electric model needs clean, silent motion. A performance brand deserves sharp transitions and tension in its typography. Digital design becomes a mirror of engineering philosophy.</p>
-<h2 class="ar-h">Turning Interaction Into Intention</h2>
-<p>When visitors start playing with the site&mdash;zooming, rotating, customizing&mdash;they begin to imagine ownership.</p>
-<p>That&rsquo;s where conversion starts.</p>
-<p>Key features that drive engagement:</p>
-<ul class="ar-list">
-<li><strong>Instant visual feedback</strong> when changing color or trim</li>
-<li><strong>Personalized recommendations</strong> based on previous choices</li>
-<li><strong>Integrated dealer locators</strong> for one-click test-drive booking</li>
-<li><strong>Responsive design</strong> that keeps every interaction smooth on mobile</li>
-</ul>
-<p>Each action moves the visitor one step closer to making a real decision.</p>
-<h2 class="ar-h">From Showcase to Relationship</h2>
-<p>We helped an automotive client move from static catalog pages to a fully interactive platform. Instead of listing models, we built a story around design philosophy and user control.</p>
-<p>Cinematic videos replaced photo grids. Performance metrics became animations that react to scroll. The interface felt engineered&mdash;just like the product.</p>
-<p>The results spoke clearly: more engagement, longer session times, and higher direct inquiries.</p>
-<h2 class="ar-h">The Road Ahead</h2>
-<p>Automotive brands that treat their sites as living spaces&mdash;not showrooms&mdash;win trust faster. Because the modern customer doesn&rsquo;t start with a brochure; they start with a feeling.</p>
-<p>Every scroll, highlight, and reflection should say one thing:</p>
-<p><em>This is what it feels like to drive it.</em></p></div>
-    </div>
-    <nav class="ar-nav" aria-label="More articles">
-      <a href="why-hospitality-brands-need-digital-experiences-that-feel-like-destinations.html"><span class="k">Previous article</span><span class="t">Why Hospitality Brands Need Digital Experiences That Feel Like Destinations</span></a>
-      <a class="next" href="architecture-in-the-digital-age.html"><span class="k">Next article</span><span class="t">Architecture in the Digital Age</span></a>
-    </nav>
-    <section class="ar-more" aria-label="More whispers">
-      <h2 class="wp-title">more whispers</h2>
-      <div class="wp-grid"><a class="wc" href="architecture-in-the-digital-age.html"><img src="../public/img/ref/whisper-architecture.jpg" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Mark Miller</span><span class="wc-role">Creative Lead</span></span><span class="wc-date num">Jul 20, 2025</span></div><h2 class="wc-title">Architecture in the Digital Age</h2><p class="wc-sum">Why architecture firms must move beyond static galleries and build digital platforms that capture ambition and authority.</p></a><a class="wc" href="designing-trust-why-digital-brands-win-with-simplicity.html"><img src="../public/img/ref/whisper-trust.jpg" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Jordan Ellis</span><span class="wc-role">UX Strategist</span></span><span class="wc-date num">Oct 8, 2025</span></div><h2 class="wc-title">Designing Trust: Why Digital Brands Win with Simplicity</h2><p class="wc-sum">In an age of information overload, clarity builds credibility. Here&rsquo;s how brands can design digital experiences that earn trust through simplicity, structure, and restraint.</p></a><a class="wc" href="digital-identities-across-cultures.html"><img src="../service-strategy.png" alt="" loading="lazy" decoding="async"><div class="wc-meta"><span class="wc-by"><span class="wc-name">Edward Bright</span><span class="wc-role">Marketing Lead</span></span><span class="wc-date num">Jul 25, 2025</span></div><h2 class="wc-title">Digital Identities Across Cultures</h2><p class="wc-sum">How fashion brands like Numeriq blend raw street energy with high-fashion polish in their online presence.</p></a></div>
-    </section>
-  </div>
-</main>
 
-<section class="wh-close" aria-label="Studio at a glance">
-  <video class="wh-close-bg" data-src="../germ.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
-  <div class="wh-close-in">
-    <h2 class="wh-inspire wh-pop">Let us <span class="accent">inspire</span><br>your next<br>project</h2>
-    <span class="whc-line whc-line-a" aria-hidden="true"></span>
-    <p class="wh-nine wh-pop wh-words">9 years</p>
-    <p class="wh-nine-p wh-pop wh-words">Building lasting partnerships, scaling brands, and shipping work that stands out.</p>
-    <img class="wh-face wh-pop" src="../portrait-tobias.jpg" alt="Tobias Neumann" loading="lazy" decoding="async">
-    <ul class="wh-stats">
-      <li class="wh-pop"><span class="wh-sq" aria-hidden="true"></span>120+ projects delivered</li>
-      <li class="wh-pop"><span class="wh-sq" aria-hidden="true"></span>99% on-time launches</li>
-      <li class="wh-pop"><span class="wh-sq" aria-hidden="true"></span>84% average boost in engagement</li>
-    </ul>
-    <blockquote class="wh-q wh-pop">&quot;We listen first, stay transparent, and deliver what we promise.<br>Every project matters to us.&quot;</blockquote>
-    <p class="wh-who wh-pop">Tobias Neumann</p>
-    <p class="wh-role wh-pop">CEO of Create&#174;</p>
-    <span class="whc-line whc-line-b" aria-hidden="true"></span>
-    <p class="wh-years wh-pop" aria-hidden="true">2016 — 2025</p>
-    <a href="#site-foot" class="wh-cta wh-pop"><span class="roll"><span>Book an intro call</span><span aria-hidden="true">Book an intro call</span></span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></a>
-  </div>
-</section>
+
 
 <footer id="site-foot">
   <div class="shell foot-up" style="padding:60px 0 80px">
@@ -1360,6 +1429,13 @@ html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
     </div>
   </div>
 </footer>
+<div class="wr" id="whRead" aria-hidden="true">
+  <span class="wr-disc"></span>
+  <span class="wr-in">
+    <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M6 26h39M33 14l12 12-12 12"/></svg>
+    <span class="wr-label">Read article</span>
+  </span>
+</div>
 <script src="../js/motion.min.js" onerror="window.__disarm&&window.__disarm()"></script>
 <script>
 (function(){
@@ -1394,11 +1470,56 @@ html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
   h.innerHTML=h.textContent.split(" ").map(function(w){var e=document.createElement("span");e.className="w";e.setAttribute("aria-hidden","true");e.textContent=w;return e.outerHTML}).join(" ");
  });
 
+ /* search the notes by title, author or summary, as the reference does */
+ (function(){
+  var q=document.getElementById("whq");if(!q)return;
+  var cards=[].slice.call(document.querySelectorAll(".wp-bar+.wp-grid a.wc")),empty=document.getElementById("whEmpty");
+  if(!cards.length)cards=[].slice.call(document.querySelectorAll(".wp-bar~.wp-grid a.wc"));
+  q.addEventListener("input",function(){
+   var t=q.value.trim().toLowerCase(),shown=0;
+   cards.forEach(function(c){
+    var ok=!t||c.textContent.toLowerCase().indexOf(t)>=0;
+    c.hidden=!ok;if(ok)shown++;
+   });
+   empty.hidden=shown>0;
+  });
+ })();
+
+ /* the reference swaps the pointer for a "read article" disc while it is
+    over an article card; the disc simply sits under the pointer */
+ (function(){
+  var disc=document.getElementById("whRead");if(!disc)return;
+  var shown=false;
+  function place(x,y){disc.style.transform="translate(-50%,-50%) translate("+x+"px,"+y+"px)"}
+  function show(on){if(on===shown)return;shown=on;disc.classList.toggle("on",on)}
+  document.addEventListener("pointermove",function(e){
+   if(e.pointerType==="touch")return show(false);
+   var card=e.target.closest&&e.target.closest("a.wc");
+   show(!!card);if(card)place(e.clientX,e.clientY);
+  },{passive:true});
+  document.addEventListener("pointerdown",function(e){
+   if(!e.target.closest||!e.target.closest("a.wc"))show(false);
+  },{passive:true});
+  document.addEventListener("mouseleave",function(){show(false)});
+  addEventListener("blur",function(){show(false)});
+ })();
+
+ /* the date and the title are split into words, then characters, so they
+    can arrive one character at a time without breaking words across lines */
+ document.querySelectorAll(".ar-date,.ar-title").forEach(function(el){
+  var text=el.textContent;el.setAttribute("aria-label",text);
+  el.innerHTML=text.split(" ").map(function(w){
+   return '<span class="wd" aria-hidden="true">'+w.split("").map(function(c){
+    return '<span class="ch">'+c.replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</span>";
+   }).join("")+"</span>";
+  }).join(" ");
+ });
+
  /* the title fills the content width, as the reference's does */
  (function(){
-  var t=document.querySelector(".wp-title");if(!t)return;
+  var t=document.querySelector(".ar-more-t");if(!t)return;
   function fit(){
-   var box=t.parentElement.clientWidth;
+   var box=t.clientWidth||t.parentElement.clientWidth;
    t.style.fontSize="100px";
    var rg=document.createRange();rg.selectNodeContents(t);
    var ink=rg.getBoundingClientRect().width;
@@ -1412,10 +1533,9 @@ html.js-motion article.wc .wc-meta{opacity:0;transform:translateY(120px)}
  var OUT=[.16,1,.3,1];
  function once(els,run,margin){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target)}})},{rootMargin:margin});
   [].forEach.call(els,function(el){io.observe(el)})}
- /* each card's byline rides up as the card arrives, as on the homepage */
- once(document.querySelectorAll("article.wc"),function(card){
-  M.animate(card.querySelector(".wc-meta"),{opacity:[0,1],y:[120,0]},{duration:1.2,ease:OUT});
- },"0px 0px -35% 0px");
+ /* the reference's head arrives one character at a time */
+ M.animate(".ar-date .ch",{opacity:[0,1],y:[40,0]},{duration:.8,delay:M.stagger(.004,{startDelay:.05}),ease:OUT});
+ M.animate(".ar-title .ch",{opacity:[0,1],y:[40,0]},{duration:.8,delay:M.stagger(.004,{startDelay:.2}),ease:OUT});
  /* closing panel and footer, as on the homepage */
  once(document.querySelectorAll(".wh-pop"),function(el){
   /* the year line settles at 60%, as on the reference */
