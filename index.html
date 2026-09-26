@@ -427,7 +427,7 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 @media(prefers-reduced-motion:reduce){.pcard-logo.on,.pcard-logo{transition:none}}
 
 /* footer video: fills the small pill that used to hold the chip image */
-.foot-vid{display:block;width:80px;height:40px;flex:none;border-radius:999px;
+.foot-vid{display:block;width:80px;height:45px;flex:none;border-radius:0;
   object-fit:cover;background:var(--mist)}
 
 /* ═══════════════════════ why-choose-us benefit cards (nine.jpg) ════════ */
@@ -1160,7 +1160,6 @@ html.js-motion .faq-pop{opacity:.001}
 .wc{position:relative;display:block;height:clamp(420px,56vw,600px);border-radius:12px;overflow:hidden;background:var(--ink);color:#fff}
 .wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:transform 1.2s var(--ease)}
 .wc-intro>img{filter:brightness(.6) grayscale(1)}
-a.wc:hover>img{transform:scale(1.04)}
 .wc-veil{position:absolute;inset:0}
 .wc-meta{position:absolute;left:32px;right:32px;top:32px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .wc-by{display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.5);padding-left:16px}
@@ -1168,7 +1167,6 @@ a.wc:hover>img{transform:scale(1.04)}
 .wc-role{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#f2f2f2;opacity:.8}
 .wc-date{flex:none;font-size:14.1px;line-height:1.3;letter-spacing:-.04em;color:#fafafa}
 .wc-title{position:absolute;left:32px;right:32px;top:110px;max-width:350px;font-size:32px;line-height:1.2;font-weight:400;letter-spacing:-.05em;transition:color .3s}
-a.wc:hover .wc-title{color:var(--accent)}
 .wi-title,.wi-sub,.wi-p{position:relative;margin:0 32px}
 .wi-title{margin-top:59px;font-size:clamp(40px,4vw,56px);line-height:1.1;font-weight:600;letter-spacing:-.05em}
 .wi-sub{margin-top:23px;font-size:29px;line-height:1.2;letter-spacing:-.06em}
@@ -1316,12 +1314,13 @@ a.wc:hover .wc-title{color:var(--accent)}
 @media(prefers-reduced-motion:reduce){.froll-in{transition:none}}
 /* start poses for the one-time reveals; without script (or with reduced
    motion) none of this applies and everything simply shows */
-html.js-motion a.wc .wc-meta{opacity:0;transform:translateY(120px)}
-html.js-motion .wh-pop{opacity:0;transform:scale(1.3);transform-origin:0 50%}
-html.js-motion .wh-words .w{opacity:0;transform:translateY(20px)}
+/* start poses for the closing panel: the figure and the stats settle from
+   1.3x, everything else only fades, as the reference plays it */
+html.js-motion .wh-pop{opacity:0}
+html.js-motion .wh-pop:not(.wh-nine-p):not(.wh-who):not(.wh-face):not(.wh-years){transform:scale(1.3);transform-origin:0 50%}
+html.js-motion .wh-nine{transform:translateY(40px) scale(1.3);transform-origin:0 50%}
 html.js-motion .foot-up .foot-grid{transform:scale(.9);transform-origin:50% 0}
 html.js-motion .foot-lower .foot-grid{transform:scale(.8);transform-origin:50% 0}
-html.js-motion .nl-h .w,html.js-motion .nl-lw .w{opacity:0;transform:translateY(20px)}
 .nl-h .w,.nl-lw .w{display:inline-block}
 .wcard h3{transition:color .3s}
 .wcard:hover h3{color:var(--accent)}
@@ -1410,7 +1409,7 @@ html.js-motion .tm-pop{opacity:.001}
    180 x 244 portrait and the quote; under them the row of client cards
    (500 x 350, 24px apart), scrolled sideways by the visitor. The title
    rises word by word and the rating fades in; nothing else moves. */
-.tst{background:#fafafa;padding:clamp(56px,7vw,120px) 0}
+.tst{background:#fafafa;padding:clamp(56px,7vw,120px) 0;overflow:hidden}
 .tst-top{display:grid;grid-template-columns:1fr;gap:32px}
 .tst-card{position:relative;overflow:hidden;border-radius:12px;padding:32px}
 .tst-intro{display:flex;flex-direction:column;background:#f2f2f2}
@@ -1435,9 +1434,12 @@ html.js-motion .tm-pop{opacity:.001}
 .tst-chip{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:8px;background:var(--rule);color:var(--deep);
   font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;white-space:nowrap}
 .tst-spot-c{position:absolute;right:40px;bottom:40px}
-.tst-row{list-style:none;display:flex;gap:24px;margin-top:40px;padding-bottom:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;overscroll-behavior-x:contain}
-.tst-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-.tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:12px;background:#fff;scroll-snap-align:start}
+/* the reference lets this row run past the edge and clips it with the
+   section; it does not scroll and it does not travel */
+.tst-row{list-style:none;display:flex;gap:24px;margin-top:40px}
+.tst-brands{display:flex;align-items:center;gap:149px;height:40px;margin-top:56px;padding-left:32px}
+.tst-brands img{flex:none;height:40px;width:auto;filter:invert(1) hue-rotate(180deg)}
+.tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:16px;background:#fff}
 .tst-date{font-size:12px;line-height:1.2;letter-spacing:-.06em;color:var(--muted)}
 .tst-mark{position:absolute;right:28px;top:40px;width:120px;height:90px;color:#f2f2f2}
 .tst-q{position:relative;margin-top:17px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
@@ -1451,17 +1453,16 @@ html.js-motion .tm-pop{opacity:.001}
   .tst-spot-img{grid-row:2/5}.tst-spot-c{position:static;grid-column:2;justify-self:start;margin-top:12px}}
 @media(max-width:809px){.tst-h{font-size:36px}.tst-spot{grid-template-columns:1fr;row-gap:16px}.tst-spot-img{grid-row:auto}.tst-spot-c{grid-column:auto}.tst-spot-n{margin-top:8px}}
 @media(min-width:1200px){
-  .tst{padding:0 0 230px}
+  .tst{padding:0 0 160px}
   .tst-rule{margin-bottom:26px}
   .tst-spot-n{margin-top:63px}
   .tst-spot-c{bottom:46px;right:39px}
-  .tst-spot-w{font-size:160px;line-height:1;top:54px;left:36px}
+  .tst-spot-w{font-size:112px;line-height:1.2;top:47px;left:40px}
   .tst-top{grid-template-columns:minmax(0,676px) minmax(0,676px);gap:32px;justify-content:center}
   .tst-card{height:580px;padding:40px}
   .tst-spot{grid-template-rows:auto auto 1fr;align-content:start;padding-top:289px}
-  .tst-row{margin:150px -20px 0;padding-left:20px;padding-right:20px;scroll-padding-left:20px}
+  .tst-row{margin:54px 0 0}
 }
-html.js-motion .tst-rev{opacity:.001}
 
 /* ═══════════════════════════════════════════════════ footer ════════════ */
 .foot-in{border-bottom:0}
@@ -1909,7 +1910,17 @@ input::placeholder{color:var(--rule)}
         <span class="tst-chip tst-spot-c">Lindholm</span>
       </div>
     </div>
-    <ul class="tst-row" id="tstRow" tabindex="0" aria-label="Client testimonials"></ul>
+    <div class="tst-brands" aria-label="Brands we have worked with">
+      <img src="public/img/ref/logo-7.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/logo-5.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/tst-logo-3.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/logo-9.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/logo-4.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/logo-blackwell.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/logo-8.svg" alt="" height="40" decoding="async">
+      <img src="public/img/ref/tst-logo-8.svg" alt="" height="40" decoding="async">
+    </div>
+    <ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul>
   </div>
 </section>
 
@@ -1943,10 +1954,10 @@ input::placeholder{color:var(--rule)}
     </ul>
     <blockquote class="wh-q wh-pop">&quot;We listen first, stay transparent, and deliver what we promise.<br>Every project matters to us.&quot;</blockquote>
     <p class="wh-who wh-pop">Tobias Neumann</p>
-    <p class="wh-role wh-pop">CEO of Create&#174;</p>
+    <p class="wh-role">CEO of Create&#174;</p>
     <span class="whc-line whc-line-b" aria-hidden="true"></span>
     <p class="wh-years wh-pop" aria-hidden="true">2016 — 2025</p>
-    <a href="#site-foot" class="wh-cta wh-pop"><span class="roll"><span>Book an intro call</span><span aria-hidden="true">Book an intro call</span></span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    <a href="#site-foot" class="wh-cta"><span class="roll"><span>Book an intro call</span><span aria-hidden="true">Book an intro call</span></span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></a>
   </div>
 </section>
 
@@ -2576,28 +2587,24 @@ tick();setInterval(tick,1000);
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target)}})},{rootMargin:margin});
   Array.prototype.forEach.call(els,function(el){io.observe(el)});
  }
- once(document.querySelectorAll("a.wc"),function(card){
-  M.animate(card.querySelector(".wc-meta"),{opacity:[0,1],y:[120,0]},{duration:1.2,ease:OUT});
- },"0px 0px -35% 0px");
+ /* closing panel, block by block, as the reference plays it: the year
+    figure lifts 40px from 1.3x while it fades; the line beneath it and the
+    name only fade; the stats settle from 1.3x; the year range stops at 60%;
+    the role line and the call button do not move at all */
  once(document.querySelectorAll(".wh-pop"),function(el){
-  /* the year line settles at 60%, as on the reference */
-  M.animate(el,{opacity:[0,el.classList.contains("wh-years")?.6:1],scale:[1.3,1]},{duration:.9,ease:OUT});
+  if(el.classList.contains("wh-nine"))
+   M.animate(el,{opacity:[0,1],scale:[1.3,1],y:[40,0]},{duration:1,ease:OUT});
+  else if(el.classList.contains("wh-years"))
+   M.animate(el,{opacity:[0,.6]},{duration:1,ease:OUT});
+  else if(el.classList.contains("wh-nine-p")||el.classList.contains("wh-who")||el.classList.contains("wh-face"))
+   M.animate(el,{opacity:[0,1]},{duration:1,ease:OUT});
+  else
+   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:1,ease:OUT});
  },"0px 0px -10% 0px");
- /* closing panel: the words of "9 years" and the line under it rise 20px
-    and fade in while they are on screen, and drop back out when they leave
-    (in either direction), as on the reference */
- document.querySelectorAll(".wh-words").forEach(function(el){
-  var ws=el.querySelectorAll(".w"),shown=false;
-  new IntersectionObserver(function(es){
-   var v=es[0].isIntersecting;if(v===shown)return;shown=v;
-   M.animate(ws,v?{opacity:1,y:0}:{opacity:0,y:20},{duration:v?.7:.4,delay:v?M.stagger(.03):0,ease:OUT});
-  },{rootMargin:"0px 0px -10% 0px"}).observe(el);
- });
  /* footer (reference): the upper block settles from .9x as it comes in, its
     heading and lead rising word by word; the lower block settles from .8x */
  once(document.querySelectorAll(".foot-up .foot-grid"),function(el){
   M.animate(el,{scale:[.9,1]},{duration:1,ease:OUT});
-  M.animate(el.querySelectorAll(".nl-h .w,.nl-lw .w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.03),ease:OUT});
  },"0px 0px -10% 0px");
  once(document.querySelectorAll(".foot-lower .foot-grid"),function(el){
   M.animate(el,{scale:[.8,1]},{duration:1,ease:OUT});
@@ -2649,10 +2656,6 @@ tick();setInterval(tick,1000);
     from 1.3x and fade in as they arrive (the title's words also rise) */
  once(document.querySelectorAll(".faq-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
- },"0px 0px -10% 0px");
- /* testimonials: the rating block fades in as it arrives */
- once(document.querySelectorAll(".tst-rev"),function(el){
-  M.animate(el,{opacity:[0,1]},{duration:.8,ease:OUT});
  },"0px 0px -10% 0px");
  var pl=document.querySelector(".pcard-logo");
  if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
