@@ -1129,7 +1129,7 @@ html.js-motion .faq-pop{opacity:.001}
 .faq.open .acc{grid-template-rows:1fr}
 @media(min-width:1200px){
   .faq-sec{padding:160px 0 225px}
-  .faq-grid{grid-template-columns:minmax(0,573px) 593px;justify-content:space-between;gap:0}
+  .faq-grid{grid-template-columns:minmax(0,42.36%) 42.36%;justify-content:space-between;gap:0}
   .faq-left{padding:33px 0 0 20px}
 }
 @media(max-width:809px){.faq-who{flex-wrap:wrap}.faq-btn{margin-left:76px}.faq-t{font-size:19px}}
@@ -1404,14 +1404,16 @@ html.js-motion .foot-lower .foot-grid{transform:scale(.8);transform-origin:50% 0
 @media(min-width:1200px){
   .team{padding-top:151px;padding-bottom:191px}
   .team .hww-head{padding-bottom:0;grid-template-columns:22.21% 1fr}
-  .tm-row{grid-template-columns:repeat(4,350px);gap:0;justify-content:center;margin-top:111px}
+  .tm-row{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:111px}
+  .tm-tilt{aspect-ratio:auto;height:600px}
+  .team .hww-kick{margin-top:77.76px}
+  .team .hww-title{margin-top:53.28px}
   .tm-tilt{transform:rotateY(25deg)}
   .tm-lead{grid-template-columns:minmax(0,528px) 336px 368px;column-gap:40px;margin-top:88px;padding-left:40px}
 }
 @media(max-width:809px){.tm-lead{grid-template-columns:1fr}.tm-disc{border-left:0;padding-left:0}.tm-kpi b{font-size:56px}}
 /* entrances (reference): the cards rise 120px one after another as the row
    comes up; the leadership row grows in from 1.3x */
-html.js-motion .tm-card{transform:translateY(120px)}
 html.js-motion .team-bg{transform:scale(1.11)}
 html.js-motion .tm-pop{opacity:.001}
 @media(prefers-reduced-motion:reduce){.tm-tilt,.tm-img,.tm-kpi,.tm-kpil,.tm-who,.tm-veil{transition:none}}
@@ -1428,6 +1430,7 @@ html.js-motion .tm-pop{opacity:.001}
 .tst-card{position:relative;overflow:hidden;border-radius:12px;padding:32px}
 .tst-intro{display:flex;flex-direction:column;background:#f2f2f2}
 .tst-rule{display:block;height:1px;margin-bottom:39px;background:linear-gradient(to right,var(--deep) 0 20px,var(--rule) 20px)}
+html.js-motion .tst-rule{transform:translateX(-100px)}
 .tst-kick{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.5;letter-spacing:-.05em;text-transform:uppercase;color:var(--deep)}
 .tst-h{margin-top:24px;max-width:430px;font-size:48px;line-height:1.1;font-weight:500;letter-spacing:-.05em;color:#141414}
 .tst-lead{margin-top:24px;max-width:441px;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:var(--deep)}
@@ -1885,12 +1888,12 @@ input::placeholder{color:var(--rule)}
     <div class="grid hww-head team-head" style="row-gap:40px">
       <div class="hww-rail">
         <span class="hww-cap"></span>
-        <span class="t-mono hww-kick rv-tag">The team</span>
+        <span class="t-mono hww-kick">The team</span>
         <span class="hww-hatch"></span>
       </div>
       <div class="hww-main">
         <div class="hww-top"><span class="hww-line"></span><span class="hww-mark">create<sup>&#174;</sup></span></div>
-        <h2 class="hww-title rise-words">No serious faces. Real serious work.</h2>
+        <h2 class="hww-title rise-words rise-900">No serious faces. Real serious work.</h2>
         <p class="hww-sub team-sub">&mdash;&mdash;&nbsp; We bring sharp strategy and bold ideas, without the stiff boardroom vibe. Professional where it counts, human where it matters.</p>
         <span class="hww-ticks"></span>
       </div>
@@ -1915,7 +1918,7 @@ input::placeholder{color:var(--rule)}
       <div class="faq-left">
         <p class="faq-kick">FAQ</p>
         <span class="faq-rule" aria-hidden="true"></span>
-        <h2 class="faq-h rise-words">Clearing doubts and concerns</h2>
+        <h2 class="faq-h rise-words rise-late">Clearing doubts and concerns</h2>
         <p class="faq-lead">&mdash;&mdash;&nbsp; Explore the most common questions about working with Create, all in one place.</p>
         <span class="faq-ticks" aria-hidden="true"></span>
         <div class="faq-book faq-pop">
@@ -1939,8 +1942,8 @@ input::placeholder{color:var(--rule)}
     <div class="tst-top">
       <div class="tst-card tst-intro">
         <span class="tst-rule" aria-hidden="true"></span>
-        <p class="tst-kick">What our clients say</p>
-        <h2 class="tst-h rise-words">Partnerships that last, results that stick.</h2>
+        <p class="tst-kick rise-words rise-600">What our clients say</p>
+        <h2 class="tst-h rise-words rise-600">Partnerships that last, results that stick.</h2>
         <p class="tst-lead">From kickoff to launch, brands trust us to stay close, adapt fast, and deliver without any drama.</p>
         <div class="tst-rev">
           <div><span class="tst-stars" aria-hidden="true"></span><p><strong>5 / 5</strong> (98 reviews)</p></div>
@@ -2274,7 +2277,7 @@ document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
   '<blockquote class="tst-q">&ldquo;'+esc(t[4])+'&rdquo;</blockquote>'+
   '<div class="tst-by"><img src="'+t[0]+'" alt="" width="60" height="60" decoding="async"><div><p class="tst-n">'+esc(t[1])+'</p><p class="tst-r">'+esc(t[2])+'</p></div><span class="tst-chip">'+esc(t[3])+'</span></div></li>';
  }).join("");
- /* reference speeds: the client row travels ~52px/s, the logo strip ~31px/s */
+ /* reference speeds, read off its own keyframes: 50px/s and 30px/s */
  function marquee(track,pxPerSec){
   if(!track)return;
   var kids=[].slice.call(track.children);if(!kids.length)return;
@@ -2287,8 +2290,8 @@ document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
   track.classList.add("tst-mq");
  }
  addEventListener("load",function(){
-  marquee(row,52);
-  marquee(document.querySelector(".tst-brands"),31);
+  marquee(row,50);
+  marquee(document.querySelector(".tst-brands"),30);
  });
 })();
 /* team cards */
@@ -2698,9 +2701,22 @@ tick();setInterval(tick,1000);
     row rises 100px and fades in; "Ask our expert" grows in from 1.3x; the
     large C in the "Built for the long run" card fades in while the card is
     on screen and back out when it leaves */
- once(document.querySelectorAll(".rise-words"),function(el){
+ once(document.querySelectorAll(".rise-words:not(.rise-900):not(.rise-600):not(.rise-late)"),function(el){
   M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:.7,delay:M.stagger(.04),ease:OUT});
  },"0px");
+ /* sections 10-12 use the reference's own measure: 900ms (team, FAQ) or 600ms
+    (testimonials), each word .015s behind the last, .2s after the trigger */
+ var REF_EASE=[.44,0,.13,.96],refStep=function(i){return .2+i*.015};
+ [[".rise-900",.9,"0px"],[".rise-600",.6,"0px"],[".rise-late",.9,"0px 0px -25px 0px"]].forEach(function(g){
+  once(document.querySelectorAll(g[0]),function(el){
+   M.animate(el.querySelectorAll(".w"),{opacity:[0,1],y:[20,0]},{duration:g[1],delay:refStep,ease:REF_EASE});
+  },g[2]);
+ });
+ /* the rule above the testimonial card slides in from 100px left, well before
+    the card itself arrives */
+ once(document.querySelectorAll(".tst-rule"),function(el){
+  M.animate(el,{x:[-100,0]},{duration:1,ease:[.55,.58,.34,1.04]});
+ },"0px 0px 400px 0px");
  once(document.querySelectorAll("#plans .plan"),function(el){
   M.animate(el,{opacity:[0,1],y:[100,0]},{duration:.9,ease:OUT});
  },"0px");
@@ -2708,22 +2724,19 @@ tick();setInterval(tick,1000);
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px -10% 0px");
  /* team (reference): the section's backdrop settles from 1.11x as the section
-    reaches the fold, then the cards rise 120px, .12s apart, as the row comes up
-    the screen; the leadership row grows in from 1.3x */
+    reaches the fold; the cards themselves never move, and the leadership row
+    grows in from 1.3x */
  once(document.querySelectorAll(".team-bg"),function(el){
-  M.animate(el,{scale:[1.11,1]},{duration:1.2,ease:OUT});
- },"0px 0px 100px 0px");
- once(document.querySelectorAll(".tm-row"),function(el){
-  M.animate(el.querySelectorAll(".tm-card"),{y:[120,0]},{duration:.9,delay:M.stagger(.12),ease:OUT});
- },"0px 0px -50% 0px");
+  M.animate(el,{scale:[1.11,1]},{duration:1,ease:[.44,0,.13,.96]});
+ },"0px");
  once(document.querySelectorAll(".tm-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px 100px 0px");
  /* FAQ (reference): the whole content block zooms up from 1.3x as its top edge
     reaches the fold, and the booking block repeats the move on its own arrival */
- once(document.querySelectorAll(".faq-pop"),function(el){
-  M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
- },"0px");
+ function faqPop(el){M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT})}
+ once(document.querySelectorAll(".faq-grid"),faqPop,"0px 0px 50px 0px");
+ once(document.querySelectorAll(".faq-book"),faqPop,"0px");
  var pl=document.querySelector(".pcard-logo");
  if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
  var rowN=0;
