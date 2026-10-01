@@ -361,6 +361,8 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 
 /* ═══════════════════════════ partnership / pricing card row ════════════ */
 .pcards{background:#fafafa}
+/* the "Ask our expert" block arrives scaled; keep that transform off the document width */
+#pricing{overflow-x:clip}
 .pcard-row{display:grid;grid-template-columns:1.15fr 1fr 1.2fr;gap:20px}
 .pcard{position:relative;overflow:hidden;display:flex;flex-direction:column;padding:28px;border-radius:12px;
   background:#fff;border:1px solid var(--line)}
@@ -385,7 +387,10 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 .pcard-panel{position:relative;margin-top:auto;padding:22px;border-radius:12px;background:#fafafa}
 .pcard-c{min-height:520px}
 .pcard-c .pcard-lab,.pcard-c .pcard-t{position:relative;z-index:1}
-.pcard-mascot{position:absolute;right:3px;top:47px;width:220px;height:335px;object-fit:cover;object-position:50% 0;pointer-events:none}
+.pcard-mascot{position:absolute;right:3px;top:47px;width:220px;height:335px;object-fit:cover;object-position:50% 0;pointer-events:none;
+  mix-blend-mode:multiply}  /* the clip is shot on white; multiply drops that onto the card, as the reference's does */
+.pcard-clip{display:none}
+@media(min-width:1200px){.pcard-clip{display:block}.pcard-still{display:none}}
 .pcard-date{margin-top:8px;font-size:calc(var(--rfs)*1.9);font-weight:500;letter-spacing:-.04em}
 .pcard-cta{display:inline-flex;align-items:center;gap:16px;margin-top:22px;
   font-size:calc(var(--rfs)*1.3)}
@@ -400,7 +405,12 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
    wordmark at 20%; 24px padding, 520px tall; the middle card carries a large
    white C that fades in while the card is on screen. */
 @media(min-width:1200px){
-  .pcard-row{grid-template-columns:404px 260px 404px 1fr;gap:24px;max-width:1260px;margin:0 auto}
+  /* the reference leaves 220px under the card row and opens the pricing
+     section 215px above its title */
+  .pcards{padding-bottom:220px}
+  #pricing{padding:215px 0 172px}
+  /* same 404/260/404/120 at full width, but the tracks share the loss below 1260 instead of overflowing */
+  .pcard-row{grid-template-columns:404fr 260fr 404fr 120fr;gap:24px;max-width:1260px;margin:0 auto}
   .pcard{height:520px;padding:24px;border:0}
   .pcard-h{font-size:32px;line-height:1.1;letter-spacing:-.06em;color:var(--deep)}
   .pcard-h svg{width:24px;height:24px}
@@ -1058,7 +1068,7 @@ html.js-motion .panel img.bg{will-change:transform}
   #plans h3{line-height:0}
   .plan-body{grid-template-columns:minmax(0,1fr) 380px 380px;column-gap:40px;padding:2px 32px 64px 64px;min-height:455px;box-sizing:border-box}
   .plan-num{display:block;right:-9px;top:156px;bottom:auto}
-  #pricing .ask{align-items:start;margin-top:71px}
+  #pricing .ask{align-items:start;margin-top:100px}
   #pricing .ask-btn{margin-top:56px}
   .plan-feat{margin-top:0}
   .plan-r{padding-top:1px}
@@ -1087,19 +1097,22 @@ html.js-motion #plans .plan,html.js-motion .ask{opacity:.001}
    28px orange + (half turn when open), the 18px answer under it; the open
    row turns into a white 12px-radius card. One answer open at a time, the
    first open to begin with; the answer opens by height. */
-.faq-sec{background:#fafafa}
+.faq-sec{background:#fafafa;overflow-x:clip}
+html.js-motion .faq-pop{opacity:.001}
 .faq-grid{display:grid;grid-template-columns:1fr;gap:48px}
 .faq-kick{font-family:"Fragment Mono",ui-monospace,monospace;font-size:16px;line-height:1.4;letter-spacing:-.04em;text-transform:uppercase;color:var(--deep)}
-.faq-rule{display:block;height:1px;margin-top:4px;max-width:546px;background:linear-gradient(to right,var(--accent) 0 20px,var(--rule) 20px)}
-.faq-h{margin-top:38px;max-width:430px;font-size:clamp(56px,7vw,96px);line-height:1;font-weight:500;letter-spacing:-.06em;color:var(--muted)}
-.faq-lead{margin-top:24px;max-width:547px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
+.faq-rule{display:block;position:relative;height:1px;margin-top:11px;max-width:553px}
+.faq-rule::before{content:"";position:absolute;left:0;top:0;width:20px;height:3px;background:var(--accent)}
+.faq-rule::after{content:"";position:absolute;left:20px;right:0;top:0;height:1px;background:var(--rule)}
+.faq-h{margin-top:34px;max-width:430px;font-size:clamp(56px,7vw,96px);line-height:1;font-weight:500;letter-spacing:-.06em;color:var(--muted)}
+.faq-lead{margin-top:24px;max-width:553px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
 .faq-ticks{display:block;margin-top:48px;height:20px;max-width:546px;background-image:repeating-linear-gradient(to right,var(--rule) 0 1px,transparent 1px 11px)}
 .faq-book{margin-top:56px}
 .faq-book-p{max-width:380px;font-size:20.96px;line-height:1.3;letter-spacing:-.04em;color:var(--muted)}
 .faq-who{display:flex;align-items:center;gap:16px;margin-top:47px;max-width:555px}
 .faq-av{width:60px;height:60px;border-radius:8px;object-fit:cover;flex:none}
 .faq-who>div{flex:1;min-width:0}
-.faq-name{font-size:18.08px;letter-spacing:-.04em;color:var(--deep)}
+.faq-name{font-size:18.08px;line-height:1.4;letter-spacing:-.04em;color:var(--deep)}
 .faq-role{font-size:16px;letter-spacing:-.04em;color:var(--muted)}
 .faq-btn{flex:none;width:161px;margin-top:0}
 .faq-list{list-style:none}
@@ -1111,16 +1124,15 @@ html.js-motion #plans .plan,html.js-motion .ask{opacity:.001}
 .faq-t{font-size:22.4px;line-height:1.3;letter-spacing:-.04em;font-weight:400;color:var(--deep)}
 .faq-ico{flex:none;width:28px;height:28px;color:var(--accent);transition:transform .5s var(--ease)}
 .faq.open .faq-ico{transform:rotate(180deg)}
-.faq-a{max-width:509px;padding:0 18px 18px;font-size:18px;line-height:1.2;letter-spacing:-.04em;color:var(--muted)}
+.faq-a{max-width:515px;padding:0 18px 18px;font-size:18px;line-height:1.2;letter-spacing:-.04em;color:var(--muted)}
 .faq .acc{transition:grid-template-rows .5s var(--ease)}
 .faq.open .acc{grid-template-rows:1fr}
 @media(min-width:1200px){
-  .faq-sec{padding:160px 0 228px}
-  .faq-grid{grid-template-columns:minmax(0,566px) 587px;justify-content:space-between;gap:0}
+  .faq-sec{padding:160px 0 225px}
+  .faq-grid{grid-template-columns:minmax(0,573px) 593px;justify-content:space-between;gap:0}
   .faq-left{padding:33px 0 0 20px}
 }
 @media(max-width:809px){.faq-who{flex-wrap:wrap}.faq-btn{margin-left:76px}.faq-t{font-size:19px}}
-html.js-motion .faq-pop{opacity:.001}
 
 /* ═══════════════════════════════════════════════ whisper cards ═════════ */
 .wcard{position:relative;display:block;width:100%;border-radius:16px;overflow:hidden;background:var(--ink);aspect-ratio:4/3}
@@ -1144,6 +1156,7 @@ html.js-motion .faq-pop{opacity:.001}
    600px rows; the closing block a 900px panel. Everything scrolls 1:1 there;
    motion is one-time reveals (script). Desktop values from 1200px up. */
 .wh{padding-top:clamp(56px,6vw,96px);background:#fafafa}
+@media(min-width:1200px){.wh{padding-top:164px}}  /* the reference opens the section 215px above its title */
 .wh-hatch{display:block;width:74px;height:12px;margin-top:3px;opacity:.15;
   background-image:repeating-linear-gradient(-45deg,var(--deep) 0 1.5px,transparent 1.5px 6px)}
 .wi-rule{position:absolute;top:32px;left:32px;right:32px;height:1px;background:rgba(217,217,217,.4)}
@@ -1339,15 +1352,15 @@ html.js-motion .foot-lower .foot-grid{transform:scale(.8);transform-origin:50% 0
    veil and brings in the KPI (80px), its line, the role and the social
    links; then a three-column row about the leadership team. */
 .team{position:relative;overflow:hidden;background:#141414;color:#fff}
-.team-bg{position:absolute;inset:0;pointer-events:none;
+.team-bg{position:absolute;inset:0;pointer-events:none;will-change:transform;
   background:radial-gradient(70% 45% at 78% 8%,rgba(255,255,255,.10),rgba(255,255,255,0) 70%),
    radial-gradient(60% 50% at 10% 55%,rgba(255,255,255,.05),rgba(255,255,255,0) 70%),
    linear-gradient(180deg,#1b1b1b 0%,#141414 55%,#0d0d0d 100%)}
 .team>.shell{position:relative}
 .team-sub{max-width:600px}
 .tm-row{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:64px}
-.tm-card{perspective:1000px}
-.tm-tilt{position:relative;overflow:hidden;aspect-ratio:315/639;border-radius:8px;background:#222;
+.tm-card{perspective:1200px}
+.tm-tilt{position:relative;overflow:hidden;aspect-ratio:350/600;border-radius:12px;background:#222;
   transition:transform .5s cubic-bezier(.16,1,.3,1)}
 .tm-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:transform .5s cubic-bezier(.16,1,.3,1)}
 .tm-veil{position:absolute;inset:0;background:rgba(20,20,20,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);opacity:0;transition:opacity .4s ease}
@@ -1371,7 +1384,7 @@ html.js-motion .foot-lower .foot-grid{transform:scale(.8);transform-origin:50% 0
 @media(hover:hover){
   .tm-card:hover .tm-veil,.tm-card:hover .tm-kpi,.tm-card:hover .tm-line,.tm-card:hover .tm-bars{opacity:1}
   .tm-card:hover .tm-kpi,.tm-card:hover .tm-kpil,.tm-card:hover .tm-who{transform:none}
-  .tm-card:hover .tm-img{transform:scale(1.1)}
+  .tm-card:hover .tm-img{transform:scale(1.16)}
   .tm-card:hover .tm-tilt{transform:none}
 }
 /* without hover, the card shows its full label (role and links) */
@@ -1389,9 +1402,9 @@ html.js-motion .foot-lower .foot-grid{transform:scale(.8);transform-origin:50% 0
 @media(min-width:810px){.tm-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:1024px){.tm-lead{grid-template-columns:minmax(0,1fr) 336px 368px;column-gap:32px}}
 @media(min-width:1200px){
-  .team{padding-top:141px;padding-bottom:176px}
-  .team .hww-head{padding-bottom:0}
-  .tm-row{grid-template-columns:repeat(4,315px);gap:31px;justify-content:center;margin-top:88px}
+  .team{padding-top:151px;padding-bottom:191px}
+  .team .hww-head{padding-bottom:0;grid-template-columns:22.21% 1fr}
+  .tm-row{grid-template-columns:repeat(4,350px);gap:0;justify-content:center;margin-top:111px}
   .tm-tilt{transform:rotateY(25deg)}
   .tm-lead{grid-template-columns:minmax(0,528px) 336px 368px;column-gap:40px;margin-top:88px;padding-left:40px}
 }
@@ -1399,6 +1412,7 @@ html.js-motion .foot-lower .foot-grid{transform:scale(.8);transform-origin:50% 0
 /* entrances (reference): the cards rise 120px one after another as the row
    comes up; the leadership row grows in from 1.3x */
 html.js-motion .tm-card{transform:translateY(120px)}
+html.js-motion .team-bg{transform:scale(1.11)}
 html.js-motion .tm-pop{opacity:.001}
 @media(prefers-reduced-motion:reduce){.tm-tilt,.tm-img,.tm-kpi,.tm-kpil,.tm-who,.tm-veil{transition:none}}
 
@@ -1426,10 +1440,6 @@ html.js-motion .tm-pop{opacity:.001}
 .tst-backed{max-width:250px}
 .tst-btn{align-self:flex-start;width:188px;margin-top:40px}
 .tst-spot{background:var(--deep);color:#fff;display:grid;grid-template-columns:180px 1fr;column-gap:40px;align-content:end;min-height:420px}
-/* the reference runs footage across the whole spotlight card, with the word,
-   the portrait and the quote sitting over it */
-.tst-spot-bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
-  filter:brightness(.5)}   /* the card reads as a dark panel, as the reference's does */
 .tst-spot-w{position:absolute;left:40px;top:44px;font-size:112px;line-height:1.2;font-weight:600;letter-spacing:-.06em;color:#f2f2f2;pointer-events:none}
 .tst-spot-img{position:relative;grid-row:1/4;width:180px;height:244px;border-radius:12px;object-fit:cover}
 .tst-spot-q{position:relative;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:#fff}
@@ -1441,6 +1451,11 @@ html.js-motion .tm-pop{opacity:.001}
 /* the reference lets this row run past the edge and clips it with the
    section; it does not scroll and it does not travel */
 .tst-row{list-style:none;display:flex;gap:24px;margin-top:40px}
+/* the reference slides the client row and the logo strip left, forever; each
+   track carries a copy of its own items so the loop has no seam */
+.tst-mq{width:max-content;animation:tst-slide var(--mq-dur,80s) linear infinite}
+@keyframes tst-slide{from{transform:translateX(0)}to{transform:translateX(calc(var(--mq-w,0px) * -1))}}
+@media(prefers-reduced-motion:reduce){.tst-mq{animation:none}}
 .tst-brands{display:flex;align-items:center;gap:149px;height:40px;margin-top:56px;padding-left:32px}
 .tst-brands img{flex:none;height:40px;width:auto;filter:invert(1) hue-rotate(180deg)}
 .tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:16px;background:#fff}
@@ -1455,14 +1470,15 @@ html.js-motion .tm-pop{opacity:.001}
 @media(min-width:1024px){.tst-top{grid-template-columns:1fr 1fr}}
 @media(max-width:1199px){.tst-spot{align-content:start;row-gap:0}.tst-spot-w{position:relative;left:auto;top:auto;grid-column:1/-1;margin:-8px 0 24px;font-size:clamp(64px,11vw,112px);line-height:1}
   .tst-spot-img{grid-row:2/5}.tst-spot-c{position:static;grid-column:2;justify-self:start;margin-top:12px}}
-@media(max-width:809px){.tst-h{font-size:36px}.tst-spot{grid-template-columns:1fr;row-gap:16px}.tst-spot-img{grid-row:auto}.tst-spot-c{grid-column:auto}.tst-spot-n{margin-top:8px}}
+@media(max-width:809px){.tst-row.tst-mq{width:auto;animation:none}.tst-row [data-mq-clone]{display:none}
+  .tst-h{font-size:36px}.tst-spot{grid-template-columns:1fr;row-gap:16px}.tst-spot-img{grid-row:auto}.tst-spot-c{grid-column:auto}.tst-spot-n{margin-top:8px}}
 @media(min-width:1200px){
   .tst{padding:0 0 160px}
   .tst-rule{margin-bottom:26px}
   .tst-spot-n{margin-top:63px}
   .tst-spot-c{bottom:46px;right:39px}
   .tst-spot-w{font-size:112px;line-height:1.2;top:47px;left:40px}
-  .tst-top{grid-template-columns:minmax(0,676px) minmax(0,676px);gap:32px;justify-content:center}
+  .tst-top{grid-template-columns:minmax(0,684px) minmax(0,684px);gap:32px;justify-content:center}
   .tst-card{height:580px;padding:40px}
   .tst-spot{grid-template-rows:auto auto 1fr;align-content:start;padding-top:289px}
   .tst-row{margin:54px 0 0}
@@ -1822,7 +1838,9 @@ input::placeholder{color:var(--rule)}
       <article class="pcard pcard-c">
         <p class="pcard-lab">Quick intro call, no strings attached.</p>
         <h2 class="pcard-t">Let&#39;s chat or just say hello.</h2>
-        <img class="pcard-mascot" src="pricing-mascot.png" alt="" loading="lazy" decoding="async">
+        <img class="pcard-mascot pcard-still" src="pricing-mascot.png" alt="" loading="lazy" decoding="async">
+        <video class="pcard-mascot pcard-clip" data-src="byebye.mp4" poster="pricing-mascot.png"
+               autoplay muted loop playsinline preload="none" aria-hidden="true"></video>
         <div class="pcard-panel">
           <p class="pcard-avail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 7v5l3 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>Next Availability</p>
           <p class="pcard-date">from 14 September 2025</p>
@@ -1893,12 +1911,12 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ FAQ ══════════════════ -->
 <section class="section faq-sec" aria-label="FAQ">
   <div class="shell">
-    <div class="faq-grid">
+    <div class="faq-grid faq-pop">
       <div class="faq-left">
         <p class="faq-kick">FAQ</p>
         <span class="faq-rule" aria-hidden="true"></span>
-        <h2 class="faq-h rise-words faq-pop">Clearing doubts and concerns</h2>
-        <p class="faq-lead faq-pop">&mdash;&mdash;&nbsp; Explore the most common questions about working with Create, all in one place.</p>
+        <h2 class="faq-h rise-words">Clearing doubts and concerns</h2>
+        <p class="faq-lead">&mdash;&mdash;&nbsp; Explore the most common questions about working with Create, all in one place.</p>
         <span class="faq-ticks" aria-hidden="true"></span>
         <div class="faq-book faq-pop">
           <p class="faq-book-p">Book a quick chat and we&rsquo;ll walk you through how we do things.</p>
@@ -1931,7 +1949,6 @@ input::placeholder{color:var(--rule)}
         <a href="#site-foot" class="plan-get tst-btn">Write a review <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
       <div class="tst-card tst-spot">
-        <video class="tst-spot-bg" data-src="byebye.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
         <p class="tst-spot-w" aria-hidden="true">Spotlight</p>
         <img class="tst-spot-img" src="DfIAtAPezhFLPAtLZ6n6L3kXCY.jpg" alt="Samuel Laronde" loading="lazy" decoding="async">
         <blockquote class="tst-spot-q">&ldquo;They didn&rsquo;t just hit the brief, they raised it. The project felt collaborative from start to finish, with clear updates, quick turns, and a final product that carried our brand further than we imagined.&rdquo;</blockquote>
@@ -2257,6 +2274,22 @@ document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
   '<blockquote class="tst-q">&ldquo;'+esc(t[4])+'&rdquo;</blockquote>'+
   '<div class="tst-by"><img src="'+t[0]+'" alt="" width="60" height="60" decoding="async"><div><p class="tst-n">'+esc(t[1])+'</p><p class="tst-r">'+esc(t[2])+'</p></div><span class="tst-chip">'+esc(t[3])+'</span></div></li>';
  }).join("");
+ /* reference speeds: the client row travels ~52px/s, the logo strip ~31px/s */
+ function marquee(track,pxPerSec){
+  if(!track)return;
+  var kids=[].slice.call(track.children);if(!kids.length)return;
+  var gap=parseFloat(getComputedStyle(track).columnGap)||0,w=0;
+  kids.forEach(function(n){w+=n.getBoundingClientRect().width+gap});
+  if(w<10)return;
+  kids.forEach(function(n){var c=n.cloneNode(true);c.setAttribute("aria-hidden","true");c.setAttribute("data-mq-clone","");track.appendChild(c)});
+  track.style.setProperty("--mq-w",w+"px");
+  track.style.setProperty("--mq-dur",(w/pxPerSec)+"s");
+  track.classList.add("tst-mq");
+ }
+ addEventListener("load",function(){
+  marquee(row,52);
+  marquee(document.querySelector(".tst-brands"),31);
+ });
 })();
 /* team cards */
 (function(){
@@ -2674,19 +2707,23 @@ tick();setInterval(tick,1000);
  once(document.querySelectorAll(".ask"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px -10% 0px");
- /* team: cards rise 120px, .12s apart, as the row comes up the screen; the
-    leadership row grows in from 1.3x */
+ /* team (reference): the section's backdrop settles from 1.11x as the section
+    reaches the fold, then the cards rise 120px, .12s apart, as the row comes up
+    the screen; the leadership row grows in from 1.3x */
+ once(document.querySelectorAll(".team-bg"),function(el){
+  M.animate(el,{scale:[1.11,1]},{duration:1.2,ease:OUT});
+ },"0px 0px 100px 0px");
  once(document.querySelectorAll(".tm-row"),function(el){
   M.animate(el.querySelectorAll(".tm-card"),{y:[120,0]},{duration:.9,delay:M.stagger(.12),ease:OUT});
  },"0px 0px -50% 0px");
  once(document.querySelectorAll(".tm-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
  },"0px 0px 100px 0px");
- /* FAQ (reference): the title, the lead and the booking block each grow in
-    from 1.3x and fade in as they arrive (the title's words also rise) */
+ /* FAQ (reference): the whole content block zooms up from 1.3x as its top edge
+    reaches the fold, and the booking block repeats the move on its own arrival */
  once(document.querySelectorAll(".faq-pop"),function(el){
   M.animate(el,{opacity:[0,1],scale:[1.3,1]},{duration:.9,ease:OUT});
- },"0px 0px -10% 0px");
+ },"0px");
  var pl=document.querySelector(".pcard-logo");
  if(pl)new IntersectionObserver(function(es){pl.classList.toggle("on",es[0].isIntersecting)},{threshold:.3}).observe(pl.closest(".pcard"));
  var rowN=0;
@@ -3130,7 +3167,7 @@ document.getElementById("nl").addEventListener("submit",function(e){
    as its section nears, plays muted on loop, and holds its first frame for
    reduced motion */
 (function(){
- var vids=[].slice.call(document.querySelectorAll("video.wh-close-bg,video.tst-spot-bg"));
+ var vids=[].slice.call(document.querySelectorAll("video.wh-close-bg,video.pcard-mascot"));
  if(!vids.length)return;
  var mq=window.matchMedia("(prefers-reduced-motion: reduce)");
  function sync(v){if(!v.getAttribute("src"))return;if(mq.matches){v.pause();v.currentTime=0}else v.play().catch(function(){})}
