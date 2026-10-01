@@ -1426,6 +1426,10 @@ html.js-motion .tm-pop{opacity:.001}
 .tst-backed{max-width:250px}
 .tst-btn{align-self:flex-start;width:188px;margin-top:40px}
 .tst-spot{background:var(--deep);color:#fff;display:grid;grid-template-columns:180px 1fr;column-gap:40px;align-content:end;min-height:420px}
+/* the reference runs footage across the whole spotlight card, with the word,
+   the portrait and the quote sitting over it */
+.tst-spot-bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.5)}   /* the card reads as a dark panel, as the reference's does */
 .tst-spot-w{position:absolute;left:40px;top:44px;font-size:112px;line-height:1.2;font-weight:600;letter-spacing:-.06em;color:#f2f2f2;pointer-events:none}
 .tst-spot-img{position:relative;grid-row:1/4;width:180px;height:244px;border-radius:12px;object-fit:cover}
 .tst-spot-q{position:relative;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.05em;color:#fff}
@@ -1927,6 +1931,7 @@ input::placeholder{color:var(--rule)}
         <a href="#site-foot" class="plan-get tst-btn">Write a review <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
       <div class="tst-card tst-spot">
+        <video class="tst-spot-bg" data-src="byebye.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
         <p class="tst-spot-w" aria-hidden="true">Spotlight</p>
         <img class="tst-spot-img" src="DfIAtAPezhFLPAtLZ6n6L3kXCY.jpg" alt="Samuel Laronde" loading="lazy" decoding="async">
         <blockquote class="tst-spot-q">&ldquo;They didn&rsquo;t just hit the brief, they raised it. The project felt collaborative from start to finish, with clear updates, quick turns, and a final product that carried our brand further than we imagined.&rdquo;</blockquote>
@@ -3121,18 +3126,23 @@ document.getElementById("nl").addEventListener("submit",function(e){
  if(mq.addEventListener)mq.addEventListener("change",apply);else if(mq.addListener)mq.addListener(apply);
 })();
 })();
-/* closing CTA: the reference's background footage loads as the section
-   nears, plays muted on loop, and holds its first frame for reduced motion */
+/* background footage (the closing panel, the spotlight card): each clip loads
+   as its section nears, plays muted on loop, and holds its first frame for
+   reduced motion */
 (function(){
- var v=document.querySelector("video.wh-close-bg");if(!v)return;
+ var vids=[].slice.call(document.querySelectorAll("video.wh-close-bg,video.tst-spot-bg"));
+ if(!vids.length)return;
  var mq=window.matchMedia("(prefers-reduced-motion: reduce)");
- function sync(){if(!v.getAttribute("src"))return;if(mq.matches){v.pause();v.currentTime=0}else v.play().catch(function(){})}
- function load(){if(v.getAttribute("src"))return;v.src=v.dataset.src;v.preload="auto";sync()}
- if("IntersectionObserver" in window){
-  var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();load()}},{rootMargin:"800px 0px"});
-  io.observe(v.parentElement);
- }else load();
- if(mq.addEventListener)mq.addEventListener("change",sync);else if(mq.addListener)mq.addListener(sync);
+ function sync(v){if(!v.getAttribute("src"))return;if(mq.matches){v.pause();v.currentTime=0}else v.play().catch(function(){})}
+ function load(v){if(v.getAttribute("src"))return;v.src=v.dataset.src;v.preload="auto";sync(v)}
+ vids.forEach(function(v){
+  if("IntersectionObserver" in window){
+   var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();load(v)}},{rootMargin:"800px 0px"});
+   io.observe(v.parentElement);
+  }else load(v);
+ });
+ function all(){vids.forEach(sync)}
+ if(mq.addEventListener)mq.addEventListener("change",all);else if(mq.addListener)mq.addListener(all);
 })();
 </script>
 </body>
