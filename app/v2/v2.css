@@ -1,0 +1,206 @@
+/*
+ * Tokens and primitives for the dark editorial homepage.
+ *
+ * Every custom property is v2-prefixed and every class is v2-scoped, so this
+ * file cannot leak into or override the existing light site.
+ */
+
+.v2 {
+  --v2-ink: #141414;
+  --v2-accent: #ff6041;
+  --v2-white: #ffffff;
+  --v2-off: #f2f2f2;
+  --v2-paper: #fafafa;
+  --v2-muted: #d5d7de;
+  --v2-grey-600: #5c6063;
+  --v2-grey-500: #797d82;
+
+  --v2-gutter: 20px;
+  --v2-nav-h: 60px;
+
+  /* reveals */
+  --v2-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* hovers */
+  --v2-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  background: var(--v2-ink);
+  color: var(--v2-white);
+}
+
+@media (min-width: 768px) {
+  .v2 { --v2-gutter: 40px; }
+}
+@media (min-width: 1440px) {
+  .v2 { --v2-gutter: 100px; }
+}
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .v2 { --v2-gutter: 60px; }
+}
+
+.v2-shell {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--v2-gutter);
+}
+
+/* ------------------------------------------------------------ typography */
+
+/* every uppercase label in the design is Fragment Mono at -0.05em */
+.v2-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+}
+
+.v2-nav-link { font-size: 16px; line-height: 24px; letter-spacing: -0.8px; }
+.v2-sup { font-size: 10.24px; line-height: 12.288px; letter-spacing: normal; }
+.v2-marker { font-size: 10.24px; line-height: 1.2; letter-spacing: -0.4096px; }
+.v2-meta { font-size: 16px; line-height: 20.8px; letter-spacing: -0.8px; }
+.v2-meta-sm { font-size: 13px; line-height: 16.9px; letter-spacing: -0.65px; }
+
+/* display headings never breathe vertically */
+.v2-display {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  line-height: 1;
+}
+
+.v2-headline {
+  font-size: clamp(28px, 3.76vw, 43.2px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.v2-stat {
+  font-size: clamp(40px, 5.6vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.v2-wordmark {
+  font-size: clamp(56px, 10.5vw, 160px);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+.v2-letscreate {
+  font-size: clamp(64px, 12vw, 200px);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+.v2-manifesto {
+  font-size: clamp(44px, 9.35vw, 140px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .v2-wordmark { font-size: 13vw; }
+  .v2-manifesto { font-size: 11vw; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .v2-manifesto { font-size: 7.5vw; }
+}
+
+/* --------------------------------------------------------- masked reveal */
+
+.v2-mask { display: block; overflow: hidden; }
+
+/* ------------------------------------------------------------ film grain */
+
+.v2-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  animation: v2-grain 1.333s steps(8) infinite;
+}
+
+/* 8 discrete offsets at 6fps reads as living grain rather than a slide */
+@keyframes v2-grain {
+  0%   { background-position: 0 0; }
+  12.5%{ background-position: -18px -9px; }
+  25%  { background-position: 9px -18px; }
+  37.5%{ background-position: -27px 18px; }
+  50%  { background-position: 18px 27px; }
+  62.5%{ background-position: -9px -27px; }
+  75%  { background-position: 27px 9px; }
+  87.5%{ background-position: -18px 18px; }
+  100% { background-position: 0 0; }
+}
+
+/* --------------------------------------------------------------- buttons */
+
+.v2-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 51px;
+  padding: 0 28px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: background-color 0.4s var(--v2-inout), color 0.4s var(--v2-inout),
+    border-color 0.4s var(--v2-inout);
+}
+.v2-btn-outline { border-color: rgba(255, 255, 255, 0.35); color: var(--v2-white); background: transparent; }
+.v2-btn-outline:hover { background: var(--v2-white); color: var(--v2-ink); border-color: var(--v2-white); }
+.v2-btn-solid { background: var(--v2-white); color: var(--v2-ink); border-color: var(--v2-white); }
+.v2-btn-solid:hover { background: transparent; color: var(--v2-white); border-color: var(--v2-white); }
+
+/* label rolls up and is replaced by an identical copy */
+.v2-roll { display: block; position: relative; overflow: hidden; height: 1.3em; }
+.v2-roll > span {
+  display: block;
+  height: 1.3em;
+  line-height: 1.3em;
+  transition: transform 0.4s var(--v2-inout);
+}
+.v2-btn:hover .v2-roll > span { transform: translateY(-100%); }
+
+/* --------------------------------------------------- stage B spotlight */
+
+.v2-emboss { color: #2a2a2a; }
+
+/* duplicate of the same text, painted by a cursor-tracked radial gradient */
+.v2-spotlight {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle 320px at var(--v2-x, 50%) var(--v2-y, 50%),
+    #ff6041 0%,
+    #ffb08a 45%,
+    transparent 70%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------- showreel */
+
+.v2-reel-rule { position: relative; height: 1px; background: rgba(255, 255, 255, 0.3); }
+.v2-reel-rule > span {
+  position: absolute;
+  inset: 0;
+  background: var(--v2-accent);
+  transform-origin: left center;
+}
+
+.v2-dot-cursor { cursor: none; }
+
+/* --------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-grain { animation: none; }
+  .v2-btn:hover .v2-roll > span { transform: none; }
+  .v2-spotlight { display: none; }
+}

@@ -48,3 +48,35 @@ water.html
 water_files/
 video.html
 video_files/
+
+# saved WhatsApp Web pages (private)
+WhatsApp.html
+WhatsApp_files/
+(*) WhatsApp.html
+(*) WhatsApp_files/
+
+# saved copies of other websites
+gemini.html
+gemini_files/
+fashion.html
+fashion_files/
+
+# scratch icons and unused loose images
+clock
+haan
+lin
+num
+you
+download
+M1NR1TiRyCrIbcVecVl0amiwUo.jpeg
+RkXDs17ovij5r4LSCj60gK3BQ.jpg
+architecture-digital-age.jpg
+digital-identities-home.png
+framer-mark.png
+hehe.jpg
+immm.png
+project-blackwell.jpg
+service-creative.png
+
+# other tools' working folders
+.kilo/
