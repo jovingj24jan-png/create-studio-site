@@ -7,7 +7,7 @@
      loaded near the end of the body, so without this the browser could not
      start downloading it until the parser had read most of the page. -->
 <link rel="preload" href="js/motion.min.js" as="script">
-<link rel="preload" href="hero.jpg" as="image" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" imagesrcset="public/img/hero-poster-828.webp 828w, public/img/hero-poster-1620.webp 1620w" imagesizes="max(100vw, 150vh)" fetchpriority="high">
 <script>/* Entrance poses are armed only when motion is allowed, so reduced-motion and
    no-JS visitors get the finished page.
    The page used to disarm itself on a fixed 3s clock. Over a real connection
@@ -172,7 +172,12 @@ body.menu #menu a.mi{opacity:1;transform:none}
 .hero>.shell,.hero .hero-in>.shell{max-width:1760px}
 .hero-bg{position:absolute;inset:0}
 .scene{position:relative}
-.hero-media{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+/* the poster is the clip's own first frame, so the video can fade in over it
+   without a visible jump; both sit in one layer that the entrance moves */
+.hero-media{position:absolute;inset:0}
+.hero-media img,.hero-vid{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.hero-vid{opacity:0;transition:opacity .7s ease}
+.hero-vid.on{opacity:1}
 html.js-motion .hero-media{opacity:.001;transform:translateY(40px) scale(1.44)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.4) 0%,rgba(5,6,9,0) 22%,rgba(5,6,9,.08) 70%,rgba(5,6,9,.55) 100%)}
 .hero-row2{margin-top:32px;margin-bottom:32px}
@@ -1617,7 +1622,10 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ HERO ═════════════════ -->
 <div class="scene">
 <section class="hero" aria-label="Introduction">
-  <div class="hero-bg"><video class="hero-media" src="bg_flowergirl.mp4" poster="hero.jpg" muted loop autoplay playsinline preload="auto" aria-hidden="true"></video></div>
+  <div class="hero-bg"><div class="hero-media">
+    <picture><source type="image/webp" srcset="public/img/hero-poster-828.webp 828w, public/img/hero-poster-1620.webp 1620w" sizes="max(100vw, 150vh)"><img class="hero-poster" src="public/img/hero-poster-1620.jpg" srcset="public/img/hero-poster-828.jpg 828w, public/img/hero-poster-1620.jpg 1620w" sizes="max(100vw, 150vh)" width="1620" height="1080" alt="" fetchpriority="high"></picture>
+    <video class="hero-vid" data-src="bg_flowergirl.mp4" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+  </div></div>
   <div class="hero-in">
 
     <!-- 00.01 -->
@@ -2607,15 +2615,14 @@ tick();setInterval(tick,1000);
  // very slow the type goes ahead after 4s, and the photo, kept invisible while it
  // downloads, swells in by itself the moment it is ready.
  function arm(){
-  var img=document.querySelector(".hero-media"), done=false, late=false;
+  var img=document.querySelector(".hero-poster"), done=false, late=false;
   function ready(){
    if(!done){done=true;requestAnimationFrame(function(){requestAnimationFrame(function(){play(false)})});return}
    if(late){late=false;requestAnimationFrame(photoIn)}
   }
   function timeout(){if(done)return;done=true;late=true;play(true)}
-  if(img&&img.readyState<2){
-   img.addEventListener("loadeddata",ready,{once:true});
-   img.addEventListener("error",ready,{once:true});
+  if(img&&!(img.complete&&img.naturalWidth)&&img.decode){
+   img.decode().then(ready,ready);
    setTimeout(timeout,4000);
   }else ready();
  }
@@ -2673,15 +2680,49 @@ tick();setInterval(tick,1000);
  draw();
 })();
 
-/* The showreel footage waits for the hero photo, so the two are not
-   splitting the connection while the page is still black. */
+/* Hero footage. The poster carries the hero on its own; the clip starts
+   downloading only once the poster is in, plays from canplay, and fades in
+   over the poster after a real frame has been presented. A slow, failed,
+   refused (autoplay) or reduced-motion clip simply leaves the poster up. */
 (function(){
- var v=document.querySelector(".reel video[data-src]"), img=document.querySelector(".hero-media");
+ var v=document.querySelector(".hero-vid"), img=document.querySelector(".hero-poster");
+ if(!v||!v.dataset.src)return;
+ var mq=matchMedia("(prefers-reduced-motion: reduce)"), started=false, retry=false;
+ function settle(){if(window.__heroSettled)return;window.__heroSettled=true;document.dispatchEvent(new Event("hero:settled"))}
+ function show(){if(!mq.matches)v.classList.add("on");settle()}
+ function tryPlay(){if(mq.matches)return;var t=v.play();if(t&&t.catch)t.catch(blocked)}
+ // autoplay refused: keep the poster, and try again on the first interaction
+ function blocked(){
+  settle();if(retry)return;retry=true;
+  function again(){["pointerdown","keydown","touchstart"].forEach(function(e){removeEventListener(e,again)});tryPlay()}
+  ["pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,again,{passive:true})});
+ }
+ function load(){
+  if(started||mq.matches)return;started=true;
+  v.addEventListener("canplay",tryPlay,{once:true});
+  v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";v.load();
+ }
+ v.addEventListener("playing",function(){
+  if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(show);
+  else requestAnimationFrame(function(){requestAnimationFrame(show)});
+ });
+ v.addEventListener("error",function(){v.classList.remove("on");settle()});
+ function motion(){if(mq.matches){v.pause();v.classList.remove("on")}else if(started)tryPlay();else load()}
+ if(mq.addEventListener)mq.addEventListener("change",motion);else if(mq.addListener)mq.addListener(motion);
+ if(mq.matches||(navigator.connection&&navigator.connection.saveData)){settle();return}
+ if(!img||(img.complete&&img.naturalWidth))load();
+ else{img.addEventListener("load",load,{once:true});img.addEventListener("error",load,{once:true});setTimeout(load,4000)}
+})();
+
+/* The showreel footage waits for the hero clip, so the two are not
+   splitting the connection while the hero is still coming in. */
+(function(){
+ var v=document.querySelector(".reel video[data-src]");
  if(!v)return;
  function load(){if(!v.dataset.src)return;v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";
   var t=v.play();if(t&&t.catch)t.catch(function(){})}
- if(!img||img.readyState>=2)load();
- else{img.addEventListener("loadeddata",load);img.addEventListener("error",load);setTimeout(load,20000)}
+ if(window.__heroSettled||!document.querySelector(".hero-vid"))load();
+ else{document.addEventListener("hero:settled",load,{once:true});setTimeout(load,20000)}
 })();
 
 /* Page 4 reveals, as measured on the reference: each article's author block
