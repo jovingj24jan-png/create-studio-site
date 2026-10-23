@@ -19,9 +19,13 @@ it loads, nothing else, so `work.html`, `studio.html`, `whispers.html`,
 ## What the edition contains
 
 Built from a commit of `main`, never from the working tree. The builder
-changes only the links in `index.html`:
+changes only the menus and links in `index.html`:
 
-- `work.html` → `#work`, `studio.html` → `#studio`,
+- the WORK, STUDIO, WHISPERS and CONTACT menu items are removed from the
+  header, the mobile menu and the footer's Navigate list (HOME stays); the
+  homepage's own sections are untouched
+- any remaining link to another page points at a homepage section instead:
+  `work.html` → `#work`, `studio.html` → `#studio`,
   `whispers.html` → `#whispers`, `contact.html` → `#site-foot`
   (header, mobile menu, "See work", footer)
 - the three project panels lose their case-study links (they point at `#work`

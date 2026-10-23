@@ -31,6 +31,18 @@ used.add(".nojekyll");
 
 const LINKS = {"work.html": "#work", "studio.html": "#studio", "whispers.html": "#whispers", "contact.html": "#site-foot"};
 let html = git("show", `${ref}:index.html`).toString();
+// the menus offered the other pages, so they go: the header's nav and its
+// CONTACT link, and those entries in the mobile menu and footer (HOME stays)
+const MENUS = [
+  /\n[ \t]*<nav class="nav t-mono" aria-label="Primary">[\s\S]*?<\/nav>/,
+  /<a class="t-mono" href="contact\.html">[\s\S]*?<\/a>\s*/,
+  /\n[ \t]*<a class="mi t-h3" href="(?:work|studio|whispers)\.html">.*?<\/a>/g,
+  /<li><a href="(?:work|studio|whispers|contact)\.html" class="froll">.*?<\/a><\/li>/g,
+];
+for (const re of MENUS) {
+  if (!re.test(html)) throw Error("menu markup not found: " + re);
+  html = html.replace(re, "");
+}
 for (const [from, to] of Object.entries(LINKS)) html = html.split(`href="${from}"`).join(`href="${to}"`);
 // project panels without a case study link to #work and drop their CTA
 html = html.replace(/case:"work\/[\w-]+\.html",/g, "");
