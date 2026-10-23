@@ -180,7 +180,7 @@ body.menu #menu a.mi{opacity:1;transform:none}
 .hero-lqip{position:absolute;inset:0;background:#7b959d url(data:image/webp;base64,UklGRuoAAABXRUJQVlA4IN4AAACQCACdASpAACsAPt1cpEyopSOttVYIAbAbiWIAuzNt0XzIH8NqAIqENPK704rR5x14xkQlTslntNzjG6z5EbY1IYqLhitG/5f9cWpQAAD+0xk/pBWJ0BUwbiGqsAY3oxZcD9n30cV2ThWZC0rWBMubaLfsY96BCxZ+gSI9X1j0BwVuBDVJT46c+63W2KGXV7nLcajeOJIrcfer812PDjpxhBBluqBAqEjhVYi9a8ARwp+CJYFipJ4vn0JYkpatzoOxS4eAsk3vBzVqUCjQGKzwwaHJJ0sAI1TRI+Z4AAA=) 50% 45%/cover no-repeat}
 .hero-media{position:absolute;inset:0}
 .hero-media img,.hero-vid{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
-.hero-vid{opacity:0;transition:opacity .7s ease}
+.hero-vid{opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
 .hero-vid.on{opacity:1}
 html.js-motion .hero-media{opacity:.001;transform:translateY(40px) scale(1.44)}
 html.js-motion .hero-lqip{transform:translateY(40px) scale(1.44)}
@@ -2588,6 +2588,8 @@ tick();setInterval(tick,1000);
   go(".hero-media",{opacity:[.001,1],y:[40,0]},{duration:.8,ease:SWELL});
   go(".hero-lqip",{y:[40,0]},{duration:.8,ease:SWELL});
   go(".hero-media,.hero-lqip",{scale:[1.44,1.11,1.11,1]},{duration:3.6,times:[0,.222,.667,1],ease:[SWELL,"linear",[.33,1,.68,1]]});
+  // the hero clip waits for the swell to settle before it fades in
+  setTimeout(function(){window.__heroIntro=true;document.dispatchEvent(new Event("hero:intro"))},3600);
  }
  function play(photoLate){
   if(!photoLate)photoIn();
@@ -2686,26 +2688,32 @@ tick();setInterval(tick,1000);
  draw();
 })();
 
-/* Hero footage. The poster carries the hero on its own; the clip starts
-   downloading only once the poster is in, plays from canplay, and fades in
-   over the poster after a real frame has been presented. A slow, failed,
-   refused (autoplay) or reduced-motion clip simply leaves the poster up. */
+/* Hero footage. The poster carries the hero while the page loads. The clip
+   starts downloading once the page has finished loading, plays once enough of
+   it is buffered to run without stalling and the poster's entrance swell has
+   settled, and fades in over the poster after a real frame has been
+   presented. A slow, failed, refused (autoplay) or reduced-motion clip simply
+   leaves the poster up. */
 (function(){
- var v=document.querySelector(".hero-vid"), img=document.querySelector(".hero-poster");
+ var v=document.querySelector(".hero-vid"), root=document.documentElement;
  if(!v||!v.dataset.src)return;
- var mq=matchMedia("(prefers-reduced-motion: reduce)"), started=false, retry=false;
+ var mq=matchMedia("(prefers-reduced-motion: reduce)"), started=false, retry=false, buffered=false, intro=false;
  function settle(){if(window.__heroSettled)return;window.__heroSettled=true;document.dispatchEvent(new Event("hero:settled"))}
  function show(){if(!mq.matches)v.classList.add("on");settle()}
- function tryPlay(){if(mq.matches)return;var t=v.play();if(t&&t.catch)t.catch(blocked)}
+ function tryPlay(){if(mq.matches||!buffered||!intro)return;var t=v.play();if(t&&t.catch)t.catch(blocked)}
  // autoplay refused: keep the poster, and try again on the first interaction
  function blocked(){
   settle();if(retry)return;retry=true;
   function again(){["pointerdown","keydown","touchstart"].forEach(function(e){removeEventListener(e,again)});tryPlay()}
   ["pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,again,{passive:true})});
  }
+ function ready(){if(buffered)return;buffered=true;tryPlay()}
+ function introDone(){if(intro)return;intro=true;tryPlay()}
  function load(){
   if(started||mq.matches)return;started=true;
-  v.addEventListener("canplay",tryPlay,{once:true});
+  v.addEventListener("canplaythrough",ready,{once:true});
+  // some browsers are slow to call a clip playable through; give them 3s
+  v.addEventListener("canplay",function(){setTimeout(ready,3000)},{once:true});
   v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";v.load();
  }
  v.addEventListener("playing",function(){
@@ -2716,8 +2724,9 @@ tick();setInterval(tick,1000);
  function motion(){if(mq.matches){v.pause();v.classList.remove("on")}else if(started)tryPlay();else load()}
  if(mq.addEventListener)mq.addEventListener("change",motion);else if(mq.addListener)mq.addListener(motion);
  if(mq.matches||(navigator.connection&&navigator.connection.saveData)){settle();return}
- if(!img||(img.complete&&img.naturalWidth))load();
- else{img.addEventListener("load",load,{once:true});img.addEventListener("error",load,{once:true});setTimeout(load,4000)}
+ if(!root.classList.contains("motion-ready")||window.__heroIntro)introDone();
+ else{document.addEventListener("hero:intro",introDone,{once:true});setTimeout(introDone,8000)}
+ if(document.readyState==="complete")load();else addEventListener("load",load,{once:true});
 })();
 
 /* The showreel footage waits for the hero clip, so the two are not
