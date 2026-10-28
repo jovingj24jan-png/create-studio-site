@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- home-only edition, built from create-studio-site@3fe84a9 by scripts/build-home-only.mjs -->
+<!-- home-only edition, built from create-studio-site@8eb2a0a by scripts/build-home-only.mjs -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -8,7 +8,7 @@
      loaded near the end of the body, so without this the browser could not
      start downloading it until the parser had read most of the page. -->
 <link rel="preload" href="js/motion.min.js" as="script">
-<link rel="preload" as="image" type="image/webp" imagesrcset="public/img/hero-poster-828.webp 828w, public/img/hero-poster-1620.webp 1620w" imagesizes="max(100vw, 150vh)" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" imagesrcset="public/img/hero-still-960.webp 960w, public/img/hero-still-1600.webp 1600w, public/img/hero-still-2400.webp 2400w" imagesizes="max(100vw, 150vh)" fetchpriority="high">
 <script>/* Entrance poses are armed only when motion is allowed, so reduced-motion and
    no-JS visitors get the finished page.
    The page used to disarm itself on a fixed 3s clock. Over a real connection
@@ -130,10 +130,8 @@ ul{list-style:none}
 /* the reference's top bar is 90% black over a 6px backdrop blur, so what
    scrolls under it stays faintly readable instead of being cut off flat */
 .hdr{position:fixed;inset:0 0 auto;z-index:120;background:rgba(0,0,0,.9);
-  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .5s var(--ease),background-color .4s var(--ease)}
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .5s var(--ease)}
 .hdr.hide{transform:translateY(-102%)}
-/* clear over the hero so its footage runs to the top edge of the screen */
-.hdr.over-hero{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
 .hdr-in{display:flex;align-items:center;height:var(--nav-h)}
 .logo{color:var(--accent);font-weight:800;font-size:calc(var(--mono)*1.75);letter-spacing:-.055em;line-height:1;display:inline-flex;align-items:flex-start}
 .logo sup{font-size:.36em;font-weight:600;margin-top:.25em}
@@ -160,6 +158,17 @@ ul{list-style:none}
 body.menu .burger i::before{top:6px;transform:rotate(45deg)}
 body.menu .burger i::after{top:6px;transform:rotate(-45deg)}
 @media(max-width:809px){.nav,.hdr-right>a{display:none}.burger{display:flex}}
+/* the reference's phone menu icon: three 2px bars 8px apart, 52px wide with a
+   32px bar between them, ending at the right gutter */
+@media(max-width:809px){
+  .hdr-in{height:60px}
+  .burger{width:60px;margin-right:-4px;justify-content:flex-end}
+  .burger i{width:52px;height:18px;background:linear-gradient(#fff,#fff) 0 8px/32px 2px no-repeat;transition:background-size .3s var(--ease)}
+  .burger i::before,.burger i::after{width:52px;height:2px}
+  .burger i::after{top:16px}
+  body.menu .burger i{background-size:0 2px}
+  body.menu .burger i::before,body.menu .burger i::after{top:8px}
+}
 #menu{position:fixed;inset:0;z-index:110;background:var(--coal);clip-path:inset(0 0 100% 0);transition:clip-path .7s cubic-bezier(.76,0,.24,1);pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + 28px);padding-bottom:40px}
 body.menu #menu{clip-path:inset(0 0 0 0);pointer-events:auto}
 #menu a.mi{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.12);opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
@@ -173,30 +182,33 @@ body.menu #menu a.mi{opacity:1;transform:none}
 .hero>.shell,.hero .hero-in>.shell{max-width:1760px}
 .hero-bg{position:absolute;inset:0}
 .scene{position:relative}
-/* the poster is the clip's own first frame, so the video can fade in over it
-   without a visible jump; both sit in one layer that the entrance moves */
-/* a few hundred bytes of the poster, blurred, inlined so the hero is never a
-   black box while the poster and the motion library load; it takes the
-   entrance's poses with the poster, which sharpens in over it */
-.hero-lqip{position:absolute;inset:0;background:#7b959d url(data:image/webp;base64,UklGRuoAAABXRUJQVlA4IN4AAACQCACdASpAACsAPt1cpEyopSOttVYIAbAbiWIAuzNt0XzIH8NqAIqENPK704rR5x14xkQlTslntNzjG6z5EbY1IYqLhitG/5f9cWpQAAD+0xk/pBWJ0BUwbiGqsAY3oxZcD9n30cV2ThWZC0rWBMubaLfsY96BCxZ+gSI9X1j0BwVuBDVJT46c+63W2KGXV7nLcajeOJIrcfer812PDjpxhBBluqBAqEjhVYi9a8ARwp+CJYFipJ4vn0JYkpatzoOxS4eAsk3vBzVqUCjQGKzwwaHJJ0sAI1TRI+Z4AAA=) 50% 45%/cover no-repeat}
+/* a few hundred bytes of the photo, blurred, inlined so the hero is never a
+   black box while the photo and the motion library load; it takes the
+   entrance's poses with the photo, which sharpens in over it */
+.hero-lqip{position:absolute;inset:0;background:#22313a url(data:image/webp;base64,UklGRuYAAABXRUJQVlA4INoAAADwCACdASpAACsAPtVWoUyoJKqiMr27MVAaiWQAxq/HySvIoR5hpzXmPhtN2O6JxhCxnNZOpClWwiWCtzrnIMeqBczu2YTyuDthjADu1PRUIAD++9x+fQuXf+9zeQCsB7H8UiA+PYXGZRRxkqR+hXgMyNhkSQCeEL2uOTU+8wEYTMOqE9IYGWKkio7jv7QpsXol8FTAv0iHWNk6w+3iT2Lp85aBSmcheV6YmrJ+kFpUU9gVKVLxdQQbYvgaKQGkUwmWwDZRjMA/xsRH9KXp6hyvhJB0GRgie0AAAA==) 50% 50%/cover no-repeat}
 .hero-media{position:absolute;inset:0}
-.hero-media img,.hero-vid{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
-.hero-vid{opacity:0;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
-.hero-vid.on{opacity:1}
+.hero-media img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 html.js-motion .hero-media{opacity:.001;transform:translateY(40px) scale(1.44)}
 html.js-motion .hero-lqip{transform:translateY(40px) scale(1.44)}
-.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.4) 0%,rgba(5,6,9,0) 22%,rgba(5,6,9,.08) 70%,rgba(5,6,9,.55) 100%)}
+/* the reference lays a fine dot screen over the photo: 1px #3d3d3d dots on an
+   8px grid at 12% */
+.hero-bg::after{content:"";position:absolute;inset:0;opacity:.12;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='1' cy='1' r='1' fill='%233D3D3D'/%3E%3C/svg%3E") 0 0/8px 8px}
 .hero-row2{margin-top:32px;margin-bottom:32px}
 .hero-in{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-top:calc(var(--nav-h) + clamp(40px,13.2vh,140px));padding-bottom:clamp(16px,2.2vh,30px)}
 @media(min-width:1024px){
-  /* index rows land on 182, 332, 552 and 794 of a 900px stage, as the
+  /* index rows land on 163, 353, 573 and 815 of a 900px stage, as the
      reference's do; in vh so the proportions hold at other heights */
-  .hero-in{justify-content:flex-start;padding-top:calc(var(--nav-h) + 13.56vh)}
-  .hero-row2{margin-top:-0.78vh;margin-bottom:0}
-  .hero-in>.shell:nth-child(3){margin-top:8.22vh;margin-bottom:0}
-  .hero-in>.shell:nth-child(4){margin-top:3vh;margin-bottom:0}
+  .hero-in{justify-content:flex-start;padding-top:calc(var(--nav-h) + 11.45vh)}
+  .hero-row2{margin-top:3vh;margin-bottom:0}
+  .hero-in>.shell:nth-child(3){margin-top:4.94vh;margin-bottom:0}
+  /* the reference's counter draws 88 x 44 at 1440 */
+  .hero-stat>.t-h4{font-size:calc(var(--rfs)*3.75);letter-spacing:-.1em;margin-top:-3px;padding-right:4px}
+  .hero-stat>.t-mono{margin-top:5px}
+  .hero-info .flex.wrap{margin-top:23px!important}
+  .hero-in>.shell:nth-child(4){margin-top:2.78vh;margin-bottom:0}
 }
-.rail{display:flex;align-items:center;gap:10px;white-space:nowrap;color:rgba(255,255,255,.65)}
+.rail{display:flex;align-items:center;gap:10px;white-space:nowrap;color:#fff}
 /* the hero runs three mono sizes, not one: the index markers sit at .64 of
    the token, the clock and showreel labels at .8125, everything else at the
    token. Scoped to the hero so later sections keep their own scale. */
@@ -214,6 +226,8 @@ html.js-motion .hero-lqip{transform:translateY(40px) scale(1.44)}
    that share at any width. Scoped here so the footer wordmark and the
    "let's create" layer keep their own sizes. */
 .hero .hero-mark-text{font-size:9.6vw}
+/* from 1024 up the reference's wordmark draws 830px wide at 1440 */
+@media(min-width:1024px){.hero .hero-mark-text{font-size:10.15vw}}
 /* The wordmark rides up out of its own mask; the mask is exactly the line
    box, so the hero's spacing is unchanged and the letters cut off on a hard
    edge rather than fading. */
@@ -233,7 +247,7 @@ html.js-motion .hero-lqip{transform:translateY(40px) scale(1.44)}
   /* inset from the capped content column, not the window edge: the card was
      hugging the viewport while the text stayed centred inside 1760px */
   .hero-card{position:absolute;right:calc(var(--gutter) + max(0px,(100% - 1760px)/2));
-    top:55.5%;width:27vw;max-width:387px;margin-left:0}
+    top:58.67%;width:27vw;max-width:387px;margin-left:0}
 }
 /* The reference lays the hero out on ten equal columns with no gap inside a
    20px page gutter, so at 1440 the column edges fall on 20, 160, 300 ... 1420.
@@ -245,6 +259,32 @@ html.js-motion .hero-lqip{transform:translateY(40px) scale(1.44)}
 .r1{grid-column:1/2;white-space:nowrap}
 @media(max-width:1023px){.hero-h1{grid-column:3/9;padding-left:0}.hero-stat{grid-column:8/11}.hero-mark,.hero-info{grid-column:3/11;padding-left:0}.hero-card{grid-column:7/11}.r1{grid-column:1/3}}
 @media(max-width:809px){.hero-h1,.hero-stat,.hero-mark,.hero-info,.hero-card,.r1{grid-column:1/11;text-align:left;margin-left:0;max-width:none;padding-left:0}.hero-stat{margin-top:8px}}
+/* The reference's phone hero, measured at 390x844: one screen, no index
+   markers, no showreel card and no logo row; the headline (24px) shares its
+   row with the counter, the wordmark runs the full width, and the studio copy,
+   clock and buttons follow at 457, 551 and 646, the whole block centred. */
+@media(max-width:809px){
+  .hero{--gutter:20px}
+  /* the reference centres the block in the screen: at 844 tall it runs 147 to 697 */
+  .hero-in{justify-content:center;padding-top:0;padding-bottom:0}
+  .hero .r1,.hero-card,.hero-logos{display:none}
+  /* the site-wide phone grid stacks every child full width; the hero keeps two columns */
+  .hero .grid>*+*{margin-top:0}
+  .hero .grid>.hero-h1{grid-column:1/8!important;grid-row:1;max-width:175px!important;font-size:24px;line-height:1.2;letter-spacing:-.06em}
+  .hero .grid>.hero-stat{grid-column:6/11!important;grid-row:1;text-align:right!important;margin-top:3px}
+  .hero .grid>.hero-info{padding-left:8px!important}
+  .hero-stat>.t-h4{font-size:60px;letter-spacing:-.1em;line-height:1.1;padding-right:2px}
+  .hero-stat>.t-mono{font-size:12px;line-height:1.3;letter-spacing:-.05em;max-width:160px!important;margin-top:4px}
+  .hero-row2{margin-top:72px;margin-bottom:0}
+  .hero .hero-mark-text{font-size:15.63vw}
+  .hero-in>.shell:nth-child(3){margin-top:50px;margin-bottom:0}
+  .hero-info .t-mono+.t-mono{margin-top:2px!important}
+  .hero-info .hx-time{margin-top:16px}
+  .hero-info .t-mono{font-size:14.4px;line-height:1.5;letter-spacing:-.05em}
+  .hero-info .hx-time .t-mono-sm{font-size:13px;line-height:1.3;letter-spacing:-.05em}
+  .hero-info .flex.wrap{margin-top:60px!important;margin-left:-8px!important;gap:24px!important}
+  .hero .hero-info .btn{padding:13.5px 14px}
+}
 /* The reference reveals a short text row by wiping it in from the left
    behind a mask: x -100 to 0 over 1s, opacity untouched. It is the single
    most-used motion on the page, so it stays the plain .mask. */
@@ -334,14 +374,17 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 .reel img,.reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(1);transition:filter .6s var(--ease)}
 .reel:hover img,.reel:hover video{filter:brightness(1.08)}
 .reel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,6,9,.06),rgba(5,6,9,.34))}
-.reel-cta{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;height:44px;color:#fff;white-space:nowrap}
+.reel-cta{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;height:44px;color:#fff;white-space:nowrap;
+  opacity:0;transition:opacity .45s var(--ease)}
+/* the reference shows the play prompt only while the card is hovered */
+.reel:hover .reel-cta,.reel:focus-visible .reel-cta{opacity:1}
 .reel-cta-icon{flex:none;display:flex;align-items:center;justify-content:center;padding:12px;border-radius:12px;background:var(--accent);color:#fff;transition:background .45s var(--ease),transform .45s var(--ease)}
 .reel-cta-icon svg{display:block;width:20px;height:20px}
-.reel:hover .reel-cta-icon{background:var(--ink);transform:translateX(3px)}
+.reel:hover .reel-cta-icon{transform:translateX(3px)}
 .reel-cta-label{font-size:16px;font-weight:400;letter-spacing:-.05em;line-height:1.4}
 @media(min-width:1200px){.reel-cta-label{font-size:18.1px;letter-spacing:-.04em}}
-.reel-note{display:flex;align-items:flex-start;gap:6px;padding:8px;color:#fff}
-.reel-note svg{flex:none;width:14px;height:14px;margin-top:3px;color:var(--accent)}
+.reel-note{display:flex;align-items:flex-start;gap:6px;padding:12px 8px 8px;color:#fff}
+.reel-note svg{flex:none;width:14px;height:auto;margin-top:4px;color:#fff}
 
 /* ═══════════════════════════════════════════════ reveal utilities ══════ */
 /* Cards and blocks: y 40 to 0 on the 1s spring, 0.2s after they come in. */
@@ -1015,6 +1058,8 @@ html.js-motion .panel img.bg{will-change:transform}
   .ph{display:grid;grid-template-columns:311px 1fr;align-items:start}
   .ph-rail{padding-top:12px}
   .ph-title{font-size:96px!important;line-height:1!important;letter-spacing:-.06em!important;color:var(--muted);max-width:800px!important}
+  /* the reference's statistics title box is 770px, so it breaks after "behind" */
+  .perf .ph-title{max-width:770px!important}
   .ph-sub{margin-top:24px;font-size:21px;line-height:1.295;letter-spacing:-.04em;color:var(--muted);max-width:600px}
   .ph-ticks{display:block;margin-top:78px;height:17px;max-width:694px;
     background-image:repeating-linear-gradient(to right,rgba(0,0,0,.28) 0 1px,transparent 1px 11px)}
@@ -1595,7 +1640,7 @@ input::placeholder{color:var(--rule)}
 <body>
 
 <!-- ═══════════════════════════════════════════════ HEADER ═══════════════ -->
-<header class="hdr over-hero" id="hdr">
+<header class="hdr" id="hdr">
   <div class="shell hdr-in">
     <a href="#top" class="logo hdr-logo" data-d="500" aria-label="Create — home">create<sup>®</sup></a>
     <nav class="nav t-mono" aria-label="Primary">
@@ -1629,8 +1674,7 @@ input::placeholder{color:var(--rule)}
 <div class="scene">
 <section class="hero" aria-label="Introduction">
   <div class="hero-bg"><div class="hero-lqip" aria-hidden="true"></div><div class="hero-media">
-    <picture><source type="image/webp" srcset="public/img/hero-poster-828.webp 828w, public/img/hero-poster-1620.webp 1620w" sizes="max(100vw, 150vh)"><img class="hero-poster" src="public/img/hero-poster-1620.jpg" srcset="public/img/hero-poster-828.jpg 828w, public/img/hero-poster-1620.jpg 1620w" sizes="max(100vw, 150vh)" width="1620" height="1080" alt="" fetchpriority="high"></picture>
-    <video class="hero-vid" data-src="bg_flowergirl.mp4" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <picture><source type="image/webp" srcset="public/img/hero-still-960.webp 960w, public/img/hero-still-1600.webp 1600w, public/img/hero-still-2400.webp 2400w" sizes="max(100vw, 150vh)"><img class="hero-poster" src="public/img/hero-still-1600.jpg" width="1600" height="1067" alt="" fetchpriority="high"></picture>
   </div></div>
   <div class="hero-in">
 
@@ -1667,16 +1711,16 @@ input::placeholder{color:var(--rule)}
         <div class="hero-info hx-row" data-d="0">
           <div style="max-width:356px">
             <p class="t-mono hx-fade" data-d="700">A design studio trusted by startups and leading brands.</p>
-            <p class="t-mono hx-fade" data-d="700">We create stories people remember.</p>
+            <p class="t-mono hx-fade" data-d="700" style="margin-top:5px">We create stories people remember.</p>
           </div>
           <div class="hx-time mt3" data-d="600">
             <span class="hair" style="width:32px;background:rgba(255,255,255,.4);margin-bottom:12px;display:block"></span>
-            <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">Our time <span id="clock" class="num">--:--</span></p>
-            <p class="t-mono-sm" style="color:rgba(255,255,255,.85)">UTC−8 Los Angeles</p>
+            <p class="t-mono-sm" style="color:#fff">Our time <span id="clock" class="num">--:--</span></p>
+            <p class="t-mono-sm" style="color:#fff">UTC−8 Los Angeles</p>
           </div>
-          <div class="flex wrap g1" style="gap:12px;margin-top:28px;margin-left:-8px">
-            <a href="#work" class="btn btn-accent"><span class="lmask" data-d="1000"><span>See work</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
-            <a href="#site-foot" class="btn btn-light"><span class="lmask" data-d="1200"><span>Let's chat</span></span> <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+          <div class="flex wrap g1" style="gap:24px;margin-top:28px;margin-left:-8px">
+            <a href="#work" class="btn btn-accent"><span class="lmask" data-d="1000"><span>See work</span></span> <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 10h15.5M11.5 4.5 17 10l-5.5 5.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+            <a href="#site-foot" class="btn btn-light"><span class="lmask" data-d="1200"><span>Let's chat</span></span> <svg width="21" height="21" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 10h15.5M11.5 4.5 17 10l-5.5 5.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
           </div>
 
         <div class="hero-card hx-row" data-d="0">
@@ -1689,7 +1733,7 @@ input::placeholder{color:var(--rule)}
               <span class="reel-cta-label">Showreel 2025</span>
             </span>
           </a>
-          <p class="reel-note t-mono-sm"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5 11.9 7.1 17.5 7.4 13.2 11 14.6 16.5 10 13.4 5.4 16.5 6.8 11 2.5 7.4 8.1 7.1Z"/></svg><span>Best digital campaign, Signal Awards</span></p>
+          <p class="reel-note t-mono-sm"><svg viewBox="-.5 -.5 15 10.2" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.795 8.946C3.306 6.774 2.049 6.018 0 6.663c.489 2.172 1.746 2.928 3.795 2.283ZM2.915 6.726c.671-1.97-.116-3.178-2.376-3.647C-.132 5.048.655 6.256 2.915 6.726ZM3.507 0C1.514 1.101 1.233 2.443 2.661 4.053 4.654 2.953 4.935 1.611 3.508.001ZM10.205 8.946C10.694 6.774 11.951 6.018 14 6.663c-.489 2.172-1.745 2.928-3.795 2.283ZM11.085 6.726c-.671-1.97.116-3.178 2.377-3.647.671 1.969-.116 3.177-2.376 3.647ZM10.493 0c1.993 1.101 2.274 2.443.846 4.053C9.346 2.952 9.065 1.61 10.492.001Z"/></svg><span>Best Digital Campaign,Wobbly Awards</span></p>
         </div>
         </div>
       </div>
@@ -2589,8 +2633,6 @@ tick();setInterval(tick,1000);
   go(".hero-media",{opacity:[.001,1],y:[40,0]},{duration:.8,ease:SWELL});
   go(".hero-lqip",{y:[40,0]},{duration:.8,ease:SWELL});
   go(".hero-media,.hero-lqip",{scale:[1.44,1.11,1.11,1]},{duration:3.6,times:[0,.222,.667,1],ease:[SWELL,"linear",[.33,1,.68,1]]});
-  // the hero clip waits for the swell to settle before it fades in
-  setTimeout(function(){window.__heroIntro=true;document.dispatchEvent(new Event("hero:intro"))},3600);
  }
  function play(photoLate){
   if(!photoLate)photoIn();
@@ -2689,56 +2731,15 @@ tick();setInterval(tick,1000);
  draw();
 })();
 
-/* Hero footage. The poster carries the hero while the page loads. The clip
-   starts downloading once the page has finished loading, plays once enough of
-   it is buffered to run without stalling and the poster's entrance swell has
-   settled, and fades in over the poster after a real frame has been
-   presented. A slow, failed, refused (autoplay) or reduced-motion clip simply
-   leaves the poster up. */
+/* The showreel footage waits for the hero photo, so the two are not
+   splitting the connection while the page is still black. */
 (function(){
- var v=document.querySelector(".hero-vid"), root=document.documentElement;
- if(!v||!v.dataset.src)return;
- var mq=matchMedia("(prefers-reduced-motion: reduce)"), started=false, retry=false, buffered=false, intro=false;
- function settle(){if(window.__heroSettled)return;window.__heroSettled=true;document.dispatchEvent(new Event("hero:settled"))}
- function show(){if(!mq.matches)v.classList.add("on");settle()}
- function tryPlay(){if(mq.matches||!buffered||!intro)return;var t=v.play();if(t&&t.catch)t.catch(blocked)}
- // autoplay refused: keep the poster, and try again on the first interaction
- function blocked(){
-  settle();if(retry)return;retry=true;
-  function again(){["pointerdown","keydown","touchstart"].forEach(function(e){removeEventListener(e,again)});tryPlay()}
-  ["pointerdown","keydown","touchstart"].forEach(function(e){addEventListener(e,again,{passive:true})});
- }
- function ready(){if(buffered)return;buffered=true;tryPlay()}
- function introDone(){if(intro)return;intro=true;tryPlay()}
- function load(){
-  if(started||mq.matches)return;started=true;
-  v.addEventListener("canplaythrough",ready,{once:true});
-  // some browsers are slow to call a clip playable through; give them 3s
-  v.addEventListener("canplay",function(){setTimeout(ready,3000)},{once:true});
-  v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";v.load();
- }
- v.addEventListener("playing",function(){
-  if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(show);
-  else requestAnimationFrame(function(){requestAnimationFrame(show)});
- });
- v.addEventListener("error",function(){v.classList.remove("on");settle()});
- function motion(){if(mq.matches){v.pause();v.classList.remove("on")}else if(started)tryPlay();else load()}
- if(mq.addEventListener)mq.addEventListener("change",motion);else if(mq.addListener)mq.addListener(motion);
- if(mq.matches||(navigator.connection&&navigator.connection.saveData)){settle();return}
- if(!root.classList.contains("motion-ready")||window.__heroIntro)introDone();
- else{document.addEventListener("hero:intro",introDone,{once:true});setTimeout(introDone,8000)}
- if(document.readyState==="complete")load();else addEventListener("load",load,{once:true});
-})();
-
-/* The showreel footage waits for the hero clip, so the two are not
-   splitting the connection while the hero is still coming in. */
-(function(){
- var v=document.querySelector(".reel video[data-src]");
+ var v=document.querySelector(".reel video[data-src]"), img=document.querySelector(".hero-poster");
  if(!v)return;
  function load(){if(!v.dataset.src)return;v.src=v.dataset.src;v.removeAttribute("data-src");v.preload="auto";
   var t=v.play();if(t&&t.catch)t.catch(function(){})}
- if(window.__heroSettled||!document.querySelector(".hero-vid"))load();
- else{document.addEventListener("hero:settled",load,{once:true});setTimeout(load,20000)}
+ if(!img||(img.complete&&img.naturalWidth))load();
+ else{img.addEventListener("load",load);img.addEventListener("error",load);setTimeout(load,20000)}
 })();
 
 /* Page 4 reveals, as measured on the reference: each article's author block
@@ -3223,16 +3224,12 @@ document.querySelectorAll(".count").forEach(function(el){
 })();
 
 /* header hide on scroll-down */
-var hdr=document.getElementById("hdr"),last=window.scrollY,heroEl=document.querySelector(".hero");
-function overHero(){hdr.classList.toggle("over-hero",!!heroEl&&window.scrollY<heroEl.offsetHeight-hdr.offsetHeight)}
+var hdr=document.getElementById("hdr"),last=window.scrollY;
 window.addEventListener("scroll",function(){
  var y=window.scrollY;
  hdr.classList.toggle("hide", y>260 && y>last && !document.body.classList.contains("menu"));
- overHero();
  last=y;
 },{passive:true});
-window.addEventListener("resize",overHero);
-overHero();
 
 /* mobile menu */
 var burger=document.getElementById("burger");
@@ -3277,70 +3274,45 @@ document.getElementById("nl").addEventListener("submit",function(e){
  this.reset();
 });
 
-/* How we work timeline: the single source of truth for the band, its text
-   column, the four stage cards and the case row. Every value is a pure
-   function of the scroll position (no timers, no one-shot triggers), so
-   scrolling back retraces exactly the same states. On desktop the band pins
-   while the stages light up in order, 01 to 04; it releases only when the
-   fourth is lit, and the case row enters after it. Below 1024px the cards
-   stack, so each lights up as it reaches the lower part of the screen. */
+/* How we work: the band and the case row are pure functions of the scroll
+   position, so scrolling back retraces the same states. As on the reference
+   the band is not pinned: it scrolls through, and each stage card rises 80px
+   and fades in the first time it comes on screen. */
 (function(){
  var track=document.querySelector(".grow-track");if(!track)return;
- var grow=track.querySelector(".grow"),run=track.querySelector(".grow-run"),col=grow.querySelector(".grow-in"),
-     list=document.getElementById("process"),cards=list.children,fsec=document.getElementById("fcase"),frow=fsec.querySelector(".fcase-in");
- var still=matchMedia("(prefers-reduced-motion: reduce)"),wide=matchMedia("(min-width:1024px)");
- var vh=innerHeight,pinned=false,pinTop=0,bottom=0,stage=0,lead=0,raf=0,HDR=60,DIM=.28;
+ var grow=track.querySelector(".grow"),col=grow.querySelector(".grow-in"),
+     cards=document.getElementById("process").children,fsec=document.getElementById("fcase"),frow=fsec.querySelector(".fcase-in");
+ var still=matchMedia("(prefers-reduced-motion: reduce)"),vh=innerHeight,raf=0,M=window.Motion;
  function clamp(v){return v<0?0:v>1?1:v}
  function out(t){return 1-(1-t)*(1-t)}
- function clear(){
-  grow.style.removeProperty("--gz");col.style.opacity=col.style.transform="";frow.style.opacity=frow.style.transform="";
-  Array.prototype.forEach.call(cards,function(c){c.style.opacity=c.style.transform=""});
- }
- function layout(){
-  vh=innerHeight;pinned=wide.matches&&!still.matches;
-  lead=parseFloat(getComputedStyle(grow).marginTop)||0;             // the band's resting offset in its track
-  if(pinned){
-   var h=grow.offsetHeight;
-   pinTop=h+HDR<=vh?Math.max(HDR,Math.round((vh-h)/2)):vh-h;           // centred under the header, or bottom-aligned if taller
-   stage=Math.round(vh*.45);                                              // scroll given to each stage
-   bottom=pinTop+h;                                                       // where the band's lower edge rests while pinned
-   grow.style.position="sticky";grow.style.top=pinTop+"px";run.style.height=Math.round(stage*4.4)+"px"; // 04 holds briefly before release
-  }else{grow.style.position=grow.style.top="";run.style.height="0px";bottom=Math.round(vh*.85)}
-  if(still.matches)clear();else frame();
- }
+ function clear(){grow.style.removeProperty("--gz");col.style.opacity=col.style.transform="";frow.style.opacity=frow.style.transform=""}
+ function layout(){vh=innerHeight;if(still.matches)clear();else frame()}
  function frame(){
   raf=0;if(still.matches)return;
-  var g=grow.getBoundingClientRect(),t=track.getBoundingClientRect();
-  // entry: the band rising from the bottom of the screen to its resting place
-  var rest=pinned?pinTop:vh*.3,e=clamp((vh-g.top)/Math.max(1,vh-rest));
+  // entry: the band rising from the bottom of the screen to 30% of it
+  var g=grow.getBoundingClientRect(),e=clamp((vh-g.top)/Math.max(1,vh*.7));
   grow.style.setProperty("--gz",(1.11-.11*out(e)).toFixed(4));
   col.style.opacity=out(clamp(e*1.4)).toFixed(3);
   col.style.transform="translateY("+(60*(1-out(e))).toFixed(1)+"px)";
-  // stage progress P, 0 to 4: pinned, how far the band has travelled down
-  // its track; stacked, how much of the card list has passed 85% of the
-  // screen (layout positions, which the cards' own styles never move)
-  var P=pinned?clamp((g.top-t.top-lead)/(stage*4))*4
-              :clamp((vh*.85-g.top-list.offsetTop)/Math.max(1,list.offsetHeight))*4;
-  Array.prototype.forEach.call(cards,function(c,i){
-   var a=out(clamp(P-i));
-   c.style.opacity=(DIM+(1-DIM)*a).toFixed(3);
-   c.style.transform=pinned?"translateY("+(14*(1-a)).toFixed(1)+"px)":"";
-  });
-  // the case row: only once the band has released and its section moves up
-  // past where the band's lower edge rested (85% of the screen when stacked,
-  // the line the last card lights up at)
-  var f=out(clamp((bottom-fsec.getBoundingClientRect().top)/(vh*.4)));
+  // the case row grows into place as its section rises up the lower 40% of the screen
+  var f=out(clamp((vh*.85-fsec.getBoundingClientRect().top)/(vh*.4)));
   frow.style.opacity=f.toFixed(3);
   frow.style.transform="scale("+(1.3-.3*f).toFixed(4)+")";
  }
- // scroll events arrive once per rendered frame, so the frame is computed
- // right there; resizes and late layout changes go through one rAF
- function tick(){if(!raf)raf=requestAnimationFrame(frame)}
+ // stage cards, measured on the reference: 80px of rise easing out over about
+ // 1s, the card fading in over its second half
+ if(M&&!still.matches&&"IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+   if(!en.isIntersecting)return;io.unobserve(en.target);
+   M.animate(en.target,{y:[80,0]},{duration:1,ease:[.16,1,.3,1]});
+   M.animate(en.target,{opacity:[0,1]},{duration:.5,delay:.45,ease:"easeOut"});
+  })},{threshold:0});
+  Array.prototype.forEach.call(cards,function(c){c.style.opacity="0";c.style.transform="translateY(80px)";io.observe(c)});
+ }
  addEventListener("scroll",frame,{passive:true});
  addEventListener("resize",layout);
  addEventListener("load",layout);
- [still,wide].forEach(function(m){if(m.addEventListener)m.addEventListener("change",layout);else if(m.addListener)m.addListener(layout)});
- if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
+ if(still.addEventListener)still.addEventListener("change",layout);else if(still.addListener)still.addListener(layout);
  layout();
 })();
 /* showreel: hold on the poster frame when the viewer asks for reduced motion */
