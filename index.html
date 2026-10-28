@@ -809,13 +809,10 @@ html.js-motion .panel img.bg{will-change:transform}
 .perf-meta{margin-top:16px}
 .perf-no{font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;color:#fff;opacity:.6}
 .perf-brands{margin-top:176px;text-align:center;font-family:"Fragment Mono",ui-monospace,monospace;font-size:20px;line-height:1.3;letter-spacing:-.05em;text-transform:uppercase;color:var(--muted)}
-/* the reference's client band: an 860px window centred on the page, fading
-   over its outer quarters, eight logos 40px tall with 140px between them,
-   running left at about 53px/s */
-.mq-brand{position:relative;z-index:1;width:min(860px,100%);margin:64px auto 0;padding-bottom:40px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
-.mq-brand .mq-track{animation-duration:var(--dur,44s)}
-.mq-brand-i{flex:none;padding:0 70px}
-.mq-brand-i img{display:block;height:40px;object-fit:contain}
+.mq-brand{position:relative;z-index:1;margin-top:64px;padding-bottom:40px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mq-brand .mq-track{animation-duration:36s}
+.mq-brand-i{flex:none;padding:0 56px}
+.mq-brand-i img{display:block;height:32px;width:auto;opacity:.7}
 @media(min-width:1200px){
   .perf .perf-head{grid-template-columns:302px 1fr;padding-left:20px}
   .perf-head .ph-rail{padding-top:0;margin-top:-24px}
@@ -1064,8 +1061,6 @@ html.js-motion .panel img.bg{will-change:transform}
   .ph{display:grid;grid-template-columns:311px 1fr;align-items:start}
   .ph-rail{padding-top:12px}
   .ph-title{font-size:96px!important;line-height:1!important;letter-spacing:-.06em!important;color:var(--muted);max-width:800px!important}
-  /* the reference's statistics title box is 770px, so it breaks after "behind" */
-  .perf .ph-title{max-width:770px!important}
   .ph-sub{margin-top:24px;font-size:21px;line-height:1.295;letter-spacing:-.04em;color:var(--muted);max-width:600px}
   .ph-ticks{display:block;margin-top:78px;height:17px;max-width:694px;
     background-image:repeating-linear-gradient(to right,rgba(0,0,0,.28) 0 1px,transparent 1px 11px)}
@@ -1556,11 +1551,6 @@ html.js-motion .tst-rule{transform:translateX(-100px)}
 .tst-mq{width:max-content;animation:tst-slide var(--mq-dur,80s) linear infinite}
 @keyframes tst-slide{from{transform:translateX(0)}to{transform:translateX(calc(var(--mq-w,0px) * -1))}}
 @media(prefers-reduced-motion:reduce){.tst-mq{animation:none}}
-/* the reference runs the row through a window inset 20px from each edge that
-   fades over its outer 5% */
-@media(min-width:810px){.tst-win{margin:0 20px;overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-          mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}}
 .tst-brands{display:flex;align-items:center;gap:149px;height:40px;margin-top:56px;padding-left:32px}
 .tst-brands img{flex:none;height:40px;width:auto;filter:invert(1) hue-rotate(180deg)}
 .tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:16px;background:#fff}
@@ -2076,7 +2066,7 @@ input::placeholder{color:var(--rule)}
       <img src="public/img/ref/logo-8.svg" alt="" height="40" decoding="async">
       <img src="public/img/ref/tst-logo-8.svg" alt="" height="40" decoding="async">
     </div>
-    <div class="tst-win"><ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul></div>
+    <ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul>
   </div>
 </section>
 
@@ -2334,18 +2324,13 @@ document.getElementById("perf").innerHTML=perf.map(function(s){
  '<div class="perf-meta"><span class="perf-bar"></span><span class="perf-line"></span>'+
  '<span class="perf-no">'+s[0]+'</span></div></div>';
 }).join("");
-/* client band: the reference's eight logos in its order, looped; the speed is
-   set in px/s, so the duration follows the track's measured width */
+/* client band: the logo files supplied for this site, looped */
 (function(){
- // each logo sits in the reference's own frame width, fitted to 40px tall
- var logos=[["public/img/hero-logos/monolith.svg","Monolith",144],["public/img/hero-logos/obliqon.svg","Obliqon",160],["public/img/brand-logos/lindholm.svg","Lindholm",161],
-  ["public/img/brand-logos/vornberg.svg","Vornberg",165],["public/img/hero-logos/wendrich.svg","Wendrich",163],["public/img/hero-logos/blackwell.svg","Blackwell",154],
-  ["public/img/hero-logos/numeriq.svg","Numeriq",160],["public/img/hero-logos/pixel-mark.svg","Client mark",40]];
- var html=logos.map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" width="'+l[2]+'" height="40" decoding="async"></span>'}).join("");
- var a=document.getElementById("brandA"),b=document.getElementById("brandB");
- a.innerHTML=html;b.innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
- function speed(){var w=a.offsetWidth;if(w)a.parentNode.style.setProperty("--dur",(w/53).toFixed(2)+"s")}
- speed();addEventListener("load",speed);
+ var logos=[["public/img/hero-logos/obliqon.svg","Obliqon"],["public/img/hero-logos/numeriq.svg","Numeriq"],["public/img/hero-logos/aurelis.svg","aurelis"],
+  ["public/img/brand-logos/logisync.svg","Logisync"],["public/img/brand-logos/lindholm.svg","Lindholm"]];
+ var html=logos.concat(logos).map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" height="32" decoding="async"></span>'}).join("");
+ document.getElementById("brandA").innerHTML=html;
+ document.getElementById("brandB").innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
 })();
 
 /* ───────────────────────────────────────────────── client marquee ───── */
@@ -3308,45 +3293,70 @@ document.getElementById("nl").addEventListener("submit",function(e){
  this.reset();
 });
 
-/* How we work: the band and the case row are pure functions of the scroll
-   position, so scrolling back retraces the same states. As on the reference
-   the band is not pinned: it scrolls through, and each stage card rises 80px
-   and fades in the first time it comes on screen. */
+/* How we work timeline: the single source of truth for the band, its text
+   column, the four stage cards and the case row. Every value is a pure
+   function of the scroll position (no timers, no one-shot triggers), so
+   scrolling back retraces exactly the same states. On desktop the band pins
+   while the stages light up in order, 01 to 04; it releases only when the
+   fourth is lit, and the case row enters after it. Below 1024px the cards
+   stack, so each lights up as it reaches the lower part of the screen. */
 (function(){
  var track=document.querySelector(".grow-track");if(!track)return;
- var grow=track.querySelector(".grow"),col=grow.querySelector(".grow-in"),
-     cards=document.getElementById("process").children,fsec=document.getElementById("fcase"),frow=fsec.querySelector(".fcase-in");
- var still=matchMedia("(prefers-reduced-motion: reduce)"),vh=innerHeight,raf=0,M=window.Motion;
+ var grow=track.querySelector(".grow"),run=track.querySelector(".grow-run"),col=grow.querySelector(".grow-in"),
+     list=document.getElementById("process"),cards=list.children,fsec=document.getElementById("fcase"),frow=fsec.querySelector(".fcase-in");
+ var still=matchMedia("(prefers-reduced-motion: reduce)"),wide=matchMedia("(min-width:1024px)");
+ var vh=innerHeight,pinned=false,pinTop=0,bottom=0,stage=0,lead=0,raf=0,HDR=60,DIM=.28;
  function clamp(v){return v<0?0:v>1?1:v}
  function out(t){return 1-(1-t)*(1-t)}
- function clear(){grow.style.removeProperty("--gz");col.style.opacity=col.style.transform="";frow.style.opacity=frow.style.transform=""}
- function layout(){vh=innerHeight;if(still.matches)clear();else frame()}
+ function clear(){
+  grow.style.removeProperty("--gz");col.style.opacity=col.style.transform="";frow.style.opacity=frow.style.transform="";
+  Array.prototype.forEach.call(cards,function(c){c.style.opacity=c.style.transform=""});
+ }
+ function layout(){
+  vh=innerHeight;pinned=wide.matches&&!still.matches;
+  lead=parseFloat(getComputedStyle(grow).marginTop)||0;             // the band's resting offset in its track
+  if(pinned){
+   var h=grow.offsetHeight;
+   pinTop=h+HDR<=vh?Math.max(HDR,Math.round((vh-h)/2)):vh-h;           // centred under the header, or bottom-aligned if taller
+   stage=Math.round(vh*.45);                                              // scroll given to each stage
+   bottom=pinTop+h;                                                       // where the band's lower edge rests while pinned
+   grow.style.position="sticky";grow.style.top=pinTop+"px";run.style.height=Math.round(stage*4.4)+"px"; // 04 holds briefly before release
+  }else{grow.style.position=grow.style.top="";run.style.height="0px";bottom=Math.round(vh*.85)}
+  if(still.matches)clear();else frame();
+ }
  function frame(){
   raf=0;if(still.matches)return;
-  // entry: the band rising from the bottom of the screen to 30% of it
-  var g=grow.getBoundingClientRect(),e=clamp((vh-g.top)/Math.max(1,vh*.7));
+  var g=grow.getBoundingClientRect(),t=track.getBoundingClientRect();
+  // entry: the band rising from the bottom of the screen to its resting place
+  var rest=pinned?pinTop:vh*.3,e=clamp((vh-g.top)/Math.max(1,vh-rest));
   grow.style.setProperty("--gz",(1.11-.11*out(e)).toFixed(4));
   col.style.opacity=out(clamp(e*1.4)).toFixed(3);
   col.style.transform="translateY("+(60*(1-out(e))).toFixed(1)+"px)";
-  // the case row grows into place as its section rises up the lower 40% of the screen
-  var f=out(clamp((vh*.85-fsec.getBoundingClientRect().top)/(vh*.4)));
+  // stage progress P, 0 to 4: pinned, how far the band has travelled down
+  // its track; stacked, how much of the card list has passed 85% of the
+  // screen (layout positions, which the cards' own styles never move)
+  var P=pinned?clamp((g.top-t.top-lead)/(stage*4))*4
+              :clamp((vh*.85-g.top-list.offsetTop)/Math.max(1,list.offsetHeight))*4;
+  Array.prototype.forEach.call(cards,function(c,i){
+   var a=out(clamp(P-i));
+   c.style.opacity=(DIM+(1-DIM)*a).toFixed(3);
+   c.style.transform=pinned?"translateY("+(14*(1-a)).toFixed(1)+"px)":"";
+  });
+  // the case row: only once the band has released and its section moves up
+  // past where the band's lower edge rested (85% of the screen when stacked,
+  // the line the last card lights up at)
+  var f=out(clamp((bottom-fsec.getBoundingClientRect().top)/(vh*.4)));
   frow.style.opacity=f.toFixed(3);
   frow.style.transform="scale("+(1.3-.3*f).toFixed(4)+")";
  }
- // stage cards, measured on the reference: 80px of rise easing out over about
- // 1s, the card fading in over its second half
- if(M&&!still.matches&&"IntersectionObserver" in window){
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){
-   if(!en.isIntersecting)return;io.unobserve(en.target);
-   M.animate(en.target,{y:[80,0]},{duration:1,ease:[.16,1,.3,1]});
-   M.animate(en.target,{opacity:[0,1]},{duration:.5,delay:.45,ease:"easeOut"});
-  })},{threshold:0});
-  Array.prototype.forEach.call(cards,function(c){c.style.opacity="0";c.style.transform="translateY(80px)";io.observe(c)});
- }
+ // scroll events arrive once per rendered frame, so the frame is computed
+ // right there; resizes and late layout changes go through one rAF
+ function tick(){if(!raf)raf=requestAnimationFrame(frame)}
  addEventListener("scroll",frame,{passive:true});
  addEventListener("resize",layout);
  addEventListener("load",layout);
- if(still.addEventListener)still.addEventListener("change",layout);else if(still.addListener)still.addListener(layout);
+ [still,wide].forEach(function(m){if(m.addEventListener)m.addEventListener("change",layout);else if(m.addListener)m.addListener(layout)});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
  layout();
 })();
 /* showreel: hold on the poster frame when the viewer asks for reduced motion */
