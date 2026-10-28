@@ -2747,19 +2747,22 @@ tick();setInterval(tick,1000);
 
 /* The counter and the client ticker, timed on the reference: the counter
    reads 10+ until about 9.5s after the load event, then rolls up to 120+ as
-   the ticker fades in and starts. Reduced motion shows the end state. */
+   the ticker fades in and starts; on a connection slow enough to hold the load
+   event back, it goes 12s in regardless. Reduced motion shows the end state. */
 (function(){
  var cnt=document.querySelector(".hero-count"),logos=document.querySelector(".hero-logos");if(!cnt)return;
  var M=window.Motion,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
  function end(){cnt.firstElementChild.style.display="none";if(logos)logos.classList.add("on")}
  if(still){end();return}
+ var done=false;
  function roll(){
+  if(done)return;done=true;
   if(logos)logos.classList.add("on");
   if(M&&document.documentElement.classList.contains("motion-ready"))M.animate(Array.prototype.slice.call(cnt.children),{y:[0,"-100%"]},{duration:.8,ease:[.16,1,.3,1]});
   else end();
  }
  if(document.readyState==="complete")setTimeout(roll,9500);
- else addEventListener("load",function(){setTimeout(roll,9500)},{once:true});
+ else{addEventListener("load",function(){setTimeout(roll,9500)},{once:true});setTimeout(roll,12000)}
 })();
 
 /* The showreel footage waits for the hero photo, so the two are not
