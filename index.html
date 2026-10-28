@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- home-only edition, built from create-studio-site@8eb2a0a by scripts/build-home-only.mjs -->
+<!-- home-only edition, built from create-studio-site@ce58844 by scripts/build-home-only.mjs -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -200,7 +200,7 @@ html.js-motion .hero-lqip{transform:translateY(40px) scale(1.44)}
   /* index rows land on 163, 353, 573 and 815 of a 900px stage, as the
      reference's do; in vh so the proportions hold at other heights */
   .hero-in{justify-content:flex-start;padding-top:calc(var(--nav-h) + 11.45vh)}
-  .hero-row2{margin-top:3vh;margin-bottom:0}
+  .hero-row2{margin-top:3.67vh;margin-bottom:0}
   .hero-in>.shell:nth-child(3){margin-top:4.94vh;margin-bottom:0}
   /* the reference's counter draws 88 x 44 at 1440 */
   .hero-stat>.t-h4{font-size:calc(var(--rfs)*3.75);letter-spacing:-.1em;margin-top:-3px;padding-right:4px}
@@ -355,19 +355,23 @@ html.js-motion .hero-card{opacity:.001;transform:translateY(66px)}
 .hero .btn-light{background:#fff;color:#000}
 .hero .btn-light:hover,.hero .btn-light:focus-visible,.hero .btn-light:active{color:var(--accent);border-color:#fff}
 .hero .btn-light svg{color:var(--accent)}
-/* Three client logos in a one-line window under the caption, rolling
-   upward at the reference's steady 21.5px/s with no stops, fading through the window's
-   soft top and bottom edges. The track holds the set twice and moves up by
-   exactly one set (3 x 40px), so the loop has no seam. The window keeps the old 40px row height so nothing
-   below moves; hovering pauses it. */
-.hero-logos{height:40px;width:min(100%,280px);margin-left:auto;overflow:hidden;
-  -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent);
-          mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
-.logo-track{display:flex;flex-direction:column;will-change:transform;animation:logo-loop 5.6s linear infinite}
-.hero-logos:hover .logo-track{animation-play-state:paused}
-.logo-set{display:flex;flex-direction:column;align-items:flex-end}
-.hero-logos img{display:block;height:22px;width:auto;margin:9px 0}
-@keyframes logo-loop{to{transform:translateY(-120px)}}
+/* The client ticker, as on the reference: eight logos 30px tall on a 60px
+   pitch rolling upward at about 21px/s through a 280 x 30 window that fades
+   at its top and bottom quarters, right-aligned, 12px under the caption. It
+   stays out of sight until the counter rolls to 120+, then fades in and starts. */
+.hero-logos{height:30px;width:min(100%,280px);margin:12px 0 0 auto;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 25%,#000 75%,transparent);
+          mask-image:linear-gradient(180deg,transparent,#000 25%,#000 75%,transparent)}
+html.js-motion .hero-logos{opacity:0;transition:opacity .6s var(--ease)}
+html.js-motion .hero-logos.on{opacity:1}
+.logo-track{display:flex;flex-direction:column;will-change:transform;animation:logo-loop 22.8s linear infinite}
+html.js-motion .hero-logos:not(.on) .logo-track{animation-play-state:paused}
+.logo-set{display:flex;flex-direction:column;align-items:flex-end;gap:30px;padding-bottom:30px}
+.hero-logos img{display:block;height:30px;width:auto}
+@keyframes logo-loop{to{transform:translateY(-480px)}}
+/* the counter's roll from 10+ to 120+: both values stacked in a one-line window */
+.hero-count{display:inline-grid;height:1.1em;overflow:hidden;vertical-align:top}
+.hero-count>span{display:block;text-align:right;line-height:1.1em}
 .reel-head{display:flex;align-items:center;gap:12px;padding:0 16px 8px;color:#fff}
 .reel-head .hair{flex:1;background:rgba(255,255,255,.5)}
 .reel{position:relative;display:block;width:100%;aspect-ratio:1.70588;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#1b2129,#05070a)}
@@ -806,10 +810,13 @@ html.js-motion .panel img.bg{will-change:transform}
 .perf-meta{margin-top:16px}
 .perf-no{font-family:"Fragment Mono",ui-monospace,monospace;font-size:12px;letter-spacing:-.05em;text-transform:uppercase;color:#fff;opacity:.6}
 .perf-brands{margin-top:176px;text-align:center;font-family:"Fragment Mono",ui-monospace,monospace;font-size:20px;line-height:1.3;letter-spacing:-.05em;text-transform:uppercase;color:var(--muted)}
-.mq-brand{position:relative;z-index:1;margin-top:64px;padding-bottom:40px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.mq-brand .mq-track{animation-duration:36s}
-.mq-brand-i{flex:none;padding:0 56px}
-.mq-brand-i img{display:block;height:32px;width:auto;opacity:.7}
+/* the reference's client band: an 860px window centred on the page, fading
+   over its outer quarters, eight logos 40px tall with 140px between them,
+   running left at about 53px/s */
+.mq-brand{position:relative;z-index:1;width:min(860px,100%);margin:64px auto 0;padding-bottom:40px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
+.mq-brand .mq-track{animation-duration:var(--dur,44s)}
+.mq-brand-i{flex:none;padding:0 70px}
+.mq-brand-i img{display:block;height:40px;object-fit:contain}
 @media(min-width:1200px){
   .perf .perf-head{grid-template-columns:302px 1fr;padding-left:20px}
   .perf-head .ph-rail{padding-top:0;margin-top:-24px}
@@ -1550,6 +1557,11 @@ html.js-motion .tst-rule{transform:translateX(-100px)}
 .tst-mq{width:max-content;animation:tst-slide var(--mq-dur,80s) linear infinite}
 @keyframes tst-slide{from{transform:translateX(0)}to{transform:translateX(calc(var(--mq-w,0px) * -1))}}
 @media(prefers-reduced-motion:reduce){.tst-mq{animation:none}}
+/* the reference runs the row through a window inset 20px from each edge that
+   fades over its outer 5% */
+@media(min-width:810px){.tst-win{margin:0 20px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}}
 .tst-brands{display:flex;align-items:center;gap:149px;height:40px;margin-top:56px;padding-left:32px}
 .tst-brands img{flex:none;height:40px;width:auto;filter:invert(1) hue-rotate(180deg)}
 .tst-t{position:relative;flex:none;display:flex;flex-direction:column;width:min(500px,86vw);min-height:350px;padding:32px;border-radius:16px;background:#fff}
@@ -1605,7 +1617,6 @@ input::placeholder{color:var(--rule)}
   .rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.rv-h .w,
   .hx-pop,.hx-fade,.hx-fade6,.hx-lift,.hdr-logo{opacity:1;transform:none}
   .sl-in{transform:none!important}.logo-track{animation:none}
-  .hero-logos.hx-lift{opacity:1}
   .mask>span,.word>span,.lmask>span,.hx-mark,.hx-row,.hx-time,.rv-h .w{transform:none}
   .word>span{filter:none}
   .imgbox img,.panel img.bg,.wcard img{transform:none}
@@ -1682,11 +1693,11 @@ input::placeholder{color:var(--rule)}
     <div class="shell">
       <div class="grid" style="align-items:start;row-gap:24px">
         <div class="r1"><div class="rail t-mono-sm hx-mark" data-d="0">// 00.01°</div></div>
-        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:550px" id="heroH1"></h1>
+        <h1 class="hero-h1 t-h4 hx-row" data-d="0" style="max-width:550px" id="heroH1">Digital experiences that<br>connect, scale and perform<span class="accent">.</span></h1>
         <div class="hero-stat hx-row" data-d="0">
-          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="count" data-to="10" data-suffix="+" data-dur="600" data-delay="1000">0+</span></p>
+          <p class="t-h4 num accent hx-pop" data-d="1000" style="font-weight:700"><span class="hero-count"><span>10+</span><span aria-hidden="true">120+</span></span></p>
           <p class="t-mono mt1 hx-lift split-lines" data-d="1000" style="color:#fff;max-width:24ch;margin-left:auto">Quietly making noise for brands worldwide</p>
-          <div class="hero-logos mt1 hx-lift" data-d="1000"><div class="logo-track"><div class="logo-set"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" width="140" height="44"></div><div class="logo-set" aria-hidden="true"><img src="public/img/hero-logos/obliqon.svg" alt="" width="169" height="44"><img src="public/img/hero-logos/numeriq.svg" alt="" width="179" height="44"><img src="public/img/hero-logos/aurelis.svg" alt="" width="140" height="44"></div></div></div>
+          <div class="hero-logos"><div class="logo-track"><div class="logo-set"><img src="public/img/hero-logos/aurelis.svg" alt="aurelis beach resort" height="30" decoding="async"><img src="public/img/hero-logos/blackwell.svg" alt="Blackwell" height="30" decoding="async"><img src="public/img/hero-logos/../brand-logos/logisync.svg" alt="Logisync" height="30" decoding="async"><img src="public/img/hero-logos/numeriq.svg" alt="Numeriq" height="30" decoding="async"><img src="public/img/hero-logos/obliqon.svg" alt="Obliqon" height="30" decoding="async"><img src="public/img/hero-logos/wendrich.svg" alt="Wendrich" height="30" decoding="async"><img src="public/img/hero-logos/monolith.svg" alt="Monolith" height="30" decoding="async"><img src="public/img/hero-logos/pixel-mark.svg" alt="Client mark" height="30" decoding="async"></div><div class="logo-set" aria-hidden="true"><img src="public/img/hero-logos/aurelis.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/blackwell.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/../brand-logos/logisync.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/numeriq.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/obliqon.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/wendrich.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/monolith.svg" alt="" height="30" decoding="async"><img src="public/img/hero-logos/pixel-mark.svg" alt="" height="30" decoding="async"></div></div></div>
         </div>
       </div>
     </div>
@@ -2066,7 +2077,7 @@ input::placeholder{color:var(--rule)}
       <img src="public/img/ref/logo-8.svg" alt="" height="40" decoding="async">
       <img src="public/img/ref/tst-logo-8.svg" alt="" height="40" decoding="async">
     </div>
-    <ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul>
+    <div class="tst-win"><ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul></div>
   </div>
 </section>
 
@@ -2324,13 +2335,18 @@ document.getElementById("perf").innerHTML=perf.map(function(s){
  '<div class="perf-meta"><span class="perf-bar"></span><span class="perf-line"></span>'+
  '<span class="perf-no">'+s[0]+'</span></div></div>';
 }).join("");
-/* client band: the logo files supplied for this site, looped */
+/* client band: the reference's eight logos in its order, looped; the speed is
+   set in px/s, so the duration follows the track's measured width */
 (function(){
- var logos=[["public/img/hero-logos/obliqon.svg","Obliqon"],["public/img/hero-logos/numeriq.svg","Numeriq"],["public/img/hero-logos/aurelis.svg","aurelis"],
-  ["public/img/brand-logos/logisync.svg","Logisync"],["public/img/brand-logos/lindholm.svg","Lindholm"]];
- var html=logos.concat(logos).map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" height="32" decoding="async"></span>'}).join("");
- document.getElementById("brandA").innerHTML=html;
- document.getElementById("brandB").innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
+ // each logo sits in the reference's own frame width, fitted to 40px tall
+ var logos=[["public/img/hero-logos/monolith.svg","Monolith",144],["public/img/hero-logos/obliqon.svg","Obliqon",160],["public/img/brand-logos/lindholm.svg","Lindholm",161],
+  ["public/img/brand-logos/vornberg.svg","Vornberg",165],["public/img/hero-logos/wendrich.svg","Wendrich",163],["public/img/hero-logos/blackwell.svg","Blackwell",154],
+  ["public/img/hero-logos/numeriq.svg","Numeriq",160],["public/img/hero-logos/pixel-mark.svg","Client mark",40]];
+ var html=logos.map(function(l){return '<span class="mq-brand-i"><img src="'+l[0]+'" alt="'+l[1]+'" width="'+l[2]+'" height="40" decoding="async"></span>'}).join("");
+ var a=document.getElementById("brandA"),b=document.getElementById("brandB");
+ a.innerHTML=html;b.innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
+ function speed(){var w=a.offsetWidth;if(w)a.parentNode.style.setProperty("--dur",(w/53).toFixed(2)+"s")}
+ speed();addEventListener("load",speed);
 })();
 
 /* ───────────────────────────────────────────────── client marquee ───── */
@@ -2649,7 +2665,6 @@ tick();setInterval(tick,1000);
   });
 
   go(".hx-pop,.hx-lift",{opacity:[.001,1],y:[80,0]},{duration:.9,delay:.79,ease:OUT});
-  document.querySelectorAll(".hero .count").forEach(function(el){setTimeout(function(){countUp(el)},790)});
   go(".hero .btn",{opacity:[.001,1]},{duration:.3,delay:.79,ease:OUT});
   document.querySelectorAll(".hero .lmask").forEach(function(m){
    M.animate(m.firstElementChild,{y:[70,0]},{duration:.52,delay:.79,ease:OUT});
@@ -2729,6 +2744,23 @@ tick();setInterval(tick,1000);
  addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(draw)},{passive:true});
  addEventListener("resize",function(){drawn=-1;draw()});
  draw();
+})();
+
+/* The counter and the client ticker, timed on the reference: the counter
+   reads 10+ until about 9.5s after the load event, then rolls up to 120+ as
+   the ticker fades in and starts. Reduced motion shows the end state. */
+(function(){
+ var cnt=document.querySelector(".hero-count"),logos=document.querySelector(".hero-logos");if(!cnt)return;
+ var M=window.Motion,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ function end(){cnt.firstElementChild.style.display="none";if(logos)logos.classList.add("on")}
+ if(still){end();return}
+ function roll(){
+  if(logos)logos.classList.add("on");
+  if(M&&document.documentElement.classList.contains("motion-ready"))M.animate(Array.prototype.slice.call(cnt.children),{y:[0,"-100%"]},{duration:.8,ease:[.16,1,.3,1]});
+  else end();
+ }
+ if(document.readyState==="complete")setTimeout(roll,9500);
+ else addEventListener("load",function(){setTimeout(roll,9500)},{once:true});
 })();
 
 /* The showreel footage waits for the hero photo, so the two are not
