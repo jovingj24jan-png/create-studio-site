@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- home-only edition, built from create-studio-site@39950df by scripts/build-home-only.mjs -->
+<!-- home-only edition, built from create-studio-site@5eaa2e3 by scripts/build-home-only.mjs -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -1929,6 +1929,33 @@ html.js-motion .wc.sum-in .wc-sum .w{opacity:1;transform:none}
 @media(min-width:1200px){.wh-head .wh-cap,.wh-head .wh-top{position:relative;top:-15px}.wi-feats{left:52px}.wh-close .wh-stats{left:68px}}
 @media(max-width:809px){.wc-sum{left:24px;right:24px;bottom:24px;font-size:16px;line-height:1.4}}
 @media(prefers-reduced-motion:reduce){html.js-motion .wc-sum .w{opacity:1;transform:none;transition:none}}
+/* ═══════ Whispers, closing panel and footer on phones, measured on the reference at 390 ═ */
+@media(max-width:809px){
+  .wh-head .ph-title{font-size:48px!important;line-height:1.1!important}
+  .wh-head .ph-sub{font-size:19.2px;line-height:1.3;color:var(--muted)}
+  .wc{height:490px}
+  .wi-title{font-size:48px}
+  .wi-sub{font-size:22.4px}
+  .wi-p,.wi-feats li{font-size:19.2px}
+  .wi-title,.wi-sub,.wi-p{margin-left:18px;margin-right:18px}
+  .wi-feats,.wc-meta,.wc-title{left:18px;right:18px}
+  .wc-name{font-size:16px}
+  .wc-sum{left:18px;right:18px;font-weight:400}
+  #whispers~.wh-close .wh-stats,.wh-close .wh-stats{margin-left:28px}
+  #site-foot .foot-up .foot-nl{margin-bottom:-10px}
+  #site-foot #nl{margin-top:48px!important}
+  #site-foot .nl-fine{margin-top:4px}
+  #site-foot .foot-up .foot-nav,#site-foot .foot-up .foot-links{margin-top:-1px}
+  #whispers~.wh-close .wh-inspire{margin-top:35px}
+  #site-foot .foot-lower .foot-off{margin-bottom:52px}
+  .wh-band{padding-bottom:112px}
+  .wh-head .ph-title{margin-bottom:10px}
+  .wh-head{padding-bottom:60px}
+  .wi-feats{left:37px;bottom:6px}
+  #site-foot .foot-tag{font-weight:500}
+}
+/* the footer's link labels rest in ink, as on the reference */
+#site-foot .froll-in>span:first-child{color:#141414}
 /* ═══════════ closing panel on phones, measured on the reference at 390 ═══
    9 years and its line, the three figures, then the heading, the portrait,
    the quote and the centred button; the years band stays off. */
