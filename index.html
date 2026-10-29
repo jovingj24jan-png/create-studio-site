@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- home-only edition, built from create-studio-site@5eaa2e3 by scripts/build-home-only.mjs -->
+<!-- home-only edition, built from create-studio-site@b01a465 by scripts/build-home-only.mjs -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -1444,13 +1444,13 @@ html.js-motion .faq-pop{opacity:.001}
 .wh-band{background:#fafafa;padding:40px 0 160px}
 .wh-grid{display:grid;grid-template-columns:1fr;gap:20px}
 .wc{position:relative;display:block;height:clamp(420px,56vw,600px);border-radius:12px;overflow:hidden;background:var(--ink);color:#fff}
-.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:transform 1.2s var(--ease)}
+.wc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease),filter .6s var(--ease)}
 .wc-intro>img{filter:brightness(.6) grayscale(1)}
 .wc-veil{position:absolute;inset:0}
 .wc-meta{position:absolute;left:32px;right:32px;top:32px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .wc-by{display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,.5);padding-left:16px}
 .wc-name{font-size:18.1px;line-height:1.4;letter-spacing:-.04em;color:#fafafa}
-.wc-role{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#f2f2f2;opacity:.8}
+.wc-role{font-size:16px;line-height:1.3;letter-spacing:-.04em;color:#f2f2f2}
 .wc-date{flex:none;font-size:14.1px;line-height:1.3;letter-spacing:-.04em;color:#fafafa}
 .wc-title{position:absolute;left:32px;right:32px;top:110px;max-width:350px;font-size:32px;line-height:1.2;font-weight:400;letter-spacing:-.05em;transition:color .3s}
 .wi-title,.wi-sub,.wi-p{position:relative;margin:0 32px}
@@ -1923,12 +1923,16 @@ input::placeholder{color:var(--rule)}
    white, the words rising in one after another as the card comes into view. */
 .wc-sum{position:absolute;left:32px;right:32px;bottom:32px;max-width:400px;margin:0;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.04em;color:#fff}
 .wc-sum .w{display:inline-block}
-html.js-motion .wc-sum .w{opacity:.001;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:calc(var(--i) * 30ms)}
-html.js-motion .wc.sum-in .wc-sum .w{opacity:1;transform:none}
+/* as on the reference: the picture rests untouched with the summary hidden;
+   under the pointer it eases to 1.1x, blurs and darkens, and the summary
+   rises in word by word a beat later (and drops away at once on leaving) */
+.wc-sum .w{opacity:0;transform:translateY(12px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+a.wc:hover>img,a.wc:focus-visible>img{transform:scale(1.1);filter:brightness(.55) blur(4px)}
+a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;transition-duration:.5s;transition-delay:calc(200ms + var(--i) * 30ms)}
 .wh-head .rv-tag{color:var(--deep)}
 @media(min-width:1200px){.wh-head .wh-cap,.wh-head .wh-top{position:relative;top:-15px}.wi-feats{left:52px}.wh-close .wh-stats{left:68px}}
 @media(max-width:809px){.wc-sum{left:24px;right:24px;bottom:24px;font-size:16px;line-height:1.4}}
-@media(prefers-reduced-motion:reduce){html.js-motion .wc-sum .w{opacity:1;transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){.wc>img,.wc-sum .w{transition:none}a.wc:hover>img,a.wc:focus-visible>img{transform:none}.wc-sum .w{transform:none}}
 /* ═══════ Whispers, closing panel and footer on phones, measured on the reference at 390 ═ */
 @media(max-width:809px){
   .wh-head .ph-title{font-size:48px!important;line-height:1.1!important}
@@ -3913,8 +3917,6 @@ document.getElementById("nl").addEventListener("submit",function(e){
 /* phones: the review arrows step the row one card at a time */
 document.querySelectorAll(".tst-arr").forEach(function(b){b.addEventListener("click",function(){var row=document.getElementById("tstRow"),c=row&&row.firstElementChild;if(!c)return;row.scrollBy({left:(c.getBoundingClientRect().width+20)*+b.dataset.dir,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})});
 
-/* the article summaries rise in word by word once their card is on screen */
-(function(){var cs=document.querySelectorAll(".wc .wc-sum");if(!cs.length)return;if(!("IntersectionObserver" in window)){cs.forEach(function(s){s.parentElement.classList.add("sum-in")});return}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("sum-in");io.unobserve(e.target)}})},{threshold:.35});cs.forEach(function(s){io.observe(s.parentElement)})})();
 </script>
 </body>
 </html>
