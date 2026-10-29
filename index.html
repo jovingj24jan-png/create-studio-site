@@ -1823,6 +1823,65 @@ input::placeholder{color:var(--rule)}
   .hero-h1{font-size:clamp(30px,8.4vw,48px)}
 }
 
+/* ═══════ Why choose us and Pricing heads, measured on the reference at 1440 ═
+   Both sections open the same way: at 160px a grey 20 x 3 tick on a hairline
+   as wide as the label, the 16px mono label in capitals at 228 over a 12px
+   hatch, and in the main column an orange 20 x 3 tick on a 913px rule with
+   the create mark at the right edge; the title sits at 235. */
+.sh-cap,.sh-hatch,.sh-rule,.sh-mark{display:none}
+/* the reference runs the scrambling letters in the accent, then settles to grey */
+.sh .scr-run{color:var(--accent)}
+@media(min-width:1200px){
+  .sh{position:relative}
+  .sechead.why{padding-top:160px}
+  #pricing{padding-top:160px}
+  .sh .sh-rail{justify-self:start;width:max-content;padding-top:0;margin-top:0}
+  .sh .sh-rail>.hair,.sh .sechead-hatch,.why .sechead-rule{display:none}
+  .sh .sh-cap{display:block;position:relative;height:1px;background:var(--rule)}
+  .sh .sh-cap::before{content:"";position:absolute;left:0;top:0;width:20px;height:3px;background:var(--rule)}
+  .sh .sh-rail .rv-tag{display:block;width:max-content;margin:65px 0 0;padding:0;font-size:16px;line-height:19px;letter-spacing:-.04em;text-transform:uppercase;color:var(--deep)}
+  .sh .sh-hatch{display:block;height:12px;margin-top:6px;background-image:repeating-linear-gradient(45deg,var(--rule) 0 1px,transparent 1px 4px)}
+  .sh .sh-rule{display:block;position:relative;width:933px;height:1px;background:var(--rule)}
+  .sh .sh-rule::before{content:"";position:absolute;left:0;top:0;width:20px;height:3px;background:var(--accent)}
+  .sh .sh-mark{display:block;position:absolute;right:20px;top:150px;margin:0}
+  .why .why-h,#pricing .ph-title{margin-top:54px}
+  .why .sechead-grid{grid-template-columns:311px 1fr}
+  /* the bodies, nudged onto the reference's positions */
+  #whyStats{position:relative;top:5px;margin-left:8px}
+  .bcard-rev p,.bcard-rev strong{font-weight:400}
+  .plan-l{padding-top:8px}
+  .plan-price{margin-top:27px}
+  .plan-was{margin-top:15px}
+  .plan-desc{margin-top:36px}
+  .plan-feat{margin-left:-10px}
+  .plan-r{padding-top:16px;margin-left:-6px}
+  #pricing .ask>p,#pricing .ask>div{margin-top:10px}
+  #pricing .ask>div{margin-left:55px}
+}
+
+/* ═══════ Why choose us and Pricing on phones, measured on the reference at 390 ═ */
+@media(max-width:809px){
+  .why .why-h,#pricing .ph-title{font-size:48px!important;line-height:1.1!important}
+  .why .sechead-lead,#pricing .ph-sub{font-size:19.2px;line-height:1.3}
+  .why .bento{margin-top:85px}
+  .why .sechead-rule{display:none}
+  .sechead.why{padding-bottom:164px}
+  #pricing .ph-rail{margin-bottom:46px}
+  #pricing .ph-title{margin-bottom:15px}
+  .why .sechead-rail{margin-bottom:-25px}
+  #pricing .ph{padding-bottom:162px}
+  /* the open plan keeps its resting colours on phones */
+  #plans .plan.open .plan-tier{color:var(--deep)}
+  #plans .plan.open .plan-name{color:var(--accent)}
+  #plans .plan.open .plan-ico{transform:none}
+  #plans .plan.open .plan-stripes{background-image:repeating-linear-gradient(to bottom,var(--rule) 0 1px,transparent 1px 4px)}
+  #pricing .ask>h3{font-size:30.4px!important;line-height:1.1!important}
+  .plan-ticks{display:none}
+  .plan-desc{margin-top:46px}
+  .plan-r{margin-top:-9px}
+  #plans .plan-body{padding-bottom:122px}
+  #plans .plan-btn{padding:18px 22px}
+}
 /* ═══════════ closing panel on phones, measured on the reference at 390 ═══
    9 years and its line, the three figures, then the heading, the portrait,
    the quote and the centred button; the years band stays off. */
@@ -2116,16 +2175,16 @@ input::placeholder{color:var(--rule)}
 </section>
 
 <!-- ═══════════════════════════════════════════════ WHY / STATS ══════════ -->
-<section class="section sechead why" aria-label="Why choose us">
+<section class="section sechead why sh" aria-label="Why choose us">
   <div class="shell">
     <div class="sechead-grid">
-      <div class="sechead-rail">
-        <span class="hair"></span>
-        <span class="sechead-tag t-mono-sm rv-tag">Why choose us</span>
-        <span class="sechead-hatch" aria-hidden="true"></span>
+      <div class="sechead-rail sh-rail">
+        <span class="hair"></span><span class="sh-cap" aria-hidden="true"></span>
+        <span class="sechead-tag t-mono-sm rv-tag"><span class="scramble" data-text="Why choose us">Why choose us</span></span>
+        <span class="sechead-hatch" aria-hidden="true"></span><span class="sh-hatch" aria-hidden="true"></span>
       </div>
       <div class="sechead-main">
-        <div class="sechead-rule" aria-hidden="true"></div>
+        <div class="sechead-rule" aria-hidden="true"></div><span class="sh-rule" aria-hidden="true"></span><span class="hww-mark sh-mark" aria-hidden="true">create<sup>&#174;</sup></span>
         <h2 class="sechead-h t-h2 why-h">Designed to Make Your Life Easier</h2>
         <p class="sechead-lead why-lead">&mdash;&mdash;&nbsp; Clear process, quick reviews, and a clean launch at the end. We keep the steps simple so projects never get stuck.</p>
       </div>
@@ -2200,11 +2259,12 @@ input::placeholder{color:var(--rule)}
 </section>
 
 <!-- ═══════════════════════════════════════════════ PRICING ══════════════ -->
-<section class="section" id="pricing" aria-label="Pricing">
+<section class="section sh" id="pricing" aria-label="Pricing">
   <div class="shell">
     <div class="ph">
-      <div class="ph-rail"><span class="t-mono-sm muted rv-tag">Pricing</span></div>
+      <div class="ph-rail sh-rail"><span class="sh-cap" aria-hidden="true"></span><span class="t-mono-sm muted rv-tag"><span class="scramble" data-text="Pricing">Pricing</span></span><span class="sh-hatch" aria-hidden="true"></span></div>
       <div class="ph-main">
+        <span class="sh-rule" aria-hidden="true"></span><span class="hww-mark sh-mark" aria-hidden="true">create<sup>&#174;</sup></span>
         <h2 class="t-h2 ph-title rise-words" style="max-width:16ch">Plans built to fit your next project</h2>
         <p class="t-body ph-sub deep">&mdash;&mdash;&nbsp; Designed around your specs, each plan gives you clarity on scope, features, and cost so you can move forward with confidence.</p>
         <span class="ph-ticks"></span>
@@ -3540,14 +3600,19 @@ document.querySelectorAll(".count").forEach(function(el){
  var io=new IntersectionObserver(function(es){
   es.forEach(function(e){
    if(!e.isIntersecting)return; io.unobserve(e.target);
-   var el=e.target, txt=el.dataset.text||el.textContent, i=0;
+   /* as on the reference, the scrambled letters type in about one per tick
+      and only start locking to the real text from the left half a second
+      later, so the word is fully settled at ~1.6s */
+   var el=e.target, txt=el.dataset.text||el.textContent, tick=0;
+   el.classList.add("scr-run");
    var id=setInterval(function(){
-    el.textContent=txt.split("").map(function(c,k){
+    tick++;
+    var shown=Math.min(txt.length,tick), locked=Math.max(0,(tick-14)*.45);
+    el.textContent=txt.slice(0,shown).split("").map(function(c,k){
      if(c===" ")return c;
-     return k<i?c:CH[Math.floor(Math.random()*CH.length)];
+     return k<locked?c:CH[Math.floor(Math.random()*CH.length)];
     }).join("");
-    i+=0.5;
-    if(i>=txt.length){clearInterval(id);el.textContent=txt;}
+    if(locked>=txt.length){clearInterval(id);el.textContent=txt;el.classList.remove("scr-run");}
    },38);
   });
  },{threshold:.6});
