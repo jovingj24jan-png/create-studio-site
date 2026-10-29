@@ -1916,6 +1916,18 @@ input::placeholder{color:var(--rule)}
   .tst-nav{display:flex;justify-content:center;gap:16px;margin-top:32px}
   .tst-arr{display:grid;place-items:center;width:44px;height:44px;border-radius:8px;background:var(--accent);color:#fff}
 }
+/* ═══════ Whispers, measured on the reference at 1440 ═══════════════════
+   The head's rules sit at 160 as on the other section heads, the label in
+   the deep grey; each article card shows its summary at the foot in 20.96px
+   white, the words rising in one after another as the card comes into view. */
+.wc-sum{position:absolute;left:32px;right:32px;bottom:32px;max-width:400px;margin:0;font-size:20.96px;line-height:1.2;font-weight:500;letter-spacing:-.04em;color:#fff}
+.wc-sum .w{display:inline-block}
+html.js-motion .wc-sum .w{opacity:.001;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease);transition-delay:calc(var(--i) * 30ms)}
+html.js-motion .wc.sum-in .wc-sum .w{opacity:1;transform:none}
+.wh-head .rv-tag{color:var(--deep)}
+@media(min-width:1200px){.wh-head .wh-cap,.wh-head .wh-top{position:relative;top:-15px}.wi-feats{left:52px}.wh-close .wh-stats{left:68px}}
+@media(max-width:809px){.wc-sum{left:24px;right:24px;bottom:24px;font-size:16px;line-height:1.4}}
+@media(prefers-reduced-motion:reduce){html.js-motion .wc-sum .w{opacity:1;transform:none;transition:none}}
 /* ═══════════ closing panel on phones, measured on the reference at 390 ═══
    9 years and its line, the three figures, then the heading, the portrait,
    the quote and the centred button; the years band stays off. */
@@ -2415,7 +2427,7 @@ input::placeholder{color:var(--rule)}
 <section id="whispers" class="wh" aria-label="Whispers">
   <div class="shell">
     <div class="ph wh-head">
-      <div class="ph-rail"><span class="wh-cap"></span><span class="t-mono-sm muted rv-tag">Whispers</span><span class="wh-hatch" aria-hidden="true"></span></div>
+      <div class="ph-rail"><span class="wh-cap"></span><span class="t-mono-sm muted rv-tag"><span class="scramble" data-text="Whispers">Whispers</span></span><span class="wh-hatch" aria-hidden="true"></span></div>
       <div class="ph-main">
         <div class="wh-top"><span class="wh-line"></span><span class="wh-mark">create<sup>&#174;</sup></span></div>
         <h2 class="t-h2 ph-title rise-words" style="max-width:15ch">What bubbles up needs to be shared</h2>
@@ -2878,7 +2890,7 @@ function wcard(p,cls){
  return '<a class="wc '+cls+'" href="#whispers"><img src="'+p[0]+'" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
  '<div class="wc-meta"><span class="wc-by"><span class="wc-name">'+esc(p[3])+'</span><span class="wc-role">'+esc(p[4])+'</span></span>'+
  '<span class="wc-date num">'+p[1]+'</span></div>'+
- '<h3 class="wc-title">'+esc(p[2])+'</h3><p class="sr">'+esc(p[5])+'</p></a>';
+ '<h3 class="wc-title">'+esc(p[2])+'</h3><p class="wc-sum" aria-label="'+esc(p[5])+'">'+p[5].split(' ').map(function(w,i){return '<span class="w" aria-hidden="true" style="--i:'+i+'">'+esc(w)+'</span>'}).join(' ')+'</p></a>';
 }
 document.getElementById("whisperGrid").innerHTML=
  '<div class="wc wc-intro"><img src="teaser-thumb.avif" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
@@ -3872,6 +3884,9 @@ document.getElementById("nl").addEventListener("submit",function(e){
 
 /* phones: the review arrows step the row one card at a time */
 document.querySelectorAll(".tst-arr").forEach(function(b){b.addEventListener("click",function(){var row=document.getElementById("tstRow"),c=row&&row.firstElementChild;if(!c)return;row.scrollBy({left:(c.getBoundingClientRect().width+20)*+b.dataset.dir,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})});
+
+/* the article summaries rise in word by word once their card is on screen */
+(function(){var cs=document.querySelectorAll(".wc .wc-sum");if(!cs.length)return;if(!("IntersectionObserver" in window)){cs.forEach(function(s){s.parentElement.classList.add("sum-in")});return}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("sum-in");io.unobserve(e.target)}})},{threshold:.35});cs.forEach(function(s){io.observe(s.parentElement)})})();
 </script>
 </body>
 </html>
