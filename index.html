@@ -776,6 +776,42 @@ html.js-motion .panel img.bg{will-change:transform}
 }
 .panel .cta{opacity:0;transform:translateY(8px);transition:all .5s var(--ease)}
 .panel a:hover .cta{opacity:1;transform:none}
+/* Measured on the reference at 1440: each panel is the photo at 64% over
+   #141414 (no gradient veil), content 100px in from either side, all text
+   pure white, a 592px tick rule top right and the client mark (the
+   reference shows its client mark top left while the panel scrolls in).
+   Title and sub ride up together, with no slide of their own. */
+.panel a{background:#141414}
+.panel img.bg{opacity:.64}
+.panel .veil{display:none}
+@media(min-width:1200px){
+  .panel .body{padding-left:100px;padding-right:100px}
+  .panel .p3-ticks{flex:0 0 592px;opacity:.5;position:relative;top:-24px;margin-right:10px}
+  .panel .p3-mid p.t-mono,.panel .stack li,.panel .body .flex.end p{color:#fff!important}
+  .panel .mask>span{transform:none;transition:none}
+  .panel .p3-mid{margin-top:calc(-7vh + 114px)}
+  .panel .p3-mid p.t-mono{margin-top:12px}
+}
+/* the reference closes the projects on a 164px strip: the years, a hairline
+   across, and the accent "More Projects" button with its count */
+.work-end{display:flex;align-items:center;gap:0;height:164px;padding:0 60px;background:#141414;color:#fafafa}
+.work-years{flex:none;font-family:"Fragment Mono",ui-monospace,monospace;font-size:20px;line-height:1.3;letter-spacing:-.05em}
+.work-line{flex:1 1 auto;height:1px;margin:0 0 0 2px;background:rgba(255,255,255,.22)}
+.work-more{flex:none;display:flex;align-items:center;gap:16px;margin-left:0;color:#fafafa;font-size:18.08px;line-height:1.4;letter-spacing:-.04em}
+.work-more-btn{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff}
+.work-more sup{align-self:flex-start;margin:4px 0 0 -14px;font-size:12px;color:rgba(255,255,255,.5)}
+@media(max-width:809px){.work-end{padding:0 20px}.work-years{font-size:16px}.work-more{font-size:16px;gap:12px}}
+/* the reference's phone panels, measured at 390: 500px tall, the title
+   centred at 178, the sub in 16px sans centred in 200px, the stack and year
+   16px in from the edges and 40px off the bottom */
+@media(max-width:809px){
+  .panel{height:500px}
+  .panel .body{padding:24px 16px 40px}
+  .panel .body>.flex:first-child{flex:none;height:44px}
+  .panel .p3-mid{margin-top:68px}
+  .panel .p3-mid p.t-mono{max-width:200px;margin:9px auto 0;font-family:"Figtree",system-ui,sans-serif;font-size:16px;line-height:1.3;letter-spacing:-.04em;text-transform:none;color:#fff!important}
+  .panel .stack li,.panel .body .flex.end p{color:#fff!important}
+}
 
 /* ═══════════════════════════════════════════════════ dark bands ════════ */
 .dark{background:var(--ink);color:#fff}
@@ -1944,6 +1980,7 @@ input::placeholder{color:var(--rule)}
 <!-- ═══════════════════════════════════════════════ SELECTED WORK ════════ -->
 <section id="work" aria-label="Selected work">
   <div id="panels"></div>
+  <div class="work-end"><span class="work-years">2017-2025</span><span class="work-line" aria-hidden="true"></span><a class="work-more" href="work.html"><span class="work-more-btn" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10h15.5M11.5 4.5 17 10l-5.5 5.5" stroke="currentColor" stroke-width="1.5"/></svg></span><span>More Projects</span><sup>5</sup></a></div>
 </section>
 
 <!-- ═══════════════════════════════════════════════ PERFORMANCE ══════════ -->
@@ -2365,7 +2402,7 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 
 /* ───────────────────────────────────────────────────── data ─────────── */
 var projects=[
- {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",year:"2025",img:"1000076318.png",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
+ {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",ticks:true,year:"2025",img:"1000076318.png",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
  {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
  {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],logoImg:"public/img/aspen-logo.svg",logoAlt:"Lindholm",title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
@@ -3250,7 +3287,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.wca
  // How we work (heading included), the case row, why choose us, page 4 and
  // the footer scroll 1:1 on the reference, with their own one-time
  // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.svc,.svc-word,.svc-lead,.acc,#hww,#fcase,.why,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot";
+ var skip=".hero,.hdr,.story-section,.panel,.work-end,.svc,.svc-word,.svc-lead,.acc,#hww,#fcase,.why,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
@@ -3478,12 +3515,26 @@ document.querySelectorAll(".count").forEach(function(el){
    var r=p.getBoundingClientRect(), H=r.height||innerHeight, img=imgs[i];
    if(!img||r.bottom<-H||r.top>innerHeight+H)return;
    var t=Math.min(1,Math.max(0,r.top/H));
-   img.style.transform=t?"scale("+(1+.5*t).toFixed(4)+")":"";
+   img.style.transform=t?"translateY("+(-50*t).toFixed(1)+"px) scale("+(1+.5*t).toFixed(4)+")":"";
+  });
+ }
+ // title and sub ride up 200px once, as on the reference, when the block's
+ // resting spot reaches the bottom of the screen (about 0.9s, steep ease-out)
+ var M=window.Motion,wide=matchMedia("(min-width:1200px)");
+ var mids=panels.map(function(p){return p.querySelector(".p3-mid")}),risen=mids.map(function(){return false});
+ var lift=!reduce&&M&&document.documentElement.classList.contains("motion-ready")&&wide.matches;
+ if(lift)mids.forEach(function(m){if(m)m.style.transform="translateY(200px)"});
+ function rise(){
+  if(!lift)return;
+  mids.forEach(function(m,i){
+   if(!m||risen[i])return;
+   var r=panels[i].getBoundingClientRect();
+   if(r.top+m.offsetTop<innerHeight){risen[i]=true;M.animate(m,{y:[200,0]},{duration:.9,ease:[.22,1,.36,1]})}
   });
  }
  if(!reduce){
-  addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(zoom)},{passive:true});
-  addEventListener("resize",zoom); zoom();
+  addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(function(){zoom();rise()})},{passive:true});
+  addEventListener("resize",zoom); zoom(); rise();
  }
 
  var fine=window.matchMedia("(hover:hover) and (pointer:fine)");

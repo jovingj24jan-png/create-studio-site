@@ -32,8 +32,9 @@ used.add(".nojekyll");
 const LINKS = {"work.html": "#work", "studio.html": "#studio", "whispers.html": "#whispers", "contact.html": "#site-foot"};
 let html = git("show", `${ref}:index.html`).toString();
 for (const [from, to] of Object.entries(LINKS)) html = html.split(`href="${from}"`).join(`href="${to}"`);
-// project panels without a case study link to #work and drop their CTA
-html = html.replace(/case:"work\/[\w-]+\.html",/g, "");
+// project panels keep their case-study hover disc (as on the reference) but
+// point at #work, since the case-study pages are not published
+html = html.replace(/case:"work\/[\w-]+\.html"/g, 'case:"#work"');
 html = html.replace("<!doctype html>", `<!doctype html>\n<!-- home-only edition, built from create-studio-site@${sha} by scripts/build-home-only.mjs -->`);
 
 const left = html.match(/(?:href|src)=["'](?!https?:|mailto:|tel:|#)[^"']*\.html/g);

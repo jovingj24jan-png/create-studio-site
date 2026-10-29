@@ -26,8 +26,8 @@ homepage section stay as they are:
   `work.html` → `#work`, `studio.html` → `#studio`,
   `whispers.html` → `#whispers`, `contact.html` → `#site-foot`
   (header, mobile menu, "See work", footer)
-- the three project panels lose their case-study links (they point at `#work`
-  and no longer show "View case study")
+- the three project panels point at `#work` instead of their case-study
+  pages, keeping the "View case study" hover disc
 - a comment after the doctype names the commit it was built from
 
 Homepage changes made on `main` after the original:
