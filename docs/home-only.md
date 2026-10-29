@@ -10,26 +10,24 @@ serve either the full site or a home-only edition of it.
 | How the edition is made | `scripts/build-home-only.mjs` |
 
 GitHub Pages serves one branch at a time (Settings → Pages → Source, "Deploy
-from a branch", folder `/`). The other pages only stop being reachable while
-Pages serves `home-only`: that branch contains `index.html`, the three
-case-study pages its project panels open (`work/aurelis-beach.html`,
-`work/blackwell-motors.html`, `work/aspen877.html`) and the files they load,
-nothing else, so `work.html`, `studio.html`, `whispers.html`, `contact.html`,
-the other `work/*` pages, `whispers/*` and the source folders return GitHub's
-404 page.
+from a branch", folder `/`). While Pages serves `home-only`, the site is
+the homepage, the four pages its header opens (`work.html`, `studio.html`,
+`whispers.html`, `contact.html`), the three case studies
+(`work/aurelis-beach.html`, `work/blackwell-motors.html`, `work/aspen877.html`),
+the seven Whisper articles (`whispers/*.html`) and the files they load; the
+scratch pages, the source folders and anything else return GitHub's 404 page.
 
 ## What the edition contains
 
 Built from a commit of `main`, never from the working tree. The builder
 changes only links; the header bar, menus and every section stay as they are:
 
-- links to unpublished pages point at homepage sections instead:
-  `work.html` → `#work`, `studio.html` → `#studio`,
-  `whispers.html` → `#whispers`, `contact.html` → `#site-foot`
-  (header, mobile menu, "See work", footer; on the case-study pages these
-  become `../index.html#work` and so on)
-- the three project panels open their case-study pages in the same tab, as
-  on the reference site; links between the case studies are kept
+- every link between published pages is kept, so the header, the menus,
+  the project panels and the article cards open their pages in the same
+  tab, as on the reference site
+- a link to a page outside the set would point at the matching homepage
+  section instead (`work.html` → `#work` and so on); the build fails on any
+  other unpublished link
 - a comment after the doctype names the commit it was built from
 
 Homepage changes made on `main` after the original:

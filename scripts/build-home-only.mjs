@@ -1,7 +1,8 @@
-// Builds the home-only edition of the site: the homepage and its three case
-// studies, with only the files they use, read from a git ref (never the
-// working tree). Every link to an unpublished page (work, studio, whispers,
-// contact) points at the matching section of the homepage instead.
+// Builds the published edition of the site: the homepage, the Work, Studio,
+// Whispers and Contact pages the header opens, the three case studies and the
+// seven Whisper articles, with only the files they use, read from a git ref
+// (never the working tree). Any link to a page outside that set points at the
+// matching section of the homepage instead.
 //   node scripts/build-home-only.mjs <ref> <outDir>
 // The output is published as the `home-only` branch; see docs/home-only.md.
 import {execFileSync} from "child_process";
@@ -18,7 +19,9 @@ const tracked = new Set(git("ls-tree", "-r", "--name-only", ref).toString().spli
 // srcset, poster, data-src, CSS url() and the strings the page's own scripts
 // build markup from. Text assets are scanned in turn for what they pull in.
 const ASSET = /(?:[\w%@.-]+\/)*[\w%@.-]+\.(?:jpe?g|png|webp|avif|gif|svg|mp4|webm|woff2?|ttf|otf|js|css|json|ico)\b/gi;
-const PAGES = ["index.html", "work/aurelis-beach.html", "work/blackwell-motors.html", "work/aspen877.html"];
+const PAGES = ["index.html", "work.html", "studio.html", "whispers.html", "contact.html",
+  "work/aurelis-beach.html", "work/blackwell-motors.html", "work/aspen877.html",
+  ...git("ls-tree", "--name-only", ref, "whispers/").toString().split("\n").filter(f => f.endsWith(".html"))];
 const used = new Set(PAGES), queue = [...PAGES];
 while (queue.length) {
   const file = queue.shift(), dir = path.posix.dirname(file);
