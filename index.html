@@ -1830,7 +1830,7 @@ input::placeholder{color:var(--rule)}
    the create mark at the right edge; the title sits at 235. */
 .sh-cap,.sh-hatch,.sh-rule,.sh-mark{display:none}
 /* the reference runs the scrambling letters in the accent, then settles to grey */
-.sh .scr-run{color:var(--accent)}
+.scramble.scr-run{color:var(--accent)}
 @media(min-width:1200px){
   .sh{position:relative}
   .sechead.why{padding-top:160px}
@@ -1881,6 +1881,40 @@ input::placeholder{color:var(--rule)}
   .plan-r{margin-top:-9px}
   #plans .plan-body{padding-bottom:122px}
   #plans .plan-btn{padding:18px 22px}
+}
+/* ═══════ The team, FAQ and testimonials, measured on the reference at 1440 ═
+   The hovered card's veil carries the reference's halftone dots over the
+   blur; the FAQ answers sit 18px further in than the questions; the two
+   buttons sit 16-17px lower. */
+.tm-veil{background:radial-gradient(rgba(0,0,0,.42) .9px,transparent 1.1px) 0 0/4px 4px,rgba(20,20,20,.5)}
+@media(min-width:1200px){
+  .faq-a{padding-left:36px}
+  .faq-btn{position:relative;top:17px}
+  .tst-btn{margin-top:56px}
+}
+/* ═══════ The team, FAQ and testimonials on phones, measured on the reference at 390 ═
+   One full-width card per row; the questions before the booking block; the
+   reviews as a sideways row of cards stepped by the two arrow buttons. */
+.tst-nav{display:none}
+@media(max-width:809px){
+  .team .hww-title{font-size:48px!important;line-height:1.1!important}
+  .team .hww-kick{font-size:16px}
+  .tm-row{grid-template-columns:1fr;gap:20px}
+  .tm-tilt{aspect-ratio:350/470}
+  .faq-h{font-size:48px}
+  .faq-lead,.tst-lead{font-size:19.2px}
+  .faq-left{display:contents}
+  .faq-list{order:1}
+  .faq-book{order:2;margin-top:56px}
+  .faq-t,.faq-a{font-size:16px}
+  .tst-h{font-size:30.4px!important}
+  .tst-spot{display:flex;flex-direction:column;align-items:flex-start}
+  .tst-spot-w{order:1}.tst-spot-q{order:2;font-size:19.2px}.tst-spot-n{order:3}.tst-spot-r{order:4}.tst-spot-img{order:5;margin-top:24px}.tst-spot-c{order:6}
+  .tst-row{flex-direction:row;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-right:calc(-1 * var(--gutter))}
+  .tst-row::-webkit-scrollbar{display:none}
+  .tst-row>li{flex:none;width:calc(100vw - 2 * var(--gutter));scroll-snap-align:start}
+  .tst-nav{display:flex;justify-content:center;gap:16px;margin-top:32px}
+  .tst-arr{display:grid;place-items:center;width:44px;height:44px;border-radius:8px;background:var(--accent);color:#fff}
 }
 /* ═══════════ closing panel on phones, measured on the reference at 390 ═══
    9 years and its line, the three figures, then the heading, the portrait,
@@ -2291,7 +2325,7 @@ input::placeholder{color:var(--rule)}
     <div class="grid hww-head team-head" style="row-gap:40px">
       <div class="hww-rail">
         <span class="hww-cap"></span>
-        <span class="t-mono hww-kick">The team</span>
+        <span class="t-mono hww-kick"><span class="scramble" data-text="The team">The team</span></span>
         <span class="hww-hatch"></span>
       </div>
       <div class="hww-main">
@@ -2319,7 +2353,7 @@ input::placeholder{color:var(--rule)}
   <div class="shell">
     <div class="faq-grid faq-pop">
       <div class="faq-left">
-        <p class="faq-kick">FAQ</p>
+        <p class="faq-kick"><span class="scramble" data-text="FAQ">FAQ</span></p>
         <span class="faq-rule" aria-hidden="true"></span>
         <h2 class="faq-h rise-words rise-late">Clearing doubts and concerns</h2>
         <p class="faq-lead">&mdash;&mdash;&nbsp; Explore the most common questions about working with Create, all in one place.</p>
@@ -2374,6 +2408,7 @@ input::placeholder{color:var(--rule)}
       <img src="public/img/ref/tst-logo-8.svg" alt="" height="40" decoding="async">
     </div>
     <ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul>
+    <div class="tst-nav"><button type="button" class="tst-arr" data-dir="-1" aria-label="Previous testimonial"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5" stroke="currentColor" stroke-width="1.5"/></svg></button><button type="button" class="tst-arr" data-dir="1" aria-label="Next testimonial"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></button></div>
   </div>
 </section>
 
@@ -3834,6 +3869,9 @@ document.getElementById("nl").addEventListener("submit",function(e){
  function all(){vids.forEach(sync)}
  if(mq.addEventListener)mq.addEventListener("change",all);else if(mq.addListener)mq.addListener(all);
 })();
+
+/* phones: the review arrows step the row one card at a time */
+document.querySelectorAll(".tst-arr").forEach(function(b){b.addEventListener("click",function(){var row=document.getElementById("tstRow"),c=row&&row.firstElementChild;if(!c)return;row.scrollBy({left:(c.getBoundingClientRect().width+20)*+b.dataset.dir,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})});
 </script>
 </body>
 </html>
