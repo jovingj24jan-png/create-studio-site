@@ -11,23 +11,25 @@ serve either the full site or a home-only edition of it.
 
 GitHub Pages serves one branch at a time (Settings → Pages → Source, "Deploy
 from a branch", folder `/`). The other pages only stop being reachable while
-Pages serves `home-only`: that branch contains `index.html` and the 75 files
-it loads, nothing else, so `work.html`, `studio.html`, `whispers.html`,
-`contact.html`, `work/*`, `whispers/*` and the source folders return GitHub's
+Pages serves `home-only`: that branch contains `index.html`, the three
+case-study pages its project panels open (`work/aurelis-beach.html`,
+`work/blackwell-motors.html`, `work/aspen877.html`) and the files they load,
+nothing else, so `work.html`, `studio.html`, `whispers.html`, `contact.html`,
+the other `work/*` pages, `whispers/*` and the source folders return GitHub's
 404 page.
 
 ## What the edition contains
 
 Built from a commit of `main`, never from the working tree. The builder
-changes only the links in `index.html`; the header bar, menus and every
-homepage section stay as they are:
+changes only links; the header bar, menus and every section stay as they are:
 
-- links to other pages point at homepage sections instead:
+- links to unpublished pages point at homepage sections instead:
   `work.html` → `#work`, `studio.html` → `#studio`,
   `whispers.html` → `#whispers`, `contact.html` → `#site-foot`
-  (header, mobile menu, "See work", footer)
-- the three project panels point at `#work` instead of their case-study
-  pages, keeping the "View case study" hover disc
+  (header, mobile menu, "See work", footer; on the case-study pages these
+  become `../index.html#work` and so on)
+- the three project panels open their case-study pages in the same tab, as
+  on the reference site; links between the case studies are kept
 - a comment after the doctype names the commit it was built from
 
 Homepage changes made on `main` after the original:
