@@ -6,8 +6,16 @@
 //   node scripts/build-home-only.mjs <ref> <outDir>
 // The output is published as the `home-only` branch; see docs/home-only.md.
 import {execFileSync} from "child_process";
+import {createRequire} from "module";
 import fs from "fs";
 import path from "path";
+
+// Minifiers already installed with the project (postcss directly, terser and
+// cssnano-simple bundled with next), so the build adds no dependency.
+const require = createRequire(import.meta.url);
+const postcss = require("postcss");
+const cssnano = require("next/dist/compiled/cssnano-simple");
+const terser = require("next/dist/compiled/terser");
 
 const [ref = "original-homepage-2026-10-23", out] = process.argv.slice(2);
 if (!out) throw Error("usage: build-home-only.mjs <ref> <outDir>");
@@ -51,7 +59,27 @@ for (const page of PAGES) {
     if (!PAGES.includes(path.posix.normalize(path.posix.join(dir, m[1])))) throw Error(`${page}: link to unpublished ${m[1]}`);
   }
   for (const m of html.matchAll(/case:"([^"]+\.html)"/g)) if (!PAGES.includes(m[1])) throw Error(`case link to unpublished ${m[1]}`);
-  pages[page] = html;
+  pages[page] = await minifyInline(html, page);
+}
+
+// The pages carry their CSS and JS inline; publish them minified. Top-level
+// names are kept, since the inline scripts share globals with each other and
+// with inline event handlers.
+async function minifyInline(html, page) {
+  const css = postcss([cssnano()]);
+  let out = "", at = 0;
+  for (const m of html.matchAll(/(<style[^>]*>)([\s\S]*?)(<\/style>)|(<script(?![^>]*\bsrc=)(?![^>]*type="application\/(?:ld\+)?json")[^>]*>)([\s\S]*?)(<\/script>)/gi)) {
+    let body;
+    if (m[1]) body = (await css.process(m[2], {from: undefined})).css;
+    else {
+      const r = await terser.minify(m[5], {compress: {passes: 2}, mangle: true, format: {comments: false}});
+      if (r.code === undefined) throw Error(`${page}: terser failed`);
+      body = r.code.replace(/<\/(script)/gi, "<\\/$1");
+    }
+    out += html.slice(at, m.index) + (m[1] ? m[1] + body + m[3] : m[4] + body + m[6]);
+    at = m.index + m[0].length;
+  }
+  return out + html.slice(at);
 }
 
 fs.rmSync(out, {recursive: true, force: true});

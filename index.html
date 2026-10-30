@@ -823,7 +823,7 @@ html.js-motion .panel img.bg{will-change:transform}
    it does not drift afterwards. */
 .perf{position:relative;overflow:hidden;background:#141414}
 .perf::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:url(public/img/perf-bg.png) center/cover no-repeat;opacity:.3;filter:brightness(.59)}
+  background:url(public/img/perf-bg.webp) center/cover no-repeat;opacity:.3;filter:brightness(.59)}
 html.js-motion .perf::before{transform:rotate(-22.8deg) scale(1.317,1.488);transition:transform 1.6s cubic-bezier(.16,1,.3,1) .2s}
 html.js-motion .perf.bg-in::before{transform:none}
 .perf>*{position:relative;z-index:1}
@@ -983,14 +983,14 @@ html.js-motion .perf.bg-in::before{transform:none}
 #hww{padding-bottom:0}
 .grow{position:relative;overflow:hidden;margin-top:clamp(56px,7vw,120px);background:#000}
 .grow::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.8;
-  background:url(process-glow.jpg) 50% 72%/cover no-repeat}
+  background:url(process-glow.webp) 50% 72%/cover no-repeat}
 @media(min-width:1024px){.grow::before{background-position:50% 62%;background-size:auto 260%}}
 /* on the reference the same photo runs on under the case row at half the
    brightness; at 1200+ the panel is ~673px tall, so its 260% frame is
    ~1750px and continues here */
 @media(min-width:1200px){
   html #fcase{background:#000}
-  html #fcase::before{opacity:.4;background:url(process-glow.jpg) 50% -1341px/auto 1750px no-repeat}
+  html #fcase::before{opacity:.4;background:url(process-glow.webp) 50% -1341px/auto 1750px no-repeat}
 }
 .grow-in{position:relative;z-index:1;display:grid;grid-template-columns:1fr 40%;
   gap:clamp(40px,6vw,96px);align-items:center;padding-top:clamp(56px,7vw,120px);
@@ -2044,6 +2044,26 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
   #site-foot .foot-tag{font-size:24px;line-height:1.2;max-width:320px!important}
   #site-foot .foot-mark{font-size:65px!important;line-height:1.1}
 }
+
+/* ═══════════ contrast (WCAG AA). Orange fills keep the brand #ff6041 and take
+   near-black labels; orange text on the light sections uses a deeper shade;
+   grey text on light surfaces is a step darker ═══════════ */
+:root{--accent-ink:#bd4730;--muted:#6b6f74}
+.dark{--muted:#797d82}
+:focus-visible{outline-color:var(--accent-ink)}
+.btn-accent,.hero .btn-accent,.plan-get,.wh-cta{color:#141414}
+:is(.why,#pricing,.faq-sec,.tst,.wh,.wh-close,#site-foot) .accent,
+.bcard-pct,#plans .plan-name,.plan-tier,:is(.why,#pricing,.wh) .hww-mark,#plans .plan.open .plan-name,.plan-save,.wh-mark,.foot-soc-i a{color:var(--accent-ink)}
+.plan-old{color:var(--muted);opacity:1}
+.tst-chip,.tst-spot-c{color:#55595c}
+.tst-spot-r{color:#e0e2e7}
+.wh-role{color:var(--deep)}
+/* the lower sections skip layout and paint until they near the screen, so the
+   first layouts while the page loads cover only the top of it; html.cv-off
+   (set before any in-page jump) lays them all out so anchors land exactly */
+html:not(.cv-off) :is(.perf,#studio,#hww,#fcase,.why,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot){content-visibility:auto;contain-intrinsic-size:auto 1000px}
+@media(min-width:810px){#plans .plan.open .plan-tier{color:var(--accent-ink)}}
+@media(hover:hover){#plans .plan:not(.open):hover .plan-tier{color:var(--accent-ink)}}
 </style>
 </head>
 <body>
@@ -2064,7 +2084,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
   </div>
 </header>
 
-<div class="menu" id="menu" aria-hidden="true">
+<div class="menu" id="menu" aria-hidden="true" inert>
   <nav class="shell">
     <a class="mi t-h3" href="#top">HOME <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">01</span></a>
     <a class="mi t-h3" href="work.html">WORK <span class="t-mono-sm num" style="color:rgba(255,255,255,.4)">02</span></a>
@@ -2168,10 +2188,10 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
 <section class="story-section" id="story-section" aria-label="Studio statement">
   <div class="story-sticky">
     <div class="story-water" aria-hidden="true">
-      <video class="story-water-a" src="public/video/story.mp4" poster="water.jpg"
-             muted loop autoplay playsinline preload="auto"></video>
-      <video class="story-water-b" src="public/video/story.mp4" poster="water.jpg"
-             muted loop autoplay playsinline preload="auto"></video>
+      <video class="story-water-a" data-src="public/video/story.mp4" data-poster="water.webp"
+             muted loop autoplay playsinline preload="none"></video>
+      <video class="story-water-b" data-src="public/video/story.mp4" data-poster="water.webp"
+             muted loop autoplay playsinline preload="none"></video>
       <span class="story-drip story-drip-1"></span>
       <span class="story-drip story-drip-2"></span>
       <span class="story-drip story-drip-3"></span>
@@ -2214,7 +2234,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
         <span class="ph-ticks"></span>
       </div>
     </div>
-    <dl id="perf" class="perf-stats"></dl>
+    <ul id="perf" class="perf-stats"></ul>
     <p class="perf-brands">Brands who are part of our success story</p>
   </div>
   <div class="mq mq-brand" aria-label="Client logos"><div class="mq-track" id="brandA"></div><div class="mq-track" id="brandB" aria-hidden="true"></div></div>
@@ -2266,7 +2286,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
 <section class="section dark" id="fcase" aria-label="Case study">
   <div class="shell fcase-in">
     <a href="#work" class="fcard">
-      <img src="whitewheel.avif" alt="Blackwell Motors">
+      <img src="whitewheel.avif" srcset="whitewheel-800.avif 800w, whitewheel.avif 1533w" sizes="(max-width: 809px) 100vw, 50vw" alt="Blackwell Motors" loading="lazy" decoding="async">
       <span class="fcard-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="#fff"><path d="M0 2.6h5.2V0H0zM6.5 6.5h6.5V3.9H6.5zM2.6 13h5.2v-2.6H2.6z"/></svg>Blackwell</span>
       <span class="fcard-t">Blackwell Motors</span>
     </a>
@@ -2324,7 +2344,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
         <div class="bcard-dots" aria-hidden="true">
           <span class="bcard-dot"></span>
           <span class="bcard-quad"><i></i><i></i><i></i><i></i></span>
-          <span class="bcard-mark"><svg id="globe" viewBox="0 0 400 400"></svg><img class="bcard-stamp" src="public/img/create-stamp.svg" alt="" width="138" height="36" decoding="async"></span>
+          <span class="bcard-mark"><svg id="globe" viewBox="0 0 400 400"></svg><img class="bcard-stamp" src="public/img/create-stamp.svg" alt="" width="138" height="36" loading="lazy" decoding="async"></span>
         </div>
         <p class="bcard-foot"><span class="bcard-hatch" aria-hidden="true"></span><span><span class="accent">Custom work</span> from day one.</span></p>
       </article>
@@ -2333,7 +2353,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
       <article class="pcard">
         <p class="pcard-h"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" transform="translate(.5 .5)" d="M7.5 0C3.365 0 0 3.365 0 7.5S3.365 15 7.5 15 15 11.635 15 7.5 11.635 0 7.5 0ZM5.156 3.75c.777 0 1.407.63 1.407 1.406 0 .777-.63 1.407-1.407 1.407-.776 0-1.406-.63-1.406-1.407 0-.776.63-1.406 1.406-1.406Zm4.688 7.5c-.777 0-1.406-.63-1.406-1.406 0-.777.629-1.406 1.406-1.406.776 0 1.406.629 1.406 1.406 0 .776-.63 1.406-1.406 1.406Zm1.131-5.9L5.35 10.975a.94.94 0 0 1-1.325 0 .94.94 0 0 1 0-1.325L9.65 4.025a.94.94 0 0 1 1.581.414.94.94 0 0 1-.256.911Z"/></svg>Simple Pricing</p>
         <p class="pcard-p">Plans that scale with your project and give you room for unlimited creative opportunities.</p>
-        <div class="pcard-img plan-show" aria-hidden="true"><div class="plan-slide"><img src="pricing-core.jpg" alt="" width="750" height="563" decoding="async"><span class="plan-chip chip-for">For startups and first launches</span><span class="plan-chip chip-name"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(.5 .5)"><path fill="#5c6063" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.817C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.239c-1.056.576-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#888d92" transform="translate(3.73 1.017)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#d5d7de" transform="translate(7.461 2.035)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.443-.744.224-.242.533-.41 1.15-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.718.248.939.557.253.354.253.956.253 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.938-.557C0 12.139 0 11.537 0 10.332V5.069Z"/></g></svg>Core</span></div><div class="plan-slide"><img src="pricing-studio.jpg" alt="" width="750" height="563" decoding="async"><span class="plan-chip chip-for">For growing teams and serious builds</span><span class="plan-chip chip-name"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(.5 .5)"><path fill="#5c6063" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.817C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.239c-1.056.576-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#888d92" transform="translate(3.73 1.017)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#d5d7de" transform="translate(7.461 2.035)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.443-.744.224-.242.533-.41 1.15-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.718.248.939.557.253.354.253.956.253 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.938-.557C0 12.139 0 11.537 0 10.332V5.069Z"/></g></svg>Studio</span></div><div class="plan-slide"><img src="pricing-scale.jpg" alt="" width="750" height="563" decoding="async"><span class="plan-chip chip-for">For established teams and long-term growth</span><span class="plan-chip chip-name"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(.5 .5)"><path fill="#5c6063" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.817C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.239c-1.056.576-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#888d92" transform="translate(3.73 1.017)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#d5d7de" transform="translate(7.461 2.035)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.443-.744.224-.242.533-.41 1.15-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.718.248.939.557.253.354.253.956.253 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.938-.557C0 12.139 0 11.537 0 10.332V5.069Z"/></g></svg>Scale</span></div></div>
+        <div class="pcard-img plan-show" aria-hidden="true"><div class="plan-slide"><img src="pricing-core.webp" alt="" width="750" height="563" loading="lazy" decoding="async"><span class="plan-chip chip-for">For startups and first launches</span><span class="plan-chip chip-name"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(.5 .5)"><path fill="#5c6063" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.817C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.239c-1.056.576-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#888d92" transform="translate(3.73 1.017)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#d5d7de" transform="translate(7.461 2.035)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.443-.744.224-.242.533-.41 1.15-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.718.248.939.557.253.354.253.956.253 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.938-.557C0 12.139 0 11.537 0 10.332V5.069Z"/></g></svg>Core</span></div><div class="plan-slide"><img src="pricing-studio.webp" alt="" width="750" height="563" loading="lazy" decoding="async"><span class="plan-chip chip-for">For growing teams and serious builds</span><span class="plan-chip chip-name"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(.5 .5)"><path fill="#5c6063" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.817C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.239c-1.056.576-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#888d92" transform="translate(3.73 1.017)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#d5d7de" transform="translate(7.461 2.035)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.443-.744.224-.242.533-.41 1.15-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.718.248.939.557.253.354.253.956.253 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.938-.557C0 12.139 0 11.537 0 10.332V5.069Z"/></g></svg>Studio</span></div><div class="plan-slide"><img src="pricing-scale.webp" alt="" width="750" height="563" loading="lazy" decoding="async"><span class="plan-chip chip-for">For established teams and long-term growth</span><span class="plan-chip chip-name"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(.5 .5)"><path fill="#5c6063" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.817C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.239c-1.056.576-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#888d92" transform="translate(3.73 1.017)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.442-.744.224-.242.533-.41 1.151-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.717.248.938.557.254.354.254.956.254 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.939-.557C0 12.139 0 11.537 0 10.332Z"/><path fill="#d5d7de" transform="translate(7.461 2.035)" d="M0 5.07c0-.703 0-1.055.104-1.368.093-.277.243-.531.443-.744.224-.242.533-.41 1.15-.746L4.251.818C5.308.242 5.837-.047 6.269.006c.377.046.718.248.939.557.253.354.253.956.253 2.161v5.263c0 .703 0 1.054-.105 1.367a1.98 1.98 0 0 1-.441.744c-.226.242-.534.41-1.151.746L3.209 12.238c-1.056.577-1.585.865-2.017.812a1.32 1.32 0 0 1-.938-.557C0 12.139 0 11.537 0 10.332V5.069Z"/></g></svg>Scale</span></div></div>
         <p class="pcard-p">Pick a plan that grows with you and keeps creative costs predictable.</p>
         <a href="#pricing" class="pcard-cta"><span class="pcard-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg></span><span>Explore plans</span></a>
       </article>
@@ -2349,7 +2369,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
         <span class="pcard-bubble" aria-hidden="true"></span>
         <p class="pcard-lab">Quick intro call, no strings attached.</p>
         <h2 class="pcard-t">Let&#39;s chat or just say hello.</h2>
-        <video class="pcard-mascot" data-src="byebye.mp4" poster="pricing-mascot.png"
+        <video class="pcard-mascot" data-src="byebye.mp4" data-poster="pricing-mascot.webp"
                autoplay muted loop playsinline preload="none" aria-hidden="true"></video>
         <div class="pcard-panel">
           <p class="pcard-avail"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 7v5l3 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>Next Availability</p>
@@ -2358,7 +2378,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
         </div>
       </article>
 
-      <span class="pcard-mark" aria-hidden="true"><img src="public/img/create-stamp.svg" alt="" width="138" height="36" decoding="async"></span>
+      <span class="pcard-mark" aria-hidden="true"><img src="public/img/create-stamp.svg" alt="" width="138" height="36" loading="lazy" decoding="async"></span>
     </div>
   </div>
 </section>
@@ -2380,7 +2400,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
       <h3 class="t-h2">Ask our expert</h3>
       <p class="t-body deep" style="max-width:32ch">Schedule a quick call, and we&rsquo;ll walk you through our flexible plans.</p>
       <div class="ask-who">
-        <div class="flex center g2"><img src="maggie.avif" alt="Maggie Winslow" width="60" height="60" decoding="async" class="ask-av"><div><p class="ask-name">Maggie Winslow</p><p class="ask-role">Project Operations Manager</p></div></div>
+        <div class="flex center g2"><img src="maggie.avif" alt="Maggie Winslow" width="60" height="60" loading="lazy" decoding="async" class="ask-av"><div><p class="ask-name">Maggie Winslow</p><p class="ask-role">Project Operations Manager</p></div></div>
         <a href="#site-foot" class="plan-get ask-btn">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
@@ -2432,7 +2452,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
         <div class="faq-book faq-pop">
           <p class="faq-book-p">Book a quick chat and we&rsquo;ll walk you through how we do things.</p>
           <div class="faq-who">
-            <img class="faq-av" src="lynn-bergmann.avif" alt="Lynn Bergmann" width="60" height="60" decoding="async">
+            <img class="faq-av" src="lynn-bergmann.avif" alt="Lynn Bergmann" width="60" height="60" loading="lazy" decoding="async">
             <div><p class="faq-name">Lynn Bergmann</p><p class="faq-role">Project Manager</p></div>
             <a href="#site-foot" class="plan-get faq-btn">Book a call <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
           </div>
@@ -2468,17 +2488,17 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
         <span class="tst-chip tst-spot-c">Lindholm</span>
       </div>
     </div>
-    <div class="tst-brands" aria-label="Brands we have worked with">
-      <img src="public/img/ref/logo-7.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/logo-5.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/tst-logo-3.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/logo-9.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/logo-4.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/logo-blackwell.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/logo-8.svg" alt="" height="40" decoding="async">
-      <img src="public/img/ref/tst-logo-8.svg" alt="" height="40" decoding="async">
+    <div class="tst-brands" role="group" aria-label="Brands we have worked with">
+      <img src="public/img/ref/logo-7.svg" alt="" width="165" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/logo-5.svg" alt="" width="154" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/tst-logo-3.svg" alt="" width="160" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/logo-9.svg" alt="" width="139" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/logo-4.svg" alt="" width="160" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/logo-blackwell.svg" alt="" width="144" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/logo-8.svg" alt="" width="163" height="40" loading="lazy" decoding="async">
+      <img src="public/img/ref/tst-logo-8.svg" alt="" width="40" height="40" loading="lazy" decoding="async">
     </div>
-    <ul class="tst-row" id="tstRow" aria-label="Client testimonials"></ul>
+    <ul class="tst-row" id="tstRow" aria-label="Client testimonials" tabindex="0"></ul>
     <div class="tst-nav"><button type="button" class="tst-arr" data-dir="-1" aria-label="Previous testimonial"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5" stroke="currentColor" stroke-width="1.5"/></svg></button><button type="button" class="tst-arr" data-dir="1" aria-label="Next testimonial"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></button></div>
   </div>
 </section>
@@ -2550,7 +2570,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
           <li><a href="#site-foot" class="froll"><span class="froll-in"><span>MORE TEMPLATES</span><span aria-hidden="true">MORE TEMPLATES</span></span></a></li>
         </ul>
         <div class="foot-soc" aria-labelledby="socLab">
-        <div class="foot-soc-i accent"><a href="https://x.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="X">X</a><a href="https://linkedin.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">Li</a><a href="https://instagram.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a><a href="https://facebook.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a><a href="https://whatsapp.com" class="ulink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a></div></div>
+        <div class="foot-soc-i accent"><a href="https://x.com" class="ulink" target="_blank" rel="noopener noreferrer">X</a><a href="https://linkedin.com" class="ulink" target="_blank" rel="noopener noreferrer">Li<span class="sr"> (LinkedIn)</span></a><a href="https://instagram.com" class="ulink" target="_blank" rel="noopener noreferrer">IG<span class="sr"> (Instagram)</span></a><a href="https://facebook.com" class="ulink" target="_blank" rel="noopener noreferrer">FB<span class="sr"> (Facebook)</span></a><a href="https://whatsapp.com" class="ulink" target="_blank" rel="noopener noreferrer">WA<span class="sr"> (WhatsApp)</span></a></div></div>
       </div>
     </div>
   </div>
@@ -2565,7 +2585,7 @@ a.wc:hover .wc-sum .w,a.wc:focus-visible .wc-sum .w{opacity:1;transform:none;tra
           <p class="t-body deep foot-tag" style="max-width:30ch">Digital experiences that connect, scale and perform.</p>
           <p class="t-wordmark mt3 foot-mark"><span class="accent">Create</span><span class="muted">\Studio</span></p>
           <div class="flex g2 mt3" style="align-items:flex-start">
-            <video class="foot-vid" src="footer_video.mp4" muted loop autoplay playsinline preload="metadata" aria-hidden="true"></video>
+            <video class="foot-vid" data-src="footer_video.mp4" muted loop autoplay playsinline preload="none" aria-hidden="true"></video>
             <p class="foot-desc">A creative agency for design, strategy, marketing, and scalable premium websites.</p>
           </div>
           <p class="foot-copy">&copy; 2026 Create Studio &mdash; All work, all rights.</p>
@@ -2624,9 +2644,9 @@ var esc=function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 
 /* ───────────────────────────────────────────────────── data ─────────── */
 var projects=[
- {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",ticks:true,year:"2025",img:"1000076318.png",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
- {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",ticks:true,year:"2025",img:"whitewheel.avif",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
- {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],logoImg:"public/img/aspen-logo.svg",logoAlt:"Lindholm",title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
+ {slug:"solvanne",case:"work/aurelis-beach.html",client:"solvanne",logo:["aurelis","beach","resort"],title:"Aurelis Beach Resort",sub:"Hospitality branding and website",ticks:true,year:"2025",img:"1000076318.webp",srcset:"1000076318-1100.webp 1100w, 1000076318.webp 1523w",bright:true,stack:["Next.js","TypeScript","Tailwind CSS","Framer Motion","Cloudflare CDN"]},
+ {slug:"harrowgate",case:"work/blackwell-motors.html",client:"harrowgate",logo:["Blackwell"],title:"Blackwell Motors",sub:"Automotive digital transformation",ticks:true,year:"2025",img:"whitewheel.avif",srcset:"whitewheel-800.avif 800w, whitewheel.avif 1533w",pos:"50% 88%",bright:true,stack:["React","WebGL","Node.js","AWS Lambda","OpenAI Embeddings"]},
+ {slug:"verge",case:"work/aspen877.html",client:"vantar",logo:["Aspen"],logoImg:"public/img/aspen-logo.svg",logoAlt:"Lindholm",title:"Aspen® 877",sub:"E-Mobility brand launch",ticks:true,year:"2025",img:"bicycle.avif",srcset:"bicycle-1100.avif 1100w, bicycle.avif 2000w",stack:["Framer","Next.js","GSAP","WebGL","Meta Ads integration"]}
 ];
 var clients=["sundermark","plinth","vantar","weldon","harrowgate","solvanne","atelier","halden","kestrel","ostara"];
 var perf=[["//001",86,"+","Projects shipped"],["//002",80,"%","Repeat collaborations"],["//003",32,"","Industry awards"],["//004",89,"%","Client retention rate"]];
@@ -2636,7 +2656,7 @@ var services=[
  {no:"03",k:"Creative",t:"Design & Innovation",img:"design",file:"innovation.jpg",round:1,c:"From first concepts to polished products that people want to use and share.",p:["UX and UI design","Prototyping and user testing","Digital product and service design","Iteration and validation","Launch planning and support"]},
  {no:"04",k:"Smart AI",t:"AI Systems",img:"ai",file:"face.jpg",round:1,c:"Practical applications of AI to unlock smarter products and workflows.",p:["Define AI vision and roadmap","Intelligent experience design","Prototyping and proof-of-concepts","Integration into platforms and workflows","Team enablement and training"]},
  {no:"05",k:"Discoverable",t:"SEO",img:"seo",file:"peak.jpg",round:1,c:"Structure, content and speed working together so the right people find the work.",p:["Technical site audit","Keyword research and content strategy","On-page and metadata optimisation","Link-building and authority growth","Performance tracking and reporting"]},
- {no:"06",k:"Build",t:"Development",img:"development",file:"public/img/service-development-1024.png",file2x:"public/img/service-development-2048.png",alt:"Close-up of a modern mechanical keyboard with a grey control knob and an orange accent key.",round:1,c:"Turning ideas and designs into scalable, functional, and reliable digital products.",p:["Web and app development","CMS integration and setup","E-commerce builds and optimisation","Custom feature development","Ongoing technical support"]}
+ {no:"06",k:"Build",t:"Development",img:"development",file:"public/img/service-development-1024.webp",file2x:"public/img/service-development-2048.webp",alt:"Close-up of a modern mechanical keyboard with a grey control knob and an orange accent key.",round:1,c:"Turning ideas and designs into scalable, functional, and reliable digital products.",p:["Web and app development","CMS integration and setup","E-commerce builds and optimisation","Custom feature development","Ongoing technical support"]}
 ];
 var process=[
  ["//01","d","Discovery","We start by listening. Goals, challenges, and vision are mapped out clearly, setting the foundation for everything that follows."],
@@ -2702,8 +2722,8 @@ h1.innerHTML=heroLines.map(function(line){
 /* ───────────────────────────────────────────── project panels ───────── */
 document.getElementById("panels").innerHTML=projects.map(function(p,i){
  return '<article class="panel'+(p.bright?" bright":"")+'" style="z-index:'+(i+1)+'"><a href="'+(p.case||"#work")+'"'+
- (p.case?' data-case':'')+' aria-label="'+esc(p.title)+(p.case?" — view case study":"")+'">'+
- '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'"'+
+ (p.case?' data-case':'')+'>'+
+ '<img class="bg" src="'+(p.img||("public/img/project-"+p.slug+".svg"))+'"'+(p.srcset?' srcset="'+p.srcset+'" sizes="(max-width: 809px) 150vw, 100vw"':'')+(i?' loading="lazy"':'')+' decoding="async"'+
    (p.pos?' style="object-position:'+p.pos+'"':'')+' alt="">'+
  '<span class="veil"></span>'+
  (p.case?'<span class="p3-cta" aria-hidden="true"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h35M27 10l12 12-12 12"/></svg>View case study</span>':'')+
@@ -2731,12 +2751,12 @@ document.getElementById("panels").innerHTML=projects.map(function(p,i){
    to its value when the row comes into view. */
 document.getElementById("perf").innerHTML=perf.map(function(s){
  var digits=String(s[1]).split(""),from=String(10).split("");
- return '<div class="perf-stat">'+
- '<dd class="perf-num num accent" aria-label="'+s[1]+s[2]+'">'+digits.map(function(d,i){return '<span class="nf-d" aria-hidden="true"><span>'+(from[i]||"0")+'</span><span>'+d+'</span></span>'}).join("")+
-   (s[2]?'<span class="nf-sfx" aria-hidden="true">'+s[2]+'</span>':'')+'</dd>'+
- '<dt class="perf-lab">'+esc(s[3])+'</dt>'+
+ return '<li class="perf-stat">'+
+ '<p class="perf-num num accent"><span class="sr">'+s[1]+s[2]+'</span>'+digits.map(function(d,i){return '<span class="nf-d" aria-hidden="true"><span>'+(from[i]||"0")+'</span><span>'+d+'</span></span>'}).join("")+
+   (s[2]?'<span class="nf-sfx" aria-hidden="true">'+s[2]+'</span>':'')+'</p>'+
+ '<p class="perf-lab">'+esc(s[3])+'</p>'+
  '<div class="perf-meta"><span class="perf-bar"></span><span class="perf-line"></span>'+
- '<span class="perf-no">'+s[0]+'</span></div></div>';
+ '<span class="perf-no">'+s[0]+'</span></div></li>';
 }).join("");
 /* the services word enters once as it comes into view, as on the reference:
    opacity 0 -> 1, scale .6 -> 1 and 80px of rise over about 0.7s */
@@ -2777,7 +2797,8 @@ document.getElementById("perf").innerHTML=perf.map(function(s){
  var a=document.getElementById("brandA"),b=document.getElementById("brandB");
  a.innerHTML=html;b.innerHTML=html.replace(/alt="[^"]*"/g,'alt=""');
  function speed(){var w=a.offsetWidth;if(w)a.parentNode.style.setProperty("--dur",(w/53).toFixed(2)+"s")}
- speed();addEventListener("load",speed);
+ // measured after layout rather than forcing one while the page is still parsing
+ if("ResizeObserver" in window)new ResizeObserver(speed).observe(a);else{speed();addEventListener("load",speed)}
 })();
 
 /* ───────────────────────────────────────────────── client marquee ───── */
@@ -2793,7 +2814,7 @@ document.getElementById("services").innerHTML=services.map(function(s){
  '<div class="svc-rule"><span class="mark"></span><span class="base"></span></div>'+
  '<h3 class="svc-title"><span class="t-service">'+esc(s.t)+'</span></h3>'+
  '<div class="svc-body">'+
-   '<div class="svc-l"><div class="svc-thumb"><img src="'+(s.file||("public/img/service-"+s.img+".svg"))+'"'+(s.file2x?' srcset="'+s.file+' 847w,'+s.file2x+' 1693w" sizes="290px"':'')+' alt="'+esc(s.alt||"")+'"></div>'+
+   '<div class="svc-l"><div class="svc-thumb"><img src="'+(s.file||("public/img/service-"+s.img+".svg"))+'" loading="lazy" decoding="async"'+(s.file2x?' srcset="'+s.file+' 847w,'+s.file2x+' 1693w" sizes="290px"':'')+' alt="'+esc(s.alt||"")+'"></div>'+
    '<p class="t-body deep svc-desc">'+esc(s.c)+'</p></div>'+
    '<div class="svc-r"><ul>'+s.p.map(function(p){
      return '<li><span class="svc-plus" aria-hidden="true">+</span><span class="t-body">'+esc(p)+'</span></li>'
@@ -2831,7 +2852,7 @@ document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
   return '<li class="tst-t"><p class="tst-date">September 2025</p>'+
   '<svg class="tst-mark" viewBox="0 0 120 90" aria-hidden="true"><path d="M0 90V52C0 22 16 5 44 0l5 12C33 18 26 30 26 44h22v46zm70 0V52c0-30 16-47 44-52l5 12c-16 6-23 18-23 32h22v46z" fill="currentColor"/></svg>'+
   '<blockquote class="tst-q">&ldquo;'+esc(t[4])+'&rdquo;</blockquote>'+
-  '<div class="tst-by"><img src="'+t[0]+'" alt="" width="60" height="60" decoding="async"><div><p class="tst-n">'+esc(t[1])+'</p><p class="tst-r">'+esc(t[2])+'</p></div><span class="tst-chip">'+esc(t[3])+'</span></div></li>';
+  '<div class="tst-by"><img src="'+t[0]+'" alt="" width="60" height="60" loading="lazy" decoding="async"><div><p class="tst-n">'+esc(t[1])+'</p><p class="tst-r">'+esc(t[2])+'</p></div><span class="tst-chip">'+esc(t[3])+'</span></div></li>';
  }).join("");
  /* reference speeds, read off its own keyframes: 50px/s and 30px/s */
  function marquee(track,pxPerSec){
@@ -2872,8 +2893,7 @@ document.getElementById("whyStats").innerHTML=whyStats.slice(1).map(function(s){
 /* titles that rise word by word (pricing card row, pricing head) and the
    closing panel's "9 years" lines */
 document.querySelectorAll(".rise-words,.wh-words,.nl-h,.nl-lw").forEach(function(h){
- h.setAttribute("aria-label",h.textContent);
- h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");
+ h.innerHTML='<span class="sr">'+esc(h.textContent)+'</span>'+h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");
 });
 /* why choose us: words of the heading and letters of the three phrases as
    spans for their entrances; the phrase itself keeps its text for readers */
@@ -2882,8 +2902,8 @@ document.querySelectorAll(".rise-words,.wh-words,.nl-h,.nl-lw").forEach(function
  if(h){h.setAttribute("aria-label",h.textContent);
   h.innerHTML=h.textContent.split(" ").map(function(w){return '<span class="w" aria-hidden="true">'+esc(w)+'</span>'}).join(" ");}
  document.querySelectorAll(".why-type").forEach(function(p){
-  var t=p.textContent;p.setAttribute("aria-label",t);
-  p.innerHTML=t.split("").map(function(c){return '<span class="ch" aria-hidden="true">'+esc(c)+'</span>'}).join("");
+  var t=p.textContent;
+  p.innerHTML='<span class="sr">'+esc(t)+'</span>'+t.split("").map(function(c){return '<span class="ch" aria-hidden="true">'+esc(c)+'</span>'}).join("");
  });
 })();
 document.getElementById("stars").innerHTML=Array(5).join(",").split(",").map(function(){
@@ -2893,9 +2913,9 @@ document.getElementById("stars").innerHTML=Array(5).join(",").split(",").map(fun
 /* ───────────────────────────────────────────────────── pricing ──────── */
 /* Plan art: each plan shows its own photo of the guideline stack. */
 function planArt(p){
- if(p.tone==="mono")return '<img src="wave.avif" alt="" decoding="async">';
- if(p.tier==="Core")return '<img src="pricing-core.jpg" alt="" decoding="async">';
- if(p.tier==="Studio")return '<img src="public/img/ref/plan-studio.jpg" alt="" decoding="async">';
+ if(p.tone==="mono")return '<img src="wave.avif" alt="" loading="lazy" decoding="async">';
+ if(p.tier==="Core")return '<img src="pricing-core.webp" alt="" loading="lazy" decoding="async">';
+ if(p.tier==="Studio")return '<img src="public/img/ref/plan-studio.webp" alt="" loading="lazy" decoding="async">';
  var c=p.tone==="red"?["#ff6041","#ff8a6f"]:["#3563e9","#6f8ff2"];
  return '<svg viewBox="0 0 140 80" aria-hidden="true"><rect width="140" height="80" fill="#eceef2"/>'+
   '<g transform="translate(26 50) rotate(-28)"><rect x="18" y="-6" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/><rect x="9" y="-15" width="96" height="30" rx="2" fill="#fff" stroke="#d5d7de" stroke-width=".6"/>'+
@@ -2949,7 +2969,7 @@ function wcard(p,cls){
  return '<a class="wc '+cls+'" href="#whispers"><img src="'+p[0]+'" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
  '<div class="wc-meta"><span class="wc-by"><span class="wc-name">'+esc(p[3])+'</span><span class="wc-role">'+esc(p[4])+'</span></span>'+
  '<span class="wc-date num">'+p[1]+'</span></div>'+
- '<h3 class="wc-title">'+esc(p[2])+'</h3><p class="wc-sum" aria-label="'+esc(p[5])+'">'+p[5].split(' ').map(function(w,i){return '<span class="w" aria-hidden="true" style="--i:'+i+'">'+esc(w)+'</span>'}).join(' ')+'</p></a>';
+ '<h3 class="wc-title">'+esc(p[2])+'</h3><p class="wc-sum"><span class="sr">'+esc(p[5])+'</span>'+p[5].split(' ').map(function(w,i){return '<span class="w" aria-hidden="true" style="--i:'+i+'">'+esc(w)+'</span>'}).join(' ')+'</p></a>';
 }
 document.getElementById("whisperGrid").innerHTML=
  '<div class="wc wc-intro"><img src="teaser-thumb.avif" alt="" loading="lazy" decoding="async"><span class="wc-veil"></span>'+
@@ -2963,10 +2983,11 @@ document.getElementById("whisperGrid").innerHTML=
 /* ═══════════════════════════════════════════════ behaviour ═══════════ */
 
 /* clock */
+var clockFmt;
 function tick(){
  try{
-  var f=new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:"2-digit",second:"2-digit",hour12:true,timeZone:"America/Los_Angeles"});
-  var t=f.format(new Date());
+  clockFmt=clockFmt||new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:"2-digit",second:"2-digit",hour12:true,timeZone:"America/Los_Angeles"});
+  var t=clockFmt.format(new Date());
   var a=document.getElementById("clock"),b=document.getElementById("clock2");
   if(a)a.textContent=t; if(b)b.textContent=t;
  }catch(e){}
@@ -3509,7 +3530,7 @@ document.querySelectorAll(".rv,.rv-tag,.rv-h,.rv-lead,.rv-num,.mask,.imgbox,.wca
  // How we work (heading included), the case row, why choose us, page 4 and
  // the footer scroll 1:1 on the reference, with their own one-time
  // reveals, so they stay out of this
- var skip=".hero,.hdr,.story-section,.panel,.work-end,.svc,.svc-word,.svc-lead,.acc,#hww,#fcase,.why,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot";
+ var skip="#perf,.hero,.hdr,.story-section,.panel,.work-end,.svc,.svc-word,.svc-lead,.acc,#hww,#fcase,.why,#pricing,.team,.faq-sec,.tst,.wh,.wh-close,#site-foot";
  var kinds="p,h1,h2,h3,h4,h5,h6,li,a,button,.btn,img,svg,video,picture,figure,blockquote,label,input,textarea,select";
  var stop="body,main,footer,section,.shell,.grid";
  function fixed(el){for(;el&&el!==document.body;el=el.parentElement){var p=getComputedStyle(el).position;if(p==="fixed")return true}return false}
@@ -3677,6 +3698,11 @@ document.querySelectorAll(".count").forEach(function(el){
  var clips=document.querySelectorAll(".story-water video");
  if(!clips.length)return;
  var section=document.getElementById("story-section");
+ /* the poster is below the fold too: it is requested once the page has
+    loaded (or on the first scroll, whichever comes first) */
+ function posters(){clips.forEach(function(v){if(v.dataset.poster){v.poster=v.dataset.poster;v.removeAttribute("data-poster")}})}
+ if(document.readyState==="complete")posters();else addEventListener("load",posters);
+ if(scrollY>0)posters();else addEventListener("scroll",posters,{passive:true,once:true});
  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
   clips.forEach(function(v){v.autoplay=false;v.removeAttribute("autoplay");v.pause()});
   return;
@@ -3687,6 +3713,14 @@ document.querySelectorAll(".count").forEach(function(el){
  if(back)back.addEventListener("loadedmetadata",function(){
   if(back.duration)back.currentTime=back.duration/2;
  },{once:true});
+ /* the clip downloads on the visitor's first scroll rather than with the
+    page (the section sits right under the hero); the poster holds the frame
+    until then */
+ function fetchClips(){
+  removeEventListener("scroll",fetchClips);
+  clips.forEach(function(v){if(v.dataset.src){v.preload="auto";v.src=v.dataset.src;v.removeAttribute("data-src")}});
+ }
+ if(scrollY>0)fetchClips();else addEventListener("scroll",fetchClips,{passive:true});
  new IntersectionObserver(function(es){
   es.forEach(function(e){
    clips.forEach(function(v){
@@ -3808,17 +3842,26 @@ window.addEventListener("scroll",function(){
 
 /* mobile menu */
 var burger=document.getElementById("burger");
-burger.addEventListener("click",function(){
- var open=document.body.classList.toggle("menu");
+// closed, the menu is inert: hidden from readers and out of the tab order
+function setMenu(open){
+ var menu=document.getElementById("menu");
+ document.body.classList.toggle("menu",open);
  burger.setAttribute("aria-expanded",open);
- document.getElementById("menu").setAttribute("aria-hidden",!open);
+ burger.setAttribute("aria-label",open?"Close menu":"Open menu");
+ menu.setAttribute("aria-hidden",!open);menu.inert=!open;
  document.body.style.overflow=open?"hidden":"";
+}
+document.addEventListener("keydown",function(e){
+ if(e.key==="Escape"&&document.body.classList.contains("menu")){setMenu(false);burger.focus()}
+});
+burger.addEventListener("click",function(){
+ var open=!document.body.classList.contains("menu");
+ setMenu(open);
  document.querySelectorAll("#menu .mi").forEach(function(a,i){a.style.transitionDelay=(open?160+i*70:0)+"ms"});
 });
 document.querySelectorAll("#menu a").forEach(function(a){
  a.addEventListener("click",function(){
-  document.body.classList.remove("menu");document.body.style.overflow="";
-  burger.setAttribute("aria-expanded",false);
+  setMenu(false);
  });
 });
 
@@ -3921,16 +3964,22 @@ document.getElementById("nl").addEventListener("submit",function(e){
     +'<animate attributeName="opacity" values="1;1;1" dur="1s" begin="'+b.toFixed(4)+'s" repeatCount="indefinite"/></circle>';
  }
  g.setAttribute("fill","#d9d9d9");g.innerHTML=out;
+ /* 700 SMIL animations tick on the main thread every frame: run them only
+    while the globe is on screen */
+ if(!still&&g.pauseAnimations&&"IntersectionObserver" in window){
+  g.pauseAnimations();
+  new IntersectionObserver(function(es){es[es.length-1].isIntersecting?g.unpauseAnimations():g.pauseAnimations()}).observe(g);
+ }
 })();
 /* background footage (the closing panel, the spotlight card): each clip loads
    as its section nears, plays muted on loop, and holds its first frame for
    reduced motion */
 (function(){
- var vids=[].slice.call(document.querySelectorAll("video.wh-close-bg,video.pcard-mascot"));
+ var vids=[].slice.call(document.querySelectorAll("video.wh-close-bg,video.pcard-mascot,video.foot-vid"));
  if(!vids.length)return;
  var mq=window.matchMedia("(prefers-reduced-motion: reduce)");
  function sync(v){if(!v.getAttribute("src"))return;if(mq.matches){v.pause();v.currentTime=0}else v.play().catch(function(){})}
- function load(v){if(v.getAttribute("src"))return;v.src=v.dataset.src;v.preload="auto";sync(v)}
+ function load(v){if(v.getAttribute("src"))return;if(v.dataset.poster)v.poster=v.dataset.poster;v.src=v.dataset.src;v.preload="auto";sync(v)}
  vids.forEach(function(v){
   if("IntersectionObserver" in window){
    var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();load(v)}},{rootMargin:"800px 0px"});
@@ -3939,6 +3988,19 @@ document.getElementById("nl").addEventListener("submit",function(e){
  });
  function all(){vids.forEach(sync)}
  if(mq.addEventListener)mq.addEventListener("change",all);else if(mq.addListener)mq.addListener(all);
+})();
+
+/* in-page jumps need the real height of every section on the way: release
+   the skipped ones first (see .cv-off in the CSS) */
+(function(){
+ var root=document.documentElement;
+ function off(){root.classList.add("cv-off")}
+ if(location.hash)off();
+ addEventListener("hashchange",off);
+ document.addEventListener("click",function(e){
+  var a=e.target.closest&&e.target.closest("a[href*='#']");
+  if(a&&a.hash&&a.pathname===location.pathname)off();
+ },true);
 })();
 
 /* phones: the review arrows step the row one card at a time */

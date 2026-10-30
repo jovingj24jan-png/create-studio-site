@@ -29,6 +29,9 @@ changes only links; the header bar, menus and every section stay as they are:
   section instead (`work.html` → `#work` and so on); the build fails on any
   other unpublished link
 - a comment after the doctype names the commit it was built from
+- each page's inline CSS and JS is minified (postcss + cssnano-simple and
+  terser, both already installed with the project; top-level names are kept
+  because the inline scripts share globals)
 
 Homepage changes made on `main` after the original:
 
